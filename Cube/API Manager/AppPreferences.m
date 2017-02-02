@@ -55,7 +55,7 @@ static AppPreferences *singleton = nil;
                                              selector:@selector(reachabilityChanged:)
                                                  name:kReachabilityChangedNotification
                                                object:nil];
-    
+    //chnges
     Reachability * reach = [Reachability reachabilityWithHostname:@"www.google.com"];
     
     reach.reachableBlock = ^(Reachability * reachability)
