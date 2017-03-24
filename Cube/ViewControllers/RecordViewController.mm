@@ -72,7 +72,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)pauseRecordingFromBackGround
 {
-    if (!stopped || !paused)
+    if (!stopped && !paused)
     {
         
         recordingPausedOrStoped=YES;
@@ -89,7 +89,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         UILabel* recordOrPauseLabel = [self.view viewWithTag:603];
         
-        recordOrPauseLabel.text = @"Record";
+        recordOrPauseLabel.text = @"Resume";
         
         
       
@@ -134,6 +134,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
     }
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [AppPreferences sharedAppPreferences].isRecordView=YES;
@@ -413,7 +414,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //    
 //        [animatedView removeFromSuperview];
         [player stop];
-        [UIApplication sharedApplication].idleTimerDisabled = NO;
+     //   [UIApplication sharedApplication].idleTimerDisabled = NO;
     }
     
     if([AppPreferences sharedAppPreferences].recordNew)
@@ -772,56 +773,56 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 
 
--(void)setPauseRecordingView:(UIButton*)sender
-{
-
-    UIView* pauseView=  [self.view viewWithTag:302];
-    UIImageView* pauseImageView= [pauseView viewWithTag:402];
-    
-    
-    if ( !paused)
-    {
-        recordingPausedOrStoped=YES;
-        
-        paused=YES;
-
-        UIImageView* animatedView= [self.view viewWithTag:1001];
-        
-        [animatedView stopAnimating];
-        
-        animatedView.image=[UIImage imageNamed:@"SoundWave-3"];
-        
-        [self pauseRecording];
-        
-        [stopTimer invalidate];
-        
-        pauseImageView.image=[UIImage imageNamed:@"Play"];
-        
-    }
-    else if ( isRecordingStarted==YES && paused)
-    {
-        recordingPausedOrStoped=NO;
-        
-        paused=NO;
-
-        [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryPlayAndRecord];
-        
-        UIImageView* animatedView= [self.view viewWithTag:1001];
-        
-        [animatedView startAnimating];
-        
-        [self setTimer];
-        
-        [self performSelector:@selector(mdRecord) withObject:nil afterDelay:0.1];
-        
-        [UIApplication sharedApplication].idleTimerDisabled = YES;
-        
-        pauseImageView.image=[UIImage imageNamed:@"Pause"];
-    }
-
-    
-    // pauseImageView.image=[UIImage imageNamed:@"play"];
-}
+//-(void)setPauseRecordingView:(UIButton*)sender
+//{
+//
+//    UIView* pauseView=  [self.view viewWithTag:302];
+//    UIImageView* pauseImageView= [pauseView viewWithTag:402];
+//    
+//    
+//    if ( !paused)
+//    {
+//        recordingPausedOrStoped=YES;
+//        
+//        paused=YES;
+//
+//        UIImageView* animatedView= [self.view viewWithTag:1001];
+//        
+//        [animatedView stopAnimating];
+//        
+//        animatedView.image=[UIImage imageNamed:@"SoundWave-3"];
+//        
+//        [self pauseRecording];
+//        
+//        [stopTimer invalidate];
+//        
+//        pauseImageView.image=[UIImage imageNamed:@"Play"];
+//        
+//    }
+//    else if ( isRecordingStarted==YES && paused)
+//    {
+//        recordingPausedOrStoped=NO;
+//        
+//        paused=NO;
+//
+//        [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryPlayAndRecord];
+//        
+//        UIImageView* animatedView= [self.view viewWithTag:1001];
+//        
+//        [animatedView startAnimating];
+//        
+//        [self setTimer];
+//        
+//        [self performSelector:@selector(mdRecord) withObject:nil afterDelay:0.1];
+//        
+//        [UIApplication sharedApplication].idleTimerDisabled = YES;
+//        
+//        pauseImageView.image=[UIImage imageNamed:@"Pause"];
+//    }
+//
+//    
+//    // pauseImageView.image=[UIImage imageNamed:@"play"];
+//}
 
 - (void) mdRecord
 {
@@ -944,7 +945,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                   
                   UILabel* recordOrPauseLabel = [self.view viewWithTag:603];
                   
-                  recordOrPauseLabel.text = @"Record";
+                  recordOrPauseLabel.text = @"Resume";
 
                   
                   [stopTimer invalidate];
@@ -1765,9 +1766,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         UIImageView* animatedView= [self.view viewWithTag:1001];
         [animatedView stopAnimating];
         animatedView.image=[UIImage imageNamed:@"SoundWave-3"];
+        UILabel* recordOrPauseLabel = [self.view viewWithTag:603];
+        
+        recordOrPauseLabel.text = @"Resume";
         paused=YES;
         [self pauseRecording];
-        [UIApplication sharedApplication].idleTimerDisabled = NO;
+     //   [UIApplication sharedApplication].idleTimerDisabled = NO;
 
     }
     [UIApplication sharedApplication].idleTimerDisabled = YES;

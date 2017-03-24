@@ -22,6 +22,7 @@
     UIAlertAction *actionDelete;
     UIAlertAction *actionCancel;
     MBProgressHUD* hud;
+    NSURLSession* session;
     
 }
 @property (weak, nonatomic) IBOutlet UIView *transferredView;

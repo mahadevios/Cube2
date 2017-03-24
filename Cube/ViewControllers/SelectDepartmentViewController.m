@@ -12,6 +12,7 @@
 #import "DepartMent.h"
 #import "RegistrationViewController.h"
 #import "MainTabBarViewController.h"
+#import "SharedSession.h"
 
 @interface SelectDepartmentViewController ()
 
@@ -73,6 +74,12 @@
    // [[Database shareddatabase] setDepartment];//to insert default department for imported files
 
     [[Database shareddatabase] setDepartment];//to insert default department for imported files
+   // [self needsUpdate];
+    
+    
+     NSURLSession*  session = [SharedSession getSharedSession:[APIManager sharedManager]];
+        
+    
 
     [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
    // [self dismissViewControllerAnimated:NO completion:^{[self checkAndDismissViewController];}];
@@ -82,7 +89,84 @@
     //NSLog(@"%@",self.navigationController);
     
 }
-
+//-(BOOL) needsUpdate
+//{
+//    //    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+//    //    NSString* appID = infoDictionary[@"CFBundleIdentifier"];
+//    //    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
+//    //    NSData* data = [NSData dataWithContentsOfURL:url];
+//    //    NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+//    //
+//    //    if ([lookup[@"resultCount"] integerValue] == 1){
+//    //        NSString* appStoreVersion = lookup[@"results"][0][@"version"];
+//    //        NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+//    ////        if (![appStoreVersion isEqualToString:currentVersion]){
+//    ////            NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
+//    ////            return YES;
+//    ////        }
+//    //        if ([appStoreVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending) {
+//    //            // *** Present alert about updating to user ***
+//    //            NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
+//    //                        return YES;
+//    //        }
+//    //    }
+//    
+//    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+//    NSString* appID = infoDictionary[@"CFBundleIdentifier"];
+//    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
+//    NSURLSession         *  session = [NSURLSession sharedSession];
+//    NSURLSessionDataTask *  theTask = [session dataTaskWithRequest: [NSURLRequest requestWithURL: url] completionHandler:
+//                                       ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+//                                       {
+//                                           NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+//                                           if ([lookup[@"resultCount"] integerValue] == 1)
+//                                           {
+//                                               
+//                                               NSString* appStoreVersion = lookup[@"results"][0][@"version"];
+//                                               NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+//                                               
+//                                               if (![appStoreVersion isEqualToString:currentVersion])
+//                                               {
+//                                                   NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
+//                                                   //                                                        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Received" withMessage:@"" withCancelText:@"Cancel" withOkText:@"Ok" withAlertTag:1000];
+//                                                   
+//                                                   alertController = [UIAlertController alertControllerWithTitle:@"Update available for Cube dictate"
+//                                                                                                         message:nil
+//                                                                                                  preferredStyle:UIAlertControllerStyleAlert];
+//                                                   actionDelete = [UIAlertAction actionWithTitle:@"Update"
+//                                                                                           style:UIAlertActionStyleDefault
+//                                                                                         handler:^(UIAlertAction * action)
+//                                                                   {
+//                                                                       [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms://itunes.com/apps/CubeDictate"]];
+//                                                                   }]; //You can use a block here to handle a press on this button
+//                                                   [alertController addAction:actionDelete];
+//                                                   
+//                                                   
+//                                                   actionCancel = [UIAlertAction actionWithTitle:@"Later"
+//                                                                                           style:UIAlertActionStyleCancel
+//                                                                                         handler:^(UIAlertAction * action)
+//                                                                   {
+//                                                                       [alertController dismissViewControllerAnimated:YES completion:nil];
+//                                                                       
+//                                                                   }]; //You can use a block here to handle a press on this button
+//                                                   [alertController addAction:actionCancel];
+//                                                   
+//                                                   [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:alertController animated:YES completion:nil];
+//                                                   
+//                                                   //return YES;
+//                                               }
+//                                               //                                           if ([appStoreVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending) {
+//                                               //                                               // *** Present alert about updating to user ***
+//                                               //
+//                                               //                                               [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Received" withMessage:@"" withCancelText:@"Cancel" withOkText:@"Ok" withAlertTag:1000];
+//                                               //                                           }
+//                                           }
+//                                       }];
+//    
+//    [theTask resume];
+//    return NO;
+//}
+//
 - (void) checkAndDismissViewController
 {
     [self.view endEditing:YES];

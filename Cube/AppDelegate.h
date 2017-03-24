@@ -22,6 +22,7 @@
     NSString* audioFilePath;
     Float64  sampleRate;
     AVAudioPlayer* player;
+   void (^_completionHandler)(UIBackgroundFetchResult);
 
 }
 @property (strong, nonatomic) UIWindow *window;
@@ -29,5 +30,7 @@
 @property(nonatomic)BOOL gotResponse;
 @property(nonatomic,strong)NSString* audioFilePathString;
 @property(nonatomic,strong)NSString* fileName;
+@property (nonatomic, copy) void (^backgroundSessionCompletionHandler)(void);
+
 @end
 

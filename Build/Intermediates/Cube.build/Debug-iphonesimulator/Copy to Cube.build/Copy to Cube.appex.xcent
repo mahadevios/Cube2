@@ -8,5 +8,9 @@
 	<array>
 		<string>group.com.coreFlexSolutions.CubeDictate</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>Y56BAH343T.com.coreFlexSolutions.CubeDictate.Copy-to-Cube</string>
+	</array>
 </dict>
 </plist>

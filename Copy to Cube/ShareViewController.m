@@ -341,7 +341,7 @@ SLComposeSheetConfigurationItem *item;
                                                           textField.text = fileNameWithoutExtension;
                                                           textField.keyboardType=UIKeyboardTypeNamePhonePad;
                                                           textField.autocorrectionType=UITextAutocorrectionTypeNo;
-                                                          textField.delegate=self;
+                                                          textField.delegate=nil;
                  
                                                       }];
                                                       actionSave = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)

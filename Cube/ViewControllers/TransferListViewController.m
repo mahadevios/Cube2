@@ -6,6 +6,8 @@
 //  Copyright © 2016 Xanadutec. All rights reserved.
 //
 //self.checkedIndexPath contain file names to be upload,arrayOfChecked contain indexpathof selected cells
+
+//check in cell for row at index path where we adding the indexpath to array
 #import "TransferListViewController.h"
 #import "AudioDetailsViewController.h"
 @interface TransferListViewController ()
@@ -28,10 +30,20 @@
          lpgr.delegate = self;
          [self.tableView addGestureRecognizer:lpgr];
           self.checkedIndexPath = [[NSMutableArray alloc] init];
+            
+            
         }
     
     arrayOfMarked=[[NSMutableArray alloc]init];
+    progressIndexPathArray=[[NSMutableArray alloc]init];
+   // progressIndexPathArrayCopy=[[NSMutableArray alloc]init];
+
+    indexPathFileNameDict= [NSMutableDictionary new];
+    
+  
+    
 }
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -40,6 +52,11 @@
     {
         self.navigationItem.title=@"Transferred Today";
     }
+    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
+    {
+        [self setTimer];
+    }
+    
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
     self.navigationItem.rightBarButtonItem = nil;
@@ -50,7 +67,7 @@
     app.failedTransferNamesArray=[[NSMutableArray alloc]init];
     
     
-    [UIApplication sharedApplication].idleTimerDisabled = NO;
+  //  [UIApplication sharedApplication].idleTimerDisabled = NO;
 
     [self.tableView reloadData];
     
@@ -62,24 +79,65 @@
 
 }
 
+-(void)setTimer
+{
+
+    progressTimer =  [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(updateProgresCount) userInfo:nil repeats:YES];
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self.checkedIndexPath removeAllObjects];
     [arrayOfMarked removeAllObjects];
     isMultipleFilesActivated=NO;
     toolBarAdded=NO;
+    
+    [progressTimer invalidate];
 }
 -(void)validateFileUploadResponse:(NSNotification*)obj
 {
-    [APIManager sharedManager].awaitingFileTransferNamesArray= [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"];
+    [progressTimer invalidate];
+    //NSString* fileName =  obj.object;
+    
+    // [progressTimer invalidate];
+    //NSIndexPath* indexPath = [indexPathFileNameDict objectForKey:fileName];
+   
+    //[progressIndexPathArrayCopy removeAllObjects];
+
+    //[self setTimer];
+   // APIManager* api = [APIManager sharedManager];
+  //  [APIManager sharedManager].awaitingFileTransferNamesArray= [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"];
+    
+     [progressIndexPathArray removeAllObjects];
     [self.checkedIndexPath removeAllObjects];
     [arrayOfMarked removeAllObjects];
     isMultipleFilesActivated=NO;
     [self hideAndShowUploadButton:NO];
+    
+    
+    //[self.tableView beginUpdates];
+    
     [self.tableView reloadData];//to update table agter getting file trnasfer response
-
+    
+    [self setTimer];
+    //[self.tableView endUpdates];
 }
+-(void)updateProgresCount
+{
+       // [self.tableView beginUpdates];
+        if (progressIndexPathArray.count>0)
+    {
+       // [self.tableView beginUpdates];
+        [APIManager sharedManager].awaitingFileTransferNamesArray= [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"] ;
 
+        [self.tableView reloadRowsAtIndexPaths:progressIndexPathArray withRowAnimation:UITableViewRowAnimationNone];
+        //[self.tableView endUpdates];
+    }
+      //  [self.tableView endUpdates];
+    
+    // [self.tableView reloadData];
+    
+}
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
 {
     if (self.navigationItem.title==self.currentViewName)//if navigation title=@"somevalue" then only handle longpress
@@ -93,7 +151,7 @@
         UILabel* deleteStatusLabel=[cell viewWithTag:105];
     
     
-        if (cell.accessoryType == UITableViewCellAccessoryNone && (![deleteStatusLabel.text isEqual:@"Uploading"]))
+        if (cell.accessoryType == UITableViewCellAccessoryNone && (![deleteStatusLabel.text containsString:@"Uploading"]))
         {
             NSDictionary* awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
             NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
@@ -204,10 +262,31 @@
     }
     else
         deleteStatusLabel.text=@"";
-    if ([[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"] && ([[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"NotTransferred"] || [[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"Resend"]))
+    if ([[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"] && ([[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"NotTransferred"] || [[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"Resend"] || [[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"ResendFailed"]))
     {
-        
-        deleteStatusLabel.text=@"Uploading";
+        if (![progressIndexPathArray containsObject:indexPath])
+        {
+            [progressIndexPathArray addObject:indexPath];
+           // [progressIndexPathArrayCopy addObject:indexPath];
+
+            [indexPathFileNameDict setObject:indexPath forKey:departmentNameLabel.text];
+        }
+        //deleteStatusLabel.text=@"Uploading";
+        if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]== NULL)
+        {
+            deleteStatusLabel.text= @"Uploading 0%";
+        }
+        else
+        deleteStatusLabel.text=[NSString stringWithFormat:@"Uploading %@",[[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]];
+
+    }
+    else
+    {
+        if ([progressIndexPathArray containsObject:indexPath])
+        {
+            [progressIndexPathArray removeObject:indexPath];
+            [indexPathFileNameDict removeObjectForKey:departmentNameLabel.text];
+        }
     }
     
     if ([arrayOfMarked containsObject:indexPath])
@@ -239,7 +318,7 @@
             NSIndexPath* indexPath= [NSIndexPath indexPathForRow:i inSection:0];
             UITableViewCell* cell= [self.tableView cellForRowAtIndexPath:indexPath];
             UILabel* deleteStatusLabel=[cell viewWithTag:105];
-            if ([deleteStatusLabel.text isEqual:@"Uploading"])
+            if ([deleteStatusLabel.text containsString:@"Uploading"])
             {
                 ++uploadFileCount;
             }
@@ -266,7 +345,7 @@
             [button setTitle:@"Deselect all"];
         }
 
-        if (cell.accessoryType == UITableViewCellAccessoryNone && (![deleteStatusLabel.text isEqual:@"Uploading"]))
+        if (cell.accessoryType == UITableViewCellAccessoryNone && (![deleteStatusLabel.text containsString:@"Uploading"]))
         {
             
             [self.checkedIndexPath addObject:fileName];
@@ -318,7 +397,7 @@ else//to disaalow single row while that row is uploading
     if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
     {    UILabel* deleteStatusLabel=[cell viewWithTag:105];
 
-        if(([deleteStatusLabel.text isEqual:@"Uploading"]))
+        if(([deleteStatusLabel.text containsString:@"Uploading"]))
         {
             alertController = [UIAlertController alertControllerWithTitle:@"Alert?"
                                                                   message:@"File is in use!"
@@ -362,7 +441,7 @@ else//to disaalow single row while that row is uploading
     if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
     {    UILabel* deleteStatusLabel=[cell viewWithTag:105];
         
-        if(([deleteStatusLabel.text isEqual:@"Uploading"]))
+        if(([deleteStatusLabel.text containsString:@"Uploading"]))
         {
             alertController = [UIAlertController alertControllerWithTitle:@"Alert?"
                                                                   message:@"File is in use!"
@@ -582,7 +661,7 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
         NSIndexPath* indexPath= [NSIndexPath indexPathForRow:i inSection:0];
         UITableViewCell* cell= [self.tableView cellForRowAtIndexPath:indexPath];
         UILabel* deleteStatusLabel=[cell viewWithTag:105];
-        if ([deleteStatusLabel.text isEqual:@"Uploading"])
+        if ([deleteStatusLabel.text containsString:@"Uploading"])
         {
             ++uploadFileCount;
         }

@@ -11,6 +11,9 @@
 @interface SelectDepartmentViewController : UIViewController
 {
     NSArray* departmentNameArray;
+//    UIAlertController *alertController;
+//    UIAlertAction *actionDelete;
+//    UIAlertAction *actionCancel;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

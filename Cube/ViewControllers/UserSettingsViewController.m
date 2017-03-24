@@ -279,12 +279,18 @@
         if (radioButtonArray.count==0)
         {
             UIButton* button=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 19, 19)];
+            [button setBackgroundColor:[UIColor clearColor]];
             [button setBackgroundImage:[UIImage imageNamed:@"RadioButtonClear"] forState:UIControlStateNormal];
             UIButton* button1=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 19, 19)];
+            [button1 setBackgroundColor:[UIColor clearColor]];
+
             [button1 setBackgroundImage:[UIImage imageNamed:@"RadioButtonClear"] forState:UIControlStateNormal];
             UIButton* button2=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 19, 19)];
+             [button2 setBackgroundColor:[UIColor clearColor]];
             [button2 setBackgroundImage:[UIImage imageNamed:@"RadioButtonClear"] forState:UIControlStateNormal];
             UIButton* button3=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 19, 19)];
+            [button3 setBackgroundColor:[UIColor clearColor]];
+
             [button3 setBackgroundImage:[UIImage imageNamed:@"RadioButtonClear"] forState:UIControlStateNormal];
             radioButtonArray=[NSMutableArray arrayWithObjects:button,button1,button2,button3, nil];
             
@@ -467,6 +473,7 @@
     
     else
     {
+        [self.poUpTableView reloadData];
         UITableViewCell* selectedCell=   [tableView cellForRowAtIndexPath:indexPath];
         
         if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRowAndSection"] isEqualToString:@"00"])

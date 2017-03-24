@@ -5,6 +5,20 @@
 //provisioning profile ***: http://sharpmobilecode.com/making-sense-of-ios-provisioning/
 
 //add provisioning profile**: http://docs.telerik.com/platform/appbuilder/cordova/code-signing-your-app/configuring-code-signing-for-ios-apps/create-ad-hoc-provisioning-profile
+
+//property getter setter strong weak http://stackoverflow.com/questions/843632/is-there-a-difference-between-an-instance-variable-and-a-property-in-objecti
+
+//strong reference concept ray wenderlich https://www.raywenderlich.com/5677/beginning-arc-in-ios-5-part-1
+
+// about nsurlsession https://realm.io/news/gwendolyn-weston-ios-background-networking/
+
+//about nsurlsession http://stackoverflow.com/questions/20390428/handleeventsforbackgroundurlsession-never-called-when-a-downloadtask-finished
+
+// background session http://stackoverflow.com/questions/31802656/what-happens-to-nsurlsessiontasks-if-app-is-killed
+
+//** background session cancelled http://stackoverflow.com/questions/20159471/ios-does-force-quitting-the-app-disables-background-upload-using-nsurlsession?rq=1
+
+// resume upload https://forums.developer.apple.com/thread/10239
 //  ViewController.m
 //  Cube
 //

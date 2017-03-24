@@ -68,6 +68,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [stopTimer invalidate];
     
+    UILabel* recordOrPauseLabel = [self.view viewWithTag:603];
+    
+    recordOrPauseLabel.text = @"Resume";
+    
    UIImageView* animatedImageView= [self.view viewWithTag:1001];
     [animatedImageView stopAnimating];
     animatedImageView.image=[UIImage imageNamed:@"SoundWave-3"];
@@ -196,7 +200,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
        
     
         recordingPausedOrStoped=YES;
-        [UIApplication sharedApplication].idleTimerDisabled = NO;
+    //    [UIApplication sharedApplication].idleTimerDisabled = NO;
 
 
     
@@ -272,7 +276,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         [startRecordingImageView setFrame:CGRectMake((startRecordingView.frame.size.width/2)-9, (startRecordingView.frame.size.height/2)-18, 18, 36)];
 
 
-        [UIApplication sharedApplication].idleTimerDisabled = NO;
+    //    [UIApplication sharedApplication].idleTimerDisabled = NO;
 
         NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
     
@@ -331,7 +335,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     UIView* animatedView=  [self.view viewWithTag:98];
     [animatedView removeFromSuperview];
     [player stop];
-    [UIApplication sharedApplication].idleTimerDisabled = NO;
+  //  [UIApplication sharedApplication].idleTimerDisabled = NO;
     [stopTimer invalidate];
     }
     
@@ -480,13 +484,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //        
 //        if (screenHeight<481)
 //        {
-//         
+//
+        UILabel* recordOrPauseLabel = [self.view viewWithTag:603];
+        
+        recordOrPauseLabel.text = @"Resume";
 //        }
         [animatedView stopAnimating];
         animatedView.image=[UIImage imageNamed:@"SoundWave-3"];
 
         [self pauseRecording];
-        [UIApplication sharedApplication].idleTimerDisabled = NO;
+     //   [UIApplication sharedApplication].idleTimerDisabled = NO;
         
     }
     [UIApplication sharedApplication].idleTimerDisabled = YES;
@@ -780,7 +787,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     
                     UILabel* recordOrPauseLabel = [self.view viewWithTag:603];
                     
-                    recordOrPauseLabel.text = @"Record";
+                    recordOrPauseLabel.text = @"Resume";
                     //[self pauseRecording];
                     recordingPausedOrStoped=YES;
                     [stopTimer invalidate];

@@ -24,7 +24,7 @@
 #import "AudioSessionManager.h"
 #import "CAXException.h"
 #import <AVFoundation/AVFoundation.h>
-
+#import "SharedSession.h"
 
 extern void ThreadStateInitalize();
 extern void ThreadStateBeginInterruption();
@@ -44,6 +44,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [[AppPreferences sharedAppPreferences] startReachabilityNotifier];
     [APIManager sharedManager].userSettingsOpened=NO;
+    
+//    NSURLSession* session = [SharedSession getSharedSession:[APIManager sharedManager]];
+
     //[[Database shareddatabase] updateDemo:@"MOB-495617757209"];
 
     //[Keychain setString:macId forKey:@"udid"];
@@ -58,23 +61,29 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
           [[NSUserDefaults standardUserDefaults] setValue:@"512 MB" forKey:LOW_STORAGE_THRESHOLD];
 
     }
-    if ([[NSUserDefaults standardUserDefaults] valueForKey:RECORD_ABBREVIATION]== NULL)
-    {
-        [[NSUserDefaults standardUserDefaults] setValue:@"MOB-" forKey:RECORD_ABBREVIATION];
-        
-    }
+//    if ([[NSUserDefaults standardUserDefaults] valueForKey:RECORD_ABBREVIATION]== NULL)
+//    {
+//        [[NSUserDefaults standardUserDefaults] setValue:@"MOB-" forKey:RECORD_ABBREVIATION];
+//        
+//    }
     if ([[NSUserDefaults standardUserDefaults] valueForKey:SAVE_DICTATION_WAITING_SETTING]== NULL)
     {
         [[NSUserDefaults standardUserDefaults] setValue:@"15 min" forKey:SAVE_DICTATION_WAITING_SETTING];
         
     }
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:CONFIRM_BEFORE_SAVING_SETTING_ALTERED])
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:CONFIRM_BEFORE_SAVING_SETTING_ALTERED])// to set confirm before saving setting on by default, if user aletered the setting then put it on
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:CONFIRM_BEFORE_SAVING_SETTING];
     }
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:PURGE_DELETED_DATA])
+    
+    // [[NSUserDefaults standardUserDefaults] setValue:NULL forKey:PURGE_DELETED_DATA];
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DELETED_DATA]== NULL)
     {
         [[NSUserDefaults standardUserDefaults] setValue:@"1 day" forKey:PURGE_DELETED_DATA];
+         [[Database shareddatabase] addDictationStatus:@"RecordingFileUploaded"];
+        [[Database shareddatabase] updateUploadingStuckedStatus];// to resolve the previous build bug
+        [[Database shareddatabase] createFileNameidentifierRelationshipTable];
+
     }
 
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoadedFirstTime"];
@@ -151,6 +160,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //        [application registerForRemoteNotificationTypes:
 //         (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
 //    }
+    
+//    bool updateAvailable = [self needsUpdate];
+//    if (updateAvailable)
+//    {
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms://itunes.com/apps/CubeDictate"]];
+//
+//    }
+   // [[SharedSession sharedSession] finishTasksAndInvalidate];
+
        return YES;
 }
 
@@ -168,19 +186,38 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         
     }
-    [[Database shareddatabase] addDictationStatus:@"RecordingFileUploaded"];
+   
+
+//    if (![[NSUserDefaults standardUserDefaults] boolForKey:APPLICATION_TERMINATE_CALLED])
+//    {
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            
+//            [[Database shareddatabase] updateUploadingFileDictationStatus];
+//        });
+ //   }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [[Database shareddatabase] updateUploadingFileDictationStatus];
+    });
+   // [[NSUserDefaults standardUserDefaults] setBool:NO forKey:APPLICATION_TERMINATE_CALLED];
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 
     //[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PAUSE_RECORDING object:nil];
-
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        
+//        [[AppPreferences sharedAppPreferences].uploadTask suspend];
+//        
+//        // [[AppPreferences sharedAppPreferences].uploadTask resume];
+//    });
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PAUSE_AUDIO_PALYER object:nil];//to pause and remove audio player
-
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
+
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
@@ -191,23 +228,62 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
     if([AppPreferences sharedAppPreferences].userObj!=nil)
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLoadedFirstTime"];
+    
+   // [[AppPreferences sharedAppPreferences].uploadTask suspend];
 
 }
 
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        
+//        [[AppPreferences sharedAppPreferences].uploadTask resume];
+//
+//        // [[AppPreferences sharedAppPreferences].uploadTask resume];
+//    });
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+  //  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:APPLICATION_TERMINATE_CALLED];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoadedFirstTime"];
     [AppPreferences sharedAppPreferences].userObj.userPin=nil;
     
-    [[Database shareddatabase] updateUploadingFileDictationStatus];
+    [[SharedSession sharedSession] finishTasksAndInvalidate];
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
+
+    //[[Database shareddatabase] updateUploadingFileDictationStatus];
      [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SAVE_RECORDING object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DELETE_RECORDING object:nil];//to pause and remove audio player
 // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    
+    // [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PAUSE_RECORDING object:nil];
+   
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                         bundle: nil];
+    
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"] && [AppPreferences sharedAppPreferences].userObj.userPin!=NULL)
+    {
+        LoginViewController* loginViewController=[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.window.rootViewController presentViewController:loginViewController animated:NO completion:nil];
+    }
+    
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        // [[AppPreferences sharedAppPreferences].uploadTask resume];
+        [self getImportedFiles];
+        
+        
+        
+    });
+    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
 - (void)handleInterruption:(NSNotification *)notification
@@ -262,50 +338,46 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     NSLog(@"%@", routeDescription);
 }
 
+//store the information
 -(void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
 {
+    //[SharedSession sharedSession] comp
+    self.backgroundSessionCompletionHandler  = completionHandler;
+    [SharedSession getSharedSession:[APIManager sharedManager]];
     NSLog(@"IDENTOFIER:   %@",identifier);
 }
 
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
+//update the UI
+- (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session
 {
+    NSLog(@"Background URL session %@ finished events.\n", session);
     
-    // [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PAUSE_RECORDING object:nil];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                         bundle: nil];
-    
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"] && [AppPreferences sharedAppPreferences].userObj.userPin!=NULL)
+    if (session.configuration.identifier)
     {
-        LoginViewController* loginViewController=[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        [self.window.rootViewController presentViewController:loginViewController animated:NO completion:nil];
+        self.backgroundSessionCompletionHandler();
+        // Call the handler we stored in -application:handleEventsForBackgroundURLSession:
+        // [self callCompletionHandlerForSession:session.configuration.identifier];
+    }
+}
+- (id)initWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    self = [super init];
+    
+    if(self)
+    {
+        // keep the block by copying it; release later if
+        // you're not using ARC
+        _completionHandler = completionHandler;
     }
     
-//    NSDateFormatter* dateFormatter = [NSDateFormatter new];
-//    
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-//    
-//    NSString* todaysDate = [dateFormatter stringFromDate:[NSDate new]];
-//    
-//    [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:@"TodaysDate"];
-//    
-//    NSString* todaysSerialNumberCount = [[NSUserDefaults standardUserDefaults] valueForKey:@"todaysSerialNumberCount"];
-//    
-//    if ( [todaysSerialNumberCount isEqual:NULL])
-//    {
-//        [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:@"todaysSerialNumberCount"];
-//    }
-//
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        [self getImportedFiles];
-        
-        
-
-    });
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    return self;
 }
+
+- (void)somethingThatHappensMuchLater
+{
+    _completionHandler(UIBackgroundFetchResultNewData);
+}
+
 
 -(void)getImportedFiles
 {
@@ -315,8 +387,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
         NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
         
-        NSString* isfile=[sharedDefaults objectForKey:@"out"];
-        NSLog(@"%@",isfile);
+        //NSString* isfile=[sharedDefaults objectForKey:@"out"];
+        //NSLog(@"%@",isfile);
         // NSString* sharedAudioFolderPathString=[sharedDefaults objectForKey:@"audioFolderPath"];
     
         NSDictionary* copy1Dict=[sharedDefaults objectForKey:@"isFileInsertedDict"];
@@ -340,92 +412,20 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             }
             else
             {}
-//                if ([fileExistFlag isEqualToString:@"UPDATE"])
-//                {
-//                    [self convertToWavFileName:wavFileName];
-//                    
-//                    NSMutableDictionary* dateAndFileNAmeDict=[NSMutableDictionary new];
-//                    
-//                    dateAndFileNAmeDict=[sharedDefaults objectForKey:@"audioNamesAndDateDict"];
-//                    
-//                    NSString* updatedDate = [dateAndFileNAmeDict objectForKey:wavFileName];
-//                    
-//                    NSString* fileNameForDatabase=[wavFileName stringByDeletingPathExtension];
-//                    
-//                    NSString* originalFileName=wavFileName;
-//                    
-//                    
-//                    NSString* fileWithWavExtension=[originalFileName stringByDeletingPathExtension];
-//                    
-//                    NSString* sharedAudioFilePathString= [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,fileWithWavExtension]];
-//                    
-//                    NSString* filePath=sharedAudioFilePathString;
-//                    
-//                    uint64_t freeSpaceUnsignLong= [[APIManager sharedManager] getFileSize:filePath];
-//                    long fileSizeinKB=freeSpaceUnsignLong;
-//                    
-//                    NSString* fileSize=[NSString stringWithFormat:@"%ld",fileSizeinKB];//update file size of override file
-//
-//                    [self prepareAudioPlayer:sharedAudioFilePathString];//initiate audio player with current recording to get currentAudioDuration of override file
-//                    
-//                    NSString* currentDuration=[NSString stringWithFormat:@"%f",player.duration];
-//
-//                    
-//                    [[Database shareddatabase] updateAudioFileDeleteStatus:@"NoDelete" fileName:fileNameForDatabase updatedDated:updatedDate currentDuration:currentDuration fileSize:fileSize];
-//                    
-//                    
-//                }
+
         }
     
-    
+    // got database error
     [[Database shareddatabase] getlistOfimportedFilesAudioDetailsArray:5];//get count of imported non transferred files
     
     
     [sharedDefaults setObject:proxyIsFileInsertedDict forKey:@"isFileInsertedDict"];
     
     [sharedDefaults synchronize];
-//        NSMutableArray* sharedAudioNamesArray=[NSMutableArray new];
-//        
-//        sharedAudioNamesArray=[sharedDefaults objectForKey:@"audioNamesArray"];
-//        
-//        int insertedFileCount = [[Database shareddatabase] getImportedFileCount];
-//        
-//        if (insertedFileCount<sharedAudioNamesArray.count)
-//        {
-//            //long unInsertedFileCount=sharedAudioNamesArray.count-insertedFileCount;
-//            [self convertToWav:insertedFileCount];
-//            //[self setCompressAudio:insertedFileCount];
-//            [self saveAudioRecordToDatabase:insertedFileCount];
-//            
-//        }
+//
+   // [[Database shareddatabase] getlistOfimportedFilesAudioDetailsArray:5];
     
-        //NSMutableDictionary* updatedFileDict=[NSMutableDictionary new];
-//        NSMutableDictionary* updatedFileDict=[sharedDefaults objectForKey:@"updatedFileDict"];
-//        
-//        NSMutableDictionary* dateAndFileNAmeDict=[sharedDefaults objectForKey:@"audioNamesAndDateDict"];
-//        for (NSString* updatedFileNAme in [updatedFileDict allKeys])
-//        {
-//            NSString* updatedValue= [updatedFileDict objectForKey:updatedFileNAme];
-//            
-//            if ([updatedValue isEqualToString:@"YES"])
-//            {
-//                NSLog(@"%@",updatedFileNAme);
-//                
-//                NSString* updatedDate = [dateAndFileNAmeDict objectForKey:updatedFileNAme];
-//                
-//                NSString* fileNameForDatabase=[updatedFileNAme stringByDeletingPathExtension];
-//                
-//                [[Database shareddatabase] updateAudioFileDeleteStatus:@"NoDelete" fileName:fileNameForDatabase updatedDated:updatedDate];
-//                
-//                [self convertToWav:insertedFileCount];
-//                
-//                [self setCompressAudioFileName:updatedFileNAme];
-//                
-//            }
-//        }
-//        
-        [[Database shareddatabase] getlistOfimportedFilesAudioDetailsArray:5];
-        
+    
         //                                [self dismissViewControllerAnimated:YES completion:nil];
         
   //  });
@@ -533,51 +533,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 
 
-//-(void)setCompressAudio:(int)insertedFileCount
-//{
-//    NSMutableArray* audioNamesArray=[NSMutableArray new];
-//    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
-//    
-//    audioNamesArray=[sharedDefaults objectForKey:@"audioNamesArray"];
-//    for (long i=0+insertedFileCount; i<audioNamesArray.count; i++)
-//    {
-//        
-//        NSString* audioFolderPath=[sharedDefaults objectForKey:@"audioFolderPath"];
-//        
-//        NSLog(@"%d",[sharedDefaults boolForKey:@"is"]);
-//        
-//        NSString* audioFileNameString=[audioNamesArray objectAtIndex:i];
-//        
-//        NSString* audioFileNameForDestination= [NSString stringWithFormat:@"Copied%@",audioFileNameString];
-//        
-//        NSURL* newurl=[NSURL URLWithString:audioFolderPath];
-//        
-//        audioFilePath=[newurl.path stringByAppendingPathComponent:audioFileNameString];
-//        
-//        //        NSError* error12;
-//        //        bool copied=   [[NSFileManager defaultManager] copyItemAtPath:audioFilePath toPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/copied.wav",AUDIO_FILES_FOLDER_NAME]] error:&error12];
-//        NSString* audioFilePathForDestination=[newurl.path stringByAppendingPathComponent:audioFileNameForDestination];
-//        
-//        destinationFilePath= [NSString stringWithFormat:@"%@",audioFilePathForDestination];
-//        //destinationFilePath = [[NSString alloc] initWithFormat: @"%@/output.caf", documentsDirectory];
-//        destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)destinationFilePath, kCFURLPOSIXPathStyle, false);
-//        sourceURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)audioFilePath, kCFURLPOSIXPathStyle, false);
-//        NSError* error;
-//        
-//        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAudioProcessing error:&error];
-//        
-//        if (error)
-//        {
-//            printf("Setting the AVAudioSessionCategoryAudioProcessing Category failed! %ld\n", (long)error.code);
-//            
-//            return;
-//        }
-//        
-//        
-//        
-//        [self convertAudio];
-//    }
-//}
 
 -(void)setCompressAudioFileName:(NSString*)audioFileNameString
 {
@@ -682,169 +637,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 }
 
-//- (bool)convertAudio
-//{
-//    //    outputFormat = kAudioFormatLinearPCM;
-//    outputFormat = kAudioFormatLinearPCM;
-//
-//    sampleRate = 8000.0;
-//    //sampleRate = 0;
-//    
-//    OSStatus error = DoConvertFile(sourceURL, destinationURL, outputFormat, sampleRate);
-//    NSError* error1;
-//    
-//    if (error) {
-//        // delete output file if it exists since an error was returned during the conversion process
-//        //        if ([[NSFileManager defaultManager] fileExistsAtPath:destinationFilePath]) {
-//        //            [[NSFileManager defaultManager] removeItemAtPath:destinationFilePath error:nil];
-//        //        }
-//        //        NSString* destinationPath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
-//        //        [[NSFileManager defaultManager] moveItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:destinationPath error:&error1];
-//        //        printf("DoConvertFile failed! %d\n", (int)error);
-//        //        [self hideHud];
-//        
-//        return false;
-//    }
-//    else
-//    {
-//        NSLog(@"Converted");
-//        
-//        NSError* error;
-//        
-//        NSString* folderPath=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:AUDIO_FILES_FOLDER_NAME]];
-//        
-//        if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
-//            [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
-//        
-//        NSString* homeDirectoryFileName=[audioFilePath lastPathComponent];//store on same name as shared file name
-//        
-//        // [[NSFileManager defaultManager] moveItemAtPath:destinationFilePath toPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,@"compressed"]] error:&error1];
-//        if ([[NSFileManager defaultManager] fileExistsAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]]])
-//        {
-//            [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]] error:nil];
-//        }
-//        
-//        bool copied=   [[NSFileManager defaultManager] copyItemAtPath:destinationFilePath toPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,homeDirectoryFileName]] error:&error1];
-//        
-//        //        if ([[NSFileManager defaultManager] fileExistsAtPath:destinationFilePath])
-//        //        {
-//        //            [[NSFileManager defaultManager] removeItemAtPath:destinationFilePath error:&error];//remove temporary file which was used to store compression result
-//        //        }
-//        //        if ([[NSFileManager defaultManager] fileExistsAtPath:audioFilePath])
-//        //        {
-//        //            [[NSFileManager defaultManager] removeItemAtPath:audioFilePath error:&error];//remove file stored at shared storage(i.e. in path extension)
-//        //        }
-//        
-//        NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
-//        
-//        
-//        NSDictionary* copyDict=[sharedDefaults objectForKey:@"updatedFileDict"];
-//        
-//        NSMutableDictionary* updatedFileDict=[copyDict mutableCopy];
-//        
-//        [updatedFileDict setObject:@"NO" forKey:homeDirectoryFileName];
-//        
-//        [sharedDefaults setObject:updatedFileDict forKey:@"updatedFileDict"];
-//        
-//        [sharedDefaults synchronize];
-//        
-//        return true;
-//    }
-//    
-//}
-//
 
-//-(void)saveAudioRecordToDatabase:(long) insertedFileCount
-//{
-//    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
-//    
-//    NSMutableArray* sharedAudioNamesArray=[NSMutableArray new];
-//    
-//    NSMutableDictionary* sharedAudioNamesAndDateDict=[NSMutableDictionary new];
-//    
-//    sharedAudioNamesArray=[sharedDefaults objectForKey:@"audioNamesArray"];
-//    
-//    sharedAudioNamesAndDateDict=[sharedDefaults objectForKey:@"audioNamesAndDateDict"];
-//    
-//    NSLog(@"%ld",sharedAudioNamesAndDateDict.count);
-//    
-//    for (long i=0+insertedFileCount; i<sharedAudioNamesArray.count; i++)
-//    {
-//        NSString* originalFileName=[sharedAudioNamesArray objectAtIndex:i];
-//        
-//        
-//        fileName=[originalFileName stringByDeletingPathExtension];
-//        
-//        NSString* sharedAudioFilePathString= [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,fileName]];
-//        
-//        NSString* filePath=sharedAudioFilePathString;
-//        
-//        uint64_t freeSpaceUnsignLong= [[APIManager sharedManager] getFileSize:filePath];
-//        long fileSizeinKB=freeSpaceUnsignLong;
-//        
-//        [self prepareAudioPlayer:sharedAudioFilePathString];//initiate audio player with current recording to get currentAudioDuration
-//        
-//        
-//        NSMutableDictionary* dateAndFileNAmeDict=[sharedDefaults objectForKey:@"audioNamesAndDateDict"];
-//
-//        NSString* updatedDate = [dateAndFileNAmeDict objectForKey:originalFileName];
-//
-//        NSString* recordCreatedDateString=updatedDate;//recording createdDate
-//
-//        NSString* recordingDate=@"";//recording updated date
-//        
-//        int dictationStatus=5;
-//        
-//        int transferStatus=0;
-//        
-//        int deleteStatus=0;
-//        
-//        NSString* deleteDate=@"";
-//        
-//        NSString* transferDate=@"";
-//        
-//        NSString *currentDuration1=[NSString stringWithFormat:@"%f",player.duration];
-//        
-//        NSURL* fileURL=[NSURL URLWithString:[filePath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-//        
-//        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:fileURL
-//                                                    options:[NSDictionary dictionaryWithObjectsAndKeys:
-//                                                             [NSNumber numberWithBool:YES],
-//                                                             AVURLAssetPreferPreciseDurationAndTimingKey,
-//                                                             nil]];
-//        
-//        NSTimeInterval durationInSeconds = player.duration;
-//        
-//        if (asset)
-//            durationInSeconds = CMTimeGetSeconds(asset.duration) ;
-//        
-//        NSString* fileSize=[NSString stringWithFormat:@"%ld",fileSizeinKB];
-//        
-//        int newDataUpdate=5;
-//        
-//        int newDataSend=0;
-//        
-//        int mobileDictationIdVal;
-//        
-//        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-//        
-//        DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-//        
-//        NSString* departmentName=[[Database shareddatabase] getDepartMentIdFromDepartmentName:deptObj.departmentName];
-//        
-//        if (departmentName == NULL)
-//        {
-//            departmentName=@"0";
-//        }
-//        NSDictionary* audioRecordDetailsDict=[[NSDictionary alloc]initWithObjectsAndKeys:fileName,@"recordItemName",recordCreatedDateString,@"recordCreatedDate",recordingDate,@"recordingDate",transferDate,@"transferDate",[NSString stringWithFormat:@"%d",dictationStatus],@"dictationStatus",[NSString stringWithFormat:@"%d",transferStatus],@"transferStatus",[NSString stringWithFormat:@"%d",deleteStatus],@"deleteStatus",deleteDate,@"deleteDate",fileSize,@"fileSize",currentDuration1,@"currentDuration",[NSString stringWithFormat:@"%d",newDataUpdate],@"newDataUpdate",[NSString stringWithFormat:@"%d",newDataSend],@"newDataSend",[NSString stringWithFormat:@"%d",mobileDictationIdVal],@"mobileDictationIdVal",departmentName,@"departmentName",nil];
-//        
-//        [[Database shareddatabase] insertRecordingData:audioRecordDetailsDict];
-//        
-//    }
-//    
-//    
-//}
-//
 -(void)prepareAudioPlayer:(NSString*)filePath
 {
     
@@ -1057,6 +850,42 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     
 }
+
+//-(void) application:(UIApplication *)application
+//handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
+//{
+//    // You must re-establish a reference to the background session,
+//    // or NSURLSessionDownloadDelegate and NSURLSessionDelegate methods will not be called
+//    // as no delegate is attached to the session. See backgroundURLSession above.
+//    NSURLSession *backgroundSession = [self backgroundURLSession];
+//    
+//    NSLog(@"Rejoining session with identifier %@ %@", identifier, backgroundSession);
+//    
+//    // Store the completion handler to update your UI after processing session events
+//    [self addCompletionHandler:completionHandler forSession:identifier];
+//}
+
+
+
+//- (void)addCompletionHandler:(CompletionHandlerType)handler forSession:(NSString *)identifier
+//{
+//    if ([self.completionHandlerDictionary objectForKey:identifier]) {
+//        NSLog(@"Error: Got multiple handlers for a single session identifier. This should not happen.\n");
+//    }
+//    
+//    [self.completionHandlerDictionary setObject:handler forKey:identifier];
+//}
+//
+//- (void)callCompletionHandlerForSession: (NSString *)identifier
+//{
+//    CompletionHandlerType handler = [self.completionHandlerDictionary objectForKey: identifier];
+//    
+//    if (handler) {
+//        [self.completionHandlerDictionary removeObjectForKey: identifier];
+//        NSLog(@"Calling completion handler for session %@", identifier);
+//        handler();
+//    }
+//}
 
 
 @end

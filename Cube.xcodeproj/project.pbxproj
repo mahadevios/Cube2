@@ -21,6 +21,7 @@
 		8430D3DD1D4A1A7D005FCA33 /* TransferListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430D3DC1D4A1A7D005FCA33 /* TransferListViewController.m */; };
 		8430D3E01D4A32AB005FCA33 /* AudioDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430D3DF1D4A32AB005FCA33 /* AudioDetailsViewController.m */; };
 		843600F81D5C7198002A9395 /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 843600F71D5C7198002A9395 /* ChangePasswordViewController.m */; };
+		843C4E0F1E77ECF800586DE5 /* SharedSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C4E0E1E77ECF800586DE5 /* SharedSession.m */; };
 		844C4A731D4B393800CF3DB4 /* UserSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844C4A721D4B393800CF3DB4 /* UserSettingsViewController.m */; };
 		844C4A791D4B736700CF3DB4 /* SwitchCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 844C4A781D4B736700CF3DB4 /* SwitchCreation.m */; };
 		845A96781DDDEF9A007F460C /* NSData+AES256.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A96771DDDEF9A007F460C /* NSData+AES256.m */; };
@@ -45,7 +46,6 @@
 		8480AAFA1D787DD500473651 /* Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480AAF91D787DD500473651 /* Keychain.m */; };
 		849A20791E080F000004DDD2 /* BrowseMusicViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 849A20781E080F000004DDD2 /* BrowseMusicViewController.mm */; };
 		849A207B1E0811F40004DDD2 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849A207A1E0811F40004DDD2 /* MediaPlayer.framework */; };
-		849A207D1E082B7E0004DDD2 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849A207C1E082B7E0004DDD2 /* CloudKit.framework */; };
 		849F02671D75328000E74723 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 849F02661D75328000E74723 /* User.m */; };
 		849F02751D754B7400E74723 /* Cube_DB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 849F02741D754B7400E74723 /* Cube_DB.sqlite */; };
 		84AB68591D536961006F962D /* InCompleteDictationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AB68581D536961006F962D /* InCompleteDictationViewController.m */; };
@@ -136,6 +136,8 @@
 		8430D3DF1D4A32AB005FCA33 /* AudioDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioDetailsViewController.m; sourceTree = "<group>"; };
 		843600F61D5C7198002A9395 /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
 		843600F71D5C7198002A9395 /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
+		843C4E0D1E77ECF800586DE5 /* SharedSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedSession.h; sourceTree = "<group>"; };
+		843C4E0E1E77ECF800586DE5 /* SharedSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedSession.m; sourceTree = "<group>"; };
 		844C4A711D4B393800CF3DB4 /* UserSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSettingsViewController.h; sourceTree = "<group>"; };
 		844C4A721D4B393800CF3DB4 /* UserSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSettingsViewController.m; sourceTree = "<group>"; };
 		844C4A771D4B736700CF3DB4 /* SwitchCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchCreation.h; sourceTree = "<group>"; };
@@ -186,7 +188,6 @@
 		849A20771E080F000004DDD2 /* BrowseMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseMusicViewController.h; sourceTree = "<group>"; };
 		849A20781E080F000004DDD2 /* BrowseMusicViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BrowseMusicViewController.mm; sourceTree = "<group>"; };
 		849A207A1E0811F40004DDD2 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		849A207C1E082B7E0004DDD2 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		849F02651D75328000E74723 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		849F02661D75328000E74723 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		849F02741D754B7400E74723 /* Cube_DB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = Cube_DB.sqlite; path = ../../Cube_DB.sqlite; sourceTree = "<group>"; };
@@ -246,7 +247,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				849A207B1E0811F40004DDD2 /* MediaPlayer.framework in Frameworks */,
-				849A207D1E082B7E0004DDD2 /* CloudKit.framework in Frameworks */,
 				840AC7591D828A6100EF6AF7 /* AVFoundation.framework in Frameworks */,
 				847D95CB1D5F325600145C32 /* libsqlite3.0.tbd in Frameworks */,
 			);
@@ -481,7 +481,6 @@
 		84EACD9A1E03FA64002C43BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				849A207C1E082B7E0004DDD2 /* CloudKit.framework */,
 				849A207A1E0811F40004DDD2 /* MediaPlayer.framework */,
 				84EACDA11E040CE2002C43BE /* iTunesLibrary */,
 				84EACD9D1E03FF65002C43BE /* iTunesLibrary.framework */,
@@ -558,6 +557,8 @@
 			children = (
 				847D95931D5F14DC00145C32 /* AppPreferences.h */,
 				847D95941D5F14DC00145C32 /* AppPreferences.m */,
+				843C4E0D1E77ECF800586DE5 /* SharedSession.h */,
+				843C4E0E1E77ECF800586DE5 /* SharedSession.m */,
 				847D95961D5F150200145C32 /* APIManager.h */,
 				847D95971D5F150200145C32 /* APIManager.m */,
 				847D95981D5F150200145C32 /* DownloadMetaDataJob.h */,
@@ -661,6 +662,9 @@
 							com.apple.InterAppAudio = {
 								enabled = 0;
 							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 						};
 					};
 					8472223D1D47368A00C00F20 = {
@@ -684,7 +688,7 @@
 								enabled = 0;
 							};
 							com.apple.iCloud = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -789,6 +793,7 @@
 				84CC5F791D747B8200D1E982 /* PinRegistrationViewController.m in Sources */,
 				84D0B5281D81B4D70084E016 /* SBJson4Parser.m in Sources */,
 				84B87BD11D770D1D002B91FB /* SplashScreenViewController.m in Sources */,
+				843C4E0F1E77ECF800586DE5 /* SharedSession.m in Sources */,
 				84D0B5291D81B4D70084E016 /* SBJson4StreamParser.m in Sources */,
 				847222461D47368A00C00F20 /* AppDelegate.mm in Sources */,
 				84D0B52A1D81B4D70084E016 /* SBJson4StreamParserState.m in Sources */,

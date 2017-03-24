@@ -133,7 +133,7 @@
     if (self.listSelected==1)
     {
         
-        alertController = [UIAlertController alertControllerWithTitle:@"File not exist"
+        alertController = [UIAlertController alertControllerWithTitle:@"File does not exist"
                                                               message:@""
                                                        preferredStyle:UIAlertControllerStyleAlert];
         
@@ -198,7 +198,7 @@
     {
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];
     }
-    [UIApplication sharedApplication].idleTimerDisabled = NO;
+ //   [UIApplication sharedApplication].idleTimerDisabled = NO;
 
 }
 -(void)playOrPauseButtonPressed
@@ -208,7 +208,7 @@
     {
         pauseOrImageView.image=[UIImage imageNamed:@"Play"] ;
         [player pause];
-        [UIApplication sharedApplication].idleTimerDisabled = NO;
+      //  [UIApplication sharedApplication].idleTimerDisabled = NO;
 
     }
     else
