@@ -65,6 +65,13 @@
     bool composed;
     bool isRecording;
     UIView* circleView;
+    
+    BOOL edited;
+    NSString* editType;
+    NSTimer* sliderTimer;
+//    UIButton* uploadLaterButton;
+//    UIButton* recordNewButton;
+//    UIView* animatedView;
 }
 @property (nonatomic)     AVAudioPlayer       *player;
 @property (nonatomic)     AVAudioRecorder     *recorder;
@@ -75,6 +82,12 @@
 
 @property (nonatomic,strong)     NSURL               *recordedAudioURL;
 @property (nonatomic,strong)     NSURL               *playerAudioURL;
+//@property (nonatomic,strong)         UIButton* uploadAudioButton;
+//@property (nonatomic,strong)         UIButton* recordNewButton;
+//@property (nonatomic,strong)         UIView* animatedView;
+//@property (nonatomic,strong)         UIButton* uploadLaterButton;
+
+
 
 @property (nonatomic)     NSString            *recordCreatedDateString;
 @property(nonatomic) NSString* audioDuration;
@@ -91,4 +104,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *stopNewImageView;
 @property (weak, nonatomic) IBOutlet UILabel *stopLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *animatedImageView;
+- (IBAction)editAudioButtonClicked:(id)sender;
 @end

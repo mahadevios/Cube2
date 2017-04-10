@@ -1779,6 +1779,9 @@ static Database *db;
 
 
 }
+
+
+
 -(int)getTransferStatus:(NSString*)fileName
 {
     Database *db=[Database shareddatabase];

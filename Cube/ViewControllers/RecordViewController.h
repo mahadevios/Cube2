@@ -71,7 +71,7 @@
     BOOL paused;
     BOOL stopped;
     BOOL recordingNew;
-
+    BOOL edited;
     UIBackgroundTaskIdentifier task;
     
     
@@ -81,6 +81,9 @@
 
     long todaysSerialNumberCount;
 
+    NSTimer* sliderTimer;
+    
+    NSString* editType;
 }
 @property (nonatomic,strong)     AVAudioPlayer       *player;
 @property (nonatomic,strong)     AVAudioRecorder     *recorder;
@@ -98,5 +101,6 @@
 - (IBAction)stopRecordingButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *stopLabel;
 @property (weak, nonatomic) IBOutlet UILabel *recordLAbel;
+- (IBAction)editAudioButtonPressed:(id)sender;
 
 @end

@@ -19,6 +19,8 @@
 //** background session cancelled http://stackoverflow.com/questions/20159471/ios-does-force-quitting-the-app-disables-background-upload-using-nsurlsession?rq=1
 
 // resume upload https://forums.developer.apple.com/thread/10239
+
+//audio trim http://stackoverflow.com/questions/30321791/how-to-trim-music-library-file-and-save-it-document-directry
 //  ViewController.m
 //  Cube
 //
