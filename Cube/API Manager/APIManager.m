@@ -581,10 +581,10 @@ static APIManager *singleton = nil;
        // [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
         [dataTask cancel];
     }
-    else
-    {
-        [dataTask cancel];
-    }
+//    else
+//    {
+//        [dataTask cancel];
+//    }
     
   //  NSMutableData *responseData = self.responsesData[@(task.taskIdentifier)];
     

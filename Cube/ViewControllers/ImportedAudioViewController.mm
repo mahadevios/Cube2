@@ -452,13 +452,21 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     
-    int audioMinutes= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]/60;
+    //int audioMinutes= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]/60;
     
-    int audioSeconds= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]%60;
+    //int audioSeconds= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]%60;
     
     departmentNameLabel.text=[[awaitingFileTransferDict valueForKey:@"RecordItemName"] stringByDeletingPathExtension];
     
-    recordingDurationLabel.text=[NSString stringWithFormat:@"%02d:%02d",audioMinutes,audioSeconds];
+    int audioHour= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]/(60*60);
+    int audioHourByMod= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]%(60*60);
+    
+    int audioMinutes = audioHourByMod / 60;
+    int audioSeconds = audioHourByMod % 60;
+    
+    recordingDurationLabel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];
+
+    //recordingDurationLabel.text=[NSString stringWithFormat:@"%02d:%02d",audioMinutes,audioSeconds];
     
     nameLabel.text=[awaitingFileTransferDict valueForKey:@"Department"];
     

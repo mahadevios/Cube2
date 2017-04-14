@@ -86,22 +86,22 @@
     NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
     
    
-     [self needsUpdate];
     if ([[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE]== NULL)//for first time to check files to be purge are available or not
     {
-       // [self needsUpdate];
+        [self needsUpdate];
         [self deleteDictation];
     }
     else
     if (!([[[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE] isEqualToString:todaysDate]))// this wil be 2nd day after pressing later or pressing delete
     {
-      //   [self needsUpdate];
+         [self needsUpdate];
         [self deleteDictation];
        // [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];
 
 
     }
     NSLog(@"%@",NSHomeDirectory());
+    // [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms://itunes.com/apps/CubeDictate"]];
   //  [[Database shareddatabase] updateAudioFileName];
 
  //   [[NSUserDefaults standardUserDefaults] setValue:NULL forKey:PURGE_DATA_DATE];

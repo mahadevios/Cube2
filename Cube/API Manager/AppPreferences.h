@@ -31,6 +31,8 @@
 @property (nonatomic)    int                                selectedTabBarIndex;
 @property (nonatomic,assign)    BOOL                        isRecordView;
 @property (nonatomic,assign)    BOOL                        fileUploading;
+@property (nonatomic,assign)    BOOL                        dismissAudioDetails;
+
 @property (nonatomic,strong) NSMutableArray*                importedFilesAudioDetailsArray;
 @property (nonatomic,strong) NSMutableDictionary*                  fileNameSessionIdentifierDict;
 

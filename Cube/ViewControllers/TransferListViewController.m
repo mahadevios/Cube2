@@ -19,24 +19,26 @@
 
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
         {
-         UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
+            UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
                                           initWithTarget:self action:@selector(handleLongPress:)];
-         lpgr.minimumPressDuration = 1.0; //seconds
-         lpgr.delegate = self;
-         [self.tableView addGestureRecognizer:lpgr];
-          self.checkedIndexPath = [[NSMutableArray alloc] init];
-            
+            lpgr.minimumPressDuration = 1.0; //seconds
+         
+            lpgr.delegate = self;
+         
+            [self.tableView addGestureRecognizer:lpgr];
+          
+            self.checkedIndexPath = [[NSMutableArray alloc] init];
             
         }
     
     arrayOfMarked=[[NSMutableArray alloc]init];
+    
     progressIndexPathArray=[[NSMutableArray alloc]init];
-   // progressIndexPathArrayCopy=[[NSMutableArray alloc]init];
 
     indexPathFileNameDict= [NSMutableDictionary new];
     
@@ -47,11 +49,14 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
     self.navigationItem.title=self.currentViewName;
+    
     if ([self.currentViewName isEqualToString:@"Today's Transferred"])
     {
         self.navigationItem.title=@"Transferred Today";
     }
+    
     if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
     {
         [self setTimer];
@@ -62,13 +67,13 @@
     self.navigationItem.rightBarButtonItem = nil;
 
     APIManager* app=[APIManager sharedManager];
+    
     app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
+    
     app.todaysFileTransferNamesArray=[[NSMutableArray alloc]init];
+    
     app.failedTransferNamesArray=[[NSMutableArray alloc]init];
     
-    
-  //  [UIApplication sharedApplication].idleTimerDisabled = NO;
-
     [self.tableView reloadData];
     
     [self.tabBarController.tabBar setHidden:YES];
@@ -83,39 +88,36 @@
 {
 
     progressTimer =  [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(updateProgresCount) userInfo:nil repeats:YES];
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self.checkedIndexPath removeAllObjects];
+    
     [arrayOfMarked removeAllObjects];
+    
     isMultipleFilesActivated=NO;
+    
     toolBarAdded=NO;
     
     [progressTimer invalidate];
+    
 }
 -(void)validateFileUploadResponse:(NSNotification*)obj
 {
+    
     [progressTimer invalidate];
-    //NSString* fileName =  obj.object;
     
-    // [progressTimer invalidate];
-    //NSIndexPath* indexPath = [indexPathFileNameDict objectForKey:fileName];
-   
-    //[progressIndexPathArrayCopy removeAllObjects];
-
-    //[self setTimer];
-   // APIManager* api = [APIManager sharedManager];
-  //  [APIManager sharedManager].awaitingFileTransferNamesArray= [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"];
+    [progressIndexPathArray removeAllObjects];
     
-     [progressIndexPathArray removeAllObjects];
     [self.checkedIndexPath removeAllObjects];
+    
     [arrayOfMarked removeAllObjects];
+    
     isMultipleFilesActivated=NO;
+    
     [self hideAndShowUploadButton:NO];
-    
-    
-    //[self.tableView beginUpdates];
     
     [self.tableView reloadData];//to update table agter getting file trnasfer response
     
@@ -124,18 +126,16 @@
 }
 -(void)updateProgresCount
 {
-       // [self.tableView beginUpdates];
-        if (progressIndexPathArray.count>0)
+
+    if (progressIndexPathArray.count>0)
     {
-       // [self.tableView beginUpdates];
+        
         [APIManager sharedManager].awaitingFileTransferNamesArray= [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"] ;
 
         [self.tableView reloadRowsAtIndexPaths:progressIndexPathArray withRowAnimation:UITableViewRowAnimationNone];
-        //[self.tableView endUpdates];
+
     }
-      //  [self.tableView endUpdates];
     
-    // [self.tableView reloadData];
     
 }
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
@@ -144,23 +144,32 @@
     {
    
         isMultipleFilesActivated = YES;
+        
         APIManager* app=[APIManager sharedManager];
+        
         CGPoint p = [gestureRecognizer locationInView:self.tableView];
+        
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+        
         UITableViewCell* cell=[self.tableView cellForRowAtIndexPath:indexPath];
+        
         UILabel* deleteStatusLabel=[cell viewWithTag:105];
     
     
         if (cell.accessoryType == UITableViewCellAccessoryNone && (![deleteStatusLabel.text containsString:@"Uploading"]))
         {
             NSDictionary* awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
+            
             NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
 
             [self.checkedIndexPath addObject:fileName];
+            
             [arrayOfMarked addObject:indexPath];
+            
             [self hideAndShowUploadButton:YES];
-            //[self hideAndShowLeftBarButton:YES];
+            
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            
             longPressAdded=YES;
         }
         
