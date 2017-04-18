@@ -1,3 +1,4 @@
+
 //
 //  Database.m
 //  DbExample
@@ -105,7 +106,8 @@ static Database *db;
 -(void)insertTaskIdentifier:(NSString*)taskIdentifier fileName:(NSString*)fileName
 {
         NSString *query3=[NSString stringWithFormat:@"INSERT OR REPLACE INTO TaskIdentifier values(\"%@\",\"%@\")",taskIdentifier,fileName];
-        
+    //NSString *query3=[NSString stringWithFormat:@"Delete from TaskIdentifier Where TASKID like '%%%@%%'",@"Xanadutec"];
+
         Database *db=[Database shareddatabase];
         NSString *dbPath=[db getDatabasePath];
         sqlite3_stmt *statement;

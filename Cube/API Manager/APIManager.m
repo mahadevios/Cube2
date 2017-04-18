@@ -499,18 +499,52 @@ static APIManager *singleton = nil;
                                                    NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
                                                   
                                                   [db updateAudioFileUploadedStatus:@"Transferred" fileName:fileName dateAndTime:date mobiledictationidval:[idvalString longLongValue]];
+                                                  
                                                   [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUploaded" fileName:fileName];
 
-                                                 [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
                                                   
                                                   [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
                                                   
-                                                  [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
-                                                  // NSLog(@"%@",[NSString stringWithFormat:@"%@ uploaded successfully",str]);
+                                                  if (fileName != nil)
+                                                  {
+                                                      [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
+                                                      // NSLog(@"%@",[NSString stringWithFormat:@"%@ uploaded successfully",str]);
+                                                      
+                                                      [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:[NSString stringWithFormat:@"%@ uploaded successfully",fileName] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                                                  }
                                                   
-                                                  [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:[NSString stringWithFormat:@"%@ uploaded successfully",fileName] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                                                 
+                                                  
+                                                  [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
                                                   
                                                   
+                                                  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                                      
+                                                      if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+                                                      {
+                                                          [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+                                                          
+                                                          NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+                                                          
+                                                          [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+                                                          
+                                                          [self uploadFileToServer:nextFileToBeUpload];
+                                                          
+                                                          
+                                                          
+                                                          NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);
+                                                          
+                                                      }
+                                                      else
+                                                      {
+                                                       [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+                                                      }
+                                                      
+
+                                                      
+                                                  });
+                                                  
+                                                 
                                               });
                                
                               
@@ -563,45 +597,34 @@ static APIManager *singleton = nil;
         
         NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)dataTask.taskIdentifier]];
         
-      //  [dataTask resume];
-//        
-//        NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
-//        NSLog(@"%@ failed: %@", dataTask.originalRequest.URL, error);
-//        
-//        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-//        
-//        [[Database shareddatabase] updateAudioFileUploadedStatus:@"TransferFailed" fileName:fileName dateAndTime:@"" mobiledictationidval:0];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:nil];
-//        
-//        NSLog(@"%@",fileName);
-//        
-//        NSLog(@"%@",result);
-//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:[NSString stringWithFormat:@"%@ uploading failed",fileName] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
         
-       // [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
-        [dataTask cancel];
-    }
-//    else
-//    {
-//        [dataTask cancel];
-//    }
-    
-  //  NSMutableData *responseData = self.responsesData[@(task.taskIdentifier)];
-    
-//    if (responseData) {
-//        // my response is JSON; I don't know what yours is, though this handles both
+        if (error.code == -997)
+        {
+//            //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                
+//                [dataTask cancel];
+//                
+//                //dispatch_async(dispatch_get_main_queue(), ^{
+//                
+//                    NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
 //
-//        NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
-//        if (response) {
-//            NSLog(@"response = %@", response);
-//        } else {
-//            NSLog(@"responseData = %@", [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
-//        }
-//        
-//        [self.responsesData removeObjectForKey:@(task.taskIdentifier)];
-//    } else {
-//        NSLog(@"responseData is nil");
-//    }
+//                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+//                    {
+//                        [self uploadFileToServer:fileName];
+// 
+//                    });
+//                //});
+//
+//                //[UIApplication sharedApplication].idleTimerDisabled = YES;
+//           // });
+        
+        }
+    }
+    else
+    {
+        //[dataTask cancel];
+    }
+    
 }
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
@@ -634,6 +657,8 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     NSString* progressShow= [NSString stringWithFormat:@"%@%%",progressPercent];
     
     NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)task.taskIdentifier]];
+    
+    
     
     NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
     
@@ -762,22 +787,9 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     request.HTTPBody = httpBody;
     
+    session = [SharedSession getSharedSession:self];
         
-//***********************
-//            NSURLSessionConfiguration * backgroundConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"hello"];
-//       
-//        NSURLSession *session = [NSURLSession sessionWithConfiguration:backgroundConfig delegate:self delegateQueue:nil];
-        
-                                   //NSLog(@"Reachable");
-                           session = [SharedSession getSharedSession:self];
-        
-       // backgroundConfig setide
-        
-//        self.responsesData = nil;
-//        self.responsesData = [NSMutableDictionary new];
-//        [self.responsesData setValue:str forKey:[NSString stringWithFormat:@"%lu",(unsigned long)[AppPreferences sharedAppPreferences].uploadTask.taskIdentifier]];
 //
-//        
         [request setHTTPMethod:@"POST"];
         
        // [APIManager sharedManager].uploadTask = [session uploadTaskWithRequest:request fromData:nil];
@@ -821,7 +833,16 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 -(void)uploadFileToServer:str
 {
   //  filnameString = str;
-    [self uploadFileToServerUsingNSURLSession:str];
+    if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<3)
+    {
+        [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:str];
+        [self uploadFileToServerUsingNSURLSession:str];
+
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:str];
+    }
     //[self uploadFileToServerUsingNSURLConnection:str];
 
 }

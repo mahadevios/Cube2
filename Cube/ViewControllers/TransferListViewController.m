@@ -87,7 +87,7 @@
 -(void)setTimer
 {
 
-    progressTimer =  [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(updateProgresCount) userInfo:nil repeats:YES];
+    progressTimer =  [NSTimer scheduledTimerWithTimeInterval:0.7 target:self selector:@selector(updateProgresCount) userInfo:nil repeats:YES];
 
 }
 
@@ -121,7 +121,11 @@
     
     [self.tableView reloadData];//to update table agter getting file trnasfer response
     
-    [self setTimer];
+    
+    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
+    {
+        [self setTimer];
+    }
     //[self.tableView endUpdates];
 }
 -(void)updateProgresCount

@@ -1774,9 +1774,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                         [[self.view viewWithTag:702] setHidden:YES];
                         [[self.view viewWithTag:703] setHidden:YES];//edit button and image
                         [[self.view viewWithTag:704] setHidden:YES];
+                        [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:self.recordedAudioFileName];
+
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                             
-                            [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:self.recordedAudioFileName];
                             
                             [app uploadFileToServer:self.recordedAudioFileName];
                             [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
@@ -2770,7 +2771,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     CMTime time1 =   CMTimeMake(totalTrackDuration, 1);
     
     CMTimeRange timeRange = CMTimeRangeMake(time, time1);
-    
+    //insertInBetween
     if (![editType isEqualToString:@"insertInBetween"])
     {
         [appendedAudioTrack removeTimeRange:timeRange];

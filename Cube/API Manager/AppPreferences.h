@@ -34,7 +34,12 @@
 @property (nonatomic,assign)    BOOL                        dismissAudioDetails;
 
 @property (nonatomic,strong) NSMutableArray*                importedFilesAudioDetailsArray;
-@property (nonatomic,strong) NSMutableDictionary*                  fileNameSessionIdentifierDict;
+@property (nonatomic,strong) NSMutableDictionary*           fileNameSessionIdentifierDict;
+
+@property (nonatomic,strong) NSMutableArray*           filesInUploadingQueueArray;
+@property (nonatomic,strong) NSMutableArray*           filesInAwaitingQueueArray;
+
+
 
 @property (nonatomic, strong) User *userObj;
 //@property(nonatomic,strong)NSURLSessionUploadTask *uploadTask;

@@ -24,7 +24,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
+//    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
     db=[Database shareddatabase];
 
     // Do any additional setup after loading the view.

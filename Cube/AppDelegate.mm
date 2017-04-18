@@ -44,7 +44,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [[AppPreferences sharedAppPreferences] startReachabilityNotifier];
     [APIManager sharedManager].userSettingsOpened=NO;
-    
+    [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray = [[NSMutableArray alloc] init];
+    [AppPreferences sharedAppPreferences].filesInUploadingQueueArray = [[NSMutableArray alloc] init];
+
 //    NSURLSession* session = [SharedSession getSharedSession:[APIManager sharedManager]];
 
     //[[Database shareddatabase] updateDemo:@"MOB-495617757209"];

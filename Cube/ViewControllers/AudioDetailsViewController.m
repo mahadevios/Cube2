@@ -642,11 +642,17 @@
                             
                             [deleteDictationButton setHidden:YES];
                             
-                            [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
                             
-                            int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
+                                               //NSLog(@"Reachable");
+                                               [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+                                               int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
+                                               
+                                               [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                                               
+                                           
                             
-                            [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                            
+                            
                             
                             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                 
@@ -698,22 +704,24 @@
                         [transferDictationButton setHidden:YES];
                         
                         [deleteDictationButton setHidden:YES];
+                        
+                    
                        
-                        [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
                         
                         if ([AppPreferences sharedAppPreferences].isReachable)
                         {
                             [AppPreferences sharedAppPreferences].fileUploading=YES;
                         }
                         
-                        dispatch_async(dispatch_get_main_queue(), ^
-                        {
+                        
+                            [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+
                             [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:801] removeFromSuperview];//remove uploading buuton
                            
                             [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:802] removeFromSuperview];//remove delete button
                             
                             [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:803] removeFromSuperview];//remove edit button
-                        });
+                        
 
                        
                         
@@ -765,11 +773,14 @@
                                     
                                     [deleteDictationButton setHidden:YES];
                                     
-                                    [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
                                     
-                                    int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
+                                                       [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+                                                       
+                                                       int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
+                                                       
+                                                       [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
                                     
-                                    [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                                    
                                     
                                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                         
@@ -809,24 +820,28 @@
                                 NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
                                 
                                 NSString* date=[app getDateAndTimeString];
-
-                                [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:801] removeFromSuperview];//remove uploading buuton
-                                [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:802] removeFromSuperview];//remove delete button
                                 
-                                [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:803] removeFromSuperview];//remove edit button
+                                                   [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:801] removeFromSuperview];//remove uploading buuton
+                                                   [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:802] removeFromSuperview];//remove delete button
+                                                   
+                                                   [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:803] removeFromSuperview];//remove edit button
+                                                   
+                                                   [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+                                                   
+                                                   NSString* transferStatus=[audiorecordDict valueForKey:@"TransferStatus"];
+                                                   
+                                                   if ([transferStatus isEqualToString:@"Transferred"])
+                                                   {
+                                                       int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
+                                                       
+                                                       [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                                                   }
+
+
+                               
                                 
                                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                     
-                                    [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
-                                    
-                                    NSString* transferStatus=[audiorecordDict valueForKey:@"TransferStatus"];
-                                    
-                                    if ([transferStatus isEqualToString:@"Transferred"])
-                                    {
-                                        int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
-                                        
-                                        [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
-                                    }
                                     
                                     if ([AppPreferences sharedAppPreferences].isReachable)
                                     {
