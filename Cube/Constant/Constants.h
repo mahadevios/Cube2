@@ -56,6 +56,9 @@
 #define NOTIFICATION_PAUSE_AUDIO_PALYER             @"pausePlayer"
 #define NOTIFICATION_DELETE_RECORDING               @"deleteRecording"
 #define NOTIFICATION_SAVE_RECORDING                 @"saveRecording"
+#define NOTIFICATION_FILE_IMPORTED                  @"fileImportingCompleted"
+#define NOTIFICATION_UPLOAD_NEXT_FILE               @"uploadNextFile"
+
 //Settimg Constants
 
 #define SAVE_DICTATION_WAITING_SETTING         @"Save dictation waiting by"

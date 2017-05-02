@@ -126,7 +126,8 @@ static Database *db;
             }
             else
             {
-                 NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+                //[[Database shareddatabase] insertTaskIdentifier:taskIdentifier fileName:fileName];
+                 NSLog(@"error while inserting task id:%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
             }
         }
         else
@@ -734,6 +735,8 @@ static Database *db;
                 else
                     //NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
                 {}
+                
+                
                 dict=[NSMutableDictionary dictionaryWithObjectsAndKeys:RecordItemName,@"RecordItemName",RecordCreatedDate,@"RecordCreatedDate",Department,@"Department",TransferStatus,@"TransferStatus",CurrentDuration,@"CurrentDuration",transferDate,@"TransferDate",deleteStatus,@"DeleteStatus",dictationStatus,@"DictationStatus",nil];
                 [listArray addObject:dict];
             }
@@ -1959,7 +1962,7 @@ static Database *db;
     NSString *TransferStatus,*CurrentDuration,*transferDate,*deleteStatus,*dictationStatus,* recordItemName,*recordCreateDate,*Department;
     NSMutableDictionary* dict=[[NSMutableDictionary alloc]init];
     app.importedFilesAudioDetailsArray=[[NSMutableArray alloc]init];
-    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where NewDataUpdate=%d and TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and DeleteStatus=0 and DictationStatus !=(Select Id from DictationStatus Where RecordingStatus='%@')",newDataUpdate,@"NotTransferred",@"RecordingFileUpload"];
+    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where NewDataUpdate=%d and TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and DeleteStatus=0 and (DictationStatus !=(Select Id from DictationStatus Where RecordingStatus='%@') and DictationStatus !=(Select Id from DictationStatus Where RecordingStatus='%@'))",newDataUpdate,@"NotTransferred",@"RecordingFileUpload",@"RecordingPause"];
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
@@ -2080,7 +2083,7 @@ static Database *db;
         }
         else
         {
-            //NSLog(@"Can't preapre query due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+            NSLog(@"Can't preapre query due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
         }
     }
     else
@@ -2336,6 +2339,9 @@ static Database *db;
                 //NSLog(@"statement is finalized");
             }
             else
+            {
+             
+            }
                 // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
                 
                 

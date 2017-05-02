@@ -48,6 +48,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [AppPreferences sharedAppPreferences].filesInUploadingQueueArray = [[NSMutableArray alloc] init];
 
 //    NSURLSession* session = [SharedSession getSharedSession:[APIManager sharedManager]];
+   // [[SharedSession getSharedSession:[APIManager sharedManager]] finishTasksAndInvalidate];
+  //  [SharedSession getSharedSession:[APIManager sharedManager]];
 
     //[[Database shareddatabase] updateDemo:@"MOB-495617757209"];
 
@@ -81,7 +83,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     // [[NSUserDefaults standardUserDefaults] setValue:NULL forKey:PURGE_DELETED_DATA];
     if ([[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DELETED_DATA]== NULL)
     {
-        [[NSUserDefaults standardUserDefaults] setValue:@"1 day" forKey:PURGE_DELETED_DATA];
+        [[NSUserDefaults standardUserDefaults] setValue:@"15 days" forKey:PURGE_DELETED_DATA];
          [[Database shareddatabase] addDictationStatus:@"RecordingFileUploaded"];
         [[Database shareddatabase] updateUploadingStuckedStatus];// to resolve the previous build bug
         [[Database shareddatabase] createFileNameidentifierRelationshipTable];
@@ -147,7 +149,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        [self getImportedFiles];
+        if (![AppPreferences sharedAppPreferences].isImporting)
+        {
+            [self getImportedFiles];
+
+        }
+        
     });
 //    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
 //    {
@@ -170,11 +177,49 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //
 //    }
    // [[SharedSession sharedSession] finishTasksAndInvalidate];
+    [self cancelTasks];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNextFile) name:NOTIFICATION_UPLOAD_NEXT_FILE object:nil];
+
 
        return YES;
 }
 
+-(void)uploadNextFile
+{
+//    dispatch_async(dispatch_get_main_queue(), ^
+//                   {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
+            if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+            {
+    
+    
+                                NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+    
+                                [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+    
+                                [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload];
+    
+    
+    
+                NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);
+    
+            }
+            else
+            {
+            }
+            
+            
+            
+        });
+                  // });
+}
 
+-(void)uploadLate
+{
+ 
+}
 - (void) checkAndCopyDatabase
 {
     NSString *destpath=[NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Cube_DB.sqlite"];
@@ -231,7 +276,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if([AppPreferences sharedAppPreferences].userObj!=nil)
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLoadedFirstTime"];
     
-   // [[AppPreferences sharedAppPreferences].uploadTask suspend];
+//[SharedSession getSharedSession:[APIManager sharedManager]].
 
 }
 
@@ -251,9 +296,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
   //  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:APPLICATION_TERMINATE_CALLED];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoadedFirstTime"];
+    
+
     [AppPreferences sharedAppPreferences].userObj.userPin=nil;
     
-    [[SharedSession getSharedSession:[APIManager sharedManager]] finishTasksAndInvalidate];
+//    [[SharedSession getSharedSession:[APIManager sharedManager]] invalidateAndCancel];
+//    [[SharedSession getSharedSession:[APIManager sharedManager]] finishTasksAndInvalidate];
+    
+    [self cancelTasks];
+
     [UIApplication sharedApplication].idleTimerDisabled = NO;
 
     //[[Database shareddatabase] updateUploadingFileDictationStatus];
@@ -261,31 +312,123 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DELETE_RECORDING object:nil];//to pause and remove audio player
 // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+- (void)cancelTasks {
+    
+    [[SharedSession getSharedSession:[APIManager sharedManager]] getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
+        
+        if (!uploadTasks || !uploadTasks.count) {
+            return;
+        }
+        for (NSURLSessionUploadTask *task in uploadTasks) {
+            [task cancel];
+        }
+    }];
+}
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     
     // [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PAUSE_RECORDING object:nil];
    
+   
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                         bundle: nil];
+        if (![AppPreferences sharedAppPreferences].isImporting)
+        {
+            
+           // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
+             //              {
+            
+                               
+               //            });
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+            
+                
+               
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                 bundle: nil];
+            
+                
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"] && [AppPreferences sharedAppPreferences].userObj.userPin!=NULL)
+            {
+                LoginViewController* loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                
+                [self.window.rootViewController presentViewController:loginViewController animated:NO completion:nil];
+            }
+            
+                
+               // [self showhud];
+//                hud.minSize = CGSizeMake(150.f, 100.f);
+//                hud = [MBProgressHUD showHUDAddedTo:loginViewController.view animated:YES];
+//                hud.mode = MBProgressHUDModeIndeterminate;
+//                hud.label.text = @"Importing Files..";
+//                hud.detailsLabel.text = @"Please wait";
+              //  [hud removeFromSuperview];
+                
+             });
+            
+             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+                          {
+            
+                              [self getImportedFiles];
+
+                        });
+            
+            
+            
+           // [self performSelector:@selector(getImportedFiles) withObject:nil afterDelay:0.0];
+           // [self performSelectorOnMainThread:@selector(getImportedFiles) withObject:nil waitUntilDone:NO];
+            
+//                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+//                                      {
+//            
+//                                          [self performSelector:@selector(getImportedFiles) withObject:nil afterDelay:2.0];
+//                                          //[self getImportedFiles];
+//            
+//                                    });
+            
+
+           
+            
+        }
+        
+        else
+        {
+            //dispatch_async(dispatch_get_main_queue(), ^{
+            
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                     bundle: nil];
+                
+                if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"] && [AppPreferences sharedAppPreferences].userObj.userPin!=NULL)
+                {
+                    LoginViewController* loginViewController=[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                    [self.window.rootViewController presentViewController:loginViewController animated:NO completion:nil];
+                }
+            
+            
+           // });
+        }
+        
+  //  });
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"] && [AppPreferences sharedAppPreferences].userObj.userPin!=NULL)
-    {
-        LoginViewController* loginViewController=[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        [self.window.rootViewController presentViewController:loginViewController animated:NO completion:nil];
-    }
     
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        // [[AppPreferences sharedAppPreferences].uploadTask resume];
-        [self getImportedFiles];
-        
-        
-        
-    });
+    
+    
+    
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+}
+
+-(void)showhud
+{
+    //UIWindow *window = [[[UIApplication sharedApplication] windows] lastObject];
+
+//    hud.minSize = CGSizeMake(150.f, 100.f);
+//    hud = [MBProgressHUD showHUDAddedTo:window animated:YES];
+//    hud.mode = MBProgressHUDModeIndeterminate;
+//    hud.label.text = @"Importing Files..";
+//    hud.detailsLabel.text = @"Please wait";
+
 }
 
 - (void)handleInterruption:(NSNotification *)notification
@@ -296,15 +439,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 	   
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PAUSE_RECORDING object:nil];//to pause audio player and save the recording from bg.we have change the setting for this in app capabilities setting to stop from the bg.
 
-    if (theInterruptionType == AVAudioSessionInterruptionTypeBegan) {
-        ThreadStateBeginInterruption();
-    }
+//    if (theInterruptionType == AVAudioSessionInterruptionTypeBegan) {
+//        ThreadStateBeginInterruption();
+//    }
     
-    if (theInterruptionType == AVAudioSessionInterruptionTypeEnded) {
-        // make sure we are again the active session
-        [[AVAudioSession sharedInstance] setActive:YES error:nil];
-        ThreadStateEndInterruption();
-    }
+//    if (theInterruptionType == AVAudioSessionInterruptionTypeEnded) {
+//        // make sure we are again the active session
+//        [[AVAudioSession sharedInstance] setActive:YES error:nil];
+//        ThreadStateEndInterruption();
+//    }
 }
 
 #pragma mark -Audio Session Route Change Notification
@@ -402,6 +545,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
         NSMutableDictionary* proxyIsFileInsertedDict=[copy1Dict mutableCopy];
 
+    [AppPreferences sharedAppPreferences].isImporting = YES;
+    
         for (NSString* wavFileName in [isFileInsertedDict allKeys])
         {
            NSString* fileExistFlag= [isFileInsertedDict valueForKey:wavFileName];
@@ -418,6 +563,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             {}
 
         }
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                         bundle: nil];
+    
+    
+    [AppPreferences sharedAppPreferences].isImporting = NO;
+    
+   // [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_IMPORTED object:nil];
+
     
     // got database error
     [[Database shareddatabase] getlistOfimportedFilesAudioDetailsArray:5];//get count of imported non transferred files

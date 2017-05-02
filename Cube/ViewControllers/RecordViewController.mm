@@ -425,7 +425,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
             
             
-             [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@editedCopy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
+            // [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@editedCopy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
             
             [[NSNotificationCenter defaultCenter] removeObserver:self];
             
@@ -450,7 +450,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)updateDictationStatus
 {
-    [[Database shareddatabase] updateAudioFileName:self.recordedAudioFileName dictationStatus:@"RecordingPause"];
     
     NSArray* pathComponents = [NSArray arrayWithObjects:
                                [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
@@ -461,7 +460,18 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self prepareAudioPlayer];
     
-    [db updateAudioFileName:recordedAudioFileName duration:player.duration];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+        [[Database shareddatabase] updateAudioFileName:self.recordedAudioFileName dictationStatus:@"RecordingPause"];
+        
+        [db updateAudioFileName:recordedAudioFileName duration:player.duration];
+    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//    
+//        
+//
+//    });
+    
 
 }
 -(void)hideDeleteButton
@@ -1972,7 +1982,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         NSError* error1;
          [[NSFileManager defaultManager] moveItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:destinationPath error:&error1];
         
-
+        [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
+        
         //[self setCompressAudio];
         [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -2623,6 +2634,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 - (IBAction)editAudioButtonPressed:(id)sender
 {
+    //Insert at the End: directly start recording and compose
+    
+    //Insert in Between: start recording and insert at slider position
+    
+    //overwrite: forst delete upto end(and then store),again start recfording and compose with stored recording
+    
+    //delete upto end: delete upto end and store the result
     
     alertController = [UIAlertController alertControllerWithTitle:@""
                                                           message:@"Select an action"
@@ -2638,6 +2656,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                         dispatch_async(dispatch_get_main_queue(), ^
                                        {
                                            //NSLog(@"Reachable");
+                                           
+                                           [self.view setUserInteractionEnabled:NO];
+                                           
                                            int seconds = player.duration;
                                            int audioHour= seconds/(60*60);
                                            int audioHourByMod= seconds%(60*60);
@@ -2674,7 +2695,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                             {
                                                 editType = @"insertInBetween";
                                                 edited = YES;
-                                                
+                                                [self.view setUserInteractionEnabled:NO];
+
                                                 [self deleteToEnd];
                                                 
                                                 
@@ -2689,6 +2711,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                              {
                                                                  editType = @"overWrite";
                                                                  edited = YES;
+                                                                 [self.view setUserInteractionEnabled:NO];
 
                                                                  [self deleteToEnd];
                                                                  
@@ -2703,7 +2726,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     {
                         edited = YES;
                         editType = @"delete";
-                        
+                        [self.view setUserInteractionEnabled:NO];
+
                         [self deleteToEnd];
                     }]; //You can use a block here to handle a press on this button
     [alertController addAction:actionDelete];
@@ -2820,7 +2844,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     
     NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,recordedAudioFileName]];
-    [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,recordedAudioFileName]] error:&error];
+    //[[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,recordedAudioFileName]] error:&error];
     
     exportSession.outputURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,recordedAudioFileName]]];//composed audio url,later on this will be deleted
     // export.outputFileType = AVFileTypeWAVE;
@@ -2894,6 +2918,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     
                    
                 }
+                
+                else
+                    if ([editType isEqualToString:@"delete"])
+                    {
+                        [self.view setUserInteractionEnabled:YES];
+
+                    }
                 
             }
             
@@ -3090,9 +3121,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             [[NSFileManager defaultManager] removeItemAtPath:recordedFilePath error:&error];
 
             //then move compossed file to existingAudioFile
-            bool moved=  [[NSFileManager defaultManager] copyItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:destpath error:&error];// save file for compression
+            bool moved=  [[NSFileManager defaultManager] copyItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:destpath error:&error];// save file for compression(if user press stopp then this file(destpath will get compressed))
             
-            bool moved1=  [[NSFileManager defaultManager] copyItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:originalFilePath error:&error];// save file for next time composition(1st file and 2nd will be editedCopy which we will record);
+            bool moved1=  [[NSFileManager defaultManager] copyItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:originalFilePath error:&error];// save file for next time composition(i.e.1st file and 2nd will be editedCopy which we will record);
             
             if (moved)
             {
@@ -3272,6 +3303,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [self setTimer];
     
     [self mdRecord];
+    
+    dispatch_async(dispatch_get_main_queue(), ^
+                   {
+                       
+                       [self.view setUserInteractionEnabled:YES];
+                   });
+
+
     
 }
 

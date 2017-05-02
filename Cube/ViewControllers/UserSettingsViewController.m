@@ -448,7 +448,7 @@
                 if (indexPath.row==1)
                 {
                     popUpOptionsArray=nil;
-                    popUpOptionsArray=[[NSMutableArray alloc]initWithObjects:@"Do not purge",@"1 day",@"2 days",@"3 days", nil];
+                    popUpOptionsArray=[[NSMutableArray alloc]initWithObjects:@"Do not purge",@"15 days",@"20 days",@"30 days", nil];
                     [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld%ld",indexPath.section,indexPath.row] forKey:@"selectedRowAndSection"];
                     [self.poUpTableView reloadData];
                 }

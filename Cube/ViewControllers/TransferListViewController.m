@@ -57,10 +57,6 @@
         self.navigationItem.title=@"Transferred Today";
     }
     
-    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
-    {
-        [self setTimer];
-    }
     
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
@@ -82,6 +78,16 @@
                                              selector:@selector(validateFileUploadResponse:) name:NOTIFICATION_FILE_UPLOAD_API
                                                object:nil];
 
+//    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
+//    {
+//        [self performSelector:@selector(setTimer) withObject:nil afterDelay:2.0];
+//
+//    }
+    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
+    {
+        [self setTimer];
+    }
+
 }
 
 -(void)setTimer
@@ -91,9 +97,19 @@
 
 }
 
+//-(void)setTimer1
+//{
+//    
+//    progressTimer =  [NSTimer scheduledTimerWithTimeInterval:0.7 target:self selector:@selector(updateProgresCount) userInfo:nil repeats:YES];
+//    
+//}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self.checkedIndexPath removeAllObjects];
+    
+    [progressIndexPathArray removeAllObjects];
+
     
     [arrayOfMarked removeAllObjects];
     
@@ -103,9 +119,13 @@
     
     [progressTimer invalidate];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 -(void)validateFileUploadResponse:(NSNotification*)obj
 {
+    
+    
     
     [progressTimer invalidate];
     
@@ -122,10 +142,13 @@
     [self.tableView reloadData];//to update table agter getting file trnasfer response
     
     
+    
     if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
     {
+        //[self performSelector:@selector(setTimer) withObject:nil afterDelay:2.0];
         [self setTimer];
     }
+   
     //[self.tableView endUpdates];
 }
 -(void)updateProgresCount

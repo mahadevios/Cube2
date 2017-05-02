@@ -27,6 +27,22 @@
 //    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
     db=[Database shareddatabase];
 
+    
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
+    transferFailedView.layer.cornerRadius=4.0f;
+    transferredView.layer.cornerRadius=4.0f;
+    awaitingTransferView.layer.cornerRadius=4.0f;
+    
+    tapRecogniser=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+    tapRecogniser1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+    tapRecogniser2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+    [transferredView addGestureRecognizer:tapRecogniser];
+    [awaitingTransferView addGestureRecognizer:tapRecogniser1];
+    [transferFailedView addGestureRecognizer:tapRecogniser2];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(getCounts) name:NOTIFICATION_FILE_UPLOAD_API
+                                               object:nil];
     // Do any additional setup after loading the view.
 }
 
@@ -50,22 +66,20 @@
 //
 //    }
     [AppPreferences sharedAppPreferences].isRecordView=NO;
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-    transferFailedView.layer.cornerRadius=4.0f;
-    transferredView.layer.cornerRadius=4.0f;
-    awaitingTransferView.layer.cornerRadius=4.0f;
-    
-    tapRecogniser=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
-    tapRecogniser1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
-    tapRecogniser2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
-    [transferredView addGestureRecognizer:tapRecogniser];
-    [awaitingTransferView addGestureRecognizer:tapRecogniser1];
-    [transferFailedView addGestureRecognizer:tapRecogniser2];
+//    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
+//    transferFailedView.layer.cornerRadius=4.0f;
+//    transferredView.layer.cornerRadius=4.0f;
+//    awaitingTransferView.layer.cornerRadius=4.0f;
+//    
+//    tapRecogniser=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+//    tapRecogniser1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+//    tapRecogniser2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+//    [transferredView addGestureRecognizer:tapRecogniser];
+//    [awaitingTransferView addGestureRecognizer:tapRecogniser1];
+//    [transferFailedView addGestureRecognizer:tapRecogniser2];
     [self getCounts];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(getCounts) name:NOTIFICATION_FILE_UPLOAD_API
-                                               object:nil];
+  
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     
 //    [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
@@ -276,6 +290,10 @@
     }
     else
     alertViewController.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
+
+    
+
+
 
 }
 

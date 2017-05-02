@@ -334,6 +334,8 @@
                     hud.label.text = @"Validating PIN";
                     hud.detailsLabel.text = @"Please wait";
                     NSString*     macId=[Keychain getStringForKey:@"udid"];
+                    
+                    [[NSUserDefaults standardUserDefaults] setValue:macId forKey:@"MacId"];
 
                     [pinCode4TextField resignFirstResponder];
                     //        [pinCode1TextField resignFirstResponder];

@@ -106,7 +106,7 @@
     else
     if ([self.selectedView isEqualToString:@"Imported"])
     {
-        [transferDictationButton setTitle:@"Transfer Recording" forState:UIControlStateNormal];
+        //[transferDictationButton setTitle:@"Transfer Recording" forState:UIControlStateNormal];
         
         audiorecordDict= [[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray objectAtIndex:self.selectedRow];
         
@@ -643,13 +643,14 @@
                             [deleteDictationButton setHidden:YES];
                             
                             
-                                               //NSLog(@"Reachable");
+                                               NSLog(@"Today's Transferred before DB");
                                                [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
                                                int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
                                                
                                                [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
                                                
-                                           
+                            NSLog(@"Today's Transferred after DB");
+
                             
                             
                             

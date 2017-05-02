@@ -13,7 +13,9 @@
 {
     NSDictionary* result;
     NSString* filnameString;
-    
+    int departmentId;
+    int transferStatus;
+    int mobileDictationIdVal;
 }
 
 +(APIManager *) sharedManager;

@@ -22,9 +22,7 @@ static NSURLSession * sharedSession =nil;
         sharedSession = [[SharedSession alloc] init];
         
         NSURLSessionConfiguration * backgroundConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"Xanadutec"];
-        //NSTimeInterval interval =  [backgroundConfig timeoutIntervalForResource];
-        
-       // [backgroundConfig setTimeoutIntervalForRequest:5];
+
         sharedSession = [NSURLSession sessionWithConfiguration:backgroundConfig delegate:sender delegateQueue:[NSOperationQueue mainQueue]];
         
         return sharedSession;
@@ -33,6 +31,15 @@ static NSURLSession * sharedSession =nil;
     {
         return  sharedSession;
     }
+    
+//    static NSURLSession *session = nil;
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        NSURLSessionConfiguration * backgroundConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"Xanadutec"];
+//        
+//        session = [NSURLSession sessionWithConfiguration:backgroundConfig delegate:sender delegateQueue:nil];
+//    });
+//    return session;
 
 }
 

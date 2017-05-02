@@ -19,6 +19,7 @@
     [super viewDidLoad];
     db=[Database shareddatabase];
     app=[APIManager sharedManager];
+   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideHud) name:NOTIFICATION_FILE_IMPORTED object:nil];
     // Do any additional setup after loading the view.
 }
 
@@ -35,6 +36,19 @@
     
     [self.tabBarController.tabBar setHidden:NO];
     
+    [self showTabBadge];
+    
+//    if ([AppPreferences sharedAppPreferences].isImporting)
+//    {
+//        [self showhud];
+//    }
+    
+    
+}
+
+
+-(void)showTabBadge
+{
     int count= [[Database shareddatabase] getCountOfTransfersOfDicatationStatus:@"RecordingPause"];
     
     int importedFileCount=[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count;
@@ -51,6 +65,31 @@
     }
     else
         alertViewController.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
+
+
+}
+
+//-(void)showhud
+//{
+//    hud.minSize = CGSizeMake(150.f, 100.f);
+//    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    hud.mode = MBProgressHUDModeIndeterminate;
+//    hud.label.text = @"Importing Files..";
+//    hud.detailsLabel.text = @"Please wait";
+//
+//}
+
+-(void)hideHud
+{
+    [hud removeFromSuperview];
+    
+    [AppPreferences sharedAppPreferences].isImporting = NO;
+    
+    [self showTabBadge];
+    
+    [self.tableView reloadData];
+
+
 
 }
 -(void)showUserSettings:(id)sender
