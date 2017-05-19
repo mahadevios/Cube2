@@ -84,6 +84,10 @@
     NSTimer* sliderTimer;
     
     NSString* editType;
+    
+    BOOL recordingRestrictionLimitCrossed;
+    
+    long totalSecondsOfAudio;
 }
 @property (nonatomic,strong)     AVAudioPlayer       *player;
 @property (nonatomic,strong)     AVAudioRecorder     *recorder;

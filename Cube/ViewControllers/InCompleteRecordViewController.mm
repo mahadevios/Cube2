@@ -16,7 +16,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 @end
 
 @implementation InCompleteRecordViewController
-@synthesize player, recorder, recordedAudioFileName, recordedAudioURL,recordCreatedDateString,existingAudioFileName,existingAudioDate,existingAudioDepartmentName,playerAudioURL,hud,hud1,deleteButton,stopNewImageView,stopNewButton,stopLabel,animatedImageView,isOpenedFromAudioDetails;
+@synthesize player, recorder, recordedAudioFileName, recordedAudioURL,recordCreatedDateString,existingAudioFileName,existingAudioDate,existingAudioDepartmentName,playerAudioURL,hud,hud1,deleteButton,stopNewImageView,stopNewButton,stopLabel,animatedImageView,audioDurationInSeconds,isOpenedFromAudioDetails;
 
 - (void)viewDidLoad
 {
@@ -70,13 +70,24 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         audioDurationLAbel.text=self.audioDuration;
         
-        NSArray* audioMinutesAndSecondsArray= [self.audioDuration componentsSeparatedByString:@":"];
+        timerHour = self.audioDurationInSeconds/(60*60);
+        int audioHourByMod= self.audioDurationInSeconds%(60*60);
         
-        timerHour= [[audioMinutesAndSecondsArray objectAtIndex:0]intValue];
+        timerMinutes = audioHourByMod / 60;
         
-        timerMinutes=[[audioMinutesAndSecondsArray objectAtIndex:1]intValue];
+        timerSeconds = audioHourByMod % 60;
         
-        timerSeconds=[[audioMinutesAndSecondsArray objectAtIndex:2]intValue];
+        
+        
+//        NSArray* audioMinutesAndSecondsArray= [self.audioDuration componentsSeparatedByString:@":"];
+//        
+//        timerHour= [[audioMinutesAndSecondsArray objectAtIndex:0]intValue];
+//        
+//        timerMinutes=[[audioMinutesAndSecondsArray objectAtIndex:1]intValue];
+//        
+//        timerSeconds=[[audioMinutesAndSecondsArray objectAtIndex:2]intValue];
+        
+        //timerHour = audioHour;
         
         audioDurationLAbel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",timerHour,timerMinutes,timerSeconds];
     
@@ -205,6 +216,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
         [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME_COPY];
         
+        totalSecondsOfAudio = self.audioDurationInSeconds;
+        
+        [self prepareAudioPlayer];
     }
 }
 
@@ -583,8 +597,21 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)updateTimer
 {
+    NSLog(@"%f",recorder.currentTime);
     ++dictationTimerSeconds;
-    
+    //++totalSecondsOfAudio;
+    if (player.duration + recorder.currentTime >RECORDING_LIMIT)
+    {
+        recordingRestrictionLimitCrossed = true;
+        
+        [self setStopRecordingView:nil];
+        
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:RECORDING_SAVED_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+        
+        recordingRestrictionLimitCrossed = false;
+        
+        return;
+    }
     if (dictationTimerSeconds==60*minutesValue)
     {
         recordingPausedOrStoped=YES;
@@ -945,15 +972,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 
                 [animatedView startAnimating];
                 
-                [self audioRecord];
-                
                 [stopTimer invalidate];
+
+                [self setTimer];
+
+                [self audioRecord];
                 
                 UILabel* recordOrPauseLabel = [self.view viewWithTag:603];
                 
                 recordOrPauseLabel.text = @"Pause";
                 
-                [self setTimer];
                 
                 [self startRecorderAfterPrepareed];
                 
@@ -1028,9 +1056,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 -(void)setStopRecordingView:(UIButton*)sender
 {
    
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:CONFIRM_BEFORE_SAVING_SETTING])
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:CONFIRM_BEFORE_SAVING_SETTING] || recordingRestrictionLimitCrossed)
     {
        // [ performSelectorOnMainThread:@selector(showHud) withObject:nil waitUntilDone:YES];
+        [recorder stop];
+        
         UIImageView* animatedImageView1 = [self.view viewWithTag:1001];
         
         [animatedImageView1 stopAnimating];
@@ -1079,7 +1109,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                 style:UIAlertActionStyleDefault
                                               handler:^(UIAlertAction * action)
                         {
-                            
+                            [recorder stop];
+
                             animatedImageView = [self.view viewWithTag:1001];
 
                             [animatedImageView stopAnimating];
@@ -2487,6 +2518,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 - (IBAction)editAudioButtonClicked:(id)sender
 {
+    [self prepareAudioPlayer];
     
     alertController = [UIAlertController alertControllerWithTitle:@""
                                                           message:@"Select an action"
@@ -2496,6 +2528,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * action)
                                    {
+                                       
+                                       if (player.duration > RECORDING_LIMIT)
+                                       {
+                                           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:MAXIMUM_RECORDING_LIMIT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                                       }
+                                       else
+                                       {
                                        edited = YES;
                                        editType = @"insert";
                                        
@@ -2519,18 +2558,20 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                           
                                                           audioDurationLAbel.text = [NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];//for circleView timer label;//for circleView timer label
                                                           
+                                                          [[self.view viewWithTag:701] setHidden:YES];//edit button and image
+                                                          
+                                                          [[self.view viewWithTag:702] setHidden:YES];
+                                                          
+                                                          [[self.view viewWithTag:703] setHidden:YES];//edit button and image
+                                                          
+                                                          [[self.view viewWithTag:704] setHidden:YES];
+                                                          [self startNewRecordingForEdit];
+                                                          
                                                       });
                                        
-                                       [[self.view viewWithTag:701] setHidden:YES];//edit button and image
+                                      
                                        
-                                       [[self.view viewWithTag:702] setHidden:YES];
-                                       
-                                       [[self.view viewWithTag:703] setHidden:YES];//edit button and image
-                                       
-                                       [[self.view viewWithTag:704] setHidden:YES];
-                                       [self startNewRecordingForEdit];
-                                       
-                                       
+                                       }
                                        
                                    }]; //You can use a block here to handle a press on this button
     [alertController addAction:actionInsert];
@@ -2539,12 +2580,18 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                                     style:UIAlertActionStyleDefault
                                                                   handler:^(UIAlertAction * action)
                                             {
+                                                if (player.duration > RECORDING_LIMIT)
+                                                {
+                                                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:MAXIMUM_RECORDING_LIMIT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                                                }
+                                                else
+                                                {
                                                 editType = @"insertInBetween";
                                                 edited = YES;
                                                 [self.view setUserInteractionEnabled:NO];
 
                                                 [self deleteToEnd];
-                                                
+                                                }
                                                 
                                                 
                                             }]; //You can use a block here to handle a press on this button
@@ -2554,13 +2601,20 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * action)
                                       {
-                                          editType = @"overWrite";
-                                          edited = YES;
-                                          [self.view setUserInteractionEnabled:NO];
+                                          if (audioRecordSlider.value > RECORDING_LIMIT)
+                                          {
+                                              [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:MAXIMUM_RECORDING_LIMIT_MESSAGE withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                                          }
+                                          else
+                                          {
+                                              totalSecondsOfAudio = audioRecordSlider.value;
+                                              editType = @"overWrite";
+                                              edited = YES;
+                                              [self.view setUserInteractionEnabled:NO];
 
-                                          [self deleteToEnd];
+                                              [self deleteToEnd];
                                           
-                                          
+                                          }
                                           
                                       }]; //You can use a block here to handle a press on this button
     [alertController addAction:actionOverWrite];
@@ -2570,11 +2624,20 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction * action)
                     {
-                        edited = YES;
-                        editType = @"delete";
-                        [self.view setUserInteractionEnabled:NO];
+                        if (player.duration == player.currentTime)
+                        {
+                            
+                        }
+                        else
+                        {
+                            edited = YES;
+                            editType = @"delete";
+                            [self.view setUserInteractionEnabled:NO];
 
-                        [self deleteToEnd];
+                            [self deleteToEnd];
+                        
+                            totalSecondsOfAudio = audioRecordSlider.value;
+                        }
                     }]; //You can use a block here to handle a press on this button
     [alertController addAction:actionDelete];
     
@@ -2769,7 +2832,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 else
                     if ([editType isEqualToString:@"delete"])
                     {
-                        [self.view setUserInteractionEnabled:YES];
+                        dispatch_async(dispatch_get_main_queue(), ^
+                                       {
+                                           [self.view setUserInteractionEnabled:YES];
+                                       });
                         
                     }
                 
@@ -2782,6 +2848,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
         if (exportSession.status==AVAssetExportSessionStatusFailed)
         {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self.view setUserInteractionEnabled:YES];
+                
+            });
             [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
             //                if (recordingStopped)
             //                {

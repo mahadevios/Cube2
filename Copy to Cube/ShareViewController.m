@@ -7,6 +7,7 @@
 //
 //http://catthoughts.ghost.io/extensions-in-ios8-custom-views/        custom view
 #import "ShareViewController.h"
+#import <AVFoundation/AVFoundation.h>
 //#import "ConfigurationViewController.h"
 
 
@@ -121,6 +122,7 @@ SLComposeSheetConfigurationItem *item;
     return result;
 }
 
+
 -(void)viewWillLayoutSubviews
 {
     NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreFlexSolutions.CubeDictate"];
@@ -219,6 +221,29 @@ SLComposeSheetConfigurationItem *item;
     [self.extensionContext completeRequestReturningItems:@[]
                                        completionHandler:nil];
 }
+
+//-(uint64_t)getFileSize:(NSURL*)fileURL
+//{
+//    uint64_t totalSpace = 0;
+//    uint64_t totalFreeSpace = 0;
+//    NSError *error = nil;
+//    
+//    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:fileURL.path  error:&error];
+//    
+//    if (dictionary)
+//    {
+//        NSNumber *fileSystemSizeInBytes = [dictionary objectForKey: NSFileSize];
+//        totalSpace = [fileSystemSizeInBytes unsignedLongLongValue];
+//        
+//    }
+//    else
+//    {
+//        // NSLog(@"Error Obtaining System Memory Info: Domain = %@, Code = %ld", [error domain], (long)[error code]);
+//    }
+//    
+//    return totalSpace;
+//}
+
 - (void)copyAudioFileButtonClicked:(id)sender
 {
     NSString *typeIdentifier = (NSString *)kUTTypeAudio;
@@ -235,25 +260,44 @@ SLComposeSheetConfigurationItem *item;
          {
              NSURL *imageURL = (NSURL *)url;
              
+             NSError *audioError;
+
+             AVAudioPlayer* player = [[AVAudioPlayer alloc] initWithContentsOfURL:imageURL error:&audioError];
+
+             //long fileSize = [self getFileSize:imageURL];
+             [sharedDefaults setObject:[NSString stringWithFormat:@"%f",player.duration] forKey:@"output1"];
+
+             if (player.duration>3600)
+             {
+                 alertController = [UIAlertController alertControllerWithTitle:@"Alert" message:@"File size is too big to import" preferredStyle:UIAlertControllerStyleAlert];
+                 
+                 actionCancel = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                     [alertController dismissViewControllerAnimated:YES completion:nil];
+                     NSLog(@"Canelled");
+                 }];
+                 
+                 [alertController addAction:actionCancel];
+                 
+
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self presentViewController:alertController animated:YES completion:nil];
+                 });
+
+             }
+          else
+          {
+              [sharedDefaults setObject:[NSString stringWithFormat:@"%f",player.duration] forKey:@"output1"];
+
              NSString* audioFileName=[imageURL lastPathComponent];
              
-             //             NSString* fileNameKeyString = [audioFileName stringByDeletingPathExtension];
              NSString* fileNameKeyString = audioFileName;
              
-             //fileNameKeyString=[fileNameKeyString stringByReplacingOccurrencesOfString:@" " withString:@""];
-             
-            // NSArray* array1=[NSArray new];
-             
-             //array1=[sharedDefaults objectForKey:@"audioNamesArray"];
-             
              NSDictionary* dict1=[NSDictionary new];
-             //
-             //        array1=[sharedDefaults objectForKey:@"audioNamesArray"];
-             //
-             dict1=[sharedDefaults objectForKey:@"isFileInsertedDict"];
-             //NSMutableArray* audioNamesArray=[NSMutableArray new];
              
-            isFileAvailable=NO;
+             dict1=[sharedDefaults objectForKey:@"isFileInsertedDict"];
+             
+             isFileAvailable=NO;
+             
              if (dict1==NULL)
              {
                //isFileAvailable=NO;
@@ -354,7 +398,6 @@ SLComposeSheetConfigurationItem *item;
                                                             
                                                             NSString* editedNameString = [[alertController textFields][0] text];
                                                             
-//                                                            editedNameString=[editedNameString stringByReplacingOccurrencesOfString:@" " withString:@""];
 
                                                             NSError *error = nil;
                                                             
@@ -565,10 +608,10 @@ SLComposeSheetConfigurationItem *item;
              
              // [self saveAudio:imageURL];
              
-             
+          }
          }];
     }
-    
+         
 }
 -(void)saveAudio:(NSURL*)url
 {

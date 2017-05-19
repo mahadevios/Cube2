@@ -75,6 +75,10 @@
 #define TRANSFER_MESSAGE                       @"Are you sure you want to transfer this recording?"
 #define RESEND_MESSAGE                         @"Are you sure you want to resend this recording?"
 #define PAUSE_STOP_MESSAGE                     @"Recording is on.Please pause/stop the recording"
+#define MAXIMUM_RECORDING_LIMIT_MESSAGE        @"Recording duration length exceeded,please start new recording for further dictation"
+#define RECORDING_SAVED_MESSAGE                @"Recording duration length exceeded,your recording has been saved in awaiting transfer,please start new recording for further dictation"
+#define RECORDING_LIMIT                        3600
+
 #define PURGE_DATA_DATE                        @"purgeDataDate"
 //#define APPLICATION_TERMINATE_CALLED           @"applicationTerminate"
 

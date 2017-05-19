@@ -976,7 +976,18 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     NSData *httpBody = [self createBodyWithBoundary:boundary parameters:params paths:@[filePath] fieldName:str];
     
+    
+    
+
+    
     request.HTTPBody = httpBody;
+    
+//    NSInputStream *readData = [[NSInputStream alloc] initWithData:httpBody];
+//    [readData open];
+//    
+//    request.HTTPBodyStream = readData;
+//    
+//    [readData close];
     
     session = [SharedSession getSharedSession:[APIManager sharedManager]];
     
@@ -985,6 +996,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     
     NSURLSessionUploadTask* uploadTask = [session uploadTaskWithRequest:request fromData:nil];
+//    NSURLSessionUploadTask* uploadTask = [session uploadTaskWithStreamedRequest:request];
     
     
     
@@ -1007,12 +1019,55 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 
 }
 
+
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+ needNewBodyStream:(void (^)(NSInputStream *bodyStream))completionHandler
+{
+
+    
+}
+
 -(void)uploadFileToServer:str
 {
     if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<2)
     {
-        [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:str];
-        [self uploadFileToServerUsingNSURLSession:str];
+        if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count == 1)
+        {
+            NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:
+                                  [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,[[AppPreferences sharedAppPreferences].filesInUploadingQueueArray objectAtIndex:0]] ];
+            
+            long firstFileSize = [self getFileSize:filePath];
+
+            if (firstFileSize>30000000)
+            {
+                [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:str];
+            }
+            
+            else
+            {
+                filePath = [NSHomeDirectory() stringByAppendingPathComponent:
+                            [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,str]];
+                long secondFileSize = [self getFileSize:filePath];
+
+                if (secondFileSize>30000000)
+                {
+                    [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:str];
+                }
+                
+                else
+                {
+                    [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:str];
+                    [self uploadFileToServerUsingNSURLSession:str];
+                }
+            }
+        }
+        
+        else
+        {
+            [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:str];
+            [self uploadFileToServerUsingNSURLSession:str];
+        }
 
     }
     else
@@ -1022,6 +1077,20 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     //[self uploadFileToServerUsingNSURLConnection:str];
 
 }
+
+//-(void)uploadFileToServer:str
+//{
+//if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<2)
+//{
+//    [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:str];
+//    [self uploadFileToServerUsingNSURLSession:str];
+//    
+//}
+//else
+//{
+//    [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:str];
+//}
+//}
 -(void)uploadFileToServerUsingNSURLConnection:(NSString*)str
 
 {

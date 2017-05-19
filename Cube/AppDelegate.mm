@@ -42,6 +42,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     // Override point for customization after application launch.
     
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreFlexSolutions.CubeDictate"];
+
+    NSString* fileSizeInBytes = [sharedDefaults objectForKey:@"output1"];
+    
+    NSLog(@"%@",fileSizeInBytes);
+    
     [[AppPreferences sharedAppPreferences] startReachabilityNotifier];
     [APIManager sharedManager].userSettingsOpened=NO;
     [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray = [[NSMutableArray alloc] init];
@@ -195,12 +201,33 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             {
     
     
-                                NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
-    
-                                [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
-    
-                                [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload];
-    
+                if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<1 && [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>1)
+                {
+//                    for (int i=0; i<2; i++)
+//                    {
+                        NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+                        
+                        [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+                        
+                        [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload];
+                    
+                    NSString* nextFileToBeUpload1 = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+                    
+                    [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+                    
+                    [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload1];
+
+                    //}
+                    
+                }
+                else
+                {
+                    NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+                    
+                    [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+                    
+                    [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload];
+                }
     
     
                 NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);

@@ -69,6 +69,10 @@
     BOOL edited;
     NSString* editType;
     NSTimer* sliderTimer;
+    
+    BOOL recordingRestrictionLimitCrossed;
+    
+    long totalSecondsOfAudio;
 //    UIButton* uploadLaterButton;
 //    UIButton* recordNewButton;
 //    UIView* animatedView;
@@ -79,7 +83,7 @@
 @property (nonatomic,strong)     NSString            *existingAudioFileName;//for use of prev controller
 @property (nonatomic)     NSString            *existingAudioDepartmentName;//for use of prev controller
 @property (nonatomic)     NSString            *existingAudioDate;//for use of prev controller
-
+@property (nonatomic)     int            audioDurationInSeconds;
 @property (nonatomic,strong)     NSURL               *recordedAudioURL;
 @property (nonatomic,strong)     NSURL               *playerAudioURL;
 //@property (nonatomic,strong)         UIButton* uploadAudioButton;

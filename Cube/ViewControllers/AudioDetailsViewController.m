@@ -1049,7 +1049,13 @@
         
     }
     
-    vc.existingAudioDepartmentName=[audiorecordDict valueForKey:@"Department"];
+    int audioDurationSeconds = [[audiorecordDict valueForKey:@"CurrentDuration"] intValue];
+    
+    //int roundUpAudioDurationSeconds = ceil(audioDurationSeconds);
+    
+    vc.audioDurationInSeconds = audioDurationSeconds;
+    
+    vc.existingAudioDepartmentName = [audiorecordDict valueForKey:@"Department"];
     
     vc.isOpenedFromAudioDetails = YES;
     
