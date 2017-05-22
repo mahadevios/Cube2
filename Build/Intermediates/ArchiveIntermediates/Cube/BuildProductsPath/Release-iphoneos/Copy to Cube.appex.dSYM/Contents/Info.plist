@@ -5,7 +5,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>English</string>
 		<key>CFBundleIdentifier</key>
-		<string>com.apple.xcode.dsym.com.coreFlexSolutions.CubeDictate.Copy-to-Cube</string>
+		<string>com.apple.xcode.dsym.com.coreFlexSolutions.CubeDictate.CopytoCube</string>
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundlePackageType</key>
@@ -15,6 +15,6 @@
 		<key>CFBundleShortVersionString</key>
 		<string>1.0.1</string>
 		<key>CFBundleVersion</key>
-		<string>10</string>
+		<string>11</string>
 	</dict>
 </plist>

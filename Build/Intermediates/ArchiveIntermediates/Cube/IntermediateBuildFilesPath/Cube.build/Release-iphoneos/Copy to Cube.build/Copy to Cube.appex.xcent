@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>application-identifier</key>
-	<string>Y56BAH343T.com.coreFlexSolutions.CubeDictate.Copy-to-Cube</string>
+	<string>Y56BAH343T.com.coreFlexSolutions.CubeDictate.CopytoCube</string>
+	<key>beta-reports-active</key>
+	<true/>
 	<key>com.apple.developer.team-identifier</key>
 	<string>Y56BAH343T</string>
 	<key>com.apple.security.application-groups</key>
@@ -11,6 +13,10 @@
 		<string>group.com.coreFlexSolutions.CubeDictate</string>
 	</array>
 	<key>get-task-allow</key>
-	<true/>
+	<false/>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>Y56BAH343T.com.coreFlexSolutions.CubeDictate.Copy-to-Cube</string>
+	</array>
 </dict>
 </plist>

@@ -656,7 +656,7 @@
 					8427DC451E124D9B0071C038 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = Y56BAH343T;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -672,7 +672,7 @@
 					8472223D1D47368A00C00F20 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = Y56BAH343T;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -897,8 +897,8 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Copy to Cube/Copy to Cube.entitlements";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -911,10 +911,10 @@
 				INFOPLIST_FILE = "Copy to Cube/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.coreFlexSolutions.CubeDictate.Copy-to-Cube";
+				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate.CopytoCube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "0e8eea66-bdda-4edd-8661-5b7df9f7e67e";
+				PROVISIONING_PROFILE_SPECIFIER = CubeDictateAppGroup;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -929,8 +929,8 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Copy to Cube/Copy to Cube.entitlements";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -939,10 +939,10 @@
 				INFOPLIST_FILE = "Copy to Cube/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.coreFlexSolutions.CubeDictate.Copy-to-Cube";
+				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate.CopytoCube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "9f74969c-d172-411b-b6fa-c0c9399e893e";
+				PROVISIONING_PROFILE_SPECIFIER = CubeDictateAppGroupDistribution;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1054,8 +1054,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_ENTITLEMENTS = Cube/Cube.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INPUT_FILETYPE = automatic;
@@ -1069,8 +1069,8 @@
 				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "444d0195-ef0a-403b-8bdc-003202357590";
+				PROVISIONING_PROFILE_SPECIFIER = CubeDictate;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1083,7 +1083,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_ENTITLEMENTS = Cube/Cube.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INPUT_FILETYPE = automatic;
@@ -1096,8 +1096,8 @@
 				New_Setting = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "a3468349-8e8d-496c-a72d-0c3f312bdef4";
+				PROVISIONING_PROFILE_SPECIFIER = CubeDistribution;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
