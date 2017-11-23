@@ -662,7 +662,7 @@
                                     [AppPreferences sharedAppPreferences].fileUploading=YES;
                                 }
                                 
-                                [app uploadFileToServer:filName];
+                                [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
                                 
                                 [[self.view viewWithTag:507] setHidden:YES];
                                 
@@ -729,7 +729,7 @@
 
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                             
-                                                       [app uploadFileToServer:filName];
+                                                       [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
             
                             
                         });
@@ -785,7 +785,7 @@
                                     
                                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                         
-                                        [app uploadFileToServer:filName];
+                                        [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
                                         
                                         [[self.view viewWithTag:507] setHidden:YES];
                                         
@@ -849,7 +849,7 @@
                                         [AppPreferences sharedAppPreferences].fileUploading=YES;
                                     }
                                     
-                                    [app uploadFileToServer:filName];
+                                    [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
                                     
                                     [[self.view viewWithTag:507] setHidden:YES];
 

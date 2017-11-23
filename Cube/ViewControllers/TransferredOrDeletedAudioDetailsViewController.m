@@ -360,7 +360,7 @@
                             
                             
                             
-                            [app uploadFileToServer:filName];
+                            [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
                             
                            // [self dismissViewControllerAnimated:YES completion:nil];
 

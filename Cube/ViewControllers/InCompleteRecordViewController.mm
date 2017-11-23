@@ -1786,7 +1786,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                             [db updateAudioFileStatus:@"RecordingFileUpload" fileName:self.existingAudioFileName];
                             
                             
-                            [app uploadFileToServer:self.existingAudioFileName];
+                            [app uploadFileToServer:self.existingAudioFileName jobName:FILE_UPLOAD_API];
                             
                             sender.userInteractionEnabled=NO;
                             

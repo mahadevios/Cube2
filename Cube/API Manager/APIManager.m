@@ -82,7 +82,7 @@ static APIManager *singleton = nil;
         
         [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
         
-        [self uploadFileToServer:nextFileToBeUpload];
+        [self uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
         
         
         
@@ -199,7 +199,9 @@ static APIManager *singleton = nil;
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
         
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:CHECK_DEVICE_REGISTRATION withRequestParameter:array withResourcePath:CHECK_DEVICE_REGISTRATION withHttpMethd:POST];
+        NSString* downloadMethodType = @"urlConnection";
+        
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:CHECK_DEVICE_REGISTRATION withRequestParameter:array withResourcePath:CHECK_DEVICE_REGISTRATION withHttpMethd:POST downloadMethodType:downloadMethodType];
         [downloadmetadatajob startMetaDataDownLoad];
 
     }
@@ -289,8 +291,9 @@ static APIManager *singleton = nil;
         NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-        
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:AUTHENTICATE_API withRequestParameter:array withResourcePath:AUTHENTICATE_API withHttpMethd:POST];
+        NSString* downloadMethodType = @"urlConnection";
+
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:AUTHENTICATE_API withRequestParameter:array withResourcePath:AUTHENTICATE_API withHttpMethd:POST downloadMethodType:downloadMethodType];
         [downloadmetadatajob startMetaDataDownLoad];
     }
     else
@@ -326,8 +329,9 @@ static APIManager *singleton = nil;
         NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-        
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:ACCEPT_PIN_API withRequestParameter:array withResourcePath:ACCEPT_PIN_API withHttpMethd:POST];
+        NSString* downloadMethodType = @"urlConnection";
+
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:ACCEPT_PIN_API withRequestParameter:array withResourcePath:ACCEPT_PIN_API withHttpMethd:POST downloadMethodType:downloadMethodType];
         [downloadmetadatajob startMetaDataDownLoad];
     }
     else
@@ -362,8 +366,9 @@ static APIManager *singleton = nil;
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
 
-        
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:VALIDATE_PIN_API withRequestParameter:array withResourcePath:VALIDATE_PIN_API withHttpMethd:POST];
+        NSString* downloadMethodType = @"urlConnection";
+
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:VALIDATE_PIN_API withRequestParameter:array withResourcePath:VALIDATE_PIN_API withHttpMethd:POST downloadMethodType:downloadMethodType] ;
         [downloadmetadatajob startMetaDataDownLoad];
     }
     else
@@ -380,8 +385,9 @@ static APIManager *singleton = nil;
         NSArray *params = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"mobilestatus=%@",mobilestatus], [NSString stringWithFormat:@"OriginalFileName=%@",OriginalFileName] ,[NSString stringWithFormat:@"macID=%@",macID],nil];
         
         NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:params,REQUEST_PARAMETER, nil];
-        
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:DICTATIONS_INSERT_API withRequestParameter:dictionary withResourcePath:DICTATIONS_INSERT_API withHttpMethd:POST];
+        NSString* downloadMethodType = @"urlConnection";
+
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:DICTATIONS_INSERT_API withRequestParameter:dictionary withResourcePath:DICTATIONS_INSERT_API withHttpMethd:POST downloadMethodType:downloadMethodType];
         [downloadmetadatajob startMetaDataDownLoad];
     }
     else
@@ -398,8 +404,9 @@ static APIManager *singleton = nil;
         NSArray *params = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"mobilestatus=%@",mobilestatus], [NSString stringWithFormat:@"OriginalFileName=%@",OriginalFileName] ,[NSString stringWithFormat:@"macID=%@",macid],nil];
         
         NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:params,REQUEST_PARAMETER, nil];
-        
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:DATA_SYNCHRONISATION_API withRequestParameter:dictionary withResourcePath:DATA_SYNCHRONISATION_API withHttpMethd:POST];
+        NSString* downloadMethodType = @"urlConnection";
+
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:DATA_SYNCHRONISATION_API withRequestParameter:dictionary withResourcePath:DATA_SYNCHRONISATION_API withHttpMethd:POST downloadMethodType:downloadMethodType];
         [downloadmetadatajob startMetaDataDownLoad];
     }
     else
@@ -410,33 +417,13 @@ static APIManager *singleton = nil;
 }
 
 
-//-(void)uploadFileFilename:(NSString*)filename macID:(NSString*)macID fileSize:(NSString*)filesize
-//{
-//    if ([[AppPreferences sharedAppPreferences] isReachable])
-//    {
-//        NSArray *params = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"filename=%@",filename], [NSString stringWithFormat:@"macID=%@",macID] ,[NSString stringWithFormat:@"filesize=%@",filesize],nil];
-//        
-//        NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:params,REQUEST_PARAMETER, nil];
-//        
-//        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:FILE_UPLOAD_API withRequestParameter:dictionary withResourcePath:FILE_UPLOAD_API withHttpMethd:POST];
-//        [downloadmetadatajob startMetaDataDownLoad];
-//    }
-//    else
-//    {
-//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-//    }
-//    
-//    
-//}
+
 
 -(void)changePinOldPin:(NSString*)oldpin NewPin:(NSString*)newpin macID:(NSString*)macID
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
         
-//        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:oldpin,@"oldpin",newpin,@"newpin",macID,@"macid", nil];
-//        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary1, nil];
-
         NSError* error;
         NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:oldpin,@"oldpin",newpin,@"newpin",macID,@"macid", nil];
         
@@ -455,7 +442,9 @@ static APIManager *singleton = nil;
         NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:PIN_CANGE_API withRequestParameter:array withResourcePath:PIN_CANGE_API withHttpMethd:POST];
+        NSString* downloadMethodType = @"urlConnection";
+
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:PIN_CANGE_API withRequestParameter:array withResourcePath:PIN_CANGE_API withHttpMethd:POST downloadMethodType:downloadMethodType];
         [downloadmetadatajob startMetaDataDownLoad];
     }
     else
@@ -466,32 +455,134 @@ static APIManager *singleton = nil;
     
     
 }
+
+-(void)sendDictationIds:(NSString*)dictationIdArray
+{
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+        [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Loading Files" detailText:@"Please wait.."];
+        
+        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+        
+        NSError* error;
+        
+        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",dictationIdArray,@"DictationID", nil];
+        
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
+                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
+                                                             error:&error];
+        
+        
+        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
+        
+        
+        
+        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
+        
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+        
+        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:SEND_DICTATION_IDS_API withRequestParameter:array withResourcePath:SEND_DICTATION_IDS_API withHttpMethd:POST downloadMethodType:@""];
+        [downloadmetadatajob startMetaDataDownLoad];
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+    
+    
+}
+-(void)downloadFileUsingConnection:(NSString*)mobielDictationIdVal
+{
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+        
+        NSError* error;
+        
+        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",mobielDictationIdVal,@"DictationID", nil];
+        
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
+                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
+                                                             error:&error];
+        
+        
+        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
+        
+        
+        
+        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
+        
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+        
+        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:FILE_DOWNLOAD_API withRequestParameter:array withResourcePath:FILE_DOWNLOAD_API withHttpMethd:POST downloadMethodType:@""];
+        [downloadmetadatajob startMetaDataDownLoad];
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+    
+    
+}
+-(void)downloafFileUsingSession:(NSString*)mobielDictationIdVal
+{
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+        
+        NSError* error;
+        
+        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+
+        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",mobielDictationIdVal,@"DictationID", nil];
+        
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
+                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
+                                                             error:&error];
+        
+        
+        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
+        
+        
+        
+        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
+        
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+        
+        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+        NSString* downloadMethodType = @"urlSession";
+        
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:FILE_DOWNLOAD_API withRequestParameter:array withResourcePath:FILE_DOWNLOAD_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+       // [downloadmetadatajob startMetaDataDownLoad];
+        [downloadmetadatajob downloadFileUsingNSURLSession:@""];
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+    
+    
+    
+}
+
+
+
+
+
+
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
 {
-//    NSMutableData *responseData = self.responsesData[@(dataTask.taskIdentifier)];
-//    if (!responseData) {
-//        responseData = [NSMutableData dataWithData:data];
-//        //self.responsesData[@(dataTask.taskIdentifier)] = responseData;
-//    } else {
-//        [responseData appendData:data];
-//    }
-    
-//    NSString* fileName = self.responsesData[@(dataTask.taskIdentifier)];
+
     
     if (!(data == nil))
     {
         NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)dataTask.taskIdentifier]];
         
-//        NSString* fileName;
-//        
-//        dispatch_async(dispatch_get_main_queue(), ^
-//                       {
-//                           //NSLog(@"Reachable");
-        
-        
 
-//                           fileName = fileName1;
-//                       });
         
         NSError* error1;
         NSString* encryptedString = [NSJSONSerialization JSONObjectWithData:data
@@ -610,7 +701,7 @@ static APIManager *singleton = nil;
                                                           
                                                           [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
                                                           
-                                                          [self uploadFileToServer:nextFileToBeUpload];
+                                                          [self uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
                                                           
                                                           
                                                           
@@ -700,7 +791,7 @@ static APIManager *singleton = nil;
                             
                             [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
                             
-                            [self uploadFileToServer:nextFileToBeUpload];
+                            [self uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
                             
                            // [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
 
@@ -982,12 +1073,6 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     request.HTTPBody = httpBody;
     
-//    NSInputStream *readData = [[NSInputStream alloc] initWithData:httpBody];
-//    [readData open];
-//    
-//    request.HTTPBodyStream = readData;
-//    
-//    [readData close];
     
     session = [SharedSession getSharedSession:[APIManager sharedManager]];
     
@@ -996,11 +1081,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     
     NSURLSessionUploadTask* uploadTask = [session uploadTaskWithRequest:request fromData:nil];
-//    NSURLSessionUploadTask* uploadTask = [session uploadTaskWithStreamedRequest:request];
-    
-    
-    
-    
+
     NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu", (unsigned long)uploadTask.taskIdentifier]];
     
     
@@ -1028,7 +1109,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
 }
 
--(void)uploadFileToServer:str
+-(void)uploadFileToServer:(NSString*)str jobName:(NSString*)jobName
 {
     if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<2)
     {
@@ -1189,7 +1270,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
                              [UIApplication sharedApplication].idleTimerDisabled = YES;
-                            [self uploadFileToServer:str];
+                            [self uploadFileToServer:str jobName:FILE_UPLOAD_API];
                         });
                     }
                     else

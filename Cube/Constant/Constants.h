@@ -32,6 +32,9 @@
 #define  DATA_SYNCHRONISATION_API             @"encrdecr_MobileDataSynchronisation"
 #define  FILE_UPLOAD_API                      @"encrdecr_MobileFileUpload"
 #define  PIN_CANGE_API                        @"encrdecr_MobilePINChange"
+#define  FILE_DOWNLOAD_API                    @"encedecr_MobileDownloadDocFile"
+#define  SEND_DICTATION_IDS_API               @"encrdecr_MobileRequestForCompleteFiles"
+
 #define  SECRET_KEY                           @"cubemob"
 #define  POST                           @"POST"
 #define  GET                            @"GET"
@@ -50,6 +53,9 @@
 #define NOTIFICATION_DICTATIONS_INSERT_API          @"notificationForMobileDictationsInsert"
 #define NOTIFICATION_DATA_SYNCHRONISATION_API       @"notificationForMobileDataSynchronisation"
 #define NOTIFICATION_FILE_UPLOAD_API                @"notificationForMobileFileUpload"
+#define NOTIFICATION_FILE_DOWNLOAD_API              @"notificationForMobileFileDownload"
+#define NOTIFICATION_SEND_DICTATION_IDS_API         @"notificationSendDictationIds"
+
 #define NOTIFICATION_PIN_CANGE_API                  @"notificationForMobilePINChange"
 #define NOTIFICATION_PAUSE_RECORDING                @"pauseRecording"
 #define NOTIFICATION_INTERNET_MESSAGE               @"internetMessage"
@@ -77,6 +83,8 @@
 #define PAUSE_STOP_MESSAGE                     @"Recording is on.Please pause/stop the recording"
 #define MAXIMUM_RECORDING_LIMIT_MESSAGE        @"Recording duration length exceeded,please start new recording for further dictation"
 #define RECORDING_SAVED_MESSAGE                @"Recording duration length exceeded,your recording has been saved in awaiting transfer,please start new recording for further dictation"
+#define CURRENT_VESRION                        @"currentVersion"
+
 #define RECORDING_LIMIT                        3600
 
 #define PURGE_DATA_DATE                        @"purgeDataDate"
@@ -98,4 +106,10 @@
 
 //#define MAC_ID                                 @"e0:2c:b2:ec:5a:8f"
 
+typedef enum
+{
+    NODOWNLOAD,
+    DOWNLOADING,
+    DOWNLOADED
+}DownloadingStatus;
 #endif /* Header_h */

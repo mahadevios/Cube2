@@ -49,7 +49,7 @@
 
 -(void) showAlertViewWithTitle:(NSString *) title withMessage:(NSString *) message withCancelText:(NSString *) cancelText withOkText:(NSString *) okText withAlertTag:(int) tag;
 -(void) showNoInternetMessage;
-
+-(void) showHudWithTitle:(NSString*)title detailText:(NSString*)detailText;
 -(void) startReachabilityNotifier;
 @end
 

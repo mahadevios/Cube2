@@ -110,6 +110,19 @@ static AppPreferences *singleton = nil;
 
 /*=================================================================================================================================================*/
 
+-(void) showHudWithTitle:(NSString*)title detailText:(NSString*)detailText
+{
+    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:true];
+    
+    hud.tag = 789;
+    
+    hud.minSize = CGSizeMake(150.0, 100.0);
+    
+    hud.label.text = title;
+    
+    hud.detailsLabel.text = detailText;
+}
+
 
 -(void) showAlertViewWithTitle:(NSString *) title withMessage:(NSString *) message withCancelText:(NSString *) cancelText withOkText:(NSString *) okText withAlertTag:(int) tag
 {

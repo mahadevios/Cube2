@@ -24,7 +24,9 @@
 @synthesize currentSaveTrintIndex;
 @synthesize isNewMatchFound;
 @synthesize dataArray;
--(id) initWithdownLoadEntityJobName:(NSString *) jobName withRequestParameter:(id) localRequestParameter withResourcePath:(NSString *) resourcePath withHttpMethd:(NSString *) httpMethodParameter
+@synthesize downloadMethodType;
+@synthesize session;
+-(id) initWithdownLoadEntityJobName:(NSString *) jobName withRequestParameter:(id) localRequestParameter withResourcePath:(NSString *) resourcePath withHttpMethd:(NSString *) httpMethodParameter downloadMethodType:(NSString*)downloadMethodType
 {
     self = [super init];
     if (self)
@@ -35,6 +37,7 @@
         self.httpMethod=httpMethodParameter;
         self.dataArray=localRequestParameter;
         self.isNewMatchFound = [NSNumber numberWithInt:1];
+        self.downloadMethodType = downloadMethodType;
     }
     return self;
 }
@@ -78,16 +81,9 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     NSError* error;
     
-    //NSData *ciphertext = [RNEncryptor e
-//    NSString* str=[NSString stringWithFormat:@"%@",array];
-//    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-//    NSData *encryptedData = [RNEncryptor encryptData:data
-//                                        withSettings:kRNCryptorAES256Settings
-//                                            password:SECRET_KEY
-//                                               error:&error];
-//    NSString *encString = [encryptedData base64EncodedStringWithOptions:0];
+
     
-    NSDictionary* dic=[array objectAtIndex:0];
+    //NSDictionary* dic=[array objectAtIndex:0];
     NSData *requestData = [NSJSONSerialization dataWithJSONObject:array options:kNilOptions error:&error];
     
     
@@ -166,9 +162,11 @@
                                                                error:&error];
     
     
-            NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:encryptedResponse options:0];
-            NSData* data=[decodedData AES256DecryptWithKey:SECRET_KEY];
-            NSString* responseString=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:encryptedResponse options:0];
+    
+    NSData* data=[decodedData AES256DecryptWithKey:SECRET_KEY];
+    
+    NSString* responseString=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
     NSDictionary *response;
     if (responseString!=nil)
@@ -177,7 +175,8 @@
         responseString=[responseString stringByReplacingOccurrencesOfString:@"False" withString:@"0"];
         
         NSData *responsedData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-        
+        //NSData *responsedData1 = [responseString dataUsingEncoding:NSDataBase64Encoding64CharacterLineLength];
+
         response = [NSJSONSerialization JSONObjectWithData:responsedData
                                                                  options:NSJSONReadingAllowFragments
                                                                    error:&error];
@@ -389,6 +388,28 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
     }
 }
     
+    if ([self.downLoadEntityJobName isEqualToString:SEND_DICTATION_IDS_API])
+    {
+        
+        if (response != nil)
+        {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+            
+            if ([[response objectForKey:@"code"] isEqualToString:@"200"])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_DICTATION_IDS_API object:response];
+                
+                
+            }else
+            {
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            }
+        }else
+        {
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
+    }
+    
     if ([self.downLoadEntityJobName isEqualToString:DATA_SYNCHRONISATION_API])
     {
         
@@ -411,26 +432,62 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
     }
 //
     
-//    if ([self.downLoadEntityJobName isEqualToString:FILE_UPLOAD_API])
-//    {
-//        
-//        if (response != nil)
-//        {
-//            
-//            if ([[response objectForKey:@"code"] isEqualToString:SUCCESS])
-//            {
-//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:response];
-//                
-//                
-//            }else
-//            {
-//                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-//            }
-//        }else
-//        {
-//            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-//        }
-//    }
+    if ([self.downLoadEntityJobName isEqualToString:FILE_DOWNLOAD_API])
+    {
+        
+        if (response != nil)
+        {
+            
+            if ([[response objectForKey:@"code"] isEqualToString:@"200"])
+            {
+                
+                NSString* path = [[NSBundle mainBundle] pathForResource:@"sample" ofType:@"doc"];
+                
+                NSString* byteCodeString = [response valueForKey:@"ByteDocForDownload"];
+                
+                NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:byteCodeString options:0];
+                
+                //NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                
+                //NSString *documentsDirectory = [paths objectAtIndex:0];
+                
+                //NSString *appFile = [documentsDirectory stringByAppendingPathComponent:@"MyFile4.doc"];
+                
+                //bool isWritten = [decodedData writeToFile:appFile atomically:YES];
+                
+                NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",@"sample.doc"]];
+                
+                NSString* filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads"]];
+                
+                if (![[NSFileManager defaultManager] fileExistsAtPath:destpath])
+                {
+                    NSError* error;
+                    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+                        [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+                    
+                   BOOL iswritten =  [decodedData writeToFile:destpath atomically:YES];
+                    
+                }
+                else
+                {
+                    [decodedData writeToFile:destpath atomically:YES];
+                    
+                }
+                
+                [[Database shareddatabase] updateDownloadingStatus:DOWNLOADED dictationId:8103552];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_DOWNLOAD_API object:response];
+                
+                
+            }else
+            {
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            }
+        }else
+        {
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
+    }
 
     
     if ([self.downLoadEntityJobName isEqualToString:PIN_CANGE_API])
@@ -456,6 +513,214 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
 
 
 }
+
+
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
+{
+
+
+    if (!(data == nil))
+    {
+        NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)dataTask.taskIdentifier]];
+
+
+
+        NSError* error1;
+        NSString* encryptedString = [NSJSONSerialization JSONObjectWithData:data
+                                                                    options:NSJSONReadingAllowFragments
+                                                                      error:&error1];
+
+
+        NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:encryptedString options:0];
+        NSData* data1=[decodedData AES256DecryptWithKey:SECRET_KEY];
+        NSString* responseString=[[NSString alloc] initWithData:data1 encoding:NSUTF8StringEncoding];
+        responseString=[responseString stringByReplacingOccurrencesOfString:@"True" withString:@"1"];
+        responseString=[responseString stringByReplacingOccurrencesOfString:@"False" withString:@"0"];
+
+        NSData *responsedData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+
+        result = [NSJSONSerialization JSONObjectWithData:responsedData
+                                                 options:NSJSONReadingAllowFragments
+                                                   error:nil];
+
+        NSString* returnCode= [result valueForKey:@"code"];
+
+        if ([returnCode longLongValue]==200)
+        {
+
+
+
+
+        }
+        else
+        {
+
+
+
+            //NSLog(@"%@",fileName);
+
+
+        }
+
+
+
+
+
+
+    }
+
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)dataTask didCompleteWithError:(NSError *)error
+{
+    //[dataTask resume];
+    NSLog(@"error code:%ld",(long)error.code);
+
+    NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)dataTask.taskIdentifier]];
+
+    if (error)
+    {
+
+
+    }
+    else
+    {
+
+    }
+
+}
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+   didSendBodyData:(int64_t)bytesSent
+    totalBytesSent:(int64_t)totalBytesSent
+totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
+{
+
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        float progress = (double)totalBytesSent / (double)totalBytesExpectedToSend;
+        //NSLog(@"progress %f",progress);
+
+        NSString* progressPercent= [NSString stringWithFormat:@"%f",progress*100];
+
+
+
+    });
+
+
+
+}
+//
+//
+//
+-(void)downloadFileUsingNSURLSession:(NSString*)str
+
+{
+
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+
+        dispatch_async(dispatch_get_main_queue(), ^
+                       {
+
+                           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+                               [self downloadFile:dataArray];
+
+                           });
+
+                       });
+
+
+
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+
+
+}
+//
+-(void)downloadFile:(NSArray*)dataArray
+{
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
+
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+
+   
+    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, FILE_DOWNLOAD_API]];
+
+   
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+
+    [request setHTTPMethod:@"POST"];
+
+
+    
+    NSError* error;
+
+
+    // NSString* authorisation=[NSString stringWithFormat:@"%@*%d*%ld*%d*%d",macId,filesizeint,deptObj.Id,1,0];
+
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+
+    //    NSError* error;
+
+
+
+    // create body
+
+    NSData *requestData = [NSJSONSerialization dataWithJSONObject:dataArray options:kNilOptions error:&error];
+    
+    
+    
+    [request setHTTPBody:requestData];
+
+
+
+
+    session = [SharedSession getSharedSession:[APIManager sharedManager]];
+
+    //
+    [request setHTTPMethod:@"POST"];
+
+
+    NSURLSessionDownloadTask* downloadTask = [session downloadTaskWithRequest:request];
+
+    dispatch_async(dispatch_get_main_queue(), ^
+                   {
+                       //NSLog(@"Reachable");
+
+                   });
+
+
+
+
+
+    [downloadTask resume];
+
+}
+//
+//
+//- (void)URLSession:(NSURLSession *)session
+//              task:(NSURLSessionTask *)task
+// needNewBodyStream:(void (^)(NSInputStream *bodyStream))completionHandler
+//{
+//
+//
+//}
+//
+//-(void)uploadFileToServer:(NSString*)str jobName:(NSString*)jobName
+//{
+//
+//    [self uploadFileToServerUsingNSURLSession:str];
+//
+//}
 
 @end
 

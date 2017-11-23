@@ -45,12 +45,16 @@
 		847D95B41D5F157C00145C32 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 847D95A21D5F157C00145C32 /* Reachability.m */; };
 		847D95CB1D5F325600145C32 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 847D95CA1D5F325600145C32 /* libsqlite3.0.tbd */; };
 		8480AAFA1D787DD500473651 /* Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480AAF91D787DD500473651 /* Keychain.m */; };
+		8488B7B71FC698E5006FE0FA /* UIButton+TableViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7B61FC698E5006FE0FA /* UIButton+TableViewButton.m */; };
+		8488B7BA1FC6A8C7006FE0FA /* TableViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7B91FC6A8C7006FE0FA /* TableViewButton.m */; };
+		8488B7BD1FC6EA00006FE0FA /* UIColor+ApplicationColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7BC1FC6E9FF006FE0FA /* UIColor+ApplicationColors.m */; };
 		849A20791E080F000004DDD2 /* BrowseMusicViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 849A20781E080F000004DDD2 /* BrowseMusicViewController.mm */; };
 		849F02671D75328000E74723 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 849F02661D75328000E74723 /* User.m */; };
 		849F02751D754B7400E74723 /* Cube_DB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 849F02741D754B7400E74723 /* Cube_DB.sqlite */; };
 		84AB68591D536961006F962D /* InCompleteDictationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AB68581D536961006F962D /* InCompleteDictationViewController.m */; };
 		84B87BCE1D76859A002B91FB /* UIDevice+Identifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B87BCD1D76859A002B91FB /* UIDevice+Identifier.m */; };
 		84B87BD11D770D1D002B91FB /* SplashScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B87BD01D770D1D002B91FB /* SplashScreenViewController.m */; };
+		84BD03061FC2DD7C006C45A6 /* DocFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */; };
 		84CC5F731D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC5F721D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m */; };
 		84CC5F761D74351900D1E982 /* DepartMent.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC5F751D74351900D1E982 /* DepartMent.m */; };
 		84CC5F791D747B8200D1E982 /* PinRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC5F781D747B8200D1E982 /* PinRegistrationViewController.m */; };
@@ -116,7 +120,6 @@
 		840AC7531D8280F200EF6AF7 /* CAXException.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAXException.mm; sourceTree = "<group>"; };
 		840AC7541D8280F200EF6AF7 /* CAXException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAXException.h; sourceTree = "<group>"; };
 		840AC7571D82816000EF6AF7 /* ExtAudioFileConvert.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ExtAudioFileConvert.mm; sourceTree = "<group>"; };
-		840AC75C1D82925A00EF6AF7 /* sourceALAC.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sourceALAC.caf; sourceTree = "<group>"; };
 		8427DC461E124D9B0071C038 /* Copy to Cube.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Copy to Cube.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8427DC481E124D9B0071C038 /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
 		8427DC491E124D9B0071C038 /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
@@ -186,6 +189,12 @@
 		847DCBBF1DE590FD002D78BB /* Cube.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cube.entitlements; sourceTree = "<group>"; };
 		8480AAF81D787DD500473651 /* Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Keychain.h; sourceTree = "<group>"; };
 		8480AAF91D787DD500473651 /* Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Keychain.m; sourceTree = "<group>"; };
+		8488B7B51FC698E5006FE0FA /* UIButton+TableViewButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+TableViewButton.h"; sourceTree = "<group>"; };
+		8488B7B61FC698E5006FE0FA /* UIButton+TableViewButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+TableViewButton.m"; sourceTree = "<group>"; };
+		8488B7B81FC6A8C7006FE0FA /* TableViewButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewButton.h; sourceTree = "<group>"; };
+		8488B7B91FC6A8C7006FE0FA /* TableViewButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewButton.m; sourceTree = "<group>"; };
+		8488B7BB1FC6E9FF006FE0FA /* UIColor+ApplicationColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+ApplicationColors.h"; sourceTree = "<group>"; };
+		8488B7BC1FC6E9FF006FE0FA /* UIColor+ApplicationColors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ApplicationColors.m"; sourceTree = "<group>"; };
 		849A20771E080F000004DDD2 /* BrowseMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseMusicViewController.h; sourceTree = "<group>"; };
 		849A20781E080F000004DDD2 /* BrowseMusicViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BrowseMusicViewController.mm; sourceTree = "<group>"; };
 		849A207A1E0811F40004DDD2 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -194,10 +203,13 @@
 		849F02741D754B7400E74723 /* Cube_DB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = Cube_DB.sqlite; path = ../../Cube_DB.sqlite; sourceTree = "<group>"; };
 		84AB68571D536961006F962D /* InCompleteDictationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InCompleteDictationViewController.h; sourceTree = "<group>"; };
 		84AB68581D536961006F962D /* InCompleteDictationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InCompleteDictationViewController.m; sourceTree = "<group>"; };
+		84B70CC61FBC509C006EB2A5 /* sample.doc */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.doc; sourceTree = "<group>"; };
 		84B87BCC1D76859A002B91FB /* UIDevice+Identifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Identifier.h"; sourceTree = "<group>"; };
 		84B87BCD1D76859A002B91FB /* UIDevice+Identifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Identifier.m"; sourceTree = "<group>"; };
 		84B87BCF1D770D1D002B91FB /* SplashScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashScreenViewController.h; sourceTree = "<group>"; };
 		84B87BD01D770D1D002B91FB /* SplashScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashScreenViewController.m; sourceTree = "<group>"; };
+		84BD03041FC2DD7C006C45A6 /* DocFilesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DocFilesViewController.h; sourceTree = "<group>"; };
+		84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DocFilesViewController.m; sourceTree = "<group>"; };
 		84CC5F711D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferredOrDeletedAudioDetailsViewController.h; sourceTree = "<group>"; };
 		84CC5F721D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferredOrDeletedAudioDetailsViewController.m; sourceTree = "<group>"; };
 		84CC5F741D74351900D1E982 /* DepartMent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepartMent.h; sourceTree = "<group>"; };
@@ -309,6 +321,12 @@
 			children = (
 				845A96761DDDEF9A007F460C /* NSData+AES256.h */,
 				845A96771DDDEF9A007F460C /* NSData+AES256.m */,
+				8488B7B51FC698E5006FE0FA /* UIButton+TableViewButton.h */,
+				8488B7B61FC698E5006FE0FA /* UIButton+TableViewButton.m */,
+				8488B7B81FC6A8C7006FE0FA /* TableViewButton.h */,
+				8488B7B91FC6A8C7006FE0FA /* TableViewButton.m */,
+				8488B7BB1FC6E9FF006FE0FA /* UIColor+ApplicationColors.h */,
+				8488B7BC1FC6E9FF006FE0FA /* UIColor+ApplicationColors.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -372,12 +390,12 @@
 				84B87BCD1D76859A002B91FB /* UIDevice+Identifier.m */,
 				847222441D47368A00C00F20 /* AppDelegate.h */,
 				847222451D47368A00C00F20 /* AppDelegate.mm */,
-				840AC75C1D82925A00EF6AF7 /* sourceALAC.caf */,
 				8472224A1D47368A00C00F20 /* Main.storyboard */,
 				8472224D1D47368A00C00F20 /* Assets.xcassets */,
 				8472224F1D47368A00C00F20 /* LaunchScreen.storyboard */,
 				847222521D47368A00C00F20 /* Info.plist */,
 				846D68741D5713F80089CA15 /* PrefixHeader.pch */,
+				84B70CC61FBC509C006EB2A5 /* sample.doc */,
 				847222411D47368A00C00F20 /* Supporting Files */,
 			);
 			path = Cube;
@@ -535,6 +553,8 @@
 				849A20781E080F000004DDD2 /* BrowseMusicViewController.mm */,
 				8427DC571E12633A0071C038 /* ImportedAudioViewController.h */,
 				8427DC581E12633A0071C038 /* ImportedAudioViewController.mm */,
+				84BD03041FC2DD7C006C45A6 /* DocFilesViewController.h */,
+				84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -776,10 +796,13 @@
 			files = (
 				84AB68591D536961006F962D /* InCompleteDictationViewController.m in Sources */,
 				845A96781DDDEF9A007F460C /* NSData+AES256.m in Sources */,
+				8488B7B71FC698E5006FE0FA /* UIButton+TableViewButton.m in Sources */,
+				8488B7BA1FC6A8C7006FE0FA /* TableViewButton.m in Sources */,
 				84D0B52B1D81B4D70084E016 /* SBJson4StreamTokeniser.m in Sources */,
 				846DE68A1D728B210004C886 /* AudioSessionManager.m in Sources */,
 				84D0B52E1D81B4D70084E016 /* SBJson4Writer.m in Sources */,
 				846DE68D1D728CDA0004C886 /* InCompleteRecordViewController.mm in Sources */,
+				8488B7BD1FC6EA00006FE0FA /* UIColor+ApplicationColors.m in Sources */,
 				847D959B1D5F150200145C32 /* DownloadMetaDataJob.m in Sources */,
 				846DE6861D7288420004C886 /* Database.m in Sources */,
 				84FCCFA21D48B75A00E3D7AE /* SelectDepartmentViewController.m in Sources */,
@@ -801,6 +824,7 @@
 				84D0B52A1D81B4D70084E016 /* SBJson4StreamParserState.m in Sources */,
 				84B87BCE1D76859A002B91FB /* UIDevice+Identifier.m in Sources */,
 				84CC5F731D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m in Sources */,
+				84BD03061FC2DD7C006C45A6 /* DocFilesViewController.m in Sources */,
 				84302E9C1D5E094C005E14E2 /* RecordTabViewController.m in Sources */,
 				8429BDD61D5DD839004CED76 /* RegistrationViewController.m in Sources */,
 				84FCCFA81D48CEB600E3D7AE /* RecordViewController.mm in Sources */,
@@ -1066,6 +1090,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				New_Setting = "";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1094,6 +1122,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				New_Setting = "";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "a3468349-8e8d-496c-a72d-0c3f312bdef4";

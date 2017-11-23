@@ -69,10 +69,11 @@
 
 -(BOOL)deleteFile:(NSString*)fileName;
 
--(void)uploadFileToServer:(NSString*)str;
+-(void)uploadFileToServer:(NSString*)str jobName:(NSString*)jobName;
 
+-(void)downloadFileUsingConnection:(NSString*)mobielDictationIdVal;
 
+-(void)downloafFileUsingSession:(NSString*)mobielDictationIdVal;
 
-
-
+-(void)sendDictationIds:(NSString*)dictationIdArray;
 @end

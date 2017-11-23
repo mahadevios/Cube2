@@ -15,6 +15,8 @@
 // double code signing http://blog.bitrise.io/2016/09/21/xcode-8-and-automatic-code-signing.html
 
 //siging identities and certificates  https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/MaintainingCertificates/MaintainingCertificates.html
+
+// animation https://www.raywenderlich.com/86521/how-to-make-a-view-controller-transition-animation-like-in-the-ping-app
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "RegistrationViewController.h"
@@ -44,25 +46,17 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreFlexSolutions.CubeDictate"];
 
-    NSString* fileSizeInBytes = [sharedDefaults objectForKey:@"output1"];
+    //NSString* fileSizeInBytes = [sharedDefaults objectForKey:@"output1"];
     
-    NSLog(@"%@",fileSizeInBytes);
+    //NSLog(@"%@",fileSizeInBytes);
     
     [[AppPreferences sharedAppPreferences] startReachabilityNotifier];
     [APIManager sharedManager].userSettingsOpened=NO;
     [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray = [[NSMutableArray alloc] init];
     [AppPreferences sharedAppPreferences].filesInUploadingQueueArray = [[NSMutableArray alloc] init];
 
-//    NSURLSession* session = [SharedSession getSharedSession:[APIManager sharedManager]];
-   // [[SharedSession getSharedSession:[APIManager sharedManager]] finishTasksAndInvalidate];
-  //  [SharedSession getSharedSession:[APIManager sharedManager]];
 
-    //[[Database shareddatabase] updateDemo:@"MOB-495617757209"];
-
-    //[Keychain setString:macId forKey:@"udid"];
-   //double h =  [[UIScreen mainScreen] bounds].size.height;
-   // [[UIScreen mainScreen] bounds].size.width;
-       [self checkAndCopyDatabase];
+   [self checkAndCopyDatabase];
     
     
   //  [[NSUserDefaults standardUserDefaults] setValue:timeLabel.text forKey:LOW_STORAGE_THRESHOLD];
@@ -98,12 +92,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoadedFirstTime"];
 
-   // NSLog(@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:LOW_STORAGE_THRESHOLD]);
-   // NSLog(@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:RECORD_ABBREVIATION]);
-
-
-   // [[NSUserDefaults standardUserDefaults] setValue:@"MOB" forKey:RECORD_ABBREVIATION];
-
     ThreadStateInitalize();
     
     try {
@@ -138,21 +126,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         printf("You probably want to fix this before continuing!");
     }
 
-//    NSDateFormatter* dateFormatter = [NSDateFormatter new];
-//    
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-//    
-//    NSString* todaysDate = [dateFormatter stringFromDate:[NSDate new]];
-//    
-//    [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:@"TodaysDate"];
-//    
-//    NSString* todaysSerialNumberCount = [[NSUserDefaults standardUserDefaults] valueForKey:@"todaysSerialNumberCount"];
-//    
-//    if ( [todaysSerialNumberCount isEqual:NULL])
-//    {
-//        [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:@"todaysSerialNumberCount"];
-//    }
-    
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         if (![AppPreferences sharedAppPreferences].isImporting)
@@ -162,27 +136,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
         
     });
-//    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
-//    {
-//        // iOS 8 Notifications
-//        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-//        
-//        [application registerForRemoteNotifications];
-//    }
-//    else
-//    {
-//        // iOS < 8 Notifications
-//        [application registerForRemoteNotificationTypes:
-//         (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
-//    }
-    
-//    bool updateAvailable = [self needsUpdate];
-//    if (updateAvailable)
-//    {
-//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms://itunes.com/apps/CubeDictate"]];
-//
-//    }
-   // [[SharedSession sharedSession] finishTasksAndInvalidate];
+
     [self cancelTasks];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNextFile) name:NOTIFICATION_UPLOAD_NEXT_FILE object:nil];
@@ -209,13 +163,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                         
                         [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
                         
-                        [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload];
+                        [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
                     
                     NSString* nextFileToBeUpload1 = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
                     
                     [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
                     
-                    [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload1];
+                    [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload1 jobName:FILE_UPLOAD_API];
 
                     //}
                     
@@ -226,7 +180,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     
                     [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
                     
-                    [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload];
+                    [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
                 }
     
     
@@ -262,18 +216,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
    
 
-//    if (![[NSUserDefaults standardUserDefaults] boolForKey:APPLICATION_TERMINATE_CALLED])
-//    {
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            
-//            [[Database shareddatabase] updateUploadingFileDictationStatus];
-//        });
- //   }
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{// to resolve database crash
         
         [[Database shareddatabase] updateUploadingFileDictationStatus];
-    });
-   // [[NSUserDefaults standardUserDefaults] setBool:NO forKey:APPLICATION_TERMINATE_CALLED];
+    //});
 
 }
 
@@ -354,19 +300,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    
-    // [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PAUSE_RECORDING object:nil];
    
-   
-    
         if (![AppPreferences sharedAppPreferences].isImporting)
         {
-            
-           // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
-             //              {
-            
-                               
-               //            });
             
             dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -384,14 +320,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             }
             
                 
-               // [self showhud];
-//                hud.minSize = CGSizeMake(150.f, 100.f);
-//                hud = [MBProgressHUD showHUDAddedTo:loginViewController.view animated:YES];
-//                hud.mode = MBProgressHUDModeIndeterminate;
-//                hud.label.text = @"Importing Files..";
-//                hud.detailsLabel.text = @"Please wait";
-              //  [hud removeFromSuperview];
-                
              });
             
              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
@@ -401,22 +329,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
                         });
             
-            
-            
-           // [self performSelector:@selector(getImportedFiles) withObject:nil afterDelay:0.0];
-           // [self performSelectorOnMainThread:@selector(getImportedFiles) withObject:nil waitUntilDone:NO];
-            
-//                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
-//                                      {
-//            
-//                                          [self performSelector:@selector(getImportedFiles) withObject:nil afterDelay:2.0];
-//                                          //[self getImportedFiles];
-//            
-//                                    });
-            
 
-           
-            
         }
         
         else
@@ -446,17 +359,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
--(void)showhud
-{
-    //UIWindow *window = [[[UIApplication sharedApplication] windows] lastObject];
-
-//    hud.minSize = CGSizeMake(150.f, 100.f);
-//    hud = [MBProgressHUD showHUDAddedTo:window animated:YES];
-//    hud.mode = MBProgressHUDModeIndeterminate;
-//    hud.label.text = @"Importing Files..";
-//    hud.detailsLabel.text = @"Please wait";
-
-}
 
 - (void)handleInterruption:(NSNotification *)notification
 {
@@ -1011,7 +913,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         NSString* fileSize=[NSString stringWithFormat:@"%ld",fileSizeinKB];
         
-        int newDataUpdate=5;
+        int newDataUpdate=5; // for imported files status = 5
         
         int newDataSend=0;
         
@@ -1030,8 +932,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         NSDictionary* audioRecordDetailsDict=[[NSDictionary alloc]initWithObjectsAndKeys:fileName,@"recordItemName",recordCreatedDateString,@"recordCreatedDate",recordingDate,@"recordingDate",transferDate,@"transferDate",[NSString stringWithFormat:@"%d",dictationStatus],@"dictationStatus",[NSString stringWithFormat:@"%d",transferStatus],@"transferStatus",[NSString stringWithFormat:@"%d",deleteStatus],@"deleteStatus",deleteDate,@"deleteDate",fileSize,@"fileSize",currentDuration1,@"currentDuration",[NSString stringWithFormat:@"%d",newDataUpdate],@"newDataUpdate",[NSString stringWithFormat:@"%d",newDataSend],@"newDataSend",[NSString stringWithFormat:@"%d",mobileDictationIdVal],@"mobileDictationIdVal",departmentName,@"departmentName",nil];
         
         [[Database shareddatabase] insertRecordingData:audioRecordDetailsDict];
-        
     
+        NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+
+        NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+
+        [[NSUserDefaults standardUserDefaults] setValue:currentVersion forKey:CURRENT_VESRION];
     
     
 }

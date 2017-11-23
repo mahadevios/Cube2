@@ -88,6 +88,8 @@
         [self setTimer];
     }
 
+   // [[APIManager sharedManager] downloadFileUsingConnection:@"6753263"];
+
 }
 
 -(void)setTimer
@@ -828,7 +830,7 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
                                 APIManager* app=[APIManager sharedManager];
                                 
                                  
-                                [app uploadFileToServer:fileName];
+                                [app uploadFileToServer:fileName jobName:FILE_UPLOAD_API];
                                 
                             });
                         }

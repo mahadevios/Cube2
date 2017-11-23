@@ -125,7 +125,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 4;
     
 }
 
@@ -135,37 +135,55 @@
     UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     UILabel* inCompleteDictationLabel=[cell viewWithTag:101];
     UILabel* noDictationLabel=[cell viewWithTag:102];
-    if (indexPath.row==0)
+    
+    
+    switch (indexPath.row)
     {
-        inCompleteDictationLabel.text=@"Incomplete Dictations";
-        noDictationLabel.text=[NSString stringWithFormat:@"%d",app.incompleteFileTransferCount];
+        case 0:inCompleteDictationLabel.text=@"Incomplete Dictations";
+            noDictationLabel.text=[NSString stringWithFormat:@"%d",app.incompleteFileTransferCount];
+            break;
+            
+        case 1:inCompleteDictationLabel.text=@"No Dictation";
+            noDictationLabel.text=@"0";
+            break;
+            
+        case 2:inCompleteDictationLabel.text=@"Imported Dictations";
+            noDictationLabel.text=[NSString stringWithFormat:@"%ld",[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count];
+            break;
+            
+        case 3:inCompleteDictationLabel.text=@"Doc Files";
+            noDictationLabel.text=[NSString stringWithFormat:@"%d",0];
+            break;
+        default:
+            break;
     }
-    else
-        if (indexPath.row==1)
-    {
-        inCompleteDictationLabel.text=@"No Dictation";
-        noDictationLabel.text=@"0";
-    }
-    else
-    {
-        inCompleteDictationLabel.text=@"Imported Dictations";
-        noDictationLabel.text=[NSString stringWithFormat:@"%ld",[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count];
-
-    }
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
-    if (indexPath.row==0)
+    switch (indexPath.row)
     {
-    [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"InCompleteDictationViewController"] animated:YES];
+        case 0:
+            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"InCompleteDictationViewController"] animated:YES];
+            break;
+            
+        case 1:
+            break;
+        
+        case 2:
+            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ImportedAudioViewController"] animated:YES];
+            break;
+         
+        case 3:
+            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"DocFilesViewController"] animated:YES];
+            break;
+            
+        default:
+            break;
     }
-    if (indexPath.row==2)
-    {
-       // [self.navigationController presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ImportedAudioViewController"] animated:YES completion:nil];
-        [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ImportedAudioViewController"] animated:YES];
-    }
+   
 }
 
 -(void)viewWillDisappear:(BOOL)animated

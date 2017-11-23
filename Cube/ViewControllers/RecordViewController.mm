@@ -1802,7 +1802,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                             
                             
-                            [app uploadFileToServer:self.recordedAudioFileName];
+                            [app uploadFileToServer:self.recordedAudioFileName jobName:FILE_UPLOAD_API];
                             [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
                             sender.userInteractionEnabled=NO;
                             deleteButton.userInteractionEnabled=NO;
@@ -1851,12 +1851,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     //for dictation waiting by
     if (recorder.isRecording)
     {
-        NSLog(@"recording");
+        //NSLog(@"recording");
 
     }
     else
     {
-        NSLog(@"Not recording");
+        //NSLog(@"Not recording");
 
     }
     ++dictationTimerSeconds;

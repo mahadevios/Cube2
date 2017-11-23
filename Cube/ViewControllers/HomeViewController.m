@@ -99,7 +99,7 @@
     formatter.dateFormat = @"MM-dd-yyyy";
     NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
     
-   
+
     if ([[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE]== NULL)//for first time to check files to be purge are available or not
     {
         [self needsUpdate];
@@ -121,6 +121,9 @@
  //   [[NSUserDefaults standardUserDefaults] setValue:NULL forKey:PURGE_DATA_DATE];
 
      [self.tabBarController.tabBar setHidden:NO];
+    
+    
+    
 //    [[Database shareddatabase] setDepartment];//to insert default department for imported files
 }
 
@@ -141,8 +144,10 @@
                                                NSString* appStoreVersion = lookup[@"results"][0][@"version"];
                                               
                                                NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
-                                                       if ([appStoreVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending)
-                                                       {
+//                                                       if ([appStoreVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending)
+                                               if (appStoreVersion != currentVersion)
+
+                                               {
                                                            NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
                                                            //
                                                            
@@ -154,6 +159,12 @@
                                                                                                  handler:^(UIAlertAction * action)
                                                                            {
                                                                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms://itunes.com/apps/CubeDictate"]];
+                                                                               
+                                                                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                                                                               formatter.dateFormat = @"MM-dd-yyyy";
+                                                                               NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
+                                                                               
+                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
                                                                            }]; //You can use a block here to handle a press on this button
                                                            [alertController addAction:actionDelete];
                                                            
@@ -164,9 +175,18 @@
                                                                            {
                                                                                [alertController dismissViewControllerAnimated:YES completion:nil];
                                                                                
+                                                                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                                                                               formatter.dateFormat = @"MM-dd-yyyy";
+                                                                               NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
+
+                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
+
+                                                                               
                                                                            }]; //You can use a block here to handle a press on this button
                                                            [alertController addAction:actionCancel];
                                                            
+                                    
+
                                                            [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:alertController animated:YES completion:nil];
                                                        }
                                                    //return YES;
@@ -177,6 +197,8 @@
     [theTask resume];
     return NO;
 }
+
+
 
 
 - (void)deleteDictation
