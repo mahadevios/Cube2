@@ -132,7 +132,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         self.recordedAudioFileName = [NSString stringWithFormat:@"%ld", milliseconds];
         
         
-        NSString* dateFileNameString=[app getDateAndTimeString];
+//        NSString* dateFileNameString=[app getDateAndTimeString];
         
         NSDateFormatter* dateFormatter = [NSDateFormatter new];
         
@@ -2163,7 +2163,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     // initiate recorder
     recorder = [[AVAudioRecorder alloc] initWithURL:self.recordedAudioURL settings:recordSetting error:&error];
    [recorder prepareToRecord];
-    
     
 }
 

@@ -48,6 +48,8 @@
 		8488B7B71FC698E5006FE0FA /* UIButton+TableViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7B61FC698E5006FE0FA /* UIButton+TableViewButton.m */; };
 		8488B7BA1FC6A8C7006FE0FA /* TableViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7B91FC6A8C7006FE0FA /* TableViewButton.m */; };
 		8488B7BD1FC6EA00006FE0FA /* UIColor+ApplicationColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7BC1FC6E9FF006FE0FA /* UIColor+ApplicationColors.m */; };
+		848B31041FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B31031FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m */; };
+		848B31071FC8204900CE3AC8 /* sample1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 848B31061FC8204900CE3AC8 /* sample1.wav */; };
 		849A20791E080F000004DDD2 /* BrowseMusicViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 849A20781E080F000004DDD2 /* BrowseMusicViewController.mm */; };
 		849F02671D75328000E74723 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 849F02661D75328000E74723 /* User.m */; };
 		849F02751D754B7400E74723 /* Cube_DB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 849F02741D754B7400E74723 /* Cube_DB.sqlite */; };
@@ -65,6 +67,8 @@
 		84D0B52C1D81B4D70084E016 /* SBJson4StreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D0B5231D81B4D70084E016 /* SBJson4StreamWriter.m */; };
 		84D0B52D1D81B4D70084E016 /* SBJson4StreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D0B5251D81B4D70084E016 /* SBJson4StreamWriterState.m */; };
 		84D0B52E1D81B4D70084E016 /* SBJson4Writer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D0B5271D81B4D70084E016 /* SBJson4Writer.m */; };
+		84F5641A1FCD4970006FC7AD /* SelectFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F564191FCD4970006FC7AD /* SelectFileViewController.m */; };
+		84F5641D1FCD522D006FC7AD /* CommonDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 84F5641C1FCD522D006FC7AD /* CommonDelegate.h */; };
 		84FCCFA21D48B75A00E3D7AE /* SelectDepartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FCCFA11D48B75A00E3D7AE /* SelectDepartmentViewController.m */; };
 		84FCCFA51D48CE3700E3D7AE /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FCCFA41D48CE3700E3D7AE /* HomeViewController.m */; };
 		84FCCFA81D48CEB600E3D7AE /* RecordViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 84FCCFA71D48CEB600E3D7AE /* RecordViewController.mm */; };
@@ -195,6 +199,10 @@
 		8488B7B91FC6A8C7006FE0FA /* TableViewButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewButton.m; sourceTree = "<group>"; };
 		8488B7BB1FC6E9FF006FE0FA /* UIColor+ApplicationColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+ApplicationColors.h"; sourceTree = "<group>"; };
 		8488B7BC1FC6E9FF006FE0FA /* UIColor+ApplicationColors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ApplicationColors.m"; sourceTree = "<group>"; };
+		848B31021FC7EC8200CE3AC8 /* SpeechRecognitionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpeechRecognitionViewController.h; sourceTree = "<group>"; };
+		848B31031FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpeechRecognitionViewController.m; sourceTree = "<group>"; };
+		848B31051FC7ECF700CE3AC8 /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = System/Library/Frameworks/Speech.framework; sourceTree = SDKROOT; };
+		848B31061FC8204900CE3AC8 /* sample1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sample1.wav; sourceTree = "<group>"; };
 		849A20771E080F000004DDD2 /* BrowseMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseMusicViewController.h; sourceTree = "<group>"; };
 		849A20781E080F000004DDD2 /* BrowseMusicViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BrowseMusicViewController.mm; sourceTree = "<group>"; };
 		849A207A1E0811F40004DDD2 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -233,6 +241,9 @@
 		84D0B5271D81B4D70084E016 /* SBJson4Writer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4Writer.m; sourceTree = "<group>"; };
 		84EACD9D1E03FF65002C43BE /* iTunesLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iTunesLibrary.framework; path = ../../../../../Library/Frameworks/iTunesLibrary.framework; sourceTree = "<group>"; };
 		84EACDA11E040CE2002C43BE /* iTunesLibrary */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = iTunesLibrary; path = ../../../../../Library/Frameworks/iTunesLibrary.framework/Versions/A/iTunesLibrary; sourceTree = "<group>"; };
+		84F564181FCD4970006FC7AD /* SelectFileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectFileViewController.h; sourceTree = "<group>"; };
+		84F564191FCD4970006FC7AD /* SelectFileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectFileViewController.m; sourceTree = "<group>"; };
+		84F5641C1FCD522D006FC7AD /* CommonDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonDelegate.h; sourceTree = "<group>"; };
 		84FCCFA01D48B75A00E3D7AE /* SelectDepartmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectDepartmentViewController.h; sourceTree = "<group>"; };
 		84FCCFA11D48B75A00E3D7AE /* SelectDepartmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectDepartmentViewController.m; sourceTree = "<group>"; };
 		84FCCFA31D48CE3700E3D7AE /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -327,6 +338,7 @@
 				8488B7B91FC6A8C7006FE0FA /* TableViewButton.m */,
 				8488B7BB1FC6E9FF006FE0FA /* UIColor+ApplicationColors.h */,
 				8488B7BC1FC6E9FF006FE0FA /* UIColor+ApplicationColors.m */,
+				84F5641C1FCD522D006FC7AD /* CommonDelegate.h */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -396,6 +408,7 @@
 				847222521D47368A00C00F20 /* Info.plist */,
 				846D68741D5713F80089CA15 /* PrefixHeader.pch */,
 				84B70CC61FBC509C006EB2A5 /* sample.doc */,
+				848B31061FC8204900CE3AC8 /* sample1.wav */,
 				847222411D47368A00C00F20 /* Supporting Files */,
 			);
 			path = Cube;
@@ -500,6 +513,7 @@
 		84EACD9A1E03FA64002C43BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				848B31051FC7ECF700CE3AC8 /* Speech.framework */,
 				840045761EC1EB0A0001369A /* AudioToolbox.framework */,
 				849A207A1E0811F40004DDD2 /* MediaPlayer.framework */,
 				84EACDA11E040CE2002C43BE /* iTunesLibrary */,
@@ -555,6 +569,10 @@
 				8427DC581E12633A0071C038 /* ImportedAudioViewController.mm */,
 				84BD03041FC2DD7C006C45A6 /* DocFilesViewController.h */,
 				84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */,
+				848B31021FC7EC8200CE3AC8 /* SpeechRecognitionViewController.h */,
+				848B31031FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m */,
+				84F564181FCD4970006FC7AD /* SelectFileViewController.h */,
+				84F564191FCD4970006FC7AD /* SelectFileViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -759,6 +777,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				849F02751D754B7400E74723 /* Cube_DB.sqlite in Resources */,
+				848B31071FC8204900CE3AC8 /* sample1.wav in Resources */,
 				847222511D47368A00C00F20 /* LaunchScreen.storyboard in Resources */,
 				8472224E1D47368A00C00F20 /* Assets.xcassets in Resources */,
 				8472224C1D47368A00C00F20 /* Main.storyboard in Resources */,
@@ -798,6 +817,7 @@
 				845A96781DDDEF9A007F460C /* NSData+AES256.m in Sources */,
 				8488B7B71FC698E5006FE0FA /* UIButton+TableViewButton.m in Sources */,
 				8488B7BA1FC6A8C7006FE0FA /* TableViewButton.m in Sources */,
+				84F5641A1FCD4970006FC7AD /* SelectFileViewController.m in Sources */,
 				84D0B52B1D81B4D70084E016 /* SBJson4StreamTokeniser.m in Sources */,
 				846DE68A1D728B210004C886 /* AudioSessionManager.m in Sources */,
 				84D0B52E1D81B4D70084E016 /* SBJson4Writer.m in Sources */,
@@ -828,9 +848,11 @@
 				84302E9C1D5E094C005E14E2 /* RecordTabViewController.m in Sources */,
 				8429BDD61D5DD839004CED76 /* RegistrationViewController.m in Sources */,
 				84FCCFA81D48CEB600E3D7AE /* RecordViewController.mm in Sources */,
+				84F5641D1FCD522D006FC7AD /* CommonDelegate.h in Sources */,
 				84FCCFA51D48CE3700E3D7AE /* HomeViewController.m in Sources */,
 				84FCCFB11D48D01000E3D7AE /* MainTabBarViewController.m in Sources */,
 				847D95951D5F14DC00145C32 /* AppPreferences.m in Sources */,
+				848B31041FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m in Sources */,
 				847D95B31D5F157C00145C32 /* MBProgressHUD.m in Sources */,
 				844C4A791D4B736700CF3DB4 /* SwitchCreation.m in Sources */,
 				847D95B41D5F157C00145C32 /* Reachability.m in Sources */,
@@ -1086,14 +1108,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Cube/PrefixHeader.pch";
 				INFOPLIST_FILE = Cube/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				New_Setting = "";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-				);
+				OTHER_LDFLAGS = "";
 				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1118,14 +1137,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Cube/PrefixHeader.pch";
 				INFOPLIST_FILE = Cube/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				New_Setting = "";
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-all_load",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "a3468349-8e8d-496c-a72d-0c3f312bdef4";

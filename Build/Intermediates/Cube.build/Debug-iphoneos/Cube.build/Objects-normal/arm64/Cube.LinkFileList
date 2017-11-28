@@ -2,10 +2,12 @@
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/NSData+AES256.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/UIButton+TableViewButton.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/TableViewButton.o
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/SelectFileViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/SBJson4StreamTokeniser.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/AudioSessionManager.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/SBJson4Writer.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/InCompleteRecordViewController.o
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/UIColor+ApplicationColors.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/DownloadMetaDataJob.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/Database.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/SelectDepartmentViewController.o
@@ -34,6 +36,7 @@
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/HomeViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/MainTabBarViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/AppPreferences.o
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/SpeechRecognitionViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/MBProgressHUD.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/SwitchCreation.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/Reachability.o
