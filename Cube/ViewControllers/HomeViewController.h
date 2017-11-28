@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBProgressHUD.h"
 
 @interface HomeViewController : UIViewController
 {
@@ -17,6 +18,11 @@
     UITapGestureRecognizer* tap;
     APIManager* app;
     Database* db;
+    UIAlertController *alertController;
+    UIAlertAction *actionDelete;
+    UIAlertAction *actionCancel;
+    MBProgressHUD* hud;
+    NSURLSession* session;
     
 }
 @property (weak, nonatomic) IBOutlet UIView *transferredView;

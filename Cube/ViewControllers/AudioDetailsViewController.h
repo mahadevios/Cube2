@@ -40,6 +40,7 @@
 - (IBAction)moreButtonClicked:(id)sender;
 
 
+- (IBAction)editRecordingButtonPressed:(id)sender;
 
 - (IBAction)backButtonPressed:(id)sender;
 - (IBAction)deleteDictation:(id)sender;

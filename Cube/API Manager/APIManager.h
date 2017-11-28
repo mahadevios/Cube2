@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "DownloadMetaDataJob.h"
 #import "NSData+AES256.h"
-@interface APIManager : NSObject
+@interface APIManager : NSObject<NSURLSessionDelegate,NSURLSessionTaskDelegate,NSURLSessionDataDelegate>
 {
     NSDictionary* result;
-   
+    NSString* filnameString;
+    int departmentId;
+    int transferStatus;
+    int mobileDictationIdVal;
 }
 
 +(APIManager *) sharedManager;
@@ -32,8 +35,10 @@
 @property(nonatomic)bool  userSettingsOpened;
 @property(nonatomic)bool  userSettingsClosed;
 
-
-
+@property(nonatomic)NSMutableDictionary* responsesData;
+@property(nonatomic,strong)NSString* taskId;
+@property(nonatomic,strong)NSURLSessionUploadTask* uploadTask;
+@property(nonatomic,strong)NSURLSession* session;
 //-(void) validateUser:(NSString *) usernameString andPassword:(NSString *) passwordString;
 -(NSString*)getMacId;//get macid of current device
 -(uint64_t)getFreeDiskspace;
@@ -64,10 +69,11 @@
 
 -(BOOL)deleteFile:(NSString*)fileName;
 
--(void)uploadFileToServer:(NSString*)str;
+-(void)uploadFileToServer:(NSString*)str jobName:(NSString*)jobName;
 
+-(void)downloadFileUsingConnection:(NSString*)mobielDictationIdVal;
 
+-(void)downloafFileUsingSession:(NSString*)mobielDictationIdVal;
 
-
-
+-(void)sendDictationIds:(NSString*)dictationIdArray;
 @end

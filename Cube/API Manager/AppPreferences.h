@@ -31,14 +31,25 @@
 @property (nonatomic)    int                                selectedTabBarIndex;
 @property (nonatomic,assign)    BOOL                        isRecordView;
 @property (nonatomic,assign)    BOOL                        fileUploading;
-@property (nonatomic,strong) NSMutableArray*                importedFilesAudioDetailsArray;
-@property (nonatomic, strong) User *userObj;
+@property (nonatomic,assign)    BOOL                        dismissAudioDetails;
+@property (nonatomic,assign)    BOOL                        isImporting;
 
+
+@property (nonatomic,strong) NSMutableArray*                importedFilesAudioDetailsArray;
+@property (nonatomic,strong) NSMutableDictionary*           fileNameSessionIdentifierDict;
+
+@property (nonatomic,strong) NSMutableArray*           filesInUploadingQueueArray;
+@property (nonatomic,strong) NSMutableArray*           filesInAwaitingQueueArray;
+
+
+
+@property (nonatomic, strong) User *userObj;
+//@property(nonatomic,strong)NSURLSessionUploadTask *uploadTask;
 +(AppPreferences *) sharedAppPreferences;
 
 -(void) showAlertViewWithTitle:(NSString *) title withMessage:(NSString *) message withCancelText:(NSString *) cancelText withOkText:(NSString *) okText withAlertTag:(int) tag;
 -(void) showNoInternetMessage;
-
+-(void) showHudWithTitle:(NSString*)title detailText:(NSString*)detailText;
 -(void) startReachabilityNotifier;
 @end
 

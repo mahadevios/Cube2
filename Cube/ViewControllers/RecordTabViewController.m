@@ -25,7 +25,14 @@
     [AppPreferences sharedAppPreferences].selectedTabBarIndex=2;
     UIViewController *alertViewController = [self.tabBarController.viewControllers objectAtIndex:3];
     
-    alertViewController.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
+     NSString* alertCount=[[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
+    if ([alertCount isEqualToString:@"0"])
+    {
+        alertViewController.tabBarItem.badgeValue =nil;
+    }
+    else
+        alertViewController.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
+   
     if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"dismiss"] isEqualToString:@"yes"])
     {
         [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];

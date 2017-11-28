@@ -21,6 +21,14 @@
     BOOL toolBarAdded;
     NSMutableArray* arrayOfMarked;
     UILabel* selectedCountLabel;
+    NSMutableArray* progressIndexPathArray;
+    NSMutableArray* progressIndexPathArrayCopy;
+
+    NSMutableDictionary* indexPathFileNameDict;
+
+    NSTimer* progressTimer;
+    
+    BOOL suspended;
 }
 @property(nonatomic,strong)NSString* currentViewName;
 

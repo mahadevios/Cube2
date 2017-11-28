@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
 #import "DepartMent.h"
+#import "AudioDetails.h"
 
 @interface Database : NSObject
 
@@ -61,12 +62,14 @@
 
 -(void)updateAudioFileStatus:(NSString*)status fileName:(NSString*)fileName;//for sdictationstatus=fileupload,called when when user confirm to file transfer
 
--(void)updateDemo:(NSString* )fileName;
+-(void)updateDownloadingStatus:(int)downloadStatus dictationId:(int)dictationId;
 
 -(int)getMobileDictationIdFromFileName:(NSString*)fileName;
 
 
 -(void)updateUploadingFileDictationStatus;
+
+-(void)updateUploadingStuckedStatus;
 
 -(int)getTransferStatus:(NSString*)filename;
 
@@ -83,4 +86,23 @@
 -(void)setDepartment;
 
 -(void)addDictationStatus:(NSString*)dictationStatus;
+
+-(NSArray*) getFilesToBePurged;
+
+//-(void)updateAudioFileName;// delete this later
+
+-(void)deleteFileRecordFromDatabase:(NSString*)fileName;
+
+-(void) createFileNameidentifierRelationshipTable;
+
+-(void)insertTaskIdentifier:(NSString*)taskIdentifier fileName:(NSString*)fileName;
+
+-(NSString*)getfileNameFromTaskIdentifier:(NSString*)taskIdentifier;
+
+-(void)deleteIdentifierFromDatabase:(NSString*)identifier;
+
+-(NSArray*) getUploadedFileList;
+
+-(NSArray*) getUploadedFilesDictationIdList;
+
 @end

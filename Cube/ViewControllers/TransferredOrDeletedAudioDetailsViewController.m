@@ -133,7 +133,7 @@
     if (self.listSelected==1)
     {
         
-        alertController = [UIAlertController alertControllerWithTitle:@"File not exist"
+        alertController = [UIAlertController alertControllerWithTitle:@"File does not exist"
                                                               message:@""
                                                        preferredStyle:UIAlertControllerStyleAlert];
         
@@ -198,7 +198,7 @@
     {
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];
     }
-    [UIApplication sharedApplication].idleTimerDisabled = NO;
+ //   [UIApplication sharedApplication].idleTimerDisabled = NO;
 
 }
 -(void)playOrPauseButtonPressed
@@ -208,7 +208,7 @@
     {
         pauseOrImageView.image=[UIImage imageNamed:@"Play"] ;
         [player pause];
-        [UIApplication sharedApplication].idleTimerDisabled = NO;
+      //  [UIApplication sharedApplication].idleTimerDisabled = NO;
 
     }
     else
@@ -345,14 +345,22 @@
                         NSString* filName=[audiorecordDic valueForKey:@"RecordItemName"];
                         [resendButton setHidden:YES];
                         [deleteDictationButton setHidden:YES];
+                        
+//                        dispatch_async(dispatch_get_main_queue(), ^
+//                                       {
+                                           //NSLog(@"Reachable");
+                                           [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+                                           int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
+                                           
+                                           [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                                       
+                                       //});
+                        
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                             
-                            [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
-                            int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
-
-                            [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
                             
-                            [app uploadFileToServer:filName];
+                            
+                            [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
                             
                            // [self dismissViewControllerAnimated:YES completion:nil];
 

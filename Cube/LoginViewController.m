@@ -5,6 +5,22 @@
 //provisioning profile ***: http://sharpmobilecode.com/making-sense-of-ios-provisioning/
 
 //add provisioning profile**: http://docs.telerik.com/platform/appbuilder/cordova/code-signing-your-app/configuring-code-signing-for-ios-apps/create-ad-hoc-provisioning-profile
+
+//property getter setter strong weak http://stackoverflow.com/questions/843632/is-there-a-difference-between-an-instance-variable-and-a-property-in-objecti
+
+//strong reference concept ray wenderlich https://www.raywenderlich.com/5677/beginning-arc-in-ios-5-part-1
+
+// about nsurlsession https://realm.io/news/gwendolyn-weston-ios-background-networking/
+
+//about nsurlsession http://stackoverflow.com/questions/20390428/handleeventsforbackgroundurlsession-never-called-when-a-downloadtask-finished
+
+// background session http://stackoverflow.com/questions/31802656/what-happens-to-nsurlsessiontasks-if-app-is-killed
+
+//** background session cancelled http://stackoverflow.com/questions/20159471/ios-does-force-quitting-the-app-disables-background-upload-using-nsurlsession?rq=1
+
+// resume upload https://forums.developer.apple.com/thread/10239
+
+//audio trim http://stackoverflow.com/questions/30321791/how-to-trim-music-library-file-and-save-it-document-directry
 //  ViewController.m
 //  Cube
 //
@@ -32,7 +48,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
+
     //self.navigationItem.title=@"Pin Login";
     //[self.navigationController.navigationBar setTitleTextAttributes:
     //@{NSForegroundColorAttributeName:[UIColor orangeColor]}];
@@ -69,6 +85,7 @@
     pinCode4TextField.layer.masksToBounds=YES;
     pinCode4TextField.layer.borderColor=[[UIColor grayColor]CGColor];
     pinCode4TextField.layer.borderWidth= 1.0f;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(validatePinResponseCheck:) name:NOTIFICATION_VALIDATE_PIN_API
                                                object:nil];
@@ -86,7 +103,9 @@
 -(void)validatePinResponseCheck:(NSNotification*)dictObj;
 {
     NSDictionary* responseDict=dictObj.object;
+    
     NSString* responseCodeString=  [responseDict valueForKey:RESPONSE_CODE];
+    
     NSString* responsePinString=  [responseDict valueForKey:@"pinvalidflag"];
     
     if ([responseCodeString intValue]==401 && [responsePinString intValue]==0)
@@ -115,37 +134,50 @@
 
         [AppPreferences sharedAppPreferences].userObj.userPin = pin;
         
+        
 
         NSArray* departmentArray=  [responseDict valueForKey:@"DepartmentList"];
+        
         NSMutableArray* deptForDatabaseArray=[[NSMutableArray alloc]init];
+        
         for (int i=0; i<departmentArray.count; i++)
         {
             DepartMent* deptObj=[[DepartMent alloc]init];
+            
             NSDictionary* deptDict= [departmentArray objectAtIndex:i];
+            
             deptObj.Id= [[deptDict valueForKey:@"ID"]longLongValue];
+            
             deptObj.departmentName=[deptDict valueForKey:@"DeptName"];
+            
             [deptForDatabaseArray addObject:deptObj];
         }
 
         Database *db=[Database shareddatabase];
+        
         [db insertDepartMentData:deptForDatabaseArray];
         
         
         //get user firstname,lastname and userId for file prefix
         
         NSString* fileNamePrefix = [responseDict valueForKey:@"FileNamePrefix"];
+        
         [[NSUserDefaults standardUserDefaults] setValue:fileNamePrefix forKey:@"FileNamePrefix"];
         
         [pinCode4TextField resignFirstResponder];
+        
         [self dismissViewControllerAnimated:NO completion:nil];
 
 
         MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
+        
         [[UIApplication sharedApplication] keyWindow].rootViewController = nil;
+        
         [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
 
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
         {
+            
             [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
 
         }
@@ -166,13 +198,15 @@
     }
 }
 
-- (UIViewController *)topViewController{
+- (UIViewController *)topViewController
+{
     return [self topViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
 }
 
 - (UIViewController *)topViewController:(UIViewController *)rootViewController
 {
-    if (rootViewController.presentedViewController == nil) {
+    if (rootViewController.presentedViewController == nil)
+    {
         return rootViewController;
     }
     
@@ -300,6 +334,8 @@
                     hud.label.text = @"Validating PIN";
                     hud.detailsLabel.text = @"Please wait";
                     NSString*     macId=[Keychain getStringForKey:@"udid"];
+                    
+                    [[NSUserDefaults standardUserDefaults] setValue:macId forKey:@"MacId"];
 
                     [pinCode4TextField resignFirstResponder];
                     //        [pinCode1TextField resignFirstResponder];

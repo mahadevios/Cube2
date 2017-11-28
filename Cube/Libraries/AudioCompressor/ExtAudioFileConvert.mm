@@ -146,7 +146,9 @@ void ThreadStateBeginInterruption()
     
     rc = pthread_mutex_unlock(&sStateLock);
     assert(rc == 0);
-}
+    
+    
+  }
 
 // handle end interruption - transition to kStateRunning
 void ThreadStateEndInterruption()
@@ -166,7 +168,9 @@ void ThreadStateEndInterruption()
     }
     
     rc = pthread_mutex_unlock(&sStateLock);
-    assert(rc == 0);                
+    assert(rc == 0);
+    
+   
 }
 
 // set state to kStateRunning

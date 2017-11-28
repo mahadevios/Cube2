@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MBProgressHUD.h"
 @interface AlertViewController : UIViewController
 {
     Database* db;
     APIManager* app;
     int badgeCount;
+    MBProgressHUD* hud;
+
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end

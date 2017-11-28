@@ -1,0 +1,2312 @@
+BCSymbolMap Version: 2.0
+-[InCompleteDictationViewController viewDidLoad]
+-[InCompleteDictationViewController viewWillAppear:]
+-[InCompleteDictationViewController popViewController:]
+-[InCompleteDictationViewController numberOfSectionsInTableView:]
+-[InCompleteDictationViewController tableView:numberOfRowsInSection:]
+-[InCompleteDictationViewController tableView:cellForRowAtIndexPath:]
+-[InCompleteDictationViewController tableView:didSelectRowAtIndexPath:]
+-[InCompleteDictationViewController didReceiveMemoryWarning]
+-[InCompleteDictationViewController tableView]
+-[InCompleteDictationViewController setTableView:]
+-[InCompleteDictationViewController .cxx_destruct]
+_OBJC_CLASS_$_InCompleteDictationViewController
+_OBJC_CLASS_$_APIManager
+_OBJC_IVAR_$_InCompleteDictationViewController.app
+_OBJC_CLASS_$_Database
+_OBJC_IVAR_$_InCompleteDictationViewController.db
+_OBJC_CLASS_$_AppPreferences
+_OBJC_IVAR_$_InCompleteDictationViewController._tableView
+_OBJC_METACLASS_$_InCompleteDictationViewController
+Apple LLVM version 8.0.0 (clang-800.0.42.1)
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/InCompleteDictationViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/InCompleteDictationViewController.h
+-[NSData(AES256) AES256EncryptWithKey:]
+-[NSData(AES256) AES256DecryptWithKey:]
++[NSData(AES256) encryptedDataForData:password:iv:salt:error:]
++[NSData(AES256) randomDataOfLength:]
++[NSData(AES256) AESKeyForPassword:salt:]
+_kRNCryptManagerErrorDomain
+_kAlgorithm
+_kAlgorithmKeySize
+_kAlgorithmBlockSize
+_kAlgorithmIVSize
+_kPBKDFSaltSize
+_kPBKDFRounds
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Categories/NSData+AES256.m
+-[SBJson4StreamTokeniser setError:]
+-[SBJson4StreamTokeniser appendData:]
+-[SBJson4StreamTokeniser skipWhitespace]
+-[SBJson4StreamTokeniser getUnichar:]
+-[SBJson4StreamTokeniser haveOneMoreCharacter]
+-[SBJson4StreamTokeniser haveRemainingCharacters:]
+-[SBJson4StreamTokeniser match:retval:token:length:]
+-[SBJson4StreamTokeniser decodeHexQuad:]
+-[SBJson4StreamTokeniser getStringToken:length:]
+-[SBJson4StreamTokeniser getNumberToken:length:]
+-[SBJson4StreamTokeniser getToken:length:]
+-[SBJson4StreamTokeniser error]
+-[SBJson4StreamTokeniser .cxx_destruct]
+_OBJC_IVAR_$_SBJson4StreamTokeniser.offset
+_OBJC_IVAR_$_SBJson4StreamTokeniser.index
+_OBJC_IVAR_$_SBJson4StreamTokeniser._error
+_OBJC_IVAR_$_SBJson4StreamTokeniser.data
+_OBJC_IVAR_$_SBJson4StreamTokeniser.bytes
+_OBJC_METACLASS_$_SBJson4StreamTokeniser
+_OBJC_CLASS_$_SBJson4StreamTokeniser
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/SBJson/SBJson4StreamTokeniser.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/SBJson/SBJson4StreamTokeniser.h
++[AudioSessionManager setAudioSessionCategory:]
+_OBJC_METACLASS_$_AudioSessionManager
+_OBJC_CLASS_$_AudioSessionManager
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/AudioSessionManager/AudioSessionManager.m
+-[SBJson4Writer init]
+-[SBJson4Writer stringWithObject:]
+-[SBJson4Writer dataWithObject:]
+-[SBJson4Writer writer:appendBytes:length:]
+-[SBJson4Writer maxDepth]
+-[SBJson4Writer setMaxDepth:]
+-[SBJson4Writer error]
+-[SBJson4Writer setError:]
+-[SBJson4Writer humanReadable]
+-[SBJson4Writer setHumanReadable:]
+-[SBJson4Writer sortKeys]
+-[SBJson4Writer setSortKeys:]
+-[SBJson4Writer sortKeysComparator]
+-[SBJson4Writer setSortKeysComparator:]
+-[SBJson4Writer acc]
+-[SBJson4Writer setAcc:]
+-[SBJson4Writer .cxx_destruct]
+_OBJC_CLASS_$_SBJson4Writer
+_OBJC_CLASS_$_SBJson4StreamWriter
+_OBJC_IVAR_$_SBJson4Writer._maxDepth
+_OBJC_IVAR_$_SBJson4Writer._error
+_OBJC_IVAR_$_SBJson4Writer._humanReadable
+_OBJC_IVAR_$_SBJson4Writer._sortKeys
+_OBJC_IVAR_$_SBJson4Writer._sortKeysComparator
+_OBJC_IVAR_$_SBJson4Writer._acc
+l_OBJC_PROTOCOL_$_SBJson4StreamWriterDelegate
+l_OBJC_LABEL_PROTOCOL_$_SBJson4StreamWriterDelegate
+_OBJC_METACLASS_$_SBJson4Writer
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/SBJson/SBJson4Writer.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/SBJson/SBJson4Writer.h
+-[InCompleteRecordViewController viewDidLoad]
+-[InCompleteRecordViewController deleteRecordin]
+-[InCompleteRecordViewController pauseRecordingFromBackGround]
+___62-[InCompleteRecordViewController pauseRecordingFromBackGround]_block_invoke
+___copy_helper_block_
+___destroy_helper_block_
+___62-[InCompleteRecordViewController pauseRecordingFromBackGround]_block_invoke.73
+___copy_helper_block_.80
+___destroy_helper_block_.81
+-[InCompleteRecordViewController hideDeleteButton]
+-[InCompleteRecordViewController showHud]
+-[InCompleteRecordViewController viewWillAppear:]
+-[InCompleteRecordViewController viewDidAppear:]
+-[InCompleteRecordViewController viewWillDisappear:]
+-[InCompleteRecordViewController disMissPopView:]
+-[InCompleteRecordViewController dismissPopView:]
+-[InCompleteRecordViewController addView:]
+-[InCompleteRecordViewController setRoundedView:toDiameter:]
+-[InCompleteRecordViewController setTimer]
+-[InCompleteRecordViewController updateTimer]
+-[InCompleteRecordViewController setStopRecordingView:]
+___55-[InCompleteRecordViewController setStopRecordingView:]_block_invoke
+___copy_helper_block_.269
+___destroy_helper_block_.270
+___55-[InCompleteRecordViewController setStopRecordingView:]_block_invoke.279
+___copy_helper_block_.282
+___destroy_helper_block_.283
+-[InCompleteRecordViewController stopRecordingViewSettingSupport]
+-[InCompleteRecordViewController setPauseRecordingView:]
+-[InCompleteRecordViewController setStartRecordingView:]
+-[InCompleteRecordViewController startRecordingViewSettingSupport]
+-[InCompleteRecordViewController addAnimatedView]
+___49-[InCompleteRecordViewController addAnimatedView]_block_invoke
+___copy_helper_block_.388
+___destroy_helper_block_.389
+___49-[InCompleteRecordViewController addAnimatedView]_block_invoke.391
+-[InCompleteRecordViewController dismissView]
+-[InCompleteRecordViewController presentRecordView]
+-[InCompleteRecordViewController sliderValueChanged]
+-[InCompleteRecordViewController updateSliderTime:]
+-[InCompleteRecordViewController deleteButtonPressed:]
+___54-[InCompleteRecordViewController deleteButtonPressed:]_block_invoke
+___copy_helper_block_.424
+___destroy_helper_block_.425
+___54-[InCompleteRecordViewController deleteButtonPressed:]_block_invoke.429
+___copy_helper_block_.430
+___destroy_helper_block_.431
+-[InCompleteRecordViewController backButtonPressed:]
+___52-[InCompleteRecordViewController backButtonPressed:]_block_invoke
+___copy_helper_block_.437
+___destroy_helper_block_.438
+-[InCompleteRecordViewController disMis]
+-[InCompleteRecordViewController moreButtonPressed:]
+-[InCompleteRecordViewController UserSettings]
+-[InCompleteRecordViewController uploadAudio:]
+___46-[InCompleteRecordViewController uploadAudio:]_block_invoke
+___46-[InCompleteRecordViewController uploadAudio:]_block_invoke_2
+___copy_helper_block_.474
+___destroy_helper_block_.475
+___copy_helper_block_.477
+___destroy_helper_block_.478
+___46-[InCompleteRecordViewController uploadAudio:]_block_invoke.480
+___copy_helper_block_.481
+___destroy_helper_block_.482
+-[InCompleteRecordViewController EditDepartment]
+-[InCompleteRecordViewController gestureRecognizer:shouldReceiveTouch:]
+-[InCompleteRecordViewController audioRecord]
+-[InCompleteRecordViewController startRecorderAfterPrepareed]
+-[InCompleteRecordViewController pauseRecording]
+-[InCompleteRecordViewController setCompressAudio]
+-[InCompleteRecordViewController convertAudio]
+__Z13DoConvertFilePK7__CFURLS1_md
+-[InCompleteRecordViewController stopRecording]
+-[InCompleteRecordViewController prepareAudioPlayer]
+-[InCompleteRecordViewController playRecording]
+-[InCompleteRecordViewController updateAudioRecordToDatabase]
+-[InCompleteRecordViewController composeAudio]
+___46-[InCompleteRecordViewController composeAudio]_block_invoke
+___copy_helper_block_.595
+___destroy_helper_block_.596
+-[InCompleteRecordViewController hideHud]
+-[InCompleteRecordViewController hideHud1]
+-[InCompleteRecordViewController audioPlayerDidFinishPlaying:successfully:]
+-[InCompleteRecordViewController numberOfSectionsInTableView:]
+-[InCompleteRecordViewController tableView:numberOfRowsInSection:]
+-[InCompleteRecordViewController tableView:cellForRowAtIndexPath:]
+-[InCompleteRecordViewController tableView:didSelectRowAtIndexPath:]
+-[InCompleteRecordViewController cancel:]
+-[InCompleteRecordViewController save:]
+-[InCompleteRecordViewController didReceiveMemoryWarning]
+-[InCompleteRecordViewController stopRecordingButtonClicked:]
+-[InCompleteRecordViewController player]
+-[InCompleteRecordViewController setPlayer:]
+-[InCompleteRecordViewController recorder]
+-[InCompleteRecordViewController setRecorder:]
+-[InCompleteRecordViewController recordedAudioFileName]
+-[InCompleteRecordViewController setRecordedAudioFileName:]
+-[InCompleteRecordViewController recordedAudioURL]
+-[InCompleteRecordViewController setRecordedAudioURL:]
+-[InCompleteRecordViewController recordCreatedDateString]
+-[InCompleteRecordViewController setRecordCreatedDateString:]
+-[InCompleteRecordViewController existingAudioFileName]
+-[InCompleteRecordViewController setExistingAudioFileName:]
+-[InCompleteRecordViewController existingAudioDate]
+-[InCompleteRecordViewController setExistingAudioDate:]
+-[InCompleteRecordViewController existingAudioDepartmentName]
+-[InCompleteRecordViewController setExistingAudioDepartmentName:]
+-[InCompleteRecordViewController playerAudioURL]
+-[InCompleteRecordViewController setPlayerAudioURL:]
+-[InCompleteRecordViewController hud]
+-[InCompleteRecordViewController setHud:]
+-[InCompleteRecordViewController hud1]
+-[InCompleteRecordViewController setHud1:]
+-[InCompleteRecordViewController deleteButton]
+-[InCompleteRecordViewController setDeleteButton:]
+-[InCompleteRecordViewController stopNewImageView]
+-[InCompleteRecordViewController setStopNewImageView:]
+-[InCompleteRecordViewController stopNewButton]
+-[InCompleteRecordViewController setStopNewButton:]
+-[InCompleteRecordViewController stopLabel]
+-[InCompleteRecordViewController setStopLabel:]
+-[InCompleteRecordViewController animatedImageView]
+-[InCompleteRecordViewController setAnimatedImageView:]
+-[InCompleteRecordViewController audioDuration]
+-[InCompleteRecordViewController setAudioDuration:]
+-[InCompleteRecordViewController .cxx_destruct]
+_OBJC_CLASS_$_InCompleteRecordViewController
+_OBJC_IVAR_$_InCompleteRecordViewController.popupView
+_OBJC_CLASS_$_PopUpCustomView
+_OBJC_IVAR_$_InCompleteRecordViewController.obj
+_OBJC_IVAR_$_InCompleteRecordViewController.db
+_OBJC_IVAR_$_InCompleteRecordViewController.existingAudioFileName
+_OBJC_IVAR_$_InCompleteRecordViewController.bsackUpAudioFileName
+_OBJC_IVAR_$_InCompleteRecordViewController.isRecordingStarted
+_OBJC_IVAR_$_InCompleteRecordViewController.recordingPauseAndExit
+_OBJC_IVAR_$_InCompleteRecordViewController.recorder
+_OBJC_IVAR_$_InCompleteRecordViewController.stopTimer
+_OBJC_IVAR_$_InCompleteRecordViewController.recordingPausedOrStoped
+_OBJC_IVAR_$_InCompleteRecordViewController.task
+___block_descriptor_tmp
+___block_descriptor_tmp.82
+_OBJC_IVAR_$_InCompleteRecordViewController.hud
+_OBJC_CLASS_$_MBProgressHUD
+_OBJC_IVAR_$_InCompleteRecordViewController.i
+_OBJC_IVAR_$_InCompleteRecordViewController.audioDurationLAbel
+_OBJC_IVAR_$_InCompleteRecordViewController.timerMinutes
+_OBJC_IVAR_$_InCompleteRecordViewController.timerSeconds
+_OBJC_IVAR_$_InCompleteRecordViewController.timerHour
+_OBJC_IVAR_$_InCompleteRecordViewController.recordedAudioFileName
+_OBJC_IVAR_$_InCompleteRecordViewController.existingAudioDepartmentName
+_OBJC_IVAR_$_InCompleteRecordViewController.existingAudioDate
+_OBJC_IVAR_$_InCompleteRecordViewController.animatedImageView
+_OBJC_IVAR_$_InCompleteRecordViewController.minutesValue
+_OBJC_IVAR_$_InCompleteRecordViewController.player
+_OBJC_IVAR_$_InCompleteRecordViewController.circleView
+_OBJC_IVAR_$_InCompleteRecordViewController.dictationTimerSeconds
+_OBJC_IVAR_$_InCompleteRecordViewController.stopNewImageView
+_OBJC_IVAR_$_InCompleteRecordViewController.stopNewButton
+_OBJC_IVAR_$_InCompleteRecordViewController.stopLabel
+_OBJC_IVAR_$_InCompleteRecordViewController.alertController
+___block_descriptor_tmp.272
+_OBJC_IVAR_$_InCompleteRecordViewController.actionDelete
+___block_descriptor_tmp.284
+_OBJC_IVAR_$_InCompleteRecordViewController.actionCancel
+_OBJC_IVAR_$_InCompleteRecordViewController.recordingStopped
+_OBJC_IVAR_$_InCompleteRecordViewController.audioRecordSlider
+_OBJC_IVAR_$_InCompleteRecordViewController.currentDuration
+_OBJC_IVAR_$_InCompleteRecordViewController.totalDuration
+___block_descriptor_tmp.390
+___block_descriptor_tmp.393
+___block_literal_global
+_OBJC_IVAR_$_InCompleteRecordViewController.app
+___block_descriptor_tmp.426
+___block_descriptor_tmp.432
+___block_descriptor_tmp.439
+_OBJC_IVAR_$_InCompleteRecordViewController.editPopUp
+_OBJC_IVAR_$_InCompleteRecordViewController.deleteButton
+___block_descriptor_tmp.476
+___block_descriptor_tmp.479
+___block_descriptor_tmp.483
+_OBJC_IVAR_$_InCompleteRecordViewController.recordedAudioURL
+_OBJC_IVAR_$_InCompleteRecordViewController.destinationFilePath
+_OBJC_IVAR_$_InCompleteRecordViewController.destinationURL
+_OBJC_IVAR_$_InCompleteRecordViewController.sourceURL
+_OBJC_IVAR_$_InCompleteRecordViewController.outputFormat
+_OBJC_IVAR_$_InCompleteRecordViewController.sampleRate
+_OBJC_IVAR_$_InCompleteRecordViewController.playerAudioURL
+_OBJC_IVAR_$_InCompleteRecordViewController.circleViewTimerSeconds
+_OBJC_IVAR_$_InCompleteRecordViewController.circleViewTimerMinutes
+___block_descriptor_tmp.597
+_OBJC_IVAR_$_InCompleteRecordViewController.hud1
+_OBJC_IVAR_$_InCompleteRecordViewController.departmentNamesArray
+_OBJC_IVAR_$_InCompleteRecordViewController.cell
+_OBJC_CLASS_$_DepartMent
+_OBJC_IVAR_$_InCompleteRecordViewController.recordCreatedDateString
+_OBJC_IVAR_$_InCompleteRecordViewController._audioDuration
+_OBJC_IVAR_$_InCompleteRecordViewController.audiorecordDict
+_OBJC_IVAR_$_InCompleteRecordViewController.result
+_OBJC_IVAR_$_InCompleteRecordViewController.maxRecordingTimeString
+_OBJC_IVAR_$_InCompleteRecordViewController.tap
+l_OBJC_PROTOCOL_$_NSObject
+l_OBJC_LABEL_PROTOCOL_$_NSObject
+l_OBJC_PROTOCOL_$_UIGestureRecognizerDelegate
+l_OBJC_LABEL_PROTOCOL_$_UIGestureRecognizerDelegate
+l_OBJC_PROTOCOL_$_AVAudioPlayerDelegate
+l_OBJC_LABEL_PROTOCOL_$_AVAudioPlayerDelegate
+_OBJC_METACLASS_$_InCompleteRecordViewController
+_OBJC_IVAR_$_InCompleteRecordViewController.circleViewTimerHour
+_OBJC_IVAR_$_InCompleteRecordViewController.deleted
+_OBJC_IVAR_$_InCompleteRecordViewController.composed
+_OBJC_IVAR_$_InCompleteRecordViewController.isRecording
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/InCompleteRecordViewController.mm
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/InCompleteRecordViewController.h
+CGRectMake
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.1.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGGeometry.h
+__destroy_helper_block_
+__copy_helper_block_
+__46-[InCompleteRecordViewController composeAudio]_block_invoke
+__46-[InCompleteRecordViewController uploadAudio:]_block_invoke.480
+__46-[InCompleteRecordViewController uploadAudio:]_block_invoke_2
+__46-[InCompleteRecordViewController uploadAudio:]_block_invoke
+__52-[InCompleteRecordViewController backButtonPressed:]_block_invoke
+__54-[InCompleteRecordViewController deleteButtonPressed:]_block_invoke.429
+__54-[InCompleteRecordViewController deleteButtonPressed:]_block_invoke
+__49-[InCompleteRecordViewController addAnimatedView]_block_invoke.391
+__49-[InCompleteRecordViewController addAnimatedView]_block_invoke
+__55-[InCompleteRecordViewController setStopRecordingView:]_block_invoke.279
+__55-[InCompleteRecordViewController setStopRecordingView:]_block_invoke
+__62-[InCompleteRecordViewController pauseRecordingFromBackGround]_block_invoke.73
+__62-[InCompleteRecordViewController pauseRecordingFromBackGround]_block_invoke
+-[DownloadMetaDataJob initWithdownLoadEntityJobName:withRequestParameter:withResourcePath:withHttpMethd:]
+-[DownloadMetaDataJob startMetaDataDownLoad]
+-[DownloadMetaDataJob sendNewRequestWithResourcePath:withRequestParameter:withJobName:withMethodType:]
+-[DownloadMetaDataJob connection:didReceiveResponse:]
+-[DownloadMetaDataJob connection:didReceiveData:]
+-[DownloadMetaDataJob shortErrorFromError:]
+-[DownloadMetaDataJob connection:didFailWithError:]
+-[DownloadMetaDataJob connectionDidFinishLoading:]
+-[DownloadMetaDataJob downLoadEntityJobName]
+-[DownloadMetaDataJob setDownLoadEntityJobName:]
+-[DownloadMetaDataJob requestParameter]
+-[DownloadMetaDataJob setRequestParameter:]
+-[DownloadMetaDataJob downLoadResourcePath]
+-[DownloadMetaDataJob setDownLoadResourcePath:]
+-[DownloadMetaDataJob downLoadJobDelegate]
+-[DownloadMetaDataJob setDownLoadJobDelegate:]
+-[DownloadMetaDataJob httpMethod]
+-[DownloadMetaDataJob setHttpMethod:]
+-[DownloadMetaDataJob addTrintsAfterSomeTimeTimer]
+-[DownloadMetaDataJob setAddTrintsAfterSomeTimeTimer:]
+-[DownloadMetaDataJob currentSaveTrintIndex]
+-[DownloadMetaDataJob setCurrentSaveTrintIndex:]
+-[DownloadMetaDataJob isNewMatchFound]
+-[DownloadMetaDataJob setIsNewMatchFound:]
+-[DownloadMetaDataJob dataArray]
+-[DownloadMetaDataJob setDataArray:]
+-[DownloadMetaDataJob .cxx_destruct]
+_OBJC_CLASS_$_DownloadMetaDataJob
+_OBJC_IVAR_$_DownloadMetaDataJob.downLoadResourcePath
+_OBJC_IVAR_$_DownloadMetaDataJob.dataArray
+_OBJC_IVAR_$_DownloadMetaDataJob.downLoadEntityJobName
+_OBJC_IVAR_$_DownloadMetaDataJob.httpMethod
+_OBJC_IVAR_$_DownloadMetaDataJob.responseData
+_OBJC_IVAR_$_DownloadMetaDataJob.statusCode
+_OBJC_IVAR_$_DownloadMetaDataJob.requestParameter
+_OBJC_IVAR_$_DownloadMetaDataJob.downLoadJobDelegate
+_OBJC_IVAR_$_DownloadMetaDataJob.addTrintsAfterSomeTimeTimer
+_OBJC_IVAR_$_DownloadMetaDataJob.currentSaveTrintIndex
+_OBJC_IVAR_$_DownloadMetaDataJob.isNewMatchFound
+_OBJC_IVAR_$_DownloadMetaDataJob.startDate
+_OBJC_METACLASS_$_DownloadMetaDataJob
+_OBJC_IVAR_$_DownloadMetaDataJob.bytesReceived
+_OBJC_IVAR_$_DownloadMetaDataJob.expectedBytes
+_OBJC_IVAR_$_DownloadMetaDataJob.percentComplete
+_OBJC_IVAR_$_DownloadMetaDataJob.progress
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/API Manager/DownloadMetaDataJob.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/API Manager/DownloadMetaDataJob.h
++[Database shareddatabase]
+-[Database init]
+-[Database getDatabasePath]
+-[Database insertDepartMentData:]
+-[Database getDepartMentNames]
+-[Database getDepartMentFromDepartmentName:]
+-[Database getCountOfTransfersOfDicatationStatus:]
+-[Database getCountOfTodaysTransfer:]
+-[Database getCountOfTransferFailed]
+-[Database getListOfFileTransfersOfStatus:]
+-[Database getDepartMentIdFromDepartmentName:]
+-[Database getDefaultDepartMentId]
+-[Database getDepartMentIdForFileName:]
+-[Database insertRecordingData:]
+-[Database updateAudioFileName:dictationStatus:]
+-[Database updateAudioFileName:duration:]
+-[Database getListOfTransferredOrDeletedFiles:]
+-[Database updateAudioFileStatus:fileName:dateAndTime:]
+-[Database updateAudioFileUploadedStatus:fileName:dateAndTime:mobiledictationidval:]
+-[Database updateAudioFileStatus:fileName:]
+-[Database updateDemo:]
+-[Database getMobileDictationIdFromFileName:]
+-[Database updateUploadingFileDictationStatus]
+-[Database getTransferStatus:]
+-[Database updateDepartment:fileName:]
+-[Database getImportedFileCount]
+-[Database getlistOfimportedFilesAudioDetailsArray:]
+-[Database updateAudioFileDeleteStatus:fileName:updatedDated:currentDuration:fileSize:]
+-[Database setDepartment]
+-[Database addDictationStatus:]
+_db
+_OBJC_METACLASS_$_Database
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Database/Database.m
+-[SelectDepartmentViewController viewDidLoad]
+-[SelectDepartmentViewController viewWillAppear:]
+-[SelectDepartmentViewController numberOfSectionsInTableView:]
+-[SelectDepartmentViewController tableView:numberOfRowsInSection:]
+-[SelectDepartmentViewController tableView:cellForRowAtIndexPath:]
+-[SelectDepartmentViewController tableView:didSelectRowAtIndexPath:]
+-[SelectDepartmentViewController checkAndDismissViewController]
+-[SelectDepartmentViewController topViewController]
+-[SelectDepartmentViewController topViewController:]
+-[SelectDepartmentViewController didReceiveMemoryWarning]
+-[SelectDepartmentViewController tableView]
+-[SelectDepartmentViewController setTableView:]
+-[SelectDepartmentViewController .cxx_destruct]
+_OBJC_CLASS_$_SelectDepartmentViewController
+_OBJC_IVAR_$_SelectDepartmentViewController.departmentNameArray
+_OBJC_CLASS_$_LoginViewController
+_OBJC_IVAR_$_SelectDepartmentViewController.tableView
+_OBJC_METACLASS_$_SelectDepartmentViewController
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/SelectDepartmentViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/SelectDepartmentViewController.h
+-[LoginViewController viewDidLoad]
+-[LoginViewController viewWillAppear:]
+-[LoginViewController viewWillDisappear:]
+-[LoginViewController validatePinResponseCheck:]
+-[LoginViewController checkAndDismissViewController]
+-[LoginViewController topViewController]
+-[LoginViewController topViewController:]
+-[LoginViewController textField:shouldChangeCharactersInRange:replacementString:]
+-[LoginViewController resignResponder:]
+-[LoginViewController didReceiveMemoryWarning]
+-[LoginViewController submitButtonCilcked:]
+___43-[LoginViewController submitButtonCilcked:]_block_invoke
+-[LoginViewController cancelButtonClicked:]
+-[LoginViewController pinCode1TextField]
+-[LoginViewController setPinCode1TextField:]
+-[LoginViewController pinCode2TextField]
+-[LoginViewController setPinCode2TextField:]
+-[LoginViewController pinCode3TextField]
+-[LoginViewController setPinCode3TextField:]
+-[LoginViewController pinCode4TextField]
+-[LoginViewController setPinCode4TextField:]
+-[LoginViewController hud]
+-[LoginViewController setHud:]
+-[LoginViewController .cxx_destruct]
+_OBJC_IVAR_$_LoginViewController.pinCode1TextField
+_OBJC_IVAR_$_LoginViewController.pinCode2TextField
+_OBJC_IVAR_$_LoginViewController.pinCode3TextField
+_OBJC_IVAR_$_LoginViewController.pinCode4TextField
+_OBJC_IVAR_$_LoginViewController.hud
+_OBJC_CLASS_$_User
+_OBJC_CLASS_$_Keychain
+l_OBJC_PROTOCOL_$_UITextFieldDelegate
+l_OBJC_LABEL_PROTOCOL_$_UITextFieldDelegate
+_OBJC_METACLASS_$_LoginViewController
+_OBJC_IVAR_$_LoginViewController.isLoadedFirstTime
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/LoginViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/LoginViewController.h
+__43-[LoginViewController submitButtonCilcked:]_block_invoke
+-[PopUpCustomView initWithFrame:andSubViews::]
+-[PopUpCustomView initWithFrame:sender:]
+-[PopUpCustomView tableView:frame:]
+-[PopUpCustomView initWithFrame:senderNameForSlider:player:]
+-[PopUpCustomView initWithFrame:senderForInternetMessage:]
+-[PopUpCustomView .cxx_destruct]
+_OBJC_IVAR_$_PopUpCustomView.overlay
+_OBJC_IVAR_$_PopUpCustomView.tap
+_OBJC_METACLASS_$_PopUpCustomView
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/PopUpCustomView.m
++[APIManager sharedManager]
+-[APIManager init]
+-[APIManager getDateAndTimeString]
+-[APIManager getFileSize:]
+-[APIManager getMacId]
+-[APIManager getFreeDiskspace]
+-[APIManager deleteFile:]
+-[APIManager checkDeviceRegistrationMacID:]
+-[APIManager authenticateUserMacID:password:username:]
+-[APIManager acceptPinMacID:Pin:]
+-[APIManager validatePinMacID:Pin:]
+-[APIManager mobileDictationsInsertMobileStatus:OriginalFileName:andMacID:]
+-[APIManager mobileDataSynchronisationMobileStatus:OriginalFileName:macID:DeleteFlag:]
+-[APIManager changePinOldPin:NewPin:macID:]
+-[APIManager uploadFileToServer:]
+___33-[APIManager uploadFileToServer:]_block_invoke
+___33-[APIManager uploadFileToServer:]_block_invoke_2
+___copy_helper_block_.256
+___destroy_helper_block_.257
+-[APIManager createBodyWithBoundary:parameters:paths:fieldName:]
+___64-[APIManager createBodyWithBoundary:parameters:paths:fieldName:]_block_invoke
+___copy_helper_block_.273
+___destroy_helper_block_.274
+-[APIManager mimeTypeForPath:]
+-[APIManager generateBoundaryString]
+-[APIManager incompleteFileTransferCount]
+-[APIManager setIncompleteFileTransferCount:]
+-[APIManager inCompleteFileTransferNamesArray]
+-[APIManager setInCompleteFileTransferNamesArray:]
+-[APIManager transferFailedCount]
+-[APIManager setTransferFailedCount:]
+-[APIManager todaysFileTransferCount]
+-[APIManager setTodaysFileTransferCount:]
+-[APIManager awaitingFileTransferCount]
+-[APIManager setAwaitingFileTransferCount:]
+-[APIManager awaitingFileTransferNamesArray]
+-[APIManager setAwaitingFileTransferNamesArray:]
+-[APIManager deletedListArray]
+-[APIManager setDeletedListArray:]
+-[APIManager transferredListArray]
+-[APIManager setTransferredListArray:]
+-[APIManager todaysFileTransferNamesArray]
+-[APIManager setTodaysFileTransferNamesArray:]
+-[APIManager failedTransferNamesArray]
+-[APIManager setFailedTransferNamesArray:]
+-[APIManager userSettingsOpened]
+-[APIManager setUserSettingsOpened:]
+-[APIManager userSettingsClosed]
+-[APIManager setUserSettingsClosed:]
+-[APIManager .cxx_destruct]
+_singleton
+_OBJC_IVAR_$_APIManager.result
+___block_descriptor_tmp.259
+___block_descriptor_tmp.276
+_OBJC_IVAR_$_APIManager.incompleteFileTransferCount
+_OBJC_IVAR_$_APIManager.inCompleteFileTransferNamesArray
+_OBJC_IVAR_$_APIManager.transferFailedCount
+_OBJC_IVAR_$_APIManager.todaysFileTransferCount
+_OBJC_IVAR_$_APIManager.awaitingFileTransferCount
+_OBJC_IVAR_$_APIManager.awaitingFileTransferNamesArray
+_OBJC_IVAR_$_APIManager.deletedListArray
+_OBJC_IVAR_$_APIManager.transferredListArray
+_OBJC_IVAR_$_APIManager._todaysFileTransferNamesArray
+_OBJC_IVAR_$_APIManager._failedTransferNamesArray
+_OBJC_IVAR_$_APIManager._userSettingsOpened
+_OBJC_IVAR_$_APIManager._userSettingsClosed
+_OBJC_METACLASS_$_APIManager
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/API Manager/APIManager.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/API Manager/APIManager.h
+__64-[APIManager createBodyWithBoundary:parameters:paths:fieldName:]_block_invoke
+__33-[APIManager uploadFileToServer:]_block_invoke_2
+__33-[APIManager uploadFileToServer:]_block_invoke
+-[UserSettingsViewController viewDidLoad]
+-[UserSettingsViewController viewWillAppear:]
+-[UserSettingsViewController viewWillDisappear:]
+-[UserSettingsViewController popViewController:]
+-[UserSettingsViewController numberOfSectionsInTableView:]
+-[UserSettingsViewController tableView:viewForHeaderInSection:]
+-[UserSettingsViewController tableView:heightForHeaderInSection:]
+-[UserSettingsViewController tableView:heightForRowAtIndexPath:]
+-[UserSettingsViewController tableView:numberOfRowsInSection:]
+-[UserSettingsViewController tableView:cellForRowAtIndexPath:]
+-[UserSettingsViewController createSwitch:]
+-[UserSettingsViewController flip:]
+-[UserSettingsViewController tableView:didSelectRowAtIndexPath:]
+-[UserSettingsViewController hideTableView]
+-[UserSettingsViewController gestureRecognizer:shouldReceiveTouch:]
+-[UserSettingsViewController disMissPopView:]
+-[UserSettingsViewController didReceiveMemoryWarning]
+-[UserSettingsViewController cancel:]
+-[UserSettingsViewController save:]
+-[UserSettingsViewController textField:shouldChangeCharactersInRange:replacementString:]
+-[UserSettingsViewController getFreeDiskspace]
+-[UserSettingsViewController backButtonPressed:]
+-[UserSettingsViewController poUpTableView]
+-[UserSettingsViewController setPoUpTableView:]
+-[UserSettingsViewController userSettingsTableView]
+-[UserSettingsViewController setUserSettingsTableView:]
+-[UserSettingsViewController .cxx_destruct]
+_OBJC_CLASS_$_UserSettingsViewController
+_OBJC_IVAR_$_UserSettingsViewController.poUpTableView
+_OBJC_IVAR_$_UserSettingsViewController.app
+_OBJC_IVAR_$_UserSettingsViewController.recordSettingsItemsarray
+_OBJC_IVAR_$_UserSettingsViewController.storageManagementItemsArray
+_OBJC_IVAR_$_UserSettingsViewController.PlaybackAutoRewindByArray
+_OBJC_IVAR_$_UserSettingsViewController.popUpOptionsArray
+_OBJC_IVAR_$_UserSettingsViewController.radioButtonArray
+_OBJC_IVAR_$_UserSettingsViewController.abbreviationPopupView
+_OBJC_IVAR_$_UserSettingsViewController.tap
+_OBJC_IVAR_$_UserSettingsViewController.tap1
+_OBJC_CLASS_$_SwitchCreation
+_OBJC_IVAR_$_UserSettingsViewController.userSettingsTableView
+_OBJC_METACLASS_$_UserSettingsViewController
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/UserSettingsViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/UserSettingsViewController.h
+_OBJC_METACLASS_$_AudioDetails
+_OBJC_CLASS_$_AudioDetails
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Models/AudioDetails.m
++[SBJson4StreamWriter initialize]
+-[SBJson4StreamWriter init]
+-[SBJson4StreamWriter appendBytes:length:]
+-[SBJson4StreamWriter writeObject:]
+-[SBJson4StreamWriter writeArray:]
+-[SBJson4StreamWriter writeObjectOpen]
+-[SBJson4StreamWriter writeObjectClose]
+-[SBJson4StreamWriter writeArrayOpen]
+-[SBJson4StreamWriter writeArrayClose]
+-[SBJson4StreamWriter writeNull]
+-[SBJson4StreamWriter writeBool:]
+-[SBJson4StreamWriter writeValue:]
+-[SBJson4StreamWriter writeString:]
+-[SBJson4StreamWriter writeNumber:]
+-[SBJson4StreamWriter state]
+-[SBJson4StreamWriter setState:]
+-[SBJson4StreamWriter stateStack]
+-[SBJson4StreamWriter delegate]
+-[SBJson4StreamWriter setDelegate:]
+-[SBJson4StreamWriter maxDepth]
+-[SBJson4StreamWriter setMaxDepth:]
+-[SBJson4StreamWriter humanReadable]
+-[SBJson4StreamWriter setHumanReadable:]
+-[SBJson4StreamWriter sortKeys]
+-[SBJson4StreamWriter setSortKeys:]
+-[SBJson4StreamWriter sortKeysComparator]
+-[SBJson4StreamWriter setSortKeysComparator:]
+-[SBJson4StreamWriter error]
+-[SBJson4StreamWriter setError:]
+-[SBJson4StreamWriter .cxx_destruct]
+_kPositiveInfinity
+_kNegativeInfinity
+_kTrue
+_kFalse
+_OBJC_IVAR_$_SBJson4StreamWriter._maxDepth
+_OBJC_IVAR_$_SBJson4StreamWriter._stateStack
+_OBJC_CLASS_$_SBJson4StreamWriterStateStart
+_OBJC_IVAR_$_SBJson4StreamWriter._state
+_OBJC_IVAR_$_SBJson4StreamWriter.cache
+_OBJC_IVAR_$_SBJson4StreamWriter._delegate
+_OBJC_IVAR_$_SBJson4StreamWriter._sortKeys
+_OBJC_IVAR_$_SBJson4StreamWriter._sortKeysComparator
+_OBJC_IVAR_$_SBJson4StreamWriter._humanReadable
+_OBJC_CLASS_$_SBJson4StreamWriterStateObjectStart
+_OBJC_CLASS_$_SBJson4StreamWriterStateArrayStart
+_OBJC_IVAR_$_SBJson4StreamWriter._error
+_OBJC_METACLASS_$_SBJson4StreamWriter
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/SBJson/SBJson4StreamWriter.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/SBJson/SBJson4StreamWriter.h
+__inline_isnand
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.1.sdk/usr/include/math.h
+strForChar
+-[ListViewController viewDidLoad]
+-[ListViewController viewWillAppear:]
+-[ListViewController showUserSettings:]
+-[ListViewController UserSettings]
+-[ListViewController dismissPopView:]
+-[ListViewController numberOfSectionsInTableView:]
+-[ListViewController tableView:numberOfRowsInSection:]
+-[ListViewController tableView:cellForRowAtIndexPath:]
+-[ListViewController tableView:didSelectRowAtIndexPath:]
+-[ListViewController didReceiveMemoryWarning]
+-[ListViewController segmentChanged:]
+-[ListViewController segment]
+-[ListViewController setSegment:]
+-[ListViewController tableView]
+-[ListViewController setTableView:]
+-[ListViewController .cxx_destruct]
+_OBJC_CLASS_$_ListViewController
+_OBJC_IVAR_$_ListViewController.segment
+_OBJC_IVAR_$_ListViewController._tableView
+_OBJC_METACLASS_$_ListViewController
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/ListViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/ListViewController.h
++[Keychain appName]
++[Keychain setString:forKey:]
++[Keychain getStringForKey:]
+_OBJC_METACLASS_$_Keychain
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/KeyChain/Keychain.m
+__Z20ThreadStateInitalizev
+__Z28ThreadStateBeginInterruptionv
+__Z26ThreadStateEndInterruptionv
+__Z21ThreadStateSetRunningv
+__Z22ThreadStatePausedCheckv
+__Z18ThreadStateSetDonev
+__ZN24CAStreamBasicDescriptionC1Ev
+___clang_call_terminate
+__ZN12CAXExceptionC2EPKcl
+__ZNK24CAStreamBasicDescription8AsStringEPcm
+__ZN12CAX4CCStringC2El
+__ZL10sStateLock
+__ZL13sStateChanged
+__ZL6sState
+__ZTS12CAXException
+__ZTI12CAXException
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/AudioCompressor/ExtAudioFileConvert.mm
+CAX4CCString
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/AudioCompressor/PublicUtility/CAXException.h
+isprint
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.1.sdk/usr/include/ctype.h
+__istype
+isascii
+CFSwapInt32HostToBig
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.1.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CFByteOrder.h
+_OSSwapInt32
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.1.sdk/usr/include/libkern/arm/OSByteOrder.h
+CAXException
+DoConvertFile
+FormatError
+BytesToFrames
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/AudioCompressor/PublicUtility/CAStreamBasicDescription.h
+NumberChannels
+Print
+PrintFormat
+SetCanonical
+ThreadStateSetDone
+ThreadStatePausedCheck
+ThreadStateSetRunning
+ThreadStateEndInterruption
+ThreadStateBeginInterruption
+ThreadStateInitalize
+-[PinRegistrationViewController viewDidLoad]
+-[PinRegistrationViewController viewWillAppear:]
+-[PinRegistrationViewController didReceiveMemoryWarning]
+-[PinRegistrationViewController submitButtonClicked:]
+___53-[PinRegistrationViewController submitButtonClicked:]_block_invoke
+___53-[PinRegistrationViewController submitButtonClicked:]_block_invoke.81
+___copy_helper_block_.82
+___destroy_helper_block_.83
+-[PinRegistrationViewController validateUserResponse:]
+___54-[PinRegistrationViewController validateUserResponse:]_block_invoke
+___copy_helper_block_.106
+___destroy_helper_block_.107
+___54-[PinRegistrationViewController validateUserResponse:]_block_invoke.113
+___copy_helper_block_.118
+___destroy_helper_block_.119
+-[PinRegistrationViewController textField:shouldChangeCharactersInRange:replacementString:]
+-[PinRegistrationViewController resignResponder:]
+-[PinRegistrationViewController textFieldShouldReturn:]
+-[PinRegistrationViewController caneclButtonClicked:]
+-[PinRegistrationViewController pinCode1TextField]
+-[PinRegistrationViewController setPinCode1TextField:]
+-[PinRegistrationViewController pinCode2TextField]
+-[PinRegistrationViewController setPinCode2TextField:]
+-[PinRegistrationViewController pinCode3TextField]
+-[PinRegistrationViewController setPinCode3TextField:]
+-[PinRegistrationViewController pinCode4TextField]
+-[PinRegistrationViewController setPinCode4TextField:]
+-[PinRegistrationViewController pinCode5TextField]
+-[PinRegistrationViewController setPinCode5TextField:]
+-[PinRegistrationViewController pinCode6TextField]
+-[PinRegistrationViewController setPinCode6TextField:]
+-[PinRegistrationViewController pinCode7TextField]
+-[PinRegistrationViewController setPinCode7TextField:]
+-[PinRegistrationViewController pinCode8TextField]
+-[PinRegistrationViewController setPinCode8TextField:]
+-[PinRegistrationViewController submitButton]
+-[PinRegistrationViewController setSubmitButton:]
+-[PinRegistrationViewController cancelButton]
+-[PinRegistrationViewController setCancelButton:]
+-[PinRegistrationViewController hud]
+-[PinRegistrationViewController setHud:]
+-[PinRegistrationViewController window]
+-[PinRegistrationViewController setWindow:]
+-[PinRegistrationViewController .cxx_destruct]
+_OBJC_CLASS_$_PinRegistrationViewController
+_OBJC_IVAR_$_PinRegistrationViewController.pinCode1TextField
+_OBJC_IVAR_$_PinRegistrationViewController.pinCode2TextField
+_OBJC_IVAR_$_PinRegistrationViewController.pinCode3TextField
+_OBJC_IVAR_$_PinRegistrationViewController.pinCode4TextField
+_OBJC_IVAR_$_PinRegistrationViewController.pinCode5TextField
+_OBJC_IVAR_$_PinRegistrationViewController.pinCode6TextField
+_OBJC_IVAR_$_PinRegistrationViewController.pinCode7TextField
+_OBJC_IVAR_$_PinRegistrationViewController.pinCode8TextField
+_OBJC_IVAR_$_PinRegistrationViewController.submitButton
+_OBJC_IVAR_$_PinRegistrationViewController.cancelButton
+_OBJC_IVAR_$_PinRegistrationViewController.title
+_OBJC_IVAR_$_PinRegistrationViewController.message
+_OBJC_IVAR_$_PinRegistrationViewController.alertController
+_OBJC_IVAR_$_PinRegistrationViewController.actionOk
+_OBJC_IVAR_$_PinRegistrationViewController.hud
+___block_descriptor_tmp.84
+___block_descriptor_tmp.108
+___block_descriptor_tmp.120
+_OBJC_IVAR_$_PinRegistrationViewController._window
+_OBJC_METACLASS_$_PinRegistrationViewController
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/PinRegistrationViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/PinRegistrationViewController.h
+__54-[PinRegistrationViewController validateUserResponse:]_block_invoke.113
+__54-[PinRegistrationViewController validateUserResponse:]_block_invoke
+__53-[PinRegistrationViewController submitButtonClicked:]_block_invoke.81
+__53-[PinRegistrationViewController submitButtonClicked:]_block_invoke
+-[SBJson4Parser init]
++[SBJson4Parser multiRootParserWithBlock:errorHandler:]
++[SBJson4Parser unwrapRootArrayParserWithBlock:errorHandler:]
++[SBJson4Parser parserWithBlock:allowMultiRoot:unwrapRootArray:errorHandler:]
+-[SBJson4Parser initWithBlock:processBlock:multiRoot:unwrapRootArray:maxDepth:errorHandler:]
+___92-[SBJson4Parser initWithBlock:processBlock:multiRoot:unwrapRootArray:maxDepth:errorHandler:]_block_invoke
+-[SBJson4Parser pop]
+-[SBJson4Parser parserFound:isValue:]
+-[SBJson4Parser parserFoundObjectStart]
+-[SBJson4Parser parserFoundObjectKey:]
+-[SBJson4Parser parserFoundObjectEnd]
+-[SBJson4Parser parserFoundArrayStart]
+-[SBJson4Parser parserFoundArrayEnd]
+-[SBJson4Parser maxDepthError]
+-[SBJson4Parser parserFoundBoolean:]
+-[SBJson4Parser parserFoundNull]
+-[SBJson4Parser parserFoundNumber:]
+-[SBJson4Parser parserFoundString:]
+-[SBJson4Parser parserFoundError:]
+-[SBJson4Parser addToPath]
+-[SBJson4Parser pathString]
+-[SBJson4Parser parserShouldSupportManyDocuments]
+-[SBJson4Parser parse:]
+-[SBJson4Parser .cxx_destruct]
+_OBJC_CLASS_$_SBJson4Parser
+_OBJC_CLASS_$_SBJson4StreamParser
+_OBJC_IVAR_$_SBJson4Parser._parser
+_OBJC_IVAR_$_SBJson4Parser.supportManyDocuments
+_OBJC_IVAR_$_SBJson4Parser.supportPartialDocuments
+_OBJC_IVAR_$_SBJson4Parser.valueBlock
+_OBJC_IVAR_$_SBJson4Parser.keyStack
+_OBJC_IVAR_$_SBJson4Parser.stack
+_OBJC_IVAR_$_SBJson4Parser.path
+_OBJC_IVAR_$_SBJson4Parser.processBlock
+_OBJC_IVAR_$_SBJson4Parser.errorHandler
+_OBJC_IVAR_$_SBJson4Parser.currentType
+_OBJC_IVAR_$_SBJson4Parser._maxDepth
+_OBJC_IVAR_$_SBJson4Parser.array
+_OBJC_IVAR_$_SBJson4Parser.dict
+_OBJC_IVAR_$_SBJson4Parser.depth
+l_OBJC_PROTOCOL_$_SBJson4StreamParserDelegate
+l_OBJC_LABEL_PROTOCOL_$_SBJson4StreamParserDelegate
+_OBJC_METACLASS_$_SBJson4Parser
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/SBJson/SBJson4Parser.m
+__92-[SBJson4Parser initWithBlock:processBlock:multiRoot:unwrapRootArray:maxDepth:errorHandler:]_block_invoke
+-[SplashScreenViewController viewDidLoad]
+-[SplashScreenViewController viewWillAppear:]
+-[SplashScreenViewController checkDeviceRegistration]
+-[SplashScreenViewController addAlertView]
+-[SplashScreenViewController refresh:]
+-[SplashScreenViewController removeAlertView]
+-[SplashScreenViewController deviceRegistrationResponseCheck:]
+-[SplashScreenViewController viewWillDisappear:]
+-[SplashScreenViewController didReceiveMemoryWarning]
+-[SplashScreenViewController hud]
+-[SplashScreenViewController setHud:]
+-[SplashScreenViewController .cxx_destruct]
+_OBJC_CLASS_$_SplashScreenViewController
+_kReachabilityChangedNotification
+_OBJC_IVAR_$_SplashScreenViewController.APIcalled
+_OBJC_IVAR_$_SplashScreenViewController.hud
+_OBJC_METACLASS_$_SplashScreenViewController
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/SplashScreenViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/SplashScreenViewController.h
+-[SBJson4StreamParser init]
+-[SBJson4StreamParser tokenName:]
+-[SBJson4StreamParser handleObjectStart]
+-[SBJson4StreamParser handleObjectEnd:]
+-[SBJson4StreamParser handleArrayStart]
+-[SBJson4StreamParser handleArrayEnd:]
+-[SBJson4StreamParser handleTokenNotExpectedHere:]
+-[SBJson4StreamParser parse:]
+-[SBJson4StreamParser decodeHexQuad:]
+-[SBJson4StreamParser decodeStringToken:length:]
+-[SBJson4StreamParser stop]
+-[SBJson4StreamParser state]
+-[SBJson4StreamParser setState:]
+-[SBJson4StreamParser delegate]
+-[SBJson4StreamParser setDelegate:]
+-[SBJson4StreamParser .cxx_destruct]
+_OBJC_IVAR_$_SBJson4StreamParser._stateStack
+_OBJC_CLASS_$_SBJson4StreamParserStateStart
+_OBJC_IVAR_$_SBJson4StreamParser._state
+_OBJC_IVAR_$_SBJson4StreamParser.tokeniser
+_OBJC_IVAR_$_SBJson4StreamParser._delegate
+_OBJC_CLASS_$_SBJson4StreamParserStateObjectStart
+_OBJC_CLASS_$_SBJson4StreamParserStateArrayStart
+_OBJC_CLASS_$_SBJson4StreamParserStateError
+_OBJC_IVAR_$_SBJson4StreamParser.stopped
+_OBJC_METACLASS_$_SBJson4StreamParser
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/SBJson/SBJson4StreamParser.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/SBJson/SBJson4StreamParser.h
+-[AppDelegate application:didFinishLaunchingWithOptions:]
+___57-[AppDelegate application:didFinishLaunchingWithOptions:]_block_invoke
+-[AppDelegate checkAndCopyDatabase]
+-[AppDelegate applicationWillResignActive:]
+-[AppDelegate applicationDidEnterBackground:]
+-[AppDelegate applicationDidBecomeActive:]
+-[AppDelegate applicationWillTerminate:]
+-[AppDelegate handleInterruption:]
+-[AppDelegate handleRouteChange:]
+-[AppDelegate application:handleEventsForBackgroundURLSession:completionHandler:]
+-[AppDelegate applicationWillEnterForeground:]
+___46-[AppDelegate applicationWillEnterForeground:]_block_invoke
+___copy_helper_block_.154
+___destroy_helper_block_.155
+-[AppDelegate getImportedFiles]
+-[AppDelegate convertToWav:]
+-[AppDelegate setCompressAudioFileName:]
+-[AppDelegate prepareAudioPlayer:]
+-[AppDelegate convertToWavFileName:]
+-[AppDelegate saveAudioRecordToDatabaseFileName:]
+-[AppDelegate hud]
+-[AppDelegate setHud:]
+-[AppDelegate window]
+-[AppDelegate setWindow:]
+-[AppDelegate gotResponse]
+-[AppDelegate setGotResponse:]
+-[AppDelegate fileName]
+-[AppDelegate setFileName:]
+-[AppDelegate audioFilePathString]
+-[AppDelegate setAudioFilePathString:]
+-[AppDelegate .cxx_destruct]
+___block_descriptor_tmp.156
+_OBJC_IVAR_$_AppDelegate.audioFilePath
+_OBJC_IVAR_$_AppDelegate.destinationFilePath
+_OBJC_IVAR_$_AppDelegate.destinationURL
+_OBJC_IVAR_$_AppDelegate.sourceURL
+_OBJC_IVAR_$_AppDelegate.outputFormat
+_OBJC_IVAR_$_AppDelegate.sampleRate
+_OBJC_IVAR_$_AppDelegate.player
+_OBJC_IVAR_$_AppDelegate.fileName
+_OBJC_IVAR_$_AppDelegate.hud
+_OBJC_IVAR_$_AppDelegate.window
+_OBJC_IVAR_$_AppDelegate.gotResponse
+_OBJC_IVAR_$_AppDelegate._audioFilePathString
+_OBJC_IVAR_$_AppDelegate.exportURL
+l_OBJC_PROTOCOL_$_UIApplicationDelegate
+l_OBJC_LABEL_PROTOCOL_$_UIApplicationDelegate
+_OBJC_METACLASS_$_AppDelegate
+_OBJC_IVAR_$_AppDelegate.isFileAvailable
+_OBJC_IVAR_$_AppDelegate.nextCount
+_OBJC_CLASS_$_AppDelegate
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/AppDelegate.mm
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/AppDelegate.h
+__46-[AppDelegate applicationWillEnterForeground:]_block_invoke
+__57-[AppDelegate application:didFinishLaunchingWithOptions:]_block_invoke
++[SBJson4StreamParserState sharedInstance]
+-[SBJson4StreamParserState parser:shouldAcceptToken:]
+-[SBJson4StreamParserState parserShouldReturn:]
+-[SBJson4StreamParserState parser:shouldTransitionTo:]
+-[SBJson4StreamParserState needKey]
+-[SBJson4StreamParserState name]
+-[SBJson4StreamParserState isError]
++[SBJson4StreamParserStateStart sharedInstance]
+-[SBJson4StreamParserStateStart parser:shouldAcceptToken:]
+-[SBJson4StreamParserStateStart parser:shouldTransitionTo:]
+-[SBJson4StreamParserStateStart name]
++[SBJson4StreamParserStateComplete sharedInstance]
+-[SBJson4StreamParserStateComplete name]
+-[SBJson4StreamParserStateComplete parserShouldReturn:]
++[SBJson4StreamParserStateError sharedInstance]
+-[SBJson4StreamParserStateError name]
+-[SBJson4StreamParserStateError parserShouldReturn:]
+-[SBJson4StreamParserStateError isError]
++[SBJson4StreamParserStateObjectStart sharedInstance]
+-[SBJson4StreamParserStateObjectStart name]
+-[SBJson4StreamParserStateObjectStart parser:shouldAcceptToken:]
+-[SBJson4StreamParserStateObjectStart parser:shouldTransitionTo:]
+-[SBJson4StreamParserStateObjectStart needKey]
++[SBJson4StreamParserStateObjectGotKey sharedInstance]
+-[SBJson4StreamParserStateObjectGotKey name]
+-[SBJson4StreamParserStateObjectGotKey parser:shouldAcceptToken:]
+-[SBJson4StreamParserStateObjectGotKey parser:shouldTransitionTo:]
++[SBJson4StreamParserStateObjectSeparator sharedInstance]
+-[SBJson4StreamParserStateObjectSeparator name]
+-[SBJson4StreamParserStateObjectSeparator parser:shouldAcceptToken:]
+-[SBJson4StreamParserStateObjectSeparator parser:shouldTransitionTo:]
++[SBJson4StreamParserStateObjectGotValue sharedInstance]
+-[SBJson4StreamParserStateObjectGotValue name]
+-[SBJson4StreamParserStateObjectGotValue parser:shouldAcceptToken:]
+-[SBJson4StreamParserStateObjectGotValue parser:shouldTransitionTo:]
++[SBJson4StreamParserStateObjectNeedKey sharedInstance]
+-[SBJson4StreamParserStateObjectNeedKey name]
+-[SBJson4StreamParserStateObjectNeedKey parser:shouldAcceptToken:]
+-[SBJson4StreamParserStateObjectNeedKey parser:shouldTransitionTo:]
+-[SBJson4StreamParserStateObjectNeedKey needKey]
++[SBJson4StreamParserStateArrayStart sharedInstance]
+-[SBJson4StreamParserStateArrayStart name]
+-[SBJson4StreamParserStateArrayStart parser:shouldAcceptToken:]
+-[SBJson4StreamParserStateArrayStart parser:shouldTransitionTo:]
++[SBJson4StreamParserStateArrayGotValue sharedInstance]
+-[SBJson4StreamParserStateArrayGotValue name]
+-[SBJson4StreamParserStateArrayGotValue parser:shouldAcceptToken:]
+-[SBJson4StreamParserStateArrayGotValue parser:shouldTransitionTo:]
++[SBJson4StreamParserStateArrayNeedValue sharedInstance]
+-[SBJson4StreamParserStateArrayNeedValue name]
+-[SBJson4StreamParserStateArrayNeedValue parser:shouldAcceptToken:]
+-[SBJson4StreamParserStateArrayNeedValue parser:shouldTransitionTo:]
+_OBJC_METACLASS_$_SBJson4StreamParserState
+_OBJC_CLASS_$_SBJson4StreamParserState
+_sharedInstance.state
+_OBJC_CLASS_$_SBJson4StreamParserStateComplete
+_OBJC_METACLASS_$_SBJson4StreamParserStateStart
+_sharedInstance.state.31
+_OBJC_METACLASS_$_SBJson4StreamParserStateComplete
+_sharedInstance.state.35
+_OBJC_METACLASS_$_SBJson4StreamParserStateError
+_sharedInstance.state.39
+_OBJC_CLASS_$_SBJson4StreamParserStateObjectGotKey
+_OBJC_METACLASS_$_SBJson4StreamParserStateObjectStart
+_sharedInstance.state.44
+_OBJC_CLASS_$_SBJson4StreamParserStateObjectSeparator
+_OBJC_METACLASS_$_SBJson4StreamParserStateObjectGotKey
+_sharedInstance.state.49
+_OBJC_CLASS_$_SBJson4StreamParserStateObjectGotValue
+_OBJC_METACLASS_$_SBJson4StreamParserStateObjectSeparator
+_sharedInstance.state.54
+_OBJC_CLASS_$_SBJson4StreamParserStateObjectNeedKey
+_OBJC_METACLASS_$_SBJson4StreamParserStateObjectGotValue
+_sharedInstance.state.59
+_OBJC_METACLASS_$_SBJson4StreamParserStateObjectNeedKey
+_sharedInstance.state.63
+_OBJC_CLASS_$_SBJson4StreamParserStateArrayGotValue
+_OBJC_METACLASS_$_SBJson4StreamParserStateArrayStart
+_sharedInstance.state.68
+_OBJC_CLASS_$_SBJson4StreamParserStateArrayNeedValue
+_OBJC_METACLASS_$_SBJson4StreamParserStateArrayGotValue
+_sharedInstance.state.73
+_OBJC_METACLASS_$_SBJson4StreamParserStateArrayNeedValue
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/SBJson/SBJson4StreamParserState.m
+-[UIDevice(Identifier) identifierForVendor1]
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/UIDevice+Identifier.m
+-[TransferredOrDeletedAudioDetailsViewController viewDidLoad]
+-[TransferredOrDeletedAudioDetailsViewController pausePlayerFromBackGround]
+-[TransferredOrDeletedAudioDetailsViewController viewWillAppear:]
+-[TransferredOrDeletedAudioDetailsViewController viewWillDisappear:]
+-[TransferredOrDeletedAudioDetailsViewController backButtonPressed:]
+-[TransferredOrDeletedAudioDetailsViewController didReceiveMemoryWarning]
+-[TransferredOrDeletedAudioDetailsViewController playRecordingButtonPressed:]
+___77-[TransferredOrDeletedAudioDetailsViewController playRecordingButtonPressed:]_block_invoke
+-[TransferredOrDeletedAudioDetailsViewController audioPlayerDidFinishPlaying:successfully:]
+-[TransferredOrDeletedAudioDetailsViewController playOrPauseButtonPressed]
+-[TransferredOrDeletedAudioDetailsViewController gestureRecognizer:shouldReceiveTouch:]
+-[TransferredOrDeletedAudioDetailsViewController dismissPopView:]
+-[TransferredOrDeletedAudioDetailsViewController updateSliderTime:]
+-[TransferredOrDeletedAudioDetailsViewController dismissPlayerView:]
+-[TransferredOrDeletedAudioDetailsViewController sliderValueChanged]
+-[TransferredOrDeletedAudioDetailsViewController deleteRecordinfButtonPressed:]
+___79-[TransferredOrDeletedAudioDetailsViewController deleteRecordinfButtonPressed:]_block_invoke
+___copy_helper_block_.212
+___destroy_helper_block_.213
+___79-[TransferredOrDeletedAudioDetailsViewController deleteRecordinfButtonPressed:]_block_invoke.217
+___copy_helper_block_.218
+___destroy_helper_block_.219
+-[TransferredOrDeletedAudioDetailsViewController resendButtonClckied:]
+___70-[TransferredOrDeletedAudioDetailsViewController resendButtonClckied:]_block_invoke
+___70-[TransferredOrDeletedAudioDetailsViewController resendButtonClckied:]_block_invoke_2
+___copy_helper_block_.244
+___destroy_helper_block_.245
+___copy_helper_block_.248
+___destroy_helper_block_.249
+___70-[TransferredOrDeletedAudioDetailsViewController resendButtonClckied:]_block_invoke.253
+___copy_helper_block_.254
+___destroy_helper_block_.255
+-[TransferredOrDeletedAudioDetailsViewController moreButtonClicked:]
+-[TransferredOrDeletedAudioDetailsViewController EditDepartment]
+-[TransferredOrDeletedAudioDetailsViewController cancel:]
+-[TransferredOrDeletedAudioDetailsViewController save:]
+-[TransferredOrDeletedAudioDetailsViewController numberOfSectionsInTableView:]
+-[TransferredOrDeletedAudioDetailsViewController tableView:numberOfRowsInSection:]
+-[TransferredOrDeletedAudioDetailsViewController tableView:cellForRowAtIndexPath:]
+-[TransferredOrDeletedAudioDetailsViewController tableView:didSelectRowAtIndexPath:]
+-[TransferredOrDeletedAudioDetailsViewController hideTableView]
+-[TransferredOrDeletedAudioDetailsViewController listSelected]
+-[TransferredOrDeletedAudioDetailsViewController setListSelected:]
+-[TransferredOrDeletedAudioDetailsViewController selectedRow]
+-[TransferredOrDeletedAudioDetailsViewController setSelectedRow:]
+-[TransferredOrDeletedAudioDetailsViewController resendButton]
+-[TransferredOrDeletedAudioDetailsViewController setResendButton:]
+-[TransferredOrDeletedAudioDetailsViewController deleteDictationButton]
+-[TransferredOrDeletedAudioDetailsViewController setDeleteDictationButton:]
+-[TransferredOrDeletedAudioDetailsViewController moreButton]
+-[TransferredOrDeletedAudioDetailsViewController setMoreButton:]
+-[TransferredOrDeletedAudioDetailsViewController .cxx_destruct]
+_OBJC_CLASS_$_TransferredOrDeletedAudioDetailsViewController
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.popupView
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.forTableViewObj
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.player
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.resendButton
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.deleteDictationButton
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.selectedRow
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.audiorecordDict
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.moreButton
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.alertController
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.actionCancel
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.sliderPopUpView
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.audioRecordSlider
+___block_descriptor_tmp.214
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.actionDelete
+___block_descriptor_tmp.220
+___block_descriptor_tmp.247
+___block_descriptor_tmp.250
+___block_descriptor_tmp.256
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.departmentNamesArray
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.cell
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.listSelected
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.tap
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.result
+_OBJC_METACLASS_$_TransferredOrDeletedAudioDetailsViewController
+_OBJC_IVAR_$_TransferredOrDeletedAudioDetailsViewController.deleted
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/TransferredOrDeletedAudioDetailsViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/TransferredOrDeletedAudioDetailsViewController.h
+__70-[TransferredOrDeletedAudioDetailsViewController resendButtonClckied:]_block_invoke.253
+__70-[TransferredOrDeletedAudioDetailsViewController resendButtonClckied:]_block_invoke_2
+__70-[TransferredOrDeletedAudioDetailsViewController resendButtonClckied:]_block_invoke
+__79-[TransferredOrDeletedAudioDetailsViewController deleteRecordinfButtonPressed:]_block_invoke.217
+__79-[TransferredOrDeletedAudioDetailsViewController deleteRecordinfButtonPressed:]_block_invoke
+__77-[TransferredOrDeletedAudioDetailsViewController playRecordingButtonPressed:]_block_invoke
+-[RecordTabViewController viewDidLoad]
+-[RecordTabViewController viewWillAppear:]
+-[RecordTabViewController didReceiveMemoryWarning]
+_OBJC_CLASS_$_RecordTabViewController
+_OBJC_METACLASS_$_RecordTabViewController
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/RecordTabViewController.m
+-[RegistrationViewController viewDidLoad]
+-[RegistrationViewController viewWillAppear:]
+-[RegistrationViewController didReceiveMemoryWarning]
+-[RegistrationViewController uIdPwdResponseCheck:]
+-[RegistrationViewController backButton:]
+-[RegistrationViewController submitButtonClicked:]
+___50-[RegistrationViewController submitButtonClicked:]_block_invoke
+-[RegistrationViewController cancelButtonClicked:]
+-[RegistrationViewController textFieldShouldReturn:]
+-[RegistrationViewController IDTextField]
+-[RegistrationViewController setIDTextField:]
+-[RegistrationViewController passwordTextfield]
+-[RegistrationViewController setPasswordTextfield:]
+-[RegistrationViewController submitButton]
+-[RegistrationViewController setSubmitButton:]
+-[RegistrationViewController cancelButton]
+-[RegistrationViewController setCancelButton:]
+-[RegistrationViewController hud]
+-[RegistrationViewController setHud:]
+-[RegistrationViewController window]
+-[RegistrationViewController setWindow:]
+-[RegistrationViewController .cxx_destruct]
+_OBJC_CLASS_$_RegistrationViewController
+_OBJC_IVAR_$_RegistrationViewController.submitButton
+_OBJC_IVAR_$_RegistrationViewController.cancelButton
+_OBJC_IVAR_$_RegistrationViewController.IDTextField
+_OBJC_IVAR_$_RegistrationViewController.passwordTextfield
+_OBJC_IVAR_$_RegistrationViewController.hud
+_OBJC_IVAR_$_RegistrationViewController.window
+_OBJC_METACLASS_$_RegistrationViewController
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/RegistrationViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/RegistrationViewController.h
+__50-[RegistrationViewController submitButtonClicked:]_block_invoke
+-[RecordViewController viewDidLoad]
+-[RecordViewController pauseRecordingFromBackGround]
+-[RecordViewController hideDeleteButton]
+-[RecordViewController saveRecordin]
+-[RecordViewController viewWillAppear:]
+-[RecordViewController viewDidAppear:]
+___38-[RecordViewController viewDidAppear:]_block_invoke
+___38-[RecordViewController viewDidAppear:]_block_invoke.207
+___copy_helper_block_.208
+___destroy_helper_block_.209
+-[RecordViewController viewWillDisappear:]
+-[RecordViewController disMissPopView:]
+-[RecordViewController dismissPopView:]
+-[RecordViewController addView:]
+-[RecordViewController setRoundedView:toDiameter:]
+-[RecordViewController setStopRecordingView:]
+___45-[RecordViewController setStopRecordingView:]_block_invoke
+___copy_helper_block_.298
+___destroy_helper_block_.299
+___45-[RecordViewController setStopRecordingView:]_block_invoke.303
+___copy_helper_block_.304
+___destroy_helper_block_.305
+-[RecordViewController setPauseRecordingView:]
+-[RecordViewController mdRecord]
+-[RecordViewController setStartRecordingView:]
+___46-[RecordViewController setStartRecordingView:]_block_invoke
+___copy_helper_block_.342
+___destroy_helper_block_.343
+___46-[RecordViewController setStartRecordingView:]_block_invoke.345
+___copy_helper_block_.346
+___destroy_helper_block_.347
+-[RecordViewController showHud]
+-[RecordViewController hideHud]
+-[RecordViewController startRecordingForUserSetting]
+-[RecordViewController startRecorderAfterPrepared]
+-[RecordViewController addAnimatedView]
+___39-[RecordViewController addAnimatedView]_block_invoke
+___copy_helper_block_.435
+___destroy_helper_block_.436
+___39-[RecordViewController addAnimatedView]_block_invoke.439
+-[RecordViewController dismissView]
+-[RecordViewController presentRecordView]
+-[RecordViewController uploadAudio:]
+___36-[RecordViewController uploadAudio:]_block_invoke
+___36-[RecordViewController uploadAudio:]_block_invoke_2
+___copy_helper_block_.458
+___destroy_helper_block_.459
+___copy_helper_block_.461
+___destroy_helper_block_.462
+___36-[RecordViewController uploadAudio:]_block_invoke.464
+___copy_helper_block_.465
+___destroy_helper_block_.466
+-[RecordViewController setTimer]
+-[RecordViewController updateTimer]
+-[RecordViewController sliderValueChanged]
+-[RecordViewController sliderValueChanged:]
+-[RecordViewController updateSliderTime:]
+-[RecordViewController backButtonPressed:]
+___42-[RecordViewController backButtonPressed:]_block_invoke
+___copy_helper_block_.492
+___destroy_helper_block_.493
+-[RecordViewController moreButtonPressed:]
+-[RecordViewController UserSettings]
+-[RecordViewController EditDepartment]
+-[RecordViewController gestureRecognizer:shouldReceiveTouch:]
+-[RecordViewController audioRecord]
+-[RecordViewController pauseRecording]
+-[RecordViewController stopRecording]
+-[RecordViewController setCompressAudio]
+-[RecordViewController convertAudio]
+-[RecordViewController prepareAudioPlayer]
+-[RecordViewController playRecording]
+-[RecordViewController saveAudioRecordToDatabase]
+-[RecordViewController audioPlayerDidFinishPlaying:successfully:]
+-[RecordViewController numberOfSectionsInTableView:]
+-[RecordViewController tableView:numberOfRowsInSection:]
+-[RecordViewController tableView:cellForRowAtIndexPath:]
+-[RecordViewController tableView:didSelectRowAtIndexPath:]
+-[RecordViewController cancel:]
+-[RecordViewController save:]
+-[RecordViewController hideTableView]
+-[RecordViewController deleteRecording:]
+___40-[RecordViewController deleteRecording:]_block_invoke
+___copy_helper_block_.687
+___destroy_helper_block_.688
+___40-[RecordViewController deleteRecording:]_block_invoke.690
+___copy_helper_block_.691
+___destroy_helper_block_.692
+-[RecordViewController didReceiveMemoryWarning]
+-[RecordViewController stopRecordingButtonClicked:]
+-[RecordViewController player]
+-[RecordViewController setPlayer:]
+-[RecordViewController recordedAudioFileName]
+-[RecordViewController setRecordedAudioFileName:]
+-[RecordViewController recorder]
+-[RecordViewController setRecorder:]
+-[RecordViewController recordedAudioURL]
+-[RecordViewController setRecordedAudioURL:]
+-[RecordViewController recordCreatedDateString]
+-[RecordViewController setRecordCreatedDateString:]
+-[RecordViewController hud]
+-[RecordViewController setHud:]
+-[RecordViewController deleteButton]
+-[RecordViewController setDeleteButton:]
+-[RecordViewController stopNewButton]
+-[RecordViewController setStopNewButton:]
+-[RecordViewController stopNewImageView]
+-[RecordViewController setStopNewImageView:]
+-[RecordViewController stopLabel]
+-[RecordViewController setStopLabel:]
+-[RecordViewController recordLAbel]
+-[RecordViewController setRecordLAbel:]
+-[RecordViewController .cxx_destruct]
+_OBJC_CLASS_$_RecordViewController
+_OBJC_IVAR_$_RecordViewController.app
+_OBJC_IVAR_$_RecordViewController.db
+_OBJC_IVAR_$_RecordViewController.popupView
+_OBJC_IVAR_$_RecordViewController.forTableViewObj
+_OBJC_IVAR_$_RecordViewController.tap
+_OBJC_IVAR_$_RecordViewController.cirecleTimerLAbel
+_OBJC_IVAR_$_RecordViewController.maxRecordingTimeString
+_OBJC_IVAR_$_RecordViewController.recordingPausedOrStoped
+_OBJC_IVAR_$_RecordViewController.stopped
+_OBJC_IVAR_$_RecordViewController.paused
+_OBJC_IVAR_$_RecordViewController.stopNewButton
+_OBJC_IVAR_$_RecordViewController.stopNewImageView
+_OBJC_IVAR_$_RecordViewController.stopLabel
+_OBJC_IVAR_$_RecordViewController.i
+_OBJC_IVAR_$_RecordViewController.circleViewTimerMinutes
+_OBJC_IVAR_$_RecordViewController.circleViewTimerSeconds
+_OBJC_IVAR_$_RecordViewController.dictationTimerSeconds
+_OBJC_IVAR_$_RecordViewController.todaysSerialNumberCount
+_OBJC_IVAR_$_RecordViewController.minutesValue
+_OBJC_IVAR_$_RecordViewController.alertController
+_OBJC_IVAR_$_RecordViewController.actionDelete
+___block_descriptor_tmp.210
+_OBJC_IVAR_$_RecordViewController.actionCancel
+_OBJC_IVAR_$_RecordViewController.player
+_OBJC_IVAR_$_RecordViewController.circleView
+_OBJC_IVAR_$_RecordViewController.isRecordingStarted
+_OBJC_IVAR_$_RecordViewController.stopTimer
+___block_descriptor_tmp.300
+___block_descriptor_tmp.306
+_OBJC_IVAR_$_RecordViewController.recorder
+___block_descriptor_tmp.344
+___block_descriptor_tmp.348
+_OBJC_IVAR_$_RecordViewController.hud
+_OBJC_IVAR_$_RecordViewController.audioRecordSlider
+_OBJC_IVAR_$_RecordViewController.currentDuration
+_OBJC_IVAR_$_RecordViewController.totalDuration
+___block_descriptor_tmp.438
+___block_descriptor_tmp.441
+_OBJC_IVAR_$_RecordViewController.recordingNew
+_OBJC_IVAR_$_RecordViewController.deleteButton
+___block_descriptor_tmp.460
+___block_descriptor_tmp.463
+___block_descriptor_tmp.467
+_OBJC_IVAR_$_RecordViewController.circleViewTimerHours
+___block_descriptor_tmp.494
+_OBJC_IVAR_$_RecordViewController.recordingPauseAndExit
+_OBJC_IVAR_$_RecordViewController.editPopUp
+_OBJC_IVAR_$_RecordViewController.destinationFilePath
+_OBJC_IVAR_$_RecordViewController.destinationURL
+_OBJC_IVAR_$_RecordViewController.sourceURL
+_OBJC_IVAR_$_RecordViewController.outputFormat
+_OBJC_IVAR_$_RecordViewController.sampleRate
+_OBJC_IVAR_$_RecordViewController.recordCreatedDateString
+_OBJC_IVAR_$_RecordViewController.departmentNamesArray
+_OBJC_IVAR_$_RecordViewController.cell
+_OBJC_IVAR_$_RecordViewController.recordedAudioFileName
+___block_descriptor_tmp.689
+___block_descriptor_tmp.693
+_OBJC_IVAR_$_RecordViewController.recordedAudioURL
+_OBJC_IVAR_$_RecordViewController.recordLAbel
+_OBJC_IVAR_$_RecordViewController.audiorecordDict
+_OBJC_IVAR_$_RecordViewController.result
+_OBJC_IVAR_$_RecordViewController.selectedDepartment
+_OBJC_METACLASS_$_RecordViewController
+_OBJC_IVAR_$_RecordViewController.deleted
+_OBJC_IVAR_$_RecordViewController.task
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/RecordViewController.mm
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/RecordViewController.h
+__40-[RecordViewController deleteRecording:]_block_invoke.690
+__40-[RecordViewController deleteRecording:]_block_invoke
+__42-[RecordViewController backButtonPressed:]_block_invoke
+__36-[RecordViewController uploadAudio:]_block_invoke.464
+__36-[RecordViewController uploadAudio:]_block_invoke_2
+__36-[RecordViewController uploadAudio:]_block_invoke
+__39-[RecordViewController addAnimatedView]_block_invoke.439
+__39-[RecordViewController addAnimatedView]_block_invoke
+__46-[RecordViewController setStartRecordingView:]_block_invoke.345
+__46-[RecordViewController setStartRecordingView:]_block_invoke
+__45-[RecordViewController setStopRecordingView:]_block_invoke.303
+__45-[RecordViewController setStopRecordingView:]_block_invoke
+__38-[RecordViewController viewDidAppear:]_block_invoke.207
+__38-[RecordViewController viewDidAppear:]_block_invoke
+-[HomeViewController viewDidLoad]
+-[HomeViewController viewWillAppear:]
+-[HomeViewController getCounts]
+-[HomeViewController showUserSettings:]
+-[HomeViewController addPopView]
+-[HomeViewController UserSettings]
+-[HomeViewController Logout]
+-[HomeViewController dismissPopView:]
+-[HomeViewController showList:]
+-[HomeViewController didReceiveMemoryWarning]
+-[HomeViewController transferredView]
+-[HomeViewController setTransferredView:]
+-[HomeViewController transferFailedView]
+-[HomeViewController setTransferFailedView:]
+-[HomeViewController awaitingTransferView]
+-[HomeViewController setAwaitingTransferView:]
+-[HomeViewController .cxx_destruct]
+_OBJC_CLASS_$_HomeViewController
+_OBJC_IVAR_$_HomeViewController.app
+_OBJC_IVAR_$_HomeViewController.db
+_OBJC_IVAR_$_HomeViewController.transferFailedView
+_OBJC_IVAR_$_HomeViewController.transferredView
+_OBJC_IVAR_$_HomeViewController.awaitingTransferView
+_OBJC_IVAR_$_HomeViewController.tapRecogniser
+_OBJC_IVAR_$_HomeViewController.tapRecogniser1
+_OBJC_IVAR_$_HomeViewController.tapRecogniser2
+_OBJC_IVAR_$_HomeViewController.tap
+_OBJC_IVAR_$_HomeViewController.overlayView
+_OBJC_METACLASS_$_HomeViewController
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/HomeViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/HomeViewController.h
+-[MainTabBarViewController viewDidLoad]
+-[MainTabBarViewController didReceiveMemoryWarning]
+_OBJC_CLASS_$_MainTabBarViewController
+_OBJC_METACLASS_$_MainTabBarViewController
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/MainTabBarViewController.m
++[AppPreferences sharedAppPreferences]
+-[AppPreferences init]
+-[AppPreferences startReachabilityNotifier]
+___43-[AppPreferences startReachabilityNotifier]_block_invoke
+___43-[AppPreferences startReachabilityNotifier]_block_invoke_2
+___copy_helper_block_.16
+___destroy_helper_block_.17
+___43-[AppPreferences startReachabilityNotifier]_block_invoke.22
+___43-[AppPreferences startReachabilityNotifier]_block_invoke_2.23
+___copy_helper_block_.24
+___destroy_helper_block_.25
+___copy_helper_block_.27
+___destroy_helper_block_.28
+-[AppPreferences reachabilityChanged:]
+-[AppPreferences showNoInternetMessage]
+-[AppPreferences showAlertViewWithTitle:withMessage:withCancelText:withOkText:withAlertTag:]
+___92-[AppPreferences showAlertViewWithTitle:withMessage:withCancelText:withOkText:withAlertTag:]_block_invoke
+___Block_byref_object_copy_
+___Block_byref_object_dispose_
+___92-[AppPreferences showAlertViewWithTitle:withMessage:withCancelText:withOkText:withAlertTag:]_block_invoke.43
+___copy_helper_block_.49
+___destroy_helper_block_.50
+___92-[AppPreferences showAlertViewWithTitle:withMessage:withCancelText:withOkText:withAlertTag:]_block_invoke.52
+___copy_helper_block_.55
+___destroy_helper_block_.56
+___copy_helper_block_.58
+___destroy_helper_block_.59
+-[AppPreferences alertView:clickedButtonAtIndex:]
+-[AppPreferences addSkipBackupAttributeToItemAtURL:]
+-[AppPreferences currentSelectedItem]
+-[AppPreferences setCurrentSelectedItem:]
+-[AppPreferences alertDelegate]
+-[AppPreferences setAlertDelegate:]
+-[AppPreferences isReachable]
+-[AppPreferences setIsReachable:]
+-[AppPreferences userObj]
+-[AppPreferences setUserObj:]
+-[AppPreferences bsackUpAudioFileName]
+-[AppPreferences setBsackUpAudioFileName:]
+-[AppPreferences recordNew]
+-[AppPreferences setRecordNew:]
+-[AppPreferences recordingNew]
+-[AppPreferences setRecordingNew:]
+-[AppPreferences selectedTabBarIndex]
+-[AppPreferences setSelectedTabBarIndex:]
+-[AppPreferences isRecordView]
+-[AppPreferences setIsRecordView:]
+-[AppPreferences fileUploading]
+-[AppPreferences setFileUploading:]
+-[AppPreferences importedFilesAudioDetailsArray]
+-[AppPreferences setImportedFilesAudioDetailsArray:]
+-[AppPreferences .cxx_destruct]
+_OBJC_CLASS_$_Reachability
+_OBJC_IVAR_$_AppPreferences.isReachable
+___block_descriptor_tmp.19
+___block_descriptor_tmp.26
+___block_descriptor_tmp.29
+___block_descriptor_tmp.51
+___block_descriptor_tmp.57
+___block_descriptor_tmp.60
+_OBJC_IVAR_$_AppPreferences.currentSelectedItem
+_OBJC_IVAR_$_AppPreferences.alertDelegate
+_OBJC_IVAR_$_AppPreferences.userObj
+_OBJC_IVAR_$_AppPreferences._bsackUpAudioFileName
+_OBJC_IVAR_$_AppPreferences._recordNew
+_OBJC_IVAR_$_AppPreferences._recordingNew
+_OBJC_IVAR_$_AppPreferences._selectedTabBarIndex
+_OBJC_IVAR_$_AppPreferences._isRecordView
+_OBJC_IVAR_$_AppPreferences._fileUploading
+_OBJC_IVAR_$_AppPreferences._importedFilesAudioDetailsArray
+_OBJC_METACLASS_$_AppPreferences
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/API Manager/AppPreferences.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/API Manager/AppPreferences.h
+__92-[AppPreferences showAlertViewWithTitle:withMessage:withCancelText:withOkText:withAlertTag:]_block_invoke.52
+__92-[AppPreferences showAlertViewWithTitle:withMessage:withCancelText:withOkText:withAlertTag:]_block_invoke.43
+__Block_byref_object_dispose_
+__Block_byref_object_copy_
+__92-[AppPreferences showAlertViewWithTitle:withMessage:withCancelText:withOkText:withAlertTag:]_block_invoke
+__43-[AppPreferences startReachabilityNotifier]_block_invoke_2.23
+__43-[AppPreferences startReachabilityNotifier]_block_invoke.22
+__43-[AppPreferences startReachabilityNotifier]_block_invoke_2
+__43-[AppPreferences startReachabilityNotifier]_block_invoke
++[MBProgressHUD showHUDAddedTo:animated:]
++[MBProgressHUD hideHUDForView:animated:]
++[MBProgressHUD HUDForView:]
+-[MBProgressHUD commonInit]
+-[MBProgressHUD initWithFrame:]
+-[MBProgressHUD initWithCoder:]
+-[MBProgressHUD initWithView:]
+-[MBProgressHUD dealloc]
+-[MBProgressHUD showAnimated:]
+-[MBProgressHUD hideAnimated:]
+-[MBProgressHUD hideAnimated:afterDelay:]
+-[MBProgressHUD hideDelayed:]
+-[MBProgressHUD handleGraceTimer:]
+-[MBProgressHUD handleMinShowTimer:]
+-[MBProgressHUD didMoveToSuperview]
+-[MBProgressHUD showUsingAnimation:]
+-[MBProgressHUD hideUsingAnimation:]
+___36-[MBProgressHUD hideUsingAnimation:]_block_invoke
+-[MBProgressHUD animateIn:withType:completion:]
+___47-[MBProgressHUD animateIn:withType:completion:]_block_invoke
+___copy_helper_block_.128
+___destroy_helper_block_.129
+-[MBProgressHUD done]
+-[MBProgressHUD setupViews]
+-[MBProgressHUD updateIndicators]
+-[MBProgressHUD updateViewsForColor:]
+-[MBProgressHUD updateBezelMotionEffects]
+-[MBProgressHUD updateConstraints]
+___34-[MBProgressHUD updateConstraints]_block_invoke
+___copy_helper_block_.335
+___destroy_helper_block_.336
+-[MBProgressHUD layoutSubviews]
+-[MBProgressHUD updatePaddingConstraints]
+___41-[MBProgressHUD updatePaddingConstraints]_block_invoke
+___copy_helper_block_.363
+___destroy_helper_block_.364
+-[MBProgressHUD applyPriority:toConstraints:]
+-[MBProgressHUD setMode:]
+-[MBProgressHUD setCustomView:]
+-[MBProgressHUD setOffset:]
+-[MBProgressHUD setMargin:]
+-[MBProgressHUD setMinSize:]
+-[MBProgressHUD setSquare:]
+-[MBProgressHUD setProgress:]
+-[MBProgressHUD setContentColor:]
+-[MBProgressHUD setDefaultMotionEffectsEnabled:]
+-[MBProgressHUD registerForNotifications]
+-[MBProgressHUD unregisterFromNotifications]
+-[MBProgressHUD statusBarOrientationDidChange:]
+-[MBProgressHUD updateForCurrentOrientationAnimated:]
+-[MBProgressHUD delegate]
+-[MBProgressHUD setDelegate:]
+-[MBProgressHUD graceTime]
+-[MBProgressHUD setGraceTime:]
+-[MBProgressHUD minShowTime]
+-[MBProgressHUD setMinShowTime:]
+-[MBProgressHUD removeFromSuperViewOnHide]
+-[MBProgressHUD setRemoveFromSuperViewOnHide:]
+-[MBProgressHUD mode]
+-[MBProgressHUD contentColor]
+-[MBProgressHUD animationType]
+-[MBProgressHUD setAnimationType:]
+-[MBProgressHUD offset]
+-[MBProgressHUD margin]
+-[MBProgressHUD minSize]
+-[MBProgressHUD isSquare]
+-[MBProgressHUD areDefaultMotionEffectsEnabled]
+-[MBProgressHUD progress]
+-[MBProgressHUD bezelView]
+-[MBProgressHUD backgroundView]
+-[MBProgressHUD customView]
+-[MBProgressHUD label]
+-[MBProgressHUD detailsLabel]
+-[MBProgressHUD button]
+-[MBProgressHUD useAnimation]
+-[MBProgressHUD setUseAnimation:]
+-[MBProgressHUD hasFinished]
+-[MBProgressHUD setFinished:]
+-[MBProgressHUD indicator]
+-[MBProgressHUD setIndicator:]
+-[MBProgressHUD graceTimer]
+-[MBProgressHUD setGraceTimer:]
+-[MBProgressHUD minShowTimer]
+-[MBProgressHUD setMinShowTimer:]
+-[MBProgressHUD showStarted]
+-[MBProgressHUD setShowStarted:]
+-[MBProgressHUD paddingConstraints]
+-[MBProgressHUD setPaddingConstraints:]
+-[MBProgressHUD bezelConstraints]
+-[MBProgressHUD setBezelConstraints:]
+-[MBProgressHUD topSpacer]
+-[MBProgressHUD setTopSpacer:]
+-[MBProgressHUD bottomSpacer]
+-[MBProgressHUD setBottomSpacer:]
+-[MBProgressHUD completionBlock]
+-[MBProgressHUD setCompletionBlock:]
+-[MBProgressHUD taskInProgress]
+-[MBProgressHUD setTaskInProgress:]
+-[MBProgressHUD .cxx_destruct]
+-[MBRoundProgressView init]
+-[MBRoundProgressView initWithFrame:]
+-[MBRoundProgressView intrinsicContentSize]
+-[MBRoundProgressView setProgress:]
+-[MBRoundProgressView setProgressTintColor:]
+-[MBRoundProgressView setBackgroundTintColor:]
+-[MBRoundProgressView drawRect:]
+-[MBRoundProgressView progress]
+-[MBRoundProgressView progressTintColor]
+-[MBRoundProgressView backgroundTintColor]
+-[MBRoundProgressView isAnnular]
+-[MBRoundProgressView setAnnular:]
+-[MBRoundProgressView .cxx_destruct]
+-[MBBarProgressView init]
+-[MBBarProgressView initWithFrame:]
+-[MBBarProgressView intrinsicContentSize]
+-[MBBarProgressView setProgress:]
+-[MBBarProgressView setProgressColor:]
+-[MBBarProgressView setProgressRemainingColor:]
+-[MBBarProgressView drawRect:]
+-[MBBarProgressView progress]
+-[MBBarProgressView lineColor]
+-[MBBarProgressView setLineColor:]
+-[MBBarProgressView progressRemainingColor]
+-[MBBarProgressView progressColor]
+-[MBBarProgressView .cxx_destruct]
+-[MBBackgroundView initWithFrame:]
+-[MBBackgroundView intrinsicContentSize]
+-[MBBackgroundView setStyle:]
+-[MBBackgroundView setColor:]
+-[MBBackgroundView updateForBackgroundStyle]
+-[MBBackgroundView updateViewsForColor:]
+-[MBBackgroundView style]
+-[MBBackgroundView color]
+-[MBBackgroundView effectView]
+-[MBBackgroundView setEffectView:]
+-[MBBackgroundView toolbar]
+-[MBBackgroundView setToolbar:]
+-[MBBackgroundView .cxx_destruct]
++[MBProgressHUD(Deprecated) hideAllHUDsForView:animated:]
++[MBProgressHUD(Deprecated) allHUDsForView:]
+-[MBProgressHUD(Deprecated) initWithWindow:]
+-[MBProgressHUD(Deprecated) show:]
+-[MBProgressHUD(Deprecated) hide:]
+-[MBProgressHUD(Deprecated) hide:afterDelay:]
+-[MBProgressHUD(Deprecated) showWhileExecuting:onTarget:withObject:animated:]
+___77-[MBProgressHUD(Deprecated) showWhileExecuting:onTarget:withObject:animated:]_block_invoke
+___copy_helper_block_.645
+___destroy_helper_block_.646
+-[MBProgressHUD(Deprecated) showAnimated:whileExecutingBlock:]
+-[MBProgressHUD(Deprecated) showAnimated:whileExecutingBlock:completionBlock:]
+-[MBProgressHUD(Deprecated) showAnimated:whileExecutingBlock:onQueue:]
+-[MBProgressHUD(Deprecated) showAnimated:whileExecutingBlock:onQueue:completionBlock:]
+___86-[MBProgressHUD(Deprecated) showAnimated:whileExecutingBlock:onQueue:completionBlock:]_block_invoke
+___86-[MBProgressHUD(Deprecated) showAnimated:whileExecutingBlock:onQueue:completionBlock:]_block_invoke_2
+___copy_helper_block_.655
+___destroy_helper_block_.656
+___copy_helper_block_.658
+___destroy_helper_block_.659
+-[MBProgressHUD(Deprecated) cleanUp]
+-[MBProgressHUD(Deprecated) labelText]
+-[MBProgressHUD(Deprecated) setLabelText:]
+-[MBProgressHUD(Deprecated) labelFont]
+-[MBProgressHUD(Deprecated) setLabelFont:]
+-[MBProgressHUD(Deprecated) labelColor]
+-[MBProgressHUD(Deprecated) setLabelColor:]
+-[MBProgressHUD(Deprecated) detailsLabelText]
+-[MBProgressHUD(Deprecated) setDetailsLabelText:]
+-[MBProgressHUD(Deprecated) detailsLabelFont]
+-[MBProgressHUD(Deprecated) setDetailsLabelFont:]
+-[MBProgressHUD(Deprecated) detailsLabelColor]
+-[MBProgressHUD(Deprecated) setDetailsLabelColor:]
+-[MBProgressHUD(Deprecated) opacity]
+-[MBProgressHUD(Deprecated) setOpacity:]
+-[MBProgressHUD(Deprecated) color]
+-[MBProgressHUD(Deprecated) setColor:]
+-[MBProgressHUD(Deprecated) yOffset]
+-[MBProgressHUD(Deprecated) setYOffset:]
+-[MBProgressHUD(Deprecated) xOffset]
+-[MBProgressHUD(Deprecated) setXOffset:]
+-[MBProgressHUD(Deprecated) cornerRadius]
+-[MBProgressHUD(Deprecated) setCornerRadius:]
+-[MBProgressHUD(Deprecated) dimBackground]
+-[MBProgressHUD(Deprecated) setDimBackground:]
+-[MBProgressHUD(Deprecated) size]
+-[MBProgressHUD(Deprecated) activityIndicatorColor]
+-[MBProgressHUD(Deprecated) setActivityIndicatorColor:]
+-[MBProgressHUDRoundedButton initWithFrame:]
+-[MBProgressHUDRoundedButton layoutSubviews]
+-[MBProgressHUDRoundedButton intrinsicContentSize]
+-[MBProgressHUDRoundedButton setTitleColor:forState:]
+-[MBProgressHUDRoundedButton setHighlighted:]
+_MBProgressMaxOffset
+_OBJC_IVAR_$_MBProgressHUD._animationType
+_OBJC_IVAR_$_MBProgressHUD._mode
+_OBJC_IVAR_$_MBProgressHUD._margin
+_OBJC_IVAR_$_MBProgressHUD._opacity
+_OBJC_IVAR_$_MBProgressHUD._defaultMotionEffectsEnabled
+_OBJC_IVAR_$_MBProgressHUD._contentColor
+___block_descriptor_tmp.131
+_OBJC_CLASS_$_MBBackgroundView
+_OBJC_IVAR_$_MBProgressHUD._backgroundView
+_OBJC_IVAR_$_MBProgressHUD._bezelView
+_OBJC_IVAR_$_MBProgressHUD._label
+_OBJC_IVAR_$_MBProgressHUD._detailsLabel
+_OBJC_CLASS_$_MBProgressHUDRoundedButton
+_OBJC_IVAR_$_MBProgressHUD._button
+_OBJC_IVAR_$_MBProgressHUD._topSpacer
+_OBJC_IVAR_$_MBProgressHUD._bottomSpacer
+_OBJC_CLASS_$_MBRoundProgressView
+_OBJC_CLASS_$_MBBarProgressView
+___block_descriptor_tmp.338
+___block_descriptor_tmp.366
+_OBJC_IVAR_$_MBProgressHUD._customView
+_OBJC_IVAR_$_MBProgressHUD._offset
+_OBJC_IVAR_$_MBProgressHUD._minSize
+_OBJC_IVAR_$_MBProgressHUD._square
+_OBJC_IVAR_$_MBProgressHUD._progress
+_OBJC_IVAR_$_MBProgressHUD._delegate
+_OBJC_IVAR_$_MBProgressHUD._graceTime
+_OBJC_IVAR_$_MBProgressHUD._minShowTime
+_OBJC_IVAR_$_MBProgressHUD._removeFromSuperViewOnHide
+_OBJC_IVAR_$_MBProgressHUD._useAnimation
+_OBJC_IVAR_$_MBProgressHUD._finished
+_OBJC_IVAR_$_MBProgressHUD._indicator
+_OBJC_IVAR_$_MBProgressHUD._graceTimer
+_OBJC_IVAR_$_MBProgressHUD._minShowTimer
+_OBJC_IVAR_$_MBProgressHUD._showStarted
+_OBJC_IVAR_$_MBProgressHUD._paddingConstraints
+_OBJC_IVAR_$_MBProgressHUD._bezelConstraints
+_OBJC_IVAR_$_MBProgressHUD._completionBlock
+_OBJC_IVAR_$_MBProgressHUD._taskInProgress
+_OBJC_IVAR_$_MBProgressHUD._activityIndicatorColor
+_OBJC_METACLASS_$_MBProgressHUD
+_OBJC_IVAR_$_MBRoundProgressView._progress
+_OBJC_IVAR_$_MBRoundProgressView._annular
+_OBJC_IVAR_$_MBRoundProgressView._progressTintColor
+_OBJC_IVAR_$_MBRoundProgressView._backgroundTintColor
+_OBJC_METACLASS_$_MBRoundProgressView
+_OBJC_IVAR_$_MBBarProgressView._progress
+_OBJC_IVAR_$_MBBarProgressView._lineColor
+_OBJC_IVAR_$_MBBarProgressView._progressColor
+_OBJC_IVAR_$_MBBarProgressView._progressRemainingColor
+_OBJC_METACLASS_$_MBBarProgressView
+_OBJC_IVAR_$_MBBackgroundView._style
+_OBJC_IVAR_$_MBBackgroundView._color
+_OBJC_IVAR_$_MBBackgroundView._effectView
+_OBJC_IVAR_$_MBBackgroundView._toolbar
+_OBJC_METACLASS_$_MBBackgroundView
+___block_descriptor_tmp.647
+___block_descriptor_tmp.657
+___block_descriptor_tmp.660
+_OBJC_METACLASS_$_MBProgressHUDRoundedButton
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/MBProgressHUD/MBProgressHUD.m
+__tg_ceil
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/8.0.0/include/tgmath.h
+CGPointMake
+__86-[MBProgressHUD(Deprecated) showAnimated:whileExecutingBlock:onQueue:completionBlock:]_block_invoke_2
+__86-[MBProgressHUD(Deprecated) showAnimated:whileExecutingBlock:onQueue:completionBlock:]_block_invoke
+__77-[MBProgressHUD(Deprecated) showWhileExecuting:onTarget:withObject:animated:]_block_invoke
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/MBProgressHUD/MBProgressHUD.h
+__inline_isnanf
+__tg_acos
+CGSizeMake
+__CGSizeEqualToSize
+__CGPointEqualToPoint
+__41-[MBProgressHUD updatePaddingConstraints]_block_invoke
+__34-[MBProgressHUD updateConstraints]_block_invoke
+__47-[MBProgressHUD animateIn:withType:completion:]_block_invoke
+__36-[MBProgressHUD hideUsingAnimation:]_block_invoke
+-[SwitchCreation cell]
+-[SwitchCreation setCell:]
+-[SwitchCreation tableview]
+-[SwitchCreation setTableview:]
+-[SwitchCreation label]
+-[SwitchCreation setLabel:]
+-[SwitchCreation .cxx_destruct]
+_OBJC_IVAR_$_SwitchCreation.cell
+_OBJC_IVAR_$_SwitchCreation.tableview
+_OBJC_IVAR_$_SwitchCreation.label
+_OBJC_METACLASS_$_SwitchCreation
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Models/SwitchCreation.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Models/SwitchCreation.h
++[Reachability reachabilityWithHostName:]
++[Reachability reachabilityWithHostname:]
++[Reachability reachabilityWithAddress:]
++[Reachability reachabilityForInternetConnection]
++[Reachability reachabilityForLocalWiFi]
+-[Reachability initWithReachabilityRef:]
+-[Reachability dealloc]
+-[Reachability startNotifier]
+_TMReachabilityCallback
+-[Reachability stopNotifier]
+-[Reachability isReachableWithFlags:]
+-[Reachability isReachable]
+-[Reachability isReachableViaWWAN]
+-[Reachability isReachableViaWiFi]
+-[Reachability isConnectionRequired]
+-[Reachability connectionRequired]
+-[Reachability isConnectionOnDemand]
+-[Reachability isInterventionRequired]
+-[Reachability currentReachabilityStatus]
+-[Reachability reachabilityFlags]
+-[Reachability currentReachabilityString]
+-[Reachability currentReachabilityFlags]
+-[Reachability reachabilityChanged:]
+___36-[Reachability reachabilityChanged:]_block_invoke
+-[Reachability description]
+-[Reachability reachableBlock]
+-[Reachability setReachableBlock:]
+-[Reachability unreachableBlock]
+-[Reachability setUnreachableBlock:]
+-[Reachability reachabilityBlock]
+-[Reachability setReachabilityBlock:]
+-[Reachability reachableOnWWAN]
+-[Reachability setReachableOnWWAN:]
+-[Reachability reachabilityRef]
+-[Reachability setReachabilityRef:]
+-[Reachability reachabilitySerialQueue]
+-[Reachability setReachabilitySerialQueue:]
+-[Reachability reachabilityObject]
+-[Reachability setReachabilityObject:]
+-[Reachability .cxx_destruct]
+_OBJC_IVAR_$_Reachability._reachableBlock
+_OBJC_IVAR_$_Reachability._unreachableBlock
+_OBJC_IVAR_$_Reachability._reachabilityBlock
+_OBJC_IVAR_$_Reachability._reachableOnWWAN
+_OBJC_IVAR_$_Reachability._reachabilityRef
+_OBJC_IVAR_$_Reachability._reachabilitySerialQueue
+_OBJC_IVAR_$_Reachability._reachabilityObject
+_OBJC_METACLASS_$_Reachability
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/Rechability/Reachability.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/Rechability/Reachability.h
+__36-[Reachability reachabilityChanged:]_block_invoke
+reachabilityFlags
+TMReachabilityCallback
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/main.m
+main
+-[AlertViewController viewDidLoad]
+-[AlertViewController viewWillAppear:]
+-[AlertViewController showUserSettings:]
+-[AlertViewController UserSettings]
+-[AlertViewController dismissPopView:]
+-[AlertViewController numberOfSectionsInTableView:]
+-[AlertViewController tableView:numberOfRowsInSection:]
+-[AlertViewController tableView:cellForRowAtIndexPath:]
+-[AlertViewController tableView:didSelectRowAtIndexPath:]
+-[AlertViewController viewWillDisappear:]
+-[AlertViewController didReceiveMemoryWarning]
+-[AlertViewController tableView]
+-[AlertViewController setTableView:]
+-[AlertViewController .cxx_destruct]
+_OBJC_CLASS_$_AlertViewController
+_OBJC_IVAR_$_AlertViewController.db
+_OBJC_IVAR_$_AlertViewController.app
+_OBJC_IVAR_$_AlertViewController._tableView
+_OBJC_METACLASS_$_AlertViewController
+_OBJC_IVAR_$_AlertViewController.badgeCount
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/AlertViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/AlertViewController.h
+__ZN12CAXException15sWarningHandlerE
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/AudioCompressor/PublicUtility/CAXException.mm
+-[TransferListViewController viewDidLoad]
+-[TransferListViewController viewWillAppear:]
+-[TransferListViewController viewWillDisappear:]
+-[TransferListViewController validateFileUploadResponse:]
+-[TransferListViewController handleLongPress:]
+-[TransferListViewController popViewController:]
+-[TransferListViewController numberOfSectionsInTableView:]
+-[TransferListViewController tableView:numberOfRowsInSection:]
+-[TransferListViewController tableView:cellForRowAtIndexPath:]
+-[TransferListViewController tableView:didSelectRowAtIndexPath:]
+___64-[TransferListViewController tableView:didSelectRowAtIndexPath:]_block_invoke
+-[TransferListViewController tableView:didDeselectRowAtIndexPath:]
+___66-[TransferListViewController tableView:didDeselectRowAtIndexPath:]_block_invoke
+___copy_helper_block_.223
+___destroy_helper_block_.224
+-[TransferListViewController hideAndShowUploadButton:]
+-[TransferListViewController addToolbar]
+-[TransferListViewController deleteMutipleFiles]
+___48-[TransferListViewController deleteMutipleFiles]_block_invoke
+___copy_helper_block_.283
+___destroy_helper_block_.284
+___48-[TransferListViewController deleteMutipleFiles]_block_invoke.288
+___copy_helper_block_.289
+___destroy_helper_block_.290
+-[TransferListViewController uploadMultipleFilesToserver]
+___57-[TransferListViewController uploadMultipleFilesToserver]_block_invoke
+___57-[TransferListViewController uploadMultipleFilesToserver]_block_invoke_2
+___copy_helper_block_.307
+___destroy_helper_block_.308
+___copy_helper_block_.311
+___destroy_helper_block_.312
+___57-[TransferListViewController uploadMultipleFilesToserver]_block_invoke.316
+___copy_helper_block_.317
+___destroy_helper_block_.318
+-[TransferListViewController selectAllFiles:]
+-[TransferListViewController didReceiveMemoryWarning]
+-[TransferListViewController currentViewName]
+-[TransferListViewController setCurrentViewName:]
+-[TransferListViewController checkedIndexPath]
+-[TransferListViewController setCheckedIndexPath:]
+-[TransferListViewController longPressAdded]
+-[TransferListViewController setLongPressAdded:]
+-[TransferListViewController tableView]
+-[TransferListViewController setTableView:]
+-[TransferListViewController .cxx_destruct]
+_OBJC_CLASS_$_TransferListViewController
+_OBJC_IVAR_$_TransferListViewController.arrayOfMarked
+_OBJC_IVAR_$_TransferListViewController.isMultipleFilesActivated
+_OBJC_IVAR_$_TransferListViewController.toolBarAdded
+_OBJC_IVAR_$_TransferListViewController.longPressAdded
+_OBJC_IVAR_$_TransferListViewController.selectedCountLabel
+_OBJC_IVAR_$_TransferListViewController.alertController
+_OBJC_IVAR_$_TransferListViewController.actionDelete
+___block_descriptor_tmp.225
+___block_descriptor_tmp.285
+___block_descriptor_tmp.291
+_OBJC_IVAR_$_TransferListViewController.actionCancel
+___block_descriptor_tmp.310
+___block_descriptor_tmp.313
+___block_descriptor_tmp.319
+_OBJC_IVAR_$_TransferListViewController.currentViewName
+_OBJC_IVAR_$_TransferListViewController.checkedIndexPath
+_OBJC_IVAR_$_TransferListViewController._tableView
+_OBJC_IVAR_$_TransferListViewController.cellSelected
+_OBJC_IVAR_$_TransferListViewController.audiorecordDict
+_OBJC_METACLASS_$_TransferListViewController
+_OBJC_IVAR_$_TransferListViewController.deleted
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/TransferListViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/TransferListViewController.h
+__57-[TransferListViewController uploadMultipleFilesToserver]_block_invoke.316
+__57-[TransferListViewController uploadMultipleFilesToserver]_block_invoke_2
+__57-[TransferListViewController uploadMultipleFilesToserver]_block_invoke
+__48-[TransferListViewController deleteMutipleFiles]_block_invoke.288
+__48-[TransferListViewController deleteMutipleFiles]_block_invoke
+__66-[TransferListViewController tableView:didDeselectRowAtIndexPath:]_block_invoke
+__64-[TransferListViewController tableView:didSelectRowAtIndexPath:]_block_invoke
+-[User userId]
+-[User setUserId:]
+-[User password]
+-[User setPassword:]
+-[User userPin]
+-[User setUserPin:]
+-[User .cxx_destruct]
+_OBJC_IVAR_$_User.userId
+_OBJC_IVAR_$_User.password
+_OBJC_IVAR_$_User._userPin
+_OBJC_METACLASS_$_User
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Models/User.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Models/User.h
+-[ChangePasswordViewController viewDidLoad]
+-[ChangePasswordViewController viewWillAppear:]
+-[ChangePasswordViewController textField:shouldChangeCharactersInRange:replacementString:]
+-[ChangePasswordViewController resignResponder:]
+-[ChangePasswordViewController textFieldShouldReturn:]
+-[ChangePasswordViewController didReceiveMemoryWarning]
+-[ChangePasswordViewController backButtonClicked:]
+-[ChangePasswordViewController submitButtonClicked:]
+___52-[ChangePasswordViewController submitButtonClicked:]_block_invoke
+___52-[ChangePasswordViewController submitButtonClicked:]_block_invoke.78
+___copy_helper_block_.79
+___destroy_helper_block_.80
+-[ChangePasswordViewController pinChangeResponseCheck:]
+___55-[ChangePasswordViewController pinChangeResponseCheck:]_block_invoke
+___copy_helper_block_.131
+___destroy_helper_block_.132
+___55-[ChangePasswordViewController pinChangeResponseCheck:]_block_invoke.136
+___copy_helper_block_.137
+___destroy_helper_block_.138
+___55-[ChangePasswordViewController pinChangeResponseCheck:]_block_invoke.146
+___copy_helper_block_.147
+___destroy_helper_block_.148
+-[ChangePasswordViewController cancelButtonClicked:]
+-[ChangePasswordViewController pinCode1TextField]
+-[ChangePasswordViewController setPinCode1TextField:]
+-[ChangePasswordViewController pinCode2TextField]
+-[ChangePasswordViewController setPinCode2TextField:]
+-[ChangePasswordViewController pinCode3TextField]
+-[ChangePasswordViewController setPinCode3TextField:]
+-[ChangePasswordViewController pinCode4TextField]
+-[ChangePasswordViewController setPinCode4TextField:]
+-[ChangePasswordViewController navigationBarView]
+-[ChangePasswordViewController setNavigationBarView:]
+-[ChangePasswordViewController pinCode5TextField]
+-[ChangePasswordViewController setPinCode5TextField:]
+-[ChangePasswordViewController pinCode6TextField]
+-[ChangePasswordViewController setPinCode6TextField:]
+-[ChangePasswordViewController pinCode7TextField]
+-[ChangePasswordViewController setPinCode7TextField:]
+-[ChangePasswordViewController pinCode8TextField]
+-[ChangePasswordViewController setPinCode8TextField:]
+-[ChangePasswordViewController submitButton]
+-[ChangePasswordViewController setSubmitButton:]
+-[ChangePasswordViewController cancelButton]
+-[ChangePasswordViewController setCancelButton:]
+-[ChangePasswordViewController window]
+-[ChangePasswordViewController setWindow:]
+-[ChangePasswordViewController hud]
+-[ChangePasswordViewController setHud:]
+-[ChangePasswordViewController .cxx_destruct]
+_OBJC_CLASS_$_ChangePasswordViewController
+_OBJC_IVAR_$_ChangePasswordViewController.navigationBarView
+_OBJC_IVAR_$_ChangePasswordViewController.pinCode1TextField
+_OBJC_IVAR_$_ChangePasswordViewController.pinCode2TextField
+_OBJC_IVAR_$_ChangePasswordViewController.pinCode3TextField
+_OBJC_IVAR_$_ChangePasswordViewController.pinCode4TextField
+_OBJC_IVAR_$_ChangePasswordViewController.pinCode5TextField
+_OBJC_IVAR_$_ChangePasswordViewController.pinCode6TextField
+_OBJC_IVAR_$_ChangePasswordViewController.pinCode7TextField
+_OBJC_IVAR_$_ChangePasswordViewController.pinCode8TextField
+_OBJC_IVAR_$_ChangePasswordViewController.submitButton
+_OBJC_IVAR_$_ChangePasswordViewController.cancelButton
+_OBJC_IVAR_$_ChangePasswordViewController.alertController
+___block_descriptor_tmp.81
+_OBJC_IVAR_$_ChangePasswordViewController.hud
+___block_descriptor_tmp.133
+_OBJC_IVAR_$_ChangePasswordViewController.actionDelete
+___block_descriptor_tmp.139
+___block_descriptor_tmp.149
+_OBJC_IVAR_$_ChangePasswordViewController.window
+_OBJC_IVAR_$_ChangePasswordViewController.audiorecordDict
+_OBJC_IVAR_$_ChangePasswordViewController.actionCancel
+_OBJC_IVAR_$_ChangePasswordViewController.result
+_OBJC_METACLASS_$_ChangePasswordViewController
+_OBJC_IVAR_$_ChangePasswordViewController.deleted
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/ChangePasswordViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/ChangePasswordViewController.h
+__55-[ChangePasswordViewController pinChangeResponseCheck:]_block_invoke.146
+__55-[ChangePasswordViewController pinChangeResponseCheck:]_block_invoke.136
+__55-[ChangePasswordViewController pinChangeResponseCheck:]_block_invoke
+__52-[ChangePasswordViewController submitButtonClicked:]_block_invoke.78
+__52-[ChangePasswordViewController submitButtonClicked:]_block_invoke
+-[AudioDetailsViewController viewDidLoad]
+-[AudioDetailsViewController pausePlayerFromBackGround]
+-[AudioDetailsViewController viewWillAppear:]
+-[AudioDetailsViewController viewWillDisappear:]
+-[AudioDetailsViewController popViewController:]
+-[AudioDetailsViewController didReceiveMemoryWarning]
+-[AudioDetailsViewController moreButtonClicked:]
+-[AudioDetailsViewController EditDepartment]
+-[AudioDetailsViewController backButtonPressed:]
+-[AudioDetailsViewController deleteDictation:]
+___46-[AudioDetailsViewController deleteDictation:]_block_invoke
+___46-[AudioDetailsViewController deleteDictation:]_block_invoke.250
+___copy_helper_block_.251
+___destroy_helper_block_.252
+-[AudioDetailsViewController playRecordingButtonPressed:]
+___57-[AudioDetailsViewController playRecordingButtonPressed:]_block_invoke
+-[AudioDetailsViewController audioPlayerDidFinishPlaying:successfully:]
+-[AudioDetailsViewController playOrPauseButtonPressed]
+-[AudioDetailsViewController gestureRecognizer:shouldReceiveTouch:]
+-[AudioDetailsViewController updateSliderTime:]
+-[AudioDetailsViewController dismissPopView:]
+-[AudioDetailsViewController dismissPlayerView:]
+-[AudioDetailsViewController sliderValueChanged]
+-[AudioDetailsViewController transferDictationButtonClicked:]
+___61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke
+___61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke_2
+___copy_helper_block_.337
+___destroy_helper_block_.338
+___copy_helper_block_.341
+___destroy_helper_block_.342
+___61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.346
+___copy_helper_block_.347
+___destroy_helper_block_.348
+___61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.354
+___61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke_2.355
+___copy_helper_block_.356
+___destroy_helper_block_.357
+___copy_helper_block_.359
+___destroy_helper_block_.360
+___61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.362
+___61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.366
+___61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke_2.367
+___copy_helper_block_.368
+___destroy_helper_block_.369
+___copy_helper_block_.371
+___destroy_helper_block_.372
+___61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.374
+___copy_helper_block_.375
+___destroy_helper_block_.376
+___61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.378
+___61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke_2.379
+___copy_helper_block_.382
+___destroy_helper_block_.383
+___copy_helper_block_.385
+___destroy_helper_block_.386
+___61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.388
+___copy_helper_block_.389
+___destroy_helper_block_.390
+-[AudioDetailsViewController numberOfSectionsInTableView:]
+-[AudioDetailsViewController tableView:numberOfRowsInSection:]
+-[AudioDetailsViewController tableView:cellForRowAtIndexPath:]
+-[AudioDetailsViewController tableView:didSelectRowAtIndexPath:]
+-[AudioDetailsViewController cancel:]
+-[AudioDetailsViewController save:]
+-[AudioDetailsViewController hideTableView]
+-[AudioDetailsViewController transferDictationButton]
+-[AudioDetailsViewController setTransferDictationButton:]
+-[AudioDetailsViewController deleteDictationButton]
+-[AudioDetailsViewController setDeleteDictationButton:]
+-[AudioDetailsViewController moreButton]
+-[AudioDetailsViewController setMoreButton:]
+-[AudioDetailsViewController selectedRow]
+-[AudioDetailsViewController setSelectedRow:]
+-[AudioDetailsViewController selectedView]
+-[AudioDetailsViewController setSelectedView:]
+-[AudioDetailsViewController .cxx_destruct]
+_OBJC_CLASS_$_AudioDetailsViewController
+_OBJC_IVAR_$_AudioDetailsViewController.popupView
+_OBJC_IVAR_$_AudioDetailsViewController.forTableViewObj
+_OBJC_IVAR_$_AudioDetailsViewController.player
+_OBJC_IVAR_$_AudioDetailsViewController.transferDictationButton
+_OBJC_IVAR_$_AudioDetailsViewController.deleteDictationButton
+_OBJC_IVAR_$_AudioDetailsViewController.audiorecordDict
+_OBJC_IVAR_$_AudioDetailsViewController.moreButton
+_OBJC_IVAR_$_AudioDetailsViewController.alertController
+_OBJC_IVAR_$_AudioDetailsViewController.actionDelete
+___block_descriptor_tmp.253
+_OBJC_IVAR_$_AudioDetailsViewController.actionCancel
+___block_descriptor_tmp.262
+_OBJC_IVAR_$_AudioDetailsViewController.sliderPopUpView
+_OBJC_IVAR_$_AudioDetailsViewController.audioRecordSlider
+___block_descriptor_tmp.340
+___block_descriptor_tmp.343
+___block_descriptor_tmp.349
+___block_descriptor_tmp.358
+___block_descriptor_tmp.361
+___block_descriptor_tmp.365
+___block_descriptor_tmp.370
+___block_descriptor_tmp.373
+___block_descriptor_tmp.377
+___block_descriptor_tmp.384
+___block_descriptor_tmp.387
+___block_descriptor_tmp.391
+_OBJC_IVAR_$_AudioDetailsViewController.departmentNamesArray
+_OBJC_IVAR_$_AudioDetailsViewController.cell
+_OBJC_IVAR_$_AudioDetailsViewController._selectedRow
+_OBJC_IVAR_$_AudioDetailsViewController._selectedView
+_OBJC_IVAR_$_AudioDetailsViewController.tap
+_OBJC_IVAR_$_AudioDetailsViewController.overlay
+_OBJC_IVAR_$_AudioDetailsViewController.result
+_OBJC_METACLASS_$_AudioDetailsViewController
+_OBJC_IVAR_$_AudioDetailsViewController.deleted
+_OBJC_IVAR_$_AudioDetailsViewController.moreButtonPressed
+_OBJC_IVAR_$_AudioDetailsViewController.task
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/AudioDetailsViewController.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/AudioDetailsViewController.h
+__61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.388
+__61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke_2.379
+__61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.378
+__61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.374
+__61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke_2.367
+__61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.366
+__61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.362
+__61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke_2.355
+__61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.354
+__61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke.346
+__61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke_2
+__61-[AudioDetailsViewController transferDictationButtonClicked:]_block_invoke
+__57-[AudioDetailsViewController playRecordingButtonPressed:]_block_invoke
+__46-[AudioDetailsViewController deleteDictation:]_block_invoke.250
+__46-[AudioDetailsViewController deleteDictation:]_block_invoke
+-[ImportedAudioViewController viewDidLoad]
+-[ImportedAudioViewController validateFileUploadResponse:]
+-[ImportedAudioViewController popViewController:]
+-[ImportedAudioViewController viewWillAppear:]
+-[ImportedAudioViewController backButtonPressed:]
+-[ImportedAudioViewController numberOfSectionsInTableView:]
+-[ImportedAudioViewController tableView:numberOfRowsInSection:]
+-[ImportedAudioViewController tableView:cellForRowAtIndexPath:]
+-[ImportedAudioViewController tableView:didSelectRowAtIndexPath:]
+___65-[ImportedAudioViewController tableView:didSelectRowAtIndexPath:]_block_invoke
+-[ImportedAudioViewController didReceiveMemoryWarning]
+-[ImportedAudioViewController audioFilePath]
+-[ImportedAudioViewController setAudioFilePath:]
+-[ImportedAudioViewController tableView]
+-[ImportedAudioViewController setTableView:]
+-[ImportedAudioViewController .cxx_destruct]
+_OBJC_CLASS_$_ImportedAudioViewController
+_OBJC_IVAR_$_ImportedAudioViewController.alertController
+_OBJC_IVAR_$_ImportedAudioViewController.actionDelete
+_OBJC_IVAR_$_ImportedAudioViewController.audioFilePath
+_OBJC_IVAR_$_ImportedAudioViewController._tableView
+_OBJC_IVAR_$_ImportedAudioViewController.player
+_OBJC_IVAR_$_ImportedAudioViewController.actionCancel
+_OBJC_IVAR_$_ImportedAudioViewController.destinationFilePath
+_OBJC_IVAR_$_ImportedAudioViewController.exportURL
+_OBJC_METACLASS_$_ImportedAudioViewController
+_OBJC_IVAR_$_ImportedAudioViewController.nextCount
+_OBJC_IVAR_$_ImportedAudioViewController.sourceURL
+_OBJC_IVAR_$_ImportedAudioViewController.destinationURL
+_OBJC_IVAR_$_ImportedAudioViewController.outputFormat
+_OBJC_IVAR_$_ImportedAudioViewController.sampleRate
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/ImportedAudioViewController.mm
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/ImportedAudioViewController.h
+__65-[ImportedAudioViewController tableView:didSelectRowAtIndexPath:]_block_invoke
+-[BrowseMusicViewController viewDidLoad]
+-[BrowseMusicViewController didReceiveMemoryWarning]
+-[BrowseMusicViewController PickAudioForIndex_iPhone]
+-[BrowseMusicViewController mediaPicker:didPickMediaItems:]
+-[BrowseMusicViewController setCompressAudio]
+-[BrowseMusicViewController mediaPickerDidCancel:]
+-[BrowseMusicViewController backButtonPressed:]
+-[BrowseMusicViewController browseFromMusicButtonClicked:]
+-[BrowseMusicViewController playAudioButtonClicked:]
+__Z20myDocumentsDirectoryv
+__Z12myDeleteFileP8NSString
+-[BrowseMusicViewController handleExportTapped]
+__Z19coreAudioCanOpenURLP5NSURL
+___47-[BrowseMusicViewController handleExportTapped]_block_invoke
+-[BrowseMusicViewController showAudio]
+-[BrowseMusicViewController convertToWav]
+___41-[BrowseMusicViewController convertToWav]_block_invoke
+___copy_helper_block_.261
+___destroy_helper_block_.262
+-[BrowseMusicViewController player]
+-[BrowseMusicViewController setPlayer:]
+-[BrowseMusicViewController audioData]
+-[BrowseMusicViewController setAudioData:]
+-[BrowseMusicViewController musicPlayer]
+-[BrowseMusicViewController setMusicPlayer:]
+-[BrowseMusicViewController .cxx_destruct]
+_OBJC_CLASS_$_BrowseMusicViewController
+_OBJC_IVAR_$_BrowseMusicViewController.song
+_OBJC_IVAR_$_BrowseMusicViewController.exportURL
+_OBJC_IVAR_$_BrowseMusicViewController.nextCount
+_OBJC_IVAR_$_BrowseMusicViewController.player
+___block_descriptor_tmp.263
+_OBJC_IVAR_$_BrowseMusicViewController._audioData
+_OBJC_IVAR_$_BrowseMusicViewController._musicPlayer
+l_OBJC_PROTOCOL_$_UIActionSheetDelegate
+l_OBJC_LABEL_PROTOCOL_$_UIActionSheetDelegate
+l_OBJC_PROTOCOL_$_UINavigationControllerDelegate
+l_OBJC_LABEL_PROTOCOL_$_UINavigationControllerDelegate
+l_OBJC_PROTOCOL_$_UIImagePickerControllerDelegate
+l_OBJC_LABEL_PROTOCOL_$_UIImagePickerControllerDelegate
+l_OBJC_PROTOCOL_$_MPMediaPickerControllerDelegate
+l_OBJC_LABEL_PROTOCOL_$_MPMediaPickerControllerDelegate
+l_OBJC_PROTOCOL_$_AVAudioRecorderDelegate
+l_OBJC_LABEL_PROTOCOL_$_AVAudioRecorderDelegate
+l_OBJC_PROTOCOL_$_AVAudioSessionDelegate
+l_OBJC_LABEL_PROTOCOL_$_AVAudioSessionDelegate
+_OBJC_METACLASS_$_BrowseMusicViewController
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/BrowseMusicViewController.mm
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/ViewControllers/BrowseMusicViewController.h
+__41-[BrowseMusicViewController convertToWav]_block_invoke
+__47-[BrowseMusicViewController handleExportTapped]_block_invoke
+coreAudioCanOpenURL
+myDeleteFile
+myDocumentsDirectory
++[SBJson4StreamWriterState sharedInstance]
+-[SBJson4StreamWriterState isInvalidState:]
+-[SBJson4StreamWriterState appendSeparator:]
+-[SBJson4StreamWriterState expectingKey:]
+-[SBJson4StreamWriterState transitionState:]
+-[SBJson4StreamWriterState appendWhitespace:]
++[SBJson4StreamWriterStateObjectStart sharedInstance]
+-[SBJson4StreamWriterStateObjectStart transitionState:]
+-[SBJson4StreamWriterStateObjectStart expectingKey:]
++[SBJson4StreamWriterStateObjectKey sharedInstance]
+-[SBJson4StreamWriterStateObjectKey appendSeparator:]
++[SBJson4StreamWriterStateObjectValue sharedInstance]
+-[SBJson4StreamWriterStateObjectValue appendSeparator:]
+-[SBJson4StreamWriterStateObjectValue transitionState:]
+-[SBJson4StreamWriterStateObjectValue appendWhitespace:]
++[SBJson4StreamWriterStateArrayStart sharedInstance]
+-[SBJson4StreamWriterStateArrayStart transitionState:]
++[SBJson4StreamWriterStateArrayValue sharedInstance]
+-[SBJson4StreamWriterStateArrayValue appendSeparator:]
++[SBJson4StreamWriterStateStart sharedInstance]
+-[SBJson4StreamWriterStateStart transitionState:]
+-[SBJson4StreamWriterStateStart appendSeparator:]
++[SBJson4StreamWriterStateComplete sharedInstance]
+-[SBJson4StreamWriterStateComplete isInvalidState:]
++[SBJson4StreamWriterStateError sharedInstance]
+_OBJC_METACLASS_$_SBJson4StreamWriterState
+_OBJC_CLASS_$_SBJson4StreamWriterState
+_OBJC_CLASS_$_SBJson4StreamWriterStateObjectValue
+_OBJC_METACLASS_$_SBJson4StreamWriterStateObjectStart
+_sharedInstance.state.25
+_OBJC_METACLASS_$_SBJson4StreamWriterStateObjectKey
+_OBJC_CLASS_$_SBJson4StreamWriterStateObjectKey
+_sharedInstance.state.28
+_OBJC_METACLASS_$_SBJson4StreamWriterStateObjectValue
+_sharedInstance.state.33
+_OBJC_CLASS_$_SBJson4StreamWriterStateArrayValue
+_OBJC_METACLASS_$_SBJson4StreamWriterStateArrayStart
+_sharedInstance.state.36
+_OBJC_METACLASS_$_SBJson4StreamWriterStateArrayValue
+_sharedInstance.state.38
+_OBJC_CLASS_$_SBJson4StreamWriterStateComplete
+_OBJC_METACLASS_$_SBJson4StreamWriterStateStart
+_sharedInstance.state.41
+_OBJC_METACLASS_$_SBJson4StreamWriterStateComplete
+_sharedInstance.state.45
+_OBJC_METACLASS_$_SBJson4StreamWriterStateError
+_OBJC_CLASS_$_SBJson4StreamWriterStateError
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/SBJson/SBJson4StreamWriterState.m
+-[DepartMent encodeWithCoder:]
+-[DepartMent initWithCoder:]
+-[DepartMent Id]
+-[DepartMent setId:]
+-[DepartMent departmentName]
+-[DepartMent setDepartmentName:]
+-[DepartMent .cxx_destruct]
+_OBJC_IVAR_$_DepartMent.Id
+_OBJC_IVAR_$_DepartMent.departmentName
+_OBJC_METACLASS_$_DepartMent
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Models/DepartMent.m
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Models/DepartMent.h
+__Z17CAStringForOSTypemPc
+__ZN24CAStreamBasicDescriptionC2Ev
+__ZN24CAStreamBasicDescriptionC2ERK27AudioStreamBasicDescription
+__ZN24CAStreamBasicDescriptionC1ERK27AudioStreamBasicDescription
+__ZN24CAStreamBasicDescriptionC2Edmmmmmmm
+__ZN24CAStreamBasicDescriptionC1Edmmmmmmm
+__ZNK24CAStreamBasicDescription14SampleWordSizeEv
+__ZN24CAStreamBasicDescription24NormalizeLinearPCMFormatER27AudioStreamBasicDescription
+__ZN24CAStreamBasicDescription24NormalizeLinearPCMFormatEbR27AudioStreamBasicDescription
+__ZN24CAStreamBasicDescription11ResetFormatER27AudioStreamBasicDescription
+__ZN24CAStreamBasicDescription13FillOutFormatER27AudioStreamBasicDescriptionRKS0_
+__ZN24CAStreamBasicDescription13GetSimpleNameERK27AudioStreamBasicDescriptionPcmbb
+__ZltRK27AudioStreamBasicDescriptionS1_
+__ZeqRK27AudioStreamBasicDescriptionS1_
+__ZNK24CAStreamBasicDescription7IsEqualERK27AudioStreamBasicDescriptionb
+__Z11SanityCheckRK27AudioStreamBasicDescription
+__ZN24CAStreamBasicDescription8FromTextEPKcR27AudioStreamBasicDescription
+__ZN24CAStreamBasicDescription6sEmptyE
+__ZN24CAStreamBasicDescription23sTextParsingUsageStringE
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/AudioCompressor/PublicUtility/CAStreamBasicDescription.mm
+FromText
+isdigit
+__isctype
+CFSwapInt32BigToHost
+SanityCheck
+IsEqual
+operator==
+MatchFormatFlags
+fequal
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Cube/Libraries/AudioCompressor/PublicUtility/CAMath.h
+fiszero
+operator<
+fnotequal
+fnonzero
+GetSimpleName
+FillOutFormat
+ResetFormat
+NormalizeLinearPCMFormat
+SampleWordSize
+NumberInterleavedChannels
+IsInterleaved
+IsPCM
+AsString
+AlignmentIsSignificant
+PackednessIsSignificant
+CAStreamBasicDescription
+SetFrom
+CAStringForOSType

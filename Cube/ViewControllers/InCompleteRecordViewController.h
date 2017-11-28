@@ -29,8 +29,12 @@
     NSTimer* stopTimer;
     int timerSeconds;
     int timerMinutes;
+    int timerHour;
+
     int circleViewTimerMinutes;
     int circleViewTimerSeconds;
+    int circleViewTimerHour;
+
     UILabel* currentDuration;
     UILabel* totalDuration;
     bool recordingPausedOrStoped;
@@ -60,6 +64,18 @@
     NSString* bsackUpAudioFileName;
     bool composed;
     bool isRecording;
+    UIView* circleView;
+    
+    BOOL edited;
+    NSString* editType;
+    NSTimer* sliderTimer;
+    
+    BOOL recordingRestrictionLimitCrossed;
+    
+    long totalSecondsOfAudio;
+//    UIButton* uploadLaterButton;
+//    UIButton* recordNewButton;
+//    UIView* animatedView;
 }
 @property (nonatomic)     AVAudioPlayer       *player;
 @property (nonatomic)     AVAudioRecorder     *recorder;
@@ -67,9 +83,15 @@
 @property (nonatomic,strong)     NSString            *existingAudioFileName;//for use of prev controller
 @property (nonatomic)     NSString            *existingAudioDepartmentName;//for use of prev controller
 @property (nonatomic)     NSString            *existingAudioDate;//for use of prev controller
-
+@property (nonatomic)     int            audioDurationInSeconds;
 @property (nonatomic,strong)     NSURL               *recordedAudioURL;
 @property (nonatomic,strong)     NSURL               *playerAudioURL;
+//@property (nonatomic,strong)         UIButton* uploadAudioButton;
+//@property (nonatomic,strong)         UIButton* recordNewButton;
+//@property (nonatomic,strong)         UIView* animatedView;
+//@property (nonatomic,strong)         UIButton* uploadLaterButton;
+
+
 
 @property (nonatomic)     NSString            *recordCreatedDateString;
 @property(nonatomic) NSString* audioDuration;
@@ -81,4 +103,11 @@
 - (IBAction)backButtonPressed:(id)sender;
 - (IBAction)moreButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+- (IBAction)stopRecordingButtonClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *stopNewButton;
+@property (weak, nonatomic) IBOutlet UIImageView *stopNewImageView;
+@property (weak, nonatomic) IBOutlet UILabel *stopLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *animatedImageView;
+@property(nonatomic) BOOL isOpenedFromAudioDetails;
+- (IBAction)editAudioButtonClicked:(id)sender;
 @end

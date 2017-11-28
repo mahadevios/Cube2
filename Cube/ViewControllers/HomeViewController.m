@@ -11,7 +11,7 @@
 #import "PopUpCustomView.h"
 #import "AlertViewController.h"
 #import "NSData+AES256.h"
-
+#import "SharedSession.h"
 //#import <iTunesLibrary/ITLibrary.h>
 
 
@@ -24,9 +24,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
+//    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
     db=[Database shareddatabase];
+
     
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
+    transferFailedView.layer.cornerRadius=4.0f;
+    transferredView.layer.cornerRadius=4.0f;
+    awaitingTransferView.layer.cornerRadius=4.0f;
+    
+    tapRecogniser=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+    tapRecogniser1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+    tapRecogniser2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+    [transferredView addGestureRecognizer:tapRecogniser];
+    [awaitingTransferView addGestureRecognizer:tapRecogniser1];
+    [transferFailedView addGestureRecognizer:tapRecogniser2];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(getCounts) name:NOTIFICATION_FILE_UPLOAD_API
+                                               object:nil];
     // Do any additional setup after loading the view.
 }
 
@@ -43,24 +59,28 @@
 //    NSData* str1= [encr AES256DecryptWithKey:@"mahadev"];
 //    
 //    NSString* df=[[NSString alloc]initWithData:str1 encoding:NSUTF8StringEncoding];
+
+//    if (!session)
+//    {
+//        session = [SharedSession getSharedSession:[APIManager sharedManager]];
+//
+//    }
     [AppPreferences sharedAppPreferences].isRecordView=NO;
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-    transferFailedView.layer.cornerRadius=4.0f;
-    transferredView.layer.cornerRadius=4.0f;
-    awaitingTransferView.layer.cornerRadius=4.0f;
-    
-    tapRecogniser=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
-    tapRecogniser1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
-    tapRecogniser2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
-    [transferredView addGestureRecognizer:tapRecogniser];
-    [awaitingTransferView addGestureRecognizer:tapRecogniser1];
-    [transferFailedView addGestureRecognizer:tapRecogniser2];
+//    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
+//    transferFailedView.layer.cornerRadius=4.0f;
+//    transferredView.layer.cornerRadius=4.0f;
+//    awaitingTransferView.layer.cornerRadius=4.0f;
+//    
+//    tapRecogniser=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+//    tapRecogniser1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+//    tapRecogniser2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+//    [transferredView addGestureRecognizer:tapRecogniser];
+//    [awaitingTransferView addGestureRecognizer:tapRecogniser1];
+//    [transferFailedView addGestureRecognizer:tapRecogniser2];
     [self getCounts];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(getCounts) name:NOTIFICATION_FILE_UPLOAD_API
-                                               object:nil];
-    [UIApplication sharedApplication].idleTimerDisabled = NO;
+  
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
     
 //    [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
 //        if (granted) {
@@ -74,8 +94,187 @@
 //        }
 //    }];
     
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"MM-dd-yyyy";
+    NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
+    
+
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE]== NULL)//for first time to check files to be purge are available or not
+    {
+        [self needsUpdate];
+        [self deleteDictation];
+    }
+    else
+    if (!([[[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE] isEqualToString:todaysDate]))// this wil be 2nd day after pressing later or pressing delete
+    {
+         [self needsUpdate];
+        [self deleteDictation];
+       // [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];
+
+
+    }
+    NSLog(@"%@",NSHomeDirectory());
+    // [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms://itunes.com/apps/CubeDictate"]];
+  //  [[Database shareddatabase] updateAudioFileName];
+
+ //   [[NSUserDefaults standardUserDefaults] setValue:NULL forKey:PURGE_DATA_DATE];
+
      [self.tabBarController.tabBar setHidden:NO];
+    
+    
+    
 //    [[Database shareddatabase] setDepartment];//to insert default department for imported files
+}
+
+-(BOOL) needsUpdate
+{
+    
+    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString* appID = infoDictionary[@"CFBundleIdentifier"];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
+    NSURLSession         *  session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *  theTask = [session dataTaskWithRequest: [NSURLRequest requestWithURL: url] completionHandler:
+                                       ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+                                       {
+                                           NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                                           if ([lookup[@"resultCount"] integerValue] == 1)
+                                           {
+                                               
+                                               NSString* appStoreVersion = lookup[@"results"][0][@"version"];
+                                              
+                                               NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+//                                                       if ([appStoreVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending)
+                                               if (appStoreVersion != currentVersion)
+
+                                               {
+                                                           NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
+                                                           //
+                                                           
+                                                           alertController = [UIAlertController alertControllerWithTitle:@"Update available for Cube dictate"
+                                                                                                                 message:nil
+                                                                                                          preferredStyle:UIAlertControllerStyleAlert];
+                                                           actionDelete = [UIAlertAction actionWithTitle:@"Update"
+                                                                                                   style:UIAlertActionStyleDefault
+                                                                                                 handler:^(UIAlertAction * action)
+                                                                           {
+                                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms://itunes.com/apps/CubeDictate"]];
+                                                                               
+                                                                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                                                                               formatter.dateFormat = @"MM-dd-yyyy";
+                                                                               NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
+                                                                               
+                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
+                                                                           }]; //You can use a block here to handle a press on this button
+                                                           [alertController addAction:actionDelete];
+                                                           
+                                                           
+                                                           actionCancel = [UIAlertAction actionWithTitle:@"Later"
+                                                                                                   style:UIAlertActionStyleCancel
+                                                                                                 handler:^(UIAlertAction * action)
+                                                                           {
+                                                                               [alertController dismissViewControllerAnimated:YES completion:nil];
+                                                                               
+                                                                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                                                                               formatter.dateFormat = @"MM-dd-yyyy";
+                                                                               NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
+
+                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
+
+                                                                               
+                                                                           }]; //You can use a block here to handle a press on this button
+                                                           [alertController addAction:actionCancel];
+                                                           
+                                    
+
+                                                           [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:alertController animated:YES completion:nil];
+                                                       }
+                                                   //return YES;
+                                               }
+                                           
+                                       }];
+    
+    [theTask resume];
+    return NO;
+}
+
+
+
+
+- (void)deleteDictation
+{
+    
+    NSString* purgeDeleteDataKey =  [[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DELETED_DATA];
+
+    if (![purgeDeleteDataKey isEqualToString:@"Do not purge"])
+    {
+        
+  
+    
+   NSArray* filesToBePurgedArray = [[Database shareddatabase] getFilesToBePurged];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"MM-dd-yyyy";
+    NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
+    
+    if (filesToBePurgedArray.count>0)
+    {
+        alertController = [UIAlertController alertControllerWithTitle:@"Purge old dictations?"
+                                                              message:nil
+                                                       preferredStyle:UIAlertControllerStyleAlert];
+        actionDelete = [UIAlertAction actionWithTitle:@"Purge"
+                                                style:UIAlertActionStyleDestructive
+                                              handler:^(UIAlertAction * action)
+                        {
+                            hud.minSize = CGSizeMake(150.f, 100.f);
+                            hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                            hud.mode = MBProgressHUDModeIndeterminate;
+                            hud.label.text = @"Purging..";
+                            hud.detailsLabel.text = @"Please wait";
+                            for (int i=0; i< filesToBePurgedArray.count; i++)
+                            {
+                          
+                            
+                            NSString* fileName = [filesToBePurgedArray objectAtIndex:i];
+                            NSString* dateAndTimeString = [app getDateAndTimeString];
+//                            [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
+                                [db deleteFileRecordFromDatabase:fileName];
+                            [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
+                            BOOL delete= [[APIManager sharedManager] deleteFile:fileName];
+                            
+                                
+                            }
+                            
+                            [hud removeFromSuperview];
+                            
+                            [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
+                            
+                            //                            if (delete)
+                            //                            {
+                            [self dismissViewControllerAnimated:YES completion:nil];
+                            // }
+
+                        }]; //You can use a block here to handle a press on this button
+        [alertController addAction:actionDelete];
+        
+        
+        actionCancel = [UIAlertAction actionWithTitle:@"Later"
+                                                style:UIAlertActionStyleCancel
+                                              handler:^(UIAlertAction * action)
+                        {
+                           
+                                               //NSLog(@"Reachable");
+                                               
+                                               [alertController dismissViewControllerAnimated:YES completion:nil];
+                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];
+// [[NSUserDefaults standardUserDefaults] setValue:NULL forKey:PURGE_DATA_DATE];
+                            
+                            
+                        }]; //You can use a block here to handle a press on this button
+        [alertController addAction:actionCancel];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    }
 }
 
 -(void)getCounts
@@ -113,6 +312,10 @@
     }
     else
     alertViewController.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
+
+    
+
+
 
 }
 
@@ -221,7 +424,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+//
 /*
  #pragma mark - Navigation
  

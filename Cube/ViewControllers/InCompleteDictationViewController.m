@@ -100,10 +100,13 @@
     
     
     UILabel* recordingDurationLabel=[cell viewWithTag:102];
-    int audioMinutes= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]/60;
-    int audioSeconds= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]%60;
+    int audioHour= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]/(60*60);
+    int audioHourByMod= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]%(60*60);
+
+    int audioMinutes = audioHourByMod / 60;
+    int audioSeconds = audioHourByMod % 60;
     
-    recordingDurationLabel.text=[NSString stringWithFormat:@"%02d:%02d",audioMinutes,audioSeconds];
+    recordingDurationLabel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];
   //  NSLog(@"%@",recordingDurationLabel.text);
     
     UILabel* departmentNameLabel=[cell viewWithTag:103];
@@ -128,13 +131,16 @@
     UILabel* recordingDurationLabel=[cell viewWithTag:102];
     UILabel* nameLabel=[cell viewWithTag:103];
     UILabel* dateLabel=[cell viewWithTag:104];
-    
-    
+    NSDictionary* awaitingFileTransferDict= [app.inCompleteFileTransferNamesArray objectAtIndex:indexPath.row];
+
+    int audioDurationInSeconds = [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue];
+
     InCompleteRecordViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"InCompleteRecordViewController"];
     vc.existingAudioFileName=fileNameLabel.text;
     vc.audioDuration=recordingDurationLabel.text;
     vc.existingAudioDepartmentName=nameLabel.text;
     vc.existingAudioDate=dateLabel.text;
+    vc.audioDurationInSeconds = audioDurationInSeconds;
     [self presentViewController:vc animated:YES completion:nil];
    
 }

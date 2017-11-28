@@ -24,7 +24,8 @@
     //        self.edgesForExtendedLayout = UIRectEdgeNone;
     poUpTableView.layer.cornerRadius=2.0f;
     app = [AppPreferences sharedAppPreferences];
-    recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:SAVE_DICTATION_WAITING_SETTING,CONFIRM_BEFORE_SAVING_SETTING,ALERT_BEFORE_RECORDING,BACK_TO_HOME_AFTER_DICTATION,RECORD_ABBREVIATION, nil];
+//    recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:SAVE_DICTATION_WAITING_SETTING,CONFIRM_BEFORE_SAVING_SETTING,ALERT_BEFORE_RECORDING,BACK_TO_HOME_AFTER_DICTATION,RECORD_ABBREVIATION, nil];
+    recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:SAVE_DICTATION_WAITING_SETTING,CONFIRM_BEFORE_SAVING_SETTING,ALERT_BEFORE_RECORDING,BACK_TO_HOME_AFTER_DICTATION, nil];
     storageManagementItemsArray=[[NSMutableArray alloc]initWithObjects:LOW_STORAGE_THRESHOLD,PURGE_DELETED_DATA, nil];
     PlaybackAutoRewindByArray=[[NSMutableArray alloc]initWithObjects:CHANGE_YOUR_PASSWORD, nil];
     popUpOptionsArray=[[NSMutableArray alloc]init];
@@ -50,6 +51,7 @@
     self.navigationItem.title=@"User Settings";
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
+   
     //NSLog(@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:LOW_STORAGE_THRESHOLD]);
     
 }
@@ -167,7 +169,7 @@
 {
     if ([tableView isEqual:poUpTableView])
     {
-        if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRowAndSection"] isEqualToString:@"10"])
+        if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRowAndSection"] isEqualToString:@"10"] || [[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRowAndSection"] isEqualToString:@"11"])
         {
             return 40;
         }
@@ -277,12 +279,18 @@
         if (radioButtonArray.count==0)
         {
             UIButton* button=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 19, 19)];
+            [button setBackgroundColor:[UIColor clearColor]];
             [button setBackgroundImage:[UIImage imageNamed:@"RadioButtonClear"] forState:UIControlStateNormal];
             UIButton* button1=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 19, 19)];
+            [button1 setBackgroundColor:[UIColor clearColor]];
+
             [button1 setBackgroundImage:[UIImage imageNamed:@"RadioButtonClear"] forState:UIControlStateNormal];
             UIButton* button2=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 19, 19)];
+             [button2 setBackgroundColor:[UIColor clearColor]];
             [button2 setBackgroundImage:[UIImage imageNamed:@"RadioButtonClear"] forState:UIControlStateNormal];
             UIButton* button3=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 19, 19)];
+            [button3 setBackgroundColor:[UIColor clearColor]];
+
             [button3 setBackgroundImage:[UIImage imageNamed:@"RadioButtonClear"] forState:UIControlStateNormal];
             radioButtonArray=[NSMutableArray arrayWithObjects:button,button1,button2,button3, nil];
             
@@ -382,6 +390,9 @@
     {
         bool confirmBeforeSaving=sender.isOn;
         [[NSUserDefaults standardUserDefaults] setBool:confirmBeforeSaving forKey:CONFIRM_BEFORE_SAVING_SETTING];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:CONFIRM_BEFORE_SAVING_SETTING_ALTERED];
+
     }
     if (sender.tag==2)
     {
@@ -437,7 +448,7 @@
                 if (indexPath.row==1)
                 {
                     popUpOptionsArray=nil;
-                    popUpOptionsArray=[[NSMutableArray alloc]initWithObjects:@"15 days",@"30 days",@"45 days", nil];
+                    popUpOptionsArray=[[NSMutableArray alloc]initWithObjects:@"Do not purge",@"15 days",@"20 days",@"30 days", nil];
                     [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld%ld",indexPath.section,indexPath.row] forKey:@"selectedRowAndSection"];
                     [self.poUpTableView reloadData];
                 }
@@ -462,6 +473,7 @@
     
     else
     {
+        [self.poUpTableView reloadData];
         UITableViewCell* selectedCell=   [tableView cellForRowAtIndexPath:indexPath];
         
         if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRowAndSection"] isEqualToString:@"00"])

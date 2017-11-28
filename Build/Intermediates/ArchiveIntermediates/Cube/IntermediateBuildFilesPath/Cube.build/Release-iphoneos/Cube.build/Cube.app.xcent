@@ -8,6 +8,10 @@
 	<true/>
 	<key>com.apple.developer.team-identifier</key>
 	<string>Y56BAH343T</string>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.coreFlexSolutions.CubeDictate</string>
+	</array>
 	<key>get-task-allow</key>
 	<false/>
 	<key>keychain-access-groups</key>
