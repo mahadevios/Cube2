@@ -13,7 +13,7 @@
 @end
 
 @implementation DocFilesViewController
-@synthesize overLayView,scrollView;
+@synthesize overLayView,scrollView,commentTextView;
 
 - (void)viewDidLoad
 {
@@ -27,6 +27,9 @@
                                              selector:@selector(validateFileDownloadResponse:) name:NOTIFICATION_FILE_DOWNLOAD_API
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(validateCommentResponse:) name:NOTIFICATION_SEND_COMMENT_API
+                                               object:nil];
     self.navigationItem.title=@"Doc Files";
     
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
@@ -131,6 +134,19 @@
     [[Database shareddatabase] updateDownloadingStatus:DOWNLOADED dictationId:8103552];
 }
 
+-(void)validateCommentResponse:(NSNotification*)notification
+{
+    NSDictionary* dict = notification.object;
+    
+    NSString* code = [dict valueForKey:@"code"];
+    
+    NSString* dictationID = [dict valueForKey:@"DictationID"];
+
+    
+    [self removeCommentView];
+
+}
+
 -(void)addCommentView:(TableViewButton*)sender
 {
     
@@ -185,19 +201,21 @@
     
     lineView.backgroundColor = [UIColor appOrangeColor];
     
-    UITextField* textField = [[UITextField alloc] initWithFrame:CGRectMake(insideView.frame.size.width*0.07, lineView.frame.origin.y + lineView.frame.size.height + 20, insideView.frame.size.width*0.86, 30)];
+    commentTextView = [[UITextView alloc] initWithFrame:CGRectMake(insideView.frame.size.width*0.07, lineView.frame.origin.y + lineView.frame.size.height + 20, insideView.frame.size.width*0.86, 30)];
     
-    UIView* paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 30)];
+    //UIView* paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 30)];
     
-    textField.leftView = paddingView;
+    //textField.leftView = paddingView;
     
-    textField.leftViewMode = UITextFieldViewModeAlways;
+    //textField.leftViewMode = UITextFieldViewModeAlways;
     
-    textField.font = [UIFont systemFontOfSize:14.0];
+    commentTextView.font = [UIFont systemFontOfSize:14.0];
     
-    textField.delegate = self;
+    commentTextView.delegate = self;
     
-    UIButton* submitButton = [[UIButton alloc] initWithFrame:CGRectMake(insideView.frame.size.width/2 - 50, textField.frame.origin.y + textField.frame.size.height + 20, 100, 40)];
+    TableViewButton* submitButton = [[TableViewButton alloc] initWithFrame:CGRectMake(insideView.frame.size.width/2 - 50, commentTextView.frame.origin.y + commentTextView.frame.size.height + 20, 100, 40)];
+    
+    submitButton.indexPathRow = sender.indexPathRow;
     
     submitButton.backgroundColor = [UIColor appOrangeColor];
     
@@ -207,20 +225,20 @@
     
     [submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [submitButton addTarget:self action:@selector(submitButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [submitButton addTarget:self action:@selector(submitButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    textField.placeholder = @"Comment here";
+//    textView.placeholder = @"Comment here";
     
-    textField.layer.borderColor = [UIColor colorWithRed:196/255.0 green: 204/255.0 blue: 210/255.0 alpha: 1.0].CGColor;
+    commentTextView.layer.borderColor = [UIColor colorWithRed:196/255.0 green: 204/255.0 blue: 210/255.0 alpha: 1.0].CGColor;
     
-    textField.layer.borderWidth = 1.0;
+    commentTextView.layer.borderWidth = 1.0;
     
-    textField.layer.cornerRadius = 4.0;
+    commentTextView.layer.cornerRadius = 4.0;
     
     [insideView addSubview:referenceLabel];
     [insideView addSubview:referenceImageView];
     [insideView addSubview:lineView];
-    [insideView addSubview:textField];
+    [insideView addSubview:commentTextView];
     
     [insideView addSubview:submitButton];
     
@@ -248,19 +266,45 @@
 //    }];
 }
 
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@"Comment here"])
+    {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor]; //optional
+    }
+    [textView becomeFirstResponder];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""])
+    {
+        textView.text = @"Comment here";
+        textView.textColor = [UIColor lightGrayColor]; //optional
+    }
+    [textView resignFirstResponder];
+}
+
+-(void)submitButtonClicked:(TableViewButton*)sender
+{
+    if ([commentTextView.text  isEqual: @""])
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Invalid Comment" withMessage:@"Please enter a valid comment" withCancelText:@"Cancel" withOkText:@"Ok" withAlertTag:1000];
+    }
+    else
+    {
+        AudioDetails* audioDetails = [self.completedFilesForTableViewArray objectAtIndex:sender.indexPathRow];
+        [[APIManager sharedManager] sendComment:commentTextView.text dictationId:[NSString stringWithFormat:@"%d",9015099]];
+        [commentTextView resignFirstResponder];
+    }
+    
+}
+
 -(void)tapped:(UIGestureRecognizer*)touch
 {
-        [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
-
-//            self.scrollView.frame = CGRectMake(-self.view.frame.size.width, -self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
-            
-            self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, -self.view.frame.size.height, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
-
-        } completion:^(BOOL finished) {
-
-            [[self.view viewWithTag:222] removeFromSuperview];
-        }];
     
+    [self removeCommentView];
 //    overLayView.transform = CGAffineTransformIdentity;
 //    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
 //        overLayView.transform = CGAffineTransformMakeScale(0.01, 0.01);
@@ -269,6 +313,20 @@
 //    }];
 }
 
+-(void)removeCommentView
+{
+    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
+        
+        //            self.scrollView.frame = CGRectMake(-self.view.frame.size.width, -self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
+        
+        self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, -self.view.frame.size.height, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
+        
+    } completion:^(BOOL finished) {
+        
+        [[self.view viewWithTag:222] removeFromSuperview];
+    }];
+    
+}
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     if(touch.view == self.overLayView)
@@ -311,13 +369,14 @@
     
     [approveButton addTarget:self action:@selector(approveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
-    UIButton* commentButton = [cell viewWithTag:102];
+    TableViewButton* commentButton = [cell viewWithTag:102];
+    commentButton.indexPathRow = indexPath.row;
     [commentButton addTarget:self action:@selector(addCommentView:) forControlEvents:UIControlEventTouchUpInside];
 
     UIButton* detailsButton = [cell viewWithTag:103];
     [detailsButton addTarget:self action:@selector(detailsButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
-    UIButton* downloadButton = [cell viewWithTag:104];
+    TableViewButton* downloadButton = [cell viewWithTag:104];
     [downloadButton addTarget:self action:@selector(downloadButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     downloadButton.indexPathRow = indexPath.row;
     
@@ -359,7 +418,7 @@
 {
     
 }
--(void)commentButtonClicked:(UIButton*)sender
+-(void)commentButtonClicked:(TableViewButton*)sender
 {
     
 }

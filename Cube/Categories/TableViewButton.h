@@ -11,5 +11,6 @@
 @interface TableViewButton : UIButton
 
 @property(nonatomic) long indexPathRow;
+@property(nonatomic,strong) NSString* messageString;
 
 @end

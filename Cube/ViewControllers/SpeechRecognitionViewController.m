@@ -8,13 +8,14 @@
 
 #import "SpeechRecognitionViewController.h"
 #import "SelectFileViewController.h"
+#import "UIColor+ApplicationColors.h"
 
 @interface SpeechRecognitionViewController ()
 
 @end
 
 @implementation SpeechRecognitionViewController
-@synthesize audioEngine,request,recognitionTask,speechRecognizer;
+@synthesize audioEngine,request,recognitionTask,speechRecognizer,isStartedNewRequest, transcriptionStatusView,timerSeconds,startTranscriptionButton,stopTranscriptionButton,timerLabel,transcriptionStatusLabel,transcriptionTextLabel;
 
 - (void)viewDidLoad
 {
@@ -58,25 +59,162 @@
 //        }
 //    }];
  
+    self.navigationItem.title = @"Speech Transcription";
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+    
+    
+    //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"ResumeTrans"] style:UIBarButtonItemStylePlain target:self action:@selector(resetTranscription)];
+    
+    
 }
 
+-(void)popViewController:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
+-(void)resetTranscription
+{
+    [self startTranscriptionStatusViewAnimation:false];
+    
+    [startTranscriptionButton setTitle:@"Start Transcription" forState:UIControlStateNormal];
+
+    startTranscriptionButton.alpha = 1.0;
+    
+    [startTranscriptionButton setEnabled:true];
+    
+    isStartedNewRequest = false;
+    
+    transcriptionTextLabel.text = @"";
+    
+    timerSeconds = 59;
+    
+    transcriptionStatusLabel.text = @"Go ahead, I'm listening!";
+    
+    [self.previousTranscriptedArray removeAllObjects]; // remove  prev. trans. text
+}
+
+-(void)hideRightBarButton:(BOOL)hide
+{
+    if (hide == true)
+    {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+    else
+    {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"ResumeTrans"] style:UIBarButtonItemStylePlain target:self action:@selector(resetTranscription)];
+
+    }
+    
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self addTranscriptionStatusAnimationView];
+    
+    self.timerSeconds = 59;
+}
+
+-(void)addTranscriptionStatusAnimationView
+{
+    transcriptionStatusView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.1, -60, self.view.frame.size.width*0.8, 48)];
+    
+    transcriptionStatusView.backgroundColor = [UIColor appOrangeColor];
+    
+    transcriptionStatusView.layer.cornerRadius = 4.0;
+    
+    transcriptionStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width*0.1, 5, transcriptionStatusView.frame.size.width*0.8, 20)];
+    
+    transcriptionStatusLabel.font = [UIFont systemFontOfSize:15];
+    
+    transcriptionStatusLabel.text = @"Go ahead, I'm listening!";
+    
+    transcriptionStatusLabel.textAlignment = NSTextAlignmentCenter;
+    
+    timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width/2-30, 30, 60, 15)];
+    
+    timerLabel.text = @"00:59";
+    
+    timerLabel.font = [UIFont systemFontOfSize:15];
+
+    timerLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [transcriptionStatusView addSubview:transcriptionStatusLabel];
+    
+    [transcriptionStatusView addSubview:timerLabel];
+    
+    [self.view addSubview:transcriptionStatusView];
+    
+}
+
+-(void)startTranscriptionStatusViewAnimation:(BOOL)moveDown
+{
+    [UIView animateWithDuration:0.6 delay:0 usingSpringWithDamping:.7 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
+        
+        //            self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
+        int moveDownDistance;
+        if (moveDown == true)
+        {
+            moveDownDistance = 65;
+        }
+        else
+        {
+            moveDownDistance = -60;
+
+        }
+        self.transcriptionStatusView.frame = CGRectMake(self.view.frame.size.width*0.1, moveDownDistance, self.view.frame.size.width*0.8, 48);
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+}
 - (IBAction)startLiveAudioTranscription:(UIButton*)sender
 {
     
-    if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Start Transcription"])
+    if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Start Transcription"] || [[sender titleForState:UIControlStateNormal]  isEqual: @"Resume"])
     {
-        self.stopTranscriptionButton.hidden = false;
+        if ([[AppPreferences sharedAppPreferences] isReachable])
+        {
+            self.stopTranscriptionButton.hidden = false;
         
-        [self authorizeAndTranscribe:sender];
+            if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Resume"])
+            {
+                isStartedNewRequest = true; // set true for resume and using dis append text in delegate
+                
+                timerSeconds = 59;  // reset after resume
+
+            }
+
+            
+            [self authorizeAndTranscribe:sender];
+            
+            [self.startTranscriptionButton setEnabled:false];
+            
+            startTranscriptionButton.alpha = 0.5;
+            
+            transcriptionStatusLabel.text = @"Go ahead, I'm listening";
+            
+            
+        }
+        else
+        {
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
     }
     else
-        if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Transcript File"])
+    if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Transcript File"])
 
     {
-        // select file code
+        if ([[AppPreferences sharedAppPreferences] isReachable])
+        {
+            [self authorizeAndTranscribe:sender];
         
-        [self authorizeAndTranscribe:sender];
-
+        }
+        else
+        {
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
        
     }
     else
@@ -94,6 +232,18 @@
 
 - (IBAction)stopLiveAudioTranscription:(id)sender
 {
+    [self startTranscriptionStatusViewAnimation:false];
+
+    [self subStopLiveAudioTranscription];
+    
+}
+
+-(void)subStopLiveAudioTranscription
+{
+    [self.startTranscriptionButton setEnabled:true];
+    
+    startTranscriptionButton.alpha = 1.0;
+    
     if (self.capture != nil && [self.capture isRunning])
     {
         [self.capture stopRunning];
@@ -105,8 +255,12 @@
     
     [recognitionTask cancel];
     
+    [newRequestTimer invalidate];
+    
+    [self hideRightBarButton:false];
     
     
+
 }
 
 - (IBAction)segmentChanged:(UISegmentedControl*)sender
@@ -203,7 +357,11 @@
     [speechRecognizer recognitionTaskWithRequest:self.request delegate:self];
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        
         [self startCapture];
+        [self startTranscriptionStatusViewAnimation:true];
+        [self setTimer];
+
     });
     //request = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
     
@@ -257,7 +415,8 @@
 {
     if ([self.capture isRunning])
     {
-        [self transcribeLiveAudio];
+        //[self transcribeLiveAudio];
+//        isStartedNewRequest = true;
     }
     
 
@@ -274,13 +433,24 @@
     {
         NSString* previousTranscriptedText = [self.previousTranscriptedArray objectAtIndex:0];
         
-        NSString* newComposedString = [previousTranscriptedText stringByAppendingString:[NSString stringWithFormat:@"%@",formattedString]];
+        NSString* newComposedString;
+        if (isStartedNewRequest == true)
+        {
+            newComposedString = [previousTranscriptedText stringByAppendingString:[NSString stringWithFormat:@" %@",formattedString]];
+            isStartedNewRequest = false;
+        }
+        else
+        {
+            newComposedString = [previousTranscriptedText stringByAppendingString:[NSString stringWithFormat:@"%@",formattedString]];
+        }
         
         [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:newComposedString];
+
+        
     }
     else
     {
-        [self.previousTranscriptedArray addObject:formattedString];
+        [self.previousTranscriptedArray addObject:[NSString stringWithFormat:@"%@ ",formattedString]];
     }
     
 //    if (transcription != nil)
@@ -343,17 +513,34 @@
         switch (status)
         {
             case SFSpeechRecognizerAuthorizationStatusAuthorized:
-                if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Start Transcription"])
+                
+                
+
+                if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Start Transcription"] || [[sender titleForState:UIControlStateNormal]  isEqual: @"Resume"])
                 {
-                    [self transcribeLiveAudio];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        
+                        [self transcribeLiveAudio];
+                    });
+                   
+                    
+                    
+                    
                 }
                 else
                     if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Transcript File"])
                     {
-                        [self transcribePreRecordedAudio];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            
+                            [self transcribePreRecordedAudio];
+
+                        });
                     }
+                
                 //[self transcribePreRecordedAudio];
                 break;
+                
             case SFSpeechRecognizerAuthorizationStatusDenied:
                 
                 break;
@@ -370,8 +557,49 @@
     
 }
 
+-(void)setTimer
+{
+    newRequestTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+    
+}
 
+-(void)updateTime:(id) sender
+{
+    dispatch_async(dispatch_get_main_queue(), ^
+                   {
+                       if (timerSeconds == 0)
+                       {
+                           [newRequestTimer invalidate];
+                           
+                           [self startTranscriptionStatusViewAnimation:false];
 
+                           [self subStopLiveAudioTranscription];
+                           
+                           [startTranscriptionButton setEnabled:true];
+                           
+                           startTranscriptionButton.alpha = 1.0;
+
+                           [startTranscriptionButton setTitle:@"Resume" forState:UIControlStateNormal];
+                           
+                           transcriptionStatusLabel.text = @"Press Resume to continue transcription";
+                           
+                           [self hideRightBarButton:false];
+                         
+                           isStartedNewRequest = true;
+
+                       }
+                       else
+                       {
+                           --timerSeconds;
+                           
+                           timerLabel.text = [NSString stringWithFormat:@"00:%02d",timerSeconds];
+                       }
+                       
+                   });
+    
+   
+    
+}
 
 - (void)startCapture
 {

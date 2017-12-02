@@ -76,4 +76,7 @@
 -(void)downloafFileUsingSession:(NSString*)mobielDictationIdVal;
 
 -(void)sendDictationIds:(NSString*)dictationIdArray;
+
+-(void)sendComment:(NSString*)comment dictationId:(NSString*)mobielDictationIdVal;
+
 @end

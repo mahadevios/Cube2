@@ -410,6 +410,28 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
         }
     }
     
+    if ([self.downLoadEntityJobName isEqualToString:SEND_COMMENT_API])
+    {
+        
+        if (response != nil)
+        {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+            
+            if ([[response objectForKey:@"code"] isEqualToString:@"200"])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_COMMENT_API object:response];
+                
+                
+            }else
+            {
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            }
+        }else
+        {
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
+    }
+    
     if ([self.downLoadEntityJobName isEqualToString:DATA_SYNCHRONISATION_API])
     {
         

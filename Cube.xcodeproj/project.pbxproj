@@ -45,7 +45,6 @@
 		847D95B41D5F157C00145C32 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 847D95A21D5F157C00145C32 /* Reachability.m */; };
 		847D95CB1D5F325600145C32 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 847D95CA1D5F325600145C32 /* libsqlite3.0.tbd */; };
 		8480AAFA1D787DD500473651 /* Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480AAF91D787DD500473651 /* Keychain.m */; };
-		8488B7B71FC698E5006FE0FA /* UIButton+TableViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7B61FC698E5006FE0FA /* UIButton+TableViewButton.m */; };
 		8488B7BA1FC6A8C7006FE0FA /* TableViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7B91FC6A8C7006FE0FA /* TableViewButton.m */; };
 		8488B7BD1FC6EA00006FE0FA /* UIColor+ApplicationColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7BC1FC6E9FF006FE0FA /* UIColor+ApplicationColors.m */; };
 		848B31041FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B31031FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m */; };
@@ -193,8 +192,6 @@
 		847DCBBF1DE590FD002D78BB /* Cube.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cube.entitlements; sourceTree = "<group>"; };
 		8480AAF81D787DD500473651 /* Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Keychain.h; sourceTree = "<group>"; };
 		8480AAF91D787DD500473651 /* Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Keychain.m; sourceTree = "<group>"; };
-		8488B7B51FC698E5006FE0FA /* UIButton+TableViewButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+TableViewButton.h"; sourceTree = "<group>"; };
-		8488B7B61FC698E5006FE0FA /* UIButton+TableViewButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+TableViewButton.m"; sourceTree = "<group>"; };
 		8488B7B81FC6A8C7006FE0FA /* TableViewButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewButton.h; sourceTree = "<group>"; };
 		8488B7B91FC6A8C7006FE0FA /* TableViewButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewButton.m; sourceTree = "<group>"; };
 		8488B7BB1FC6E9FF006FE0FA /* UIColor+ApplicationColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+ApplicationColors.h"; sourceTree = "<group>"; };
@@ -332,8 +329,6 @@
 			children = (
 				845A96761DDDEF9A007F460C /* NSData+AES256.h */,
 				845A96771DDDEF9A007F460C /* NSData+AES256.m */,
-				8488B7B51FC698E5006FE0FA /* UIButton+TableViewButton.h */,
-				8488B7B61FC698E5006FE0FA /* UIButton+TableViewButton.m */,
 				8488B7B81FC6A8C7006FE0FA /* TableViewButton.h */,
 				8488B7B91FC6A8C7006FE0FA /* TableViewButton.m */,
 				8488B7BB1FC6E9FF006FE0FA /* UIColor+ApplicationColors.h */,
@@ -815,7 +810,6 @@
 			files = (
 				84AB68591D536961006F962D /* InCompleteDictationViewController.m in Sources */,
 				845A96781DDDEF9A007F460C /* NSData+AES256.m in Sources */,
-				8488B7B71FC698E5006FE0FA /* UIButton+TableViewButton.m in Sources */,
 				8488B7BA1FC6A8C7006FE0FA /* TableViewButton.m in Sources */,
 				84F5641A1FCD4970006FC7AD /* SelectFileViewController.m in Sources */,
 				84D0B52B1D81B4D70084E016 /* SBJson4StreamTokeniser.m in Sources */,

@@ -34,6 +34,7 @@
 #define  PIN_CANGE_API                        @"encrdecr_MobilePINChange"
 #define  FILE_DOWNLOAD_API                    @"encedecr_MobileDownloadDocFile"
 #define  SEND_DICTATION_IDS_API               @"encrdecr_MobileRequestForCompleteFiles"
+#define  SEND_COMMENT_API                     @"encdecr_MobileDocFileComment"
 
 #define  SECRET_KEY                           @"cubemob"
 #define  POST                           @"POST"
@@ -64,6 +65,7 @@
 #define NOTIFICATION_SAVE_RECORDING                 @"saveRecording"
 #define NOTIFICATION_FILE_IMPORTED                  @"fileImportingCompleted"
 #define NOTIFICATION_UPLOAD_NEXT_FILE               @"uploadNextFile"
+#define NOTIFICATION_SEND_COMMENT_API               @"commentNotification"
 
 //Settimg Constants
 
