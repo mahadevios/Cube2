@@ -115,14 +115,15 @@
     //NSString* byteCodeString = [response valueForKey:@"ByteDocForDownload"];
     
 //    NSString* dictationId = [response valueForKey:@"DictationId"];
-    NSString* dictationId = @"8103552";
+    //NSString* dictationId = @"8103552";
 
-    
+    NSString* dictationID = [response valueForKey:@"DictationID"];
+
     for (int i = 0; i< self.completedFilesForTableViewArray.count; i++)
     {
         AudioDetails* audioDetails = [self.completedFilesForTableViewArray objectAtIndex:i];
         
-        if (audioDetails.mobiledictationidval == [dictationId intValue])
+        if (audioDetails.mobiledictationidval == [dictationID intValue])
         {
             audioDetails.downloadStatus = DOWNLOADED;
             
@@ -131,7 +132,7 @@
             [self.tableView reloadRowsAtIndexPaths:[[NSArray alloc] initWithObjects:[NSIndexPath indexPathForRow:i inSection:0], nil] withRowAnimation:UITableViewRowAnimationNone];
         }
     }
-    [[Database shareddatabase] updateDownloadingStatus:DOWNLOADED dictationId:8103552];
+    [[Database shareddatabase] updateDownloadingStatus:DOWNLOADED dictationId:[dictationID intValue]];
 }
 
 -(void)validateCommentResponse:(NSNotification*)notification
@@ -434,12 +435,14 @@
     
     int dictationId = audioDetails.mobiledictationidval;
     
-//    [[APIManager sharedManager] downloadFileUsingConnection:[NSString stringWithFormat:@"%d",dictationId]];
+    NSString* fileName = [[Database shareddatabase] getfileNameFromDictationID:[NSString stringWithFormat:@"%d", dictationId]];
+    [[APIManager sharedManager] downloadFileUsingConnection:[NSString stringWithFormat:@"%d",dictationId]];
 
     if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Download"])
     {
-        [[APIManager sharedManager] downloadFileUsingConnection:@"6753263"];
-        
+        //[[APIManager sharedManager] downloadFileUsingConnection:@"6753263"];
+        [[APIManager sharedManager] downloadFileUsingConnection:[NSString stringWithFormat:@"%d",dictationId]];
+
         [[Database shareddatabase] updateDownloadingStatus:DOWNLOADING dictationId:audioDetails.mobiledictationidval];
         
         audioDetails.downloadStatus = DOWNLOADING;
@@ -453,9 +456,11 @@
         if ([[sender titleForState:UIControlStateNormal]  isEqual: @"View"])
 
     {
-        NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",@"sample.doc"]];
+        NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",fileName]];
 
-        UIDocumentInteractionController* interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:destpath]];
+        NSString* newDestPath = [destpath stringByAppendingPathExtension:@"doc"];
+        
+        UIDocumentInteractionController* interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:newDestPath]];
         
         interactionController.delegate = self;
         

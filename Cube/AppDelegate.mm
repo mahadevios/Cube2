@@ -44,6 +44,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     // Override point for customization after application launch.
     
+//    NSError* error;
+//    
+//    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",@"SU40720171201-01"]];
+//    
+//    NSString* newDestPath = [destpath stringByAppendingPathExtension:@"doc"];
+//    
+//    BOOL removed = [[NSFileManager defaultManager] removeItemAtPath:newDestPath error:&error];
     NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreFlexSolutions.CubeDictate"];
 
     //NSString* fileSizeInBytes = [sharedDefaults objectForKey:@"output1"];

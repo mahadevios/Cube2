@@ -21,11 +21,12 @@
 {
     [super viewDidLoad];
     
-    self.stopTranscriptionButton.hidden = true;
+    self.stopTranscriptionButton.hidden = true;// for prerecorded segment hide stop button
 
     self.transcriptionTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
 
-    self.previousTranscriptedArray = [NSMutableArray new];
+    self.previousTranscriptedArray = [NSMutableArray new]; // store one minute text to append next request
+    
     NSError* error;
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:&error];
@@ -77,9 +78,9 @@
 
 -(void)resetTranscription
 {
-    [self startTranscriptionStatusViewAnimation:false];
+    [self startTranscriptionStatusViewAnimationToDown:false]; // animate trans status to upperside
     
-    [startTranscriptionButton setTitle:@"Start Transcription" forState:UIControlStateNormal];
+    [startTranscriptionButton setTitle:@"Start Transcription" forState:UIControlStateNormal]; // chnage title
 
     startTranscriptionButton.alpha = 1.0;
     
@@ -148,7 +149,7 @@
     
 }
 
--(void)startTranscriptionStatusViewAnimation:(BOOL)moveDown
+-(void)startTranscriptionStatusViewAnimationToDown:(BOOL)moveDown
 {
     [UIView animateWithDuration:0.6 delay:0 usingSpringWithDamping:.7 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
         
@@ -232,10 +233,11 @@
 
 - (IBAction)stopLiveAudioTranscription:(id)sender
 {
-    [self startTranscriptionStatusViewAnimation:false];
 
     [self subStopLiveAudioTranscription];
     
+    [self hideRightBarButton:false];
+
 }
 
 -(void)subStopLiveAudioTranscription
@@ -256,9 +258,6 @@
     [recognitionTask cancel];
     
     [newRequestTimer invalidate];
-    
-    [self hideRightBarButton:false];
-    
     
 
 }
@@ -359,7 +358,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [self startCapture];
-        [self startTranscriptionStatusViewAnimation:true];
+        [self startTranscriptionStatusViewAnimationToDown:true];
         [self setTimer];
 
     });
@@ -413,11 +412,11 @@
 
 -(void)speechRecognitionTask:(SFSpeechRecognitionTask *)task didFinishSuccessfully:(BOOL)successfully
 {
-    if ([self.capture isRunning])
-    {
-        //[self transcribeLiveAudio];
+//    if ([self.capture isRunning])
+//    {
+//        [self transcribeLiveAudio];
 //        isStartedNewRequest = true;
-    }
+//    }
     
 
 //    NSLog(@"3");
@@ -434,15 +433,15 @@
         NSString* previousTranscriptedText = [self.previousTranscriptedArray objectAtIndex:0];
         
         NSString* newComposedString;
-        if (isStartedNewRequest == true)
-        {
+//        if (isStartedNewRequest == true)
+//        {
             newComposedString = [previousTranscriptedText stringByAppendingString:[NSString stringWithFormat:@" %@",formattedString]];
-            isStartedNewRequest = false;
-        }
-        else
-        {
-            newComposedString = [previousTranscriptedText stringByAppendingString:[NSString stringWithFormat:@"%@",formattedString]];
-        }
+//            isStartedNewRequest = false;
+//        }
+//        else
+//        {
+//            newComposedString = [previousTranscriptedText stringByAppendingString:[NSString stringWithFormat:@"%@",formattedString]];
+//        }
         
         [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:newComposedString];
 
@@ -571,7 +570,7 @@
                        {
                            [newRequestTimer invalidate];
                            
-                           [self startTranscriptionStatusViewAnimation:false];
+                          // [self startTranscriptionStatusViewAnimationToDown:false];
 
                            [self subStopLiveAudioTranscription];
                            
@@ -581,7 +580,7 @@
 
                            [startTranscriptionButton setTitle:@"Resume" forState:UIControlStateNormal];
                            
-                           transcriptionStatusLabel.text = @"Press Resume to continue transcription";
+                           transcriptionStatusLabel.text = @"Press Resume to continue";
                            
                            [self hideRightBarButton:false];
                          

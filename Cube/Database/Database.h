@@ -105,4 +105,6 @@
 
 -(NSArray*) getUploadedFilesDictationIdList;
 
+-(NSString*)getfileNameFromDictationID:(NSString*)mobileDictationIdVal;
+
 @end

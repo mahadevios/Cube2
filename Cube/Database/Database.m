@@ -351,6 +351,62 @@ static Database *db;
     return departmentNameArray;
 }
 
+
+-(NSString*)getfileNameFromDictationID:(NSString*)mobileDictationIdVal
+{
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement;
+    NSString* companyId;
+    sqlite3* feedbackAndQueryTypesDB;
+    //NSMutableArray* departmentNameArray=[[NSMutableArray alloc]init];;
+    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName from CubeData Where mobileDictationIdVal=%d",[mobileDictationIdVal intValue]];
+    
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
+    {
+        if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query3 UTF8String], -1, &statement, NULL) == SQLITE_OK)// 2. Prepare the query
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                
+                // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
+                companyId=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+                // [departmentNameArray addObject:companyId];
+                
+            }
+        }
+        else
+        {
+            //NSLog(@"Can't preapre query due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    else
+    {
+        //NSLog(@"can't open db due error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+    {
+    }
+    //NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        //NSLog(@"db is closed");
+    }
+    else
+    {
+        //NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    
+    return companyId;
+}
 -(DepartMent*)getDepartMentFromDepartmentName:(NSString*)name
 {
     Database *db=[Database shareddatabase];
