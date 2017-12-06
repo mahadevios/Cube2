@@ -21,11 +21,13 @@
 {
     [super viewDidLoad];
     
-    self.stopTranscriptionButton.hidden = true;// for prerecorded segment hide stop button
+    //self.stopTranscriptionButton.hidden = true;// for prerecorded segment hide stop button
 
     self.transcriptionTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
 
     self.previousTranscriptedArray = [NSMutableArray new]; // store one minute text to append next request
+    
+    [self.previousTranscriptedArray addObject:@""];
     
     NSError* error;
     
@@ -95,6 +97,9 @@
     transcriptionStatusLabel.text = @"Go ahead, I'm listening!";
     
     [self.previousTranscriptedArray removeAllObjects]; // remove  prev. trans. text
+    
+    [self.previousTranscriptedArray addObject:@""];
+    
 }
 
 -(void)hideRightBarButton:(BOOL)hide
@@ -119,13 +124,17 @@
 
 -(void)addTranscriptionStatusAnimationView
 {
-    transcriptionStatusView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.1, -60, self.view.frame.size.width*0.8, 48)];
+    UIView* keyWindow = [UIApplication sharedApplication].keyWindow;
+    
+    transcriptionStatusView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.05, -70, self.view.frame.size.width*0.8, 48)];
+    
+    transcriptionStatusView.tag = 3000;
     
     transcriptionStatusView.backgroundColor = [UIColor appOrangeColor];
     
     transcriptionStatusView.layer.cornerRadius = 4.0;
     
-    transcriptionStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width*0.1, 5, transcriptionStatusView.frame.size.width*0.8, 20)];
+    transcriptionStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width*0.1, 5, transcriptionStatusView.frame.size.width*0.9, 20)];
     
     transcriptionStatusLabel.font = [UIFont systemFontOfSize:15];
     
@@ -145,7 +154,7 @@
     
     [transcriptionStatusView addSubview:timerLabel];
     
-    [self.view addSubview:transcriptionStatusView];
+    [keyWindow addSubview:transcriptionStatusView];
     
 }
 
@@ -157,14 +166,14 @@
         int moveDownDistance;
         if (moveDown == true)
         {
-            moveDownDistance = 65;
+            moveDownDistance = 15;
         }
         else
         {
             moveDownDistance = -60;
 
         }
-        self.transcriptionStatusView.frame = CGRectMake(self.view.frame.size.width*0.1, moveDownDistance, self.view.frame.size.width*0.8, 48);
+        self.transcriptionStatusView.frame = CGRectMake(self.view.frame.size.width*0.05, moveDownDistance, self.view.frame.size.width*0.9, 48);
         
     } completion:^(BOOL finished) {
         
@@ -255,131 +264,62 @@
     
     [request endAudio];
     
-    [recognitionTask cancel];
+   // [recognitionTask cancel];
     
     [newRequestTimer invalidate];
     
+    UIView* keyWindow = [UIApplication sharedApplication].keyWindow;
 
+    //[[keyWindow viewWithTag:3000] removeFromSuperview];  //remove animation
+    [self startTranscriptionStatusViewAnimationToDown:false];   //remove animation
+    
+    //[self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:self.transcriptionTextLabel.text];
 }
 
 - (IBAction)segmentChanged:(UISegmentedControl*)sender
 {
-    if(sender.selectedSegmentIndex == 0)
-    {
-        self.stopTranscriptionButton.hidden = true;
-        self.fileNameLabel.hidden = false;
-        [self.startTranscriptionButton setTitle:@"Select File" forState:UIControlStateNormal];
-        
-    }
-    else
-    {
+//    if(sender.selectedSegmentIndex == 0)
+//    {
+//        self.stopTranscriptionButton.hidden = true;
+//        self.fileNameLabel.hidden = false;
+//        [self.startTranscriptionButton setTitle:@"Select File" forState:UIControlStateNormal];
+//
+//    }
+//    else
+//    {
         self.stopTranscriptionButton.hidden = false;
-        self.fileNameLabel.hidden = true;
-        [self.startTranscriptionButton setTitle:@"Start Transcription" forState:UIControlStateNormal];
+      //  self.fileNameLabel.hidden = true;
+      //  [self.startTranscriptionButton setTitle:@"Start Transcription" forState:UIControlStateNormal];
         
-    }
+   // }
 }
 
--(void) transcribePreRecordedAudio
-{
-    //NSString* filePath = [[NSBundle mainBundle] pathForResource:@"sample1" ofType:@"wav"];
-    
-    NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.fileNameLabel.text]];
-    dispatch_async(dispatch_get_main_queue(), ^
-    {
-         //NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.fileNameLabel.text]];
-        
-        NSURL* url = [[NSURL alloc] initFileURLWithPath:filePath];
-        
-        self.urlRequest = [[SFSpeechURLRecognitionRequest alloc] initWithURL:url];
-        
-        [speechRecognizer recognitionTaskWithRequest:self.urlRequest delegate:self];
-        
-//        [speechRecognizer recognitionTaskWithRequest:request resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error)
-//         {
-//             SFTranscription* transcription = result.bestTranscription;
-//
-//             CGSize maximumLabelSize = CGSizeMake(96, FLT_MAX);
-//
-//             //            CGSize expectedLabelSize = [feedObject.detailMessage sizeWithFont:feedText.font constrainedToSize:maximumLabelSize lineBreakMode:feedText.lineBreakMode];
-//             CGSize expectedLabelSize = [transcription.formattedString sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:maximumLabelSize lineBreakMode:UILineBreakModeWordWrap];
-//
-//             self.transcriptionTextLabel.text = transcription.formattedString;
-//
-//             self.scrollVIew.contentSize = expectedLabelSize;
-//             //NSLog(@"%@", transcription.formattedString);
-//         }];
-    });
-    
-    
-    
-//    NSLocale *local =[[NSLocale alloc] initWithLocaleIdentifier:@"es-MX"];
-//    speechRecognizer = [[SFSpeechRecognizer alloc] initWithLocale:local];
-//    NSString* path = [[NSBundle mainBundle] pathForResource:@"sample1" ofType:@"wav"];
-//    NSURL *url = [[NSURL alloc] initFileURLWithPath:path];
-//    if(!speechRecognizer.isAvailable)
-//        NSLog(@"speechRecognizer is not available, maybe it has no internet connection");
-//    SFSpeechURLRecognitionRequest *urlRequest = [[SFSpeechURLRecognitionRequest alloc] initWithURL:url];
-//    urlRequest.shouldReportPartialResults = YES; // YES if animate writting
-//    [speechRecognizer recognitionTaskWithRequest: urlRequest resultHandler:  ^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error)
-//     {
-//         NSString *transcriptText = result.bestTranscription.formattedString;
-//         if(!error)
-//         {
-//             NSLog(@"transcriptText");
-//         }
-//     }];
-}
 
 -(void) transcribeLiveAudio
 {    
-//    AVAudioInputNode* inputNode = audioEngine.inputNode;
-//
-////    [inputNode removeTapOnBus:0];
-//    //AVAudioFormat* recordingFormat = [inputNode inputFormatForBus:0];
-//
-//    [inputNode installTapOnBus:0 bufferSize:2048 format:[inputNode inputFormatForBus:0] block:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when)
-//    {
-//        [self.request appendAudioPCMBuffer:buffer];
-//    }];
-//
-//    [audioEngine prepare];
-//
-//    NSError* error;
-//
-//    [audioEngine startAndReturnError:&error];
-//
-    //[self createTaskRequest];
-    
+
+
+
+// with delegate
     self.request = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
-    
-    [speechRecognizer recognitionTaskWithRequest:self.request delegate:self];
-    
+
+//    [speechRecognizer recognitionTaskWithRequest:self.request delegate:self];
+
     dispatch_async(dispatch_get_main_queue(), ^{
-        
+
         [self startCapture];
         [self startTranscriptionStatusViewAnimationToDown:true];
         [self setTimer];
 
     });
+    
+
+    
     //request = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
     
-    //recognitionTask = [speechRecognizer recognitionTaskWithRequest:request delegate:self];
-    //[self startCapture];
-//    recognitionTask = [speechRecognizer recognitionTaskWithRequest:request resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
-//        SFTranscription* transcription = result.bestTranscription;
-//
-//        if (transcription != nil)
-//        {
-//            //NSLog(@"%@", transcription.formattedString);
-//            dispatch_async(dispatch_get_main_queue(), ^
-//                           {
-//                               //NSLog(@"Reachable");
-//                               self.transcriptionTextLabel.text = transcription.formattedString;
-//                           });
-//        }
-//
-//    }];
+    recognitionTask = [speechRecognizer recognitionTaskWithRequest:request delegate:self];
+
+
 }
 
 //-(void)createTaskRequest
@@ -428,39 +368,29 @@
    // NSLog(@"4");
     SFTranscription* transcription = recognitionResult.bestTranscription;
     NSString* formattedString =  transcription.formattedString;
-    if (self.previousTranscriptedArray.count > 0)
-    {
-        NSString* previousTranscriptedText = [self.previousTranscriptedArray objectAtIndex:0];
-        
-        NSString* newComposedString;
-//        if (isStartedNewRequest == true)
-//        {
-            newComposedString = [previousTranscriptedText stringByAppendingString:[NSString stringWithFormat:@" %@",formattedString]];
-//            isStartedNewRequest = false;
-//        }
-//        else
-//        {
-//            newComposedString = [previousTranscriptedText stringByAppendingString:[NSString stringWithFormat:@"%@",formattedString]];
-//        }
-        
-        [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:newComposedString];
-
-        
-    }
-    else
-    {
-        [self.previousTranscriptedArray addObject:[NSString stringWithFormat:@"%@ ",formattedString]];
-    }
     
-//    if (transcription != nil)
+    
+    
+    
+    
+    
+//    if (self.previousTranscriptedArray.count > 0)
 //    {
-//        //NSLog(@"%@", transcription.formattedString);
-//        dispatch_async(dispatch_get_main_queue(), ^
-//                       {
-//                           //NSLog(@"Reachable");
-//                           self.transcriptionTextLabel.text = transcription.formattedString;
-//                       });
+//        NSString* previousTranscriptedText = [self.previousTranscriptedArray objectAtIndex:0];
+//
+//        NSString* newComposedString;
+//
+//        newComposedString = [previousTranscriptedText stringByAppendingString:[NSString stringWithFormat:@" %@",formattedString]];
+//
+//        [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:newComposedString];
+//
+//
 //    }
+//    else
+//    {
+//        [self.previousTranscriptedArray addObject:[NSString stringWithFormat:@"%@ ",formattedString]];
+//    }
+    
 }
 
 -(void)speechRecognitionTask:(SFSpeechRecognitionTask *)task didHypothesizeTranscription:(SFTranscription *)transcription
@@ -473,31 +403,56 @@
         dispatch_async(dispatch_get_main_queue(), ^
                        {
                            //NSLog(@"Reachable");
-                           NSString* formattedString =  transcription.formattedString;
-
-                           if (self.previousTranscriptedArray.count > 0)
+                          
+                           //NSString* formattedString =  transcription.formattedString;
+                           
+                           if (isStartedNewRequest == true)
                            {
-                               NSString* previousTranscriptedText = [self.previousTranscriptedArray objectAtIndex:0];
+                               NSString* text = [self.previousTranscriptedArray objectAtIndex:0];
                                
-                               NSString* updatedTranscriptedText = [previousTranscriptedText stringByAppendingString:[NSString stringWithFormat:@"%@",formattedString]];
+                               self.transcriptionTextLabel.text = [text stringByAppendingString:[NSString stringWithFormat:@" %@",transcription.formattedString]];
                                
-//                               CGSize size = [updatedTranscriptedText sizeWithFont:[UIFont systemFontOfSize:15] forWidth:self.view.frame.size.width*0.8 lineBreakMode:NSLineBreakByWordWrapping];
+                               // [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject: self.transcriptionTextLabel.text];
                                
-                               CGSize maximumLabelSize = CGSizeMake(96, FLT_MAX);
-                               
-                               //            CGSize expectedLabelSize = [feedObject.detailMessage sizeWithFont:feedText.font constrainedToSize:maximumLabelSize lineBreakMode:feedText.lineBreakMode];
-                               CGSize expectedLabelSize = [updatedTranscriptedText sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:maximumLabelSize lineBreakMode:UILineBreakModeWordWrap];
-                               
-                               self.transcriptionTextLabel.text = updatedTranscriptedText;
-                               
-                               self.scrollVIew.contentSize = expectedLabelSize;
-
                                
                            }
                            else
                            {
-                               self.transcriptionTextLabel.text = transcription.formattedString;
+                               [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:transcription.formattedString];
+                               
+                               self.transcriptionTextLabel.text = [self.previousTranscriptedArray objectAtIndex:0];
+                               
+                               //[self.previousTranscriptedArray replaceObjectAtIndex:0 withObject: self.transcriptionTextLabel.text];
+                               
                            }
+                           
+                           CGSize maximumLabelSize = CGSizeMake(96, FLT_MAX);
+                           
+                           
+                           CGSize expectedLabelSize = [self.transcriptionTextLabel.text sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:maximumLabelSize lineBreakMode:UILineBreakModeWordWrap];
+                           
+                           self.scrollVIew.contentSize = expectedLabelSize;
+                           
+//                           if (self.previousTranscriptedArray.count > 0)
+//                           {
+//                               NSString* previousTranscriptedText = [self.previousTranscriptedArray objectAtIndex:0];
+//
+//                               NSString* updatedTranscriptedText = [previousTranscriptedText stringByAppendingString:[NSString stringWithFormat:@"%@",formattedString]];
+//
+//                               CGSize maximumLabelSize = CGSizeMake(96, FLT_MAX);
+//
+//                               CGSize expectedLabelSize = [updatedTranscriptedText sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:maximumLabelSize lineBreakMode:UILineBreakModeWordWrap];
+//
+//                               self.transcriptionTextLabel.text = updatedTranscriptedText;
+//
+//                               self.scrollVIew.contentSize = expectedLabelSize;
+//
+//
+//                           }
+//                           else
+//                           {
+//                               self.transcriptionTextLabel.text = transcription.formattedString;
+//                           }
                        });
     }
 }
@@ -584,7 +539,9 @@
                            
                            [self hideRightBarButton:false];
                          
-                           isStartedNewRequest = true;
+                           //isStartedNewRequest = true;
+
+                           //[self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:self.transcriptionTextLabel.text];
 
                        }
                        else
@@ -638,11 +595,131 @@
 
 -(void)setFileName:(NSString *)fileName
 {
-    self.fileNameLabel.text = fileName;
+    //self.fileNameLabel.text = fileName;
     
     [self.startTranscriptionButton setTitle:@"Transcript File" forState:UIControlStateNormal];
     
 }
+
+
+-(void)withoutDelegateTrans
+{
+    AVAudioInputNode* inputNode = audioEngine.inputNode;
+    
+    [inputNode removeTapOnBus:0];
+    //AVAudioFormat* recordingFormat = [inputNode inputFormatForBus:0];
+    
+    [inputNode installTapOnBus:0 bufferSize:2048 format:[inputNode inputFormatForBus:0] block:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when)
+     {
+         [self.request appendAudioPCMBuffer:buffer];
+     }];
+    
+    [audioEngine prepare];
+    
+    NSError* error;
+    
+    [audioEngine startAndReturnError:&error];
+    
+    request = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
+    
+    [self startTranscriptionStatusViewAnimationToDown:true];
+    
+    [self setTimer];
+    
+    recognitionTask = [speechRecognizer recognitionTaskWithRequest:request resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
+        SFTranscription* transcription = result.bestTranscription;
+        
+        if (transcription != nil)
+        {
+            //NSLog(@"%@", transcription.formattedString);
+            dispatch_async(dispatch_get_main_queue(), ^
+                           {
+                               
+                               
+                               if (isStartedNewRequest == true)
+                               {
+                                   NSString* text = [self.previousTranscriptedArray objectAtIndex:0];
+                                   
+                                   self.transcriptionTextLabel.text = [text stringByAppendingString:[NSString stringWithFormat:@" %@",transcription.formattedString]];
+                                   
+                                   // [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject: self.transcriptionTextLabel.text];
+                                   
+                                   
+                               }
+                               else
+                               {
+                                   [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:transcription.formattedString];
+                                   self.transcriptionTextLabel.text = [self.previousTranscriptedArray objectAtIndex:0];
+                                   
+                               }
+                               
+                               CGSize maximumLabelSize = CGSizeMake(96, FLT_MAX);
+                               
+                               
+                               CGSize expectedLabelSize = [self.transcriptionTextLabel.text sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:maximumLabelSize lineBreakMode:UILineBreakModeWordWrap];
+                               
+                               self.scrollVIew.contentSize = expectedLabelSize;
+                               
+                           });
+        }
+        
+    }];
+    
+    
+    
+}
+
+-(void) transcribePreRecordedAudio
+{
+    //NSString* filePath = [[NSBundle mainBundle] pathForResource:@"sample1" ofType:@"wav"];
+    
+    NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.fileNameLabel.text]];
+    dispatch_async(dispatch_get_main_queue(), ^
+                   {
+                       //NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.fileNameLabel.text]];
+                       
+                       NSURL* url = [[NSURL alloc] initFileURLWithPath:filePath];
+                       
+                       self.urlRequest = [[SFSpeechURLRecognitionRequest alloc] initWithURL:url];
+                       
+                       [speechRecognizer recognitionTaskWithRequest:self.urlRequest delegate:self];
+                       
+                       //        [speechRecognizer recognitionTaskWithRequest:request resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error)
+                       //         {
+                       //             SFTranscription* transcription = result.bestTranscription;
+                       //
+                       //             CGSize maximumLabelSize = CGSizeMake(96, FLT_MAX);
+                       //
+                       //             //            CGSize expectedLabelSize = [feedObject.detailMessage sizeWithFont:feedText.font constrainedToSize:maximumLabelSize lineBreakMode:feedText.lineBreakMode];
+                       //             CGSize expectedLabelSize = [transcription.formattedString sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:maximumLabelSize lineBreakMode:UILineBreakModeWordWrap];
+                       //
+                       //             self.transcriptionTextLabel.text = transcription.formattedString;
+                       //
+                       //             self.scrollVIew.contentSize = expectedLabelSize;
+                       //             //NSLog(@"%@", transcription.formattedString);
+                       //         }];
+                   });
+    
+    
+    
+    //    NSLocale *local =[[NSLocale alloc] initWithLocaleIdentifier:@"es-MX"];
+    //    speechRecognizer = [[SFSpeechRecognizer alloc] initWithLocale:local];
+    //    NSString* path = [[NSBundle mainBundle] pathForResource:@"sample1" ofType:@"wav"];
+    //    NSURL *url = [[NSURL alloc] initFileURLWithPath:path];
+    //    if(!speechRecognizer.isAvailable)
+    //        NSLog(@"speechRecognizer is not available, maybe it has no internet connection");
+    //    SFSpeechURLRecognitionRequest *urlRequest = [[SFSpeechURLRecognitionRequest alloc] initWithURL:url];
+    //    urlRequest.shouldReportPartialResults = YES; // YES if animate writting
+    //    [speechRecognizer recognitionTaskWithRequest: urlRequest resultHandler:  ^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error)
+    //     {
+    //         NSString *transcriptText = result.bestTranscription.formattedString;
+    //         if(!error)
+    //         {
+    //             NSLog(@"transcriptText");
+    //         }
+    //     }];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

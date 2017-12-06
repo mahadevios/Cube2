@@ -1592,10 +1592,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Agd-v4-q4m">
-                                <rect key="frame" x="21" y="78" width="165.33333333333334" height="29"/>
+                                <rect key="frame" x="21" y="40" width="165.33333333333334" height="29"/>
                                 <color key="backgroundColor" red="0.36080178619999997" green="0.7219445109" blue="0.36225932840000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="Select FIle">
+                                <state key="normal" title="Start Transcription">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -1608,7 +1608,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dma-eH-p9t">
-                                <rect key="frame" x="228" y="78.333333333333329" width="165.33333333333337" height="29"/>
+                                <rect key="frame" x="228" y="40.333333333333336" width="165.33333333333337" height="29.000000000000007"/>
                                 <color key="backgroundColor" red="0.80000000000000004" green="0.0" blue="0.0039215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="Stop Transcription">
@@ -1623,7 +1623,7 @@
                                     <action selector="stopLiveAudioTranscription:" destination="7Gc-rA-3Zl" eventType="touchUpInside" id="6IH-Px-PyP"/>
                                 </connections>
                             </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="w1G-4r-nfB">
+                            <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="w1G-4r-nfB">
                                 <rect key="frame" x="114" y="30" width="187" height="29"/>
                                 <segments>
                                     <segment title="PreRecorded"/>
@@ -1633,14 +1633,8 @@
                                     <action selector="segmentChanged:" destination="7Gc-rA-3Zl" eventType="valueChanged" id="7n2-jN-44K"/>
                                 </connections>
                             </segmentedControl>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9S5-NR-ovg">
-                                <rect key="frame" x="206.33333333333334" y="93" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7qx-uS-fCj">
-                                <rect key="frame" x="0.0" y="127" width="414" height="609"/>
+                                <rect key="frame" x="0.0" y="89" width="414" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ku-cA-TVA">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
@@ -1673,12 +1667,10 @@
                         <constraints>
                             <constraint firstItem="w1G-4r-nfB" firstAttribute="centerX" secondItem="l3t-eG-frr" secondAttribute="centerX" id="1Oz-L5-iPH"/>
                             <constraint firstItem="Dma-eH-p9t" firstAttribute="centerX" secondItem="l3t-eG-frr" secondAttribute="centerX" multiplier="1.5" id="AR8-jE-I9n"/>
-                            <constraint firstItem="9S5-NR-ovg" firstAttribute="centerY" secondItem="Agd-v4-q4m" secondAttribute="centerY" id="Bno-tl-idV"/>
                             <constraint firstItem="3Nn-H9-Hp7" firstAttribute="top" secondItem="7qx-uS-fCj" secondAttribute="bottom" id="CHP-4f-FUK"/>
-                            <constraint firstItem="Agd-v4-q4m" firstAttribute="top" secondItem="w1G-4r-nfB" secondAttribute="bottom" constant="20" id="ES7-f9-JWG"/>
                             <constraint firstItem="Dma-eH-p9t" firstAttribute="width" secondItem="Agd-v4-q4m" secondAttribute="width" id="J4t-NT-Q5e"/>
                             <constraint firstItem="Agd-v4-q4m" firstAttribute="centerX" secondItem="l3t-eG-frr" secondAttribute="centerX" multiplier="0.5" id="YMC-KD-bBf"/>
-                            <constraint firstItem="9S5-NR-ovg" firstAttribute="leading" secondItem="Agd-v4-q4m" secondAttribute="trailing" constant="20" id="Zqj-HM-TTc"/>
+                            <constraint firstItem="Agd-v4-q4m" firstAttribute="top" secondItem="RwJ-zo-qvR" secondAttribute="bottom" constant="20" id="glK-vX-eFD"/>
                             <constraint firstItem="Agd-v4-q4m" firstAttribute="width" secondItem="l3t-eG-frr" secondAttribute="width" multiplier="0.4" id="oBc-Dj-TYE"/>
                             <constraint firstItem="Dma-eH-p9t" firstAttribute="centerY" secondItem="Agd-v4-q4m" secondAttribute="centerY" id="oni-g0-f9A"/>
                             <constraint firstItem="w1G-4r-nfB" firstAttribute="top" secondItem="RwJ-zo-qvR" secondAttribute="bottom" constant="10" id="pxM-Oh-Rbq"/>
@@ -1689,7 +1681,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="fileNameLabel" destination="9S5-NR-ovg" id="zgY-XK-dF4"/>
                         <outlet property="scrollVIew" destination="7qx-uS-fCj" id="xKO-qs-OBD"/>
                         <outlet property="startTranscriptionButton" destination="Agd-v4-q4m" id="t0v-77-hzO"/>
                         <outlet property="stopTranscriptionButton" destination="Dma-eH-p9t" id="Hko-TC-dxM"/>

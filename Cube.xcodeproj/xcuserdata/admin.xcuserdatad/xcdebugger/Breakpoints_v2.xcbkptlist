@@ -906,7 +906,7 @@
                   moduleName = "Cube"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/admin/Documents/CubeBackUp/cube-master%202__16-aug/Cube/ViewControllers/RecordViewController.mm"
-                  timestampString = "534169399.535867"
+                  timestampString = "534271872.177804"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "432"
@@ -921,7 +921,7 @@
                   moduleName = "Cube"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/admin/Documents/CubeBackUp/cube-master%202__16-aug/Cube/ViewControllers/RecordViewController.mm"
-                  timestampString = "534169399.537371"
+                  timestampString = "534271872.179558"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "432"
@@ -2160,38 +2160,6 @@
             startingLineNumber = "382"
             endingLineNumber = "382"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/SpeechRecognitionViewController.m"
-            timestampString = "534169399.370177"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "431"
-            endingLineNumber = "431"
-            landmarkName = "-speechRecognitionTask:didFinishRecognition:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/SpeechRecognitionViewController.m"
-            timestampString = "534169399.370224"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "480"
-            endingLineNumber = "480"
-            landmarkName = "-speechRecognitionTask:didHypothesizeTranscription:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
