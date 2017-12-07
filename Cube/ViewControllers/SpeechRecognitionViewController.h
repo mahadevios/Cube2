@@ -27,6 +27,7 @@
 @property(nonatomic, strong)UILabel* transcriptionStatusLabel;
 @property(nonatomic)BOOL isStartedNewRequest;
 @property(nonatomic)int timerSeconds;
+@property(nonatomic, strong)AVAudioFile* audioFileName;
 
 - (IBAction)startLiveAudioTranscription:(id)sender;
 - (IBAction)stopLiveAudioTranscription:(id)sender;

@@ -15,7 +15,7 @@
 @end
 
 @implementation SpeechRecognitionViewController
-@synthesize audioEngine,request,recognitionTask,speechRecognizer,isStartedNewRequest, transcriptionStatusView,timerSeconds,startTranscriptionButton,stopTranscriptionButton,timerLabel,transcriptionStatusLabel,transcriptionTextLabel;
+@synthesize audioEngine,request,recognitionTask,speechRecognizer,isStartedNewRequest, transcriptionStatusView,timerSeconds,startTranscriptionButton,stopTranscriptionButton,timerLabel,transcriptionStatusLabel,transcriptionTextLabel,audioFileName;
 
 - (void)viewDidLoad
 {
@@ -38,6 +38,16 @@
     speechRecognizer = [[SFSpeechRecognizer alloc] init];
     
     request = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
+    
+    NSDictionary *audioCompressionSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                            [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
+                                                                                            [NSNumber numberWithFloat:44100.0], AVSampleRateKey,
+                                                                                            [NSNumber numberWithInt:1], AVNumberOfChannelsKey,
+                                                                                            [NSNumber numberWithInt:128000], AVEncoderBitRateKey,
+                                                                                             nil];
+    NSURL* url = [self urlForFile:@"top1.wav"];
+    audioFileName = [[AVAudioFile alloc] initForWriting:url settings:audioCompressionSettings error:nil];
+
     // Do any additional setup after loading the view.
     //[self transcribePreRecordedAudio];
     //[self authorizeAndTranscribe];
@@ -273,6 +283,8 @@
     //[[keyWindow viewWithTag:3000] removeFromSuperview];  //remove animation
     [self startTranscriptionStatusViewAnimationToDown:false];   //remove animation
     
+    audioFileName = nil; // to save the recorded file
+
     //[self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:self.transcriptionTextLabel.text];
 }
 
@@ -307,7 +319,8 @@
 
     dispatch_async(dispatch_get_main_queue(), ^{
 
-        [self startCapture];
+        //[self startCapture];
+        [self recordUsingTap];
         [self startTranscriptionStatusViewAnimationToDown:true];
         [self setTimer];
 
@@ -334,6 +347,64 @@
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
     [self.request appendAudioSampleBuffer:sampleBuffer];
+    
+//    NSError* error;
+//    bool isWr = [audioFileName writeFromBuffer:sampleBuffer error:&error];
+//
+//    [self.request appendAudioPCMBuffer:sampleBuffer];
+    
+//    if (timerSeconds == 1)
+//    {
+ //       audioFileName = nil;
+//    }
+//    NSError* error;
+//
+//    NSURL* audioExportURL = [self urlForFile:@"sample234.m4a"];
+//    AVAssetWriter *writer = [[AVAssetWriter alloc] initWithURL:audioExportURL fileType:AVFileTypeAppleM4A error:&error];
+//
+//    AudioChannelLayout channelLayout;
+//    memset(&channelLayout, 0, sizeof(AudioChannelLayout));
+//    channelLayout.mChannelLayoutTag = kAudioChannelLayoutTag_Stereo;
+//    NSDictionary *audioCompressionSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                              [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
+//                                              [NSNumber numberWithFloat:44100.0], AVSampleRateKey,
+//                                              [NSNumber numberWithInt:2], AVNumberOfChannelsKey,
+//                                              [NSNumber numberWithInt:128000], AVEncoderBitRateKey,
+//                                               nil];
+//
+//    AVAssetWriterInput *writerAudioInput;
+//
+//
+//
+//    writerAudioInput = [[AVAssetWriterInput alloc] initWithMediaType:AVMediaTypeAudio outputSettings:audioCompressionSettings];
+//
+//    writerAudioInput.expectsMediaDataInRealTime = YES;
+//
+//    if ([writer canAddInput:writerAudioInput]) {
+//        [writer addInput:writerAudioInput];
+//    } else {
+//        NSLog(@"ERROR ADDING AUDIO");
+//    }
+//
+//    [writer startWriting];
+//
+//    CMTime time = kCMTimeZero;
+//
+//    [writer startSessionAtSourceTime:time];
+//
+//    if([writerAudioInput isReadyForMoreMediaData])
+//    {
+//       bool isAppended = [writerAudioInput appendSampleBuffer:sampleBuffer];
+//
+//        NSLog(@"%d",isAppended);
+//    }
+//    AVAssetWriterStatus status = [writer status];
+//
+//    NSLog(@"%@", writer.error.localizedFailureReason);
+//    NSLog(@"%@", writer.error.localizedDescription);
+//
+//    NSLog(@"%ld",status);
+
 }
 -(void)speechRecognitionDidDetectSpeech:(SFSpeechRecognitionTask *)task
 {
@@ -429,7 +500,7 @@
                            CGSize maximumLabelSize = CGSizeMake(96, FLT_MAX);
                            
                            
-                           CGSize expectedLabelSize = [self.transcriptionTextLabel.text sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:maximumLabelSize lineBreakMode:UILineBreakModeWordWrap];
+                           CGSize expectedLabelSize = [self.transcriptionTextLabel.text sizeWithFont:[UIFont systemFontOfSize:10] constrainedToSize:maximumLabelSize lineBreakMode:UILineBreakModeWordWrap];
                            
                            self.scrollVIew.contentSize = expectedLabelSize;
                            
@@ -539,6 +610,7 @@
                            
                            [self hideRightBarButton:false];
                          
+                           audioFileName = nil; // to save the recorded file
                            //isStartedNewRequest = true;
 
                            //[self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:self.transcriptionTextLabel.text];
@@ -589,6 +661,7 @@
     }
     [self.capture addOutput:audioOutput];
     [audioOutput connectionWithMediaType:AVMediaTypeAudio];
+
     [self.capture startRunning];
 }
 
@@ -669,6 +742,33 @@
     
 }
 
+-(void)recordUsingTap
+{
+    AVAudioInputNode* inputNode = audioEngine.inputNode;
+    
+    [inputNode removeTapOnBus:0];
+    //AVAudioFormat* recordingFormat = [inputNode inputFormatForBus:0];
+    
+    [inputNode installTapOnBus:0 bufferSize:2048 format:[inputNode inputFormatForBus:0] block:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when)
+     {
+         NSError* error;
+         bool isWr = [audioFileName writeFromBuffer:buffer error:&error];
+         
+         [self.request appendAudioPCMBuffer:buffer];
+         
+         if (timerSeconds == 1)
+         {
+             audioFileName = nil;
+         }
+     }];
+    
+    [audioEngine prepare];
+    
+    NSError* error;
+    
+    [audioEngine startAndReturnError:&error];
+    
+}
 -(void) transcribePreRecordedAudio
 {
     //NSString* filePath = [[NSBundle mainBundle] pathForResource:@"sample1" ofType:@"wav"];
@@ -720,6 +820,18 @@
     //     }];
 }
 
+-(NSURL*)urlForFile:(NSString*)fileName
+{
+    NSArray  *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString* filePath = [documentsDirectory stringByAppendingPathComponent:fileName];
+    
+    NSURL* url = [NSURL fileURLWithPath:filePath];
+    AVAudioFile* file = [[AVAudioFile alloc] init];
+    
+    
+    return url;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

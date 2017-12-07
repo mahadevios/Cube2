@@ -436,7 +436,7 @@
     int dictationId = audioDetails.mobiledictationidval;
     
     NSString* fileName = [[Database shareddatabase] getfileNameFromDictationID:[NSString stringWithFormat:@"%d", dictationId]];
-    [[APIManager sharedManager] downloadFileUsingConnection:[NSString stringWithFormat:@"%d",dictationId]];
+   // [[APIManager sharedManager] downloadFileUsingConnection:[NSString stringWithFormat:@"%d",dictationId]];
 
     if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Download"])
     {
