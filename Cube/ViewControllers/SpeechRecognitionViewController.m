@@ -20,9 +20,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     //self.stopTranscriptionButton.hidden = true;// for prerecorded segment hide stop button
-
+    
+    
     self.transcriptionTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
 
     self.previousTranscriptedArray = [NSMutableArray new]; // store one minute text to append next request
@@ -39,6 +39,8 @@
     
     request = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
     
+    speechRecognizer = [[SFSpeechRecognizer alloc] init];
+
     NSDictionary *audioCompressionSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                                                                                             [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
                                                                                             [NSNumber numberWithFloat:44100.0], AVSampleRateKey,
@@ -82,6 +84,15 @@
     
 }
 
+-(void)demoTimer
+{
+    demoTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(checkState) userInfo:nil repeats:YES];
+    
+}
+-(void)checkState
+{
+    NSLog(@"state is = %ld", (long)recognitionTask.state);
+}
 -(void)popViewController:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -103,6 +114,19 @@
     transcriptionTextLabel.text = @"";
     
     timerSeconds = 59;
+    
+    if (self.capture != nil && [self.capture isRunning])
+    {
+        [self.capture stopRunning];
+    }
+    
+    [audioEngine stop];
+    
+    [request endAudio];
+    
+    //[recognitionTask cancel];
+    
+    [newRequestTimer invalidate];
     
     transcriptionStatusLabel.text = @"Go ahead, I'm listening!";
     
@@ -265,6 +289,8 @@
     
     startTranscriptionButton.alpha = 1.0;
     
+    [startTranscriptionButton setTitle:@"Resume" forState:UIControlStateNormal];
+
     if (self.capture != nil && [self.capture isRunning])
     {
         [self.capture stopRunning];
@@ -274,18 +300,17 @@
     
     [request endAudio];
     
-   // [recognitionTask cancel];
+    
+    //[recognitionTask cancel];
     
     [newRequestTimer invalidate];
     
-    UIView* keyWindow = [UIApplication sharedApplication].keyWindow;
+    //UIView* keyWindow = [UIApplication sharedApplication].keyWindow;
 
-    //[[keyWindow viewWithTag:3000] removeFromSuperview];  //remove animation
     [self startTranscriptionStatusViewAnimationToDown:false];   //remove animation
     
     audioFileName = nil; // to save the recorded file
 
-    //[self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:self.transcriptionTextLabel.text];
 }
 
 - (IBAction)segmentChanged:(UISegmentedControl*)sender
@@ -311,18 +336,27 @@
 {    
 
 
-
+   // [audioEngine stop];
+    
+    [request endAudio];
+    
+    [recognitionTask cancel];
+    
+    recognitionTask = nil;
 // with delegate
-    self.request = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
+    request = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
 
-//    [speechRecognizer recognitionTaskWithRequest:self.request delegate:self];
 
     dispatch_async(dispatch_get_main_queue(), ^{
 
+       
         //[self startCapture];
         [self recordUsingTap];
         [self startTranscriptionStatusViewAnimationToDown:true];
         [self setTimer];
+        //[self demoTimer];
+        
+        recognitionTask = [speechRecognizer recognitionTaskWithRequest:self.request delegate:self];
 
     });
     
@@ -330,7 +364,7 @@
     
     //request = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
     
-    recognitionTask = [speechRecognizer recognitionTaskWithRequest:request delegate:self];
+    
 
 
 }
@@ -418,7 +452,9 @@
 
 -(void)speechRecognitionTaskFinishedReadingAudio:(SFSpeechRecognitionTask *)task
 {
-   NSLog(@"2");
+    [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Transcripting" detailText:@"Please wait.."];
+    
+    NSLog(@"2");
 }
 
 -(void)speechRecognitionTask:(SFSpeechRecognitionTask *)task didFinishSuccessfully:(BOOL)successfully
@@ -429,20 +465,20 @@
 //        isStartedNewRequest = true;
 //    }
     
-
-//    NSLog(@"3");
-//    NSLog(@"Finished sucessfully");
+    [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+    [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject: self.transcriptionTextLabel.text];
+    NSLog(@"3");
+    NSLog(@"Finished sucessfully");
 }
 
 -(void)speechRecognitionTask:(SFSpeechRecognitionTask *)task didFinishRecognition:(SFSpeechRecognitionResult *)recognitionResult
 {
-   // NSLog(@"4");
+    NSLog(@"4");
     SFTranscription* transcription = recognitionResult.bestTranscription;
     NSString* formattedString =  transcription.formattedString;
     
     
-    
-    
+    [recognitionTask cancel];
     
     
 //    if (self.previousTranscriptedArray.count > 0)
@@ -751,15 +787,20 @@
     
     [inputNode installTapOnBus:0 bufferSize:2048 format:[inputNode inputFormatForBus:0] block:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when)
      {
-         NSError* error;
-         bool isWr = [audioFileName writeFromBuffer:buffer error:&error];
-         
-         [self.request appendAudioPCMBuffer:buffer];
-         
-         if (timerSeconds == 1)
+         // code to record the audio.
+//         NSError* error;
+//         bool isWr = [audioFileName writeFromBuffer:buffer error:&error];
+//
+         if (buffer == nil)
          {
-             audioFileName = nil;
+             [recognitionTask cancel];
          }
+         [self.request appendAudioPCMBuffer:buffer];
+//
+//         if (timerSeconds == 1)
+//         {
+//             audioFileName = nil;
+//         }
      }];
     
     [audioEngine prepare];
@@ -848,3 +889,4 @@
  }
  */
 @end
+

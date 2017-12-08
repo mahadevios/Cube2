@@ -13,6 +13,8 @@
 @interface SpeechRecognitionViewController : UIViewController<SFSpeechRecognitionTaskDelegate,AVCaptureAudioDataOutputSampleBufferDelegate,CommonDelegate>
 {
     NSTimer* newRequestTimer;
+    NSTimer* demoTimer;
+
 }
 @property(nonatomic, strong)AVAudioEngine* audioEngine;
 @property(nonatomic, strong)SFSpeechRecognizer* speechRecognizer;
