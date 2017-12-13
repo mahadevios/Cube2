@@ -78,7 +78,8 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
-    
+    [self.tabBarController.tabBar setHidden:YES];
+
     //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"ResumeTrans"] style:UIBarButtonItemStylePlain target:self action:@selector(resetTranscription)];
     
     
@@ -113,7 +114,7 @@
     
     transcriptionTextLabel.text = @"";
     
-    timerSeconds = 59;
+    timerSeconds = 60;
     
     if (self.capture != nil && [self.capture isRunning])
     {
@@ -153,7 +154,7 @@
 {
     [self addTranscriptionStatusAnimationView];
     
-    self.timerSeconds = 59;
+    self.timerSeconds = 60;
 }
 
 -(void)addTranscriptionStatusAnimationView
@@ -178,7 +179,7 @@
     
     timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width/2-30, 30, 60, 15)];
     
-    timerLabel.text = @"00:59";
+    timerLabel.text = @"00:60";
     
     timerLabel.font = [UIFont systemFontOfSize:15];
 
@@ -211,6 +212,7 @@
         
     } completion:^(BOOL finished) {
         
+        timerLabel.text = @"00:60";
     }];
 }
 - (IBAction)startLiveAudioTranscription:(UIButton*)sender
@@ -226,7 +228,7 @@
             {
                 isStartedNewRequest = true; // set true for resume and using dis append text in delegate
                 
-                timerSeconds = 59;  // reset after resume
+                timerSeconds = 60;  // reset after resume
 
             }
 
@@ -280,6 +282,10 @@
     [self subStopLiveAudioTranscription];
     
     [self hideRightBarButton:false];
+    
+    timerSeconds = 60;
+    
+    
 
 }
 

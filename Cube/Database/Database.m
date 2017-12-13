@@ -2634,7 +2634,7 @@ static Database *db;
     
     
     
-    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate, mobiledictationidval, CurrentDuration, FileSize, Department, NewDataSend from CubeData Where TransferStatus = 1 and DeleteStatus = 0"];
+    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate, mobiledictationidval, CurrentDuration, FileSize, Department, NewDataSend,RecordingDate from CubeData Where TransferStatus = 1 and DeleteStatus = 0"];
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
@@ -2659,6 +2659,9 @@ static Database *db;
                 audioDetails.department = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
 
                 audioDetails.downloadStatus =  sqlite3_column_int(statement, 6);
+                
+                audioDetails.recordingDate = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
+
 
                 [uploadedFilesArray addObject:audioDetails];
                 

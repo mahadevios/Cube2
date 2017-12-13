@@ -51,7 +51,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //    NSString* newDestPath = [destpath stringByAppendingPathExtension:@"doc"];
 //    
 //    BOOL removed = [[NSFileManager defaultManager] removeItemAtPath:newDestPath error:&error];
-    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreFlexSolutions.CubeDictate"];
+    //NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreFlexSolutions.CubeDictate"];
 
     //NSString* fileSizeInBytes = [sharedDefaults objectForKey:@"output1"];
     
@@ -63,6 +63,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [AppPreferences sharedAppPreferences].filesInUploadingQueueArray = [[NSMutableArray alloc] init];
 
 
+    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    
+    NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+    
+    [[NSUserDefaults standardUserDefaults] setValue:currentVersion forKey:CURRENT_VESRION];
+    
    [self checkAndCopyDatabase];
     
     
@@ -261,6 +267,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 
 
+
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
 //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -372,7 +379,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     UInt8 theInterruptionType = [[notification.userInfo valueForKey:AVAudioSessionInterruptionTypeKey] intValue];
     
     printf("Session interrupted! --- %s ---\n", theInterruptionType == AVAudioSessionInterruptionTypeBegan ? "Begin Interruption" : "End Interruption");
-	   
+	
+    [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryPlayAndRecord];
+
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PAUSE_RECORDING object:nil];//to pause audio player and save the recording from bg.we have change the setting for this in app capabilities setting to stop from the bg.
 
 //    if (theInterruptionType == AVAudioSessionInterruptionTypeBegan) {
@@ -940,11 +949,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         [[Database shareddatabase] insertRecordingData:audioRecordDetailsDict];
     
-        NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
-
-        NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
-
-        [[NSUserDefaults standardUserDefaults] setValue:currentVersion forKey:CURRENT_VESRION];
+        
     
     
 }

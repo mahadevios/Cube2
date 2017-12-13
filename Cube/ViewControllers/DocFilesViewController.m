@@ -54,6 +54,8 @@
     
     [self.tabBarController.tabBar setHidden:YES];
 
+   // self.navigationController.navigationBar.translucent = NO;
+
     // Do any additional setup after loading the view.
 }
 
@@ -152,6 +154,8 @@
 {
     
 //    overLayView = [[UIView alloc] initWithFrame:CGRectMake(sender.frame.origin.x, sender.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.navigationController.navigationBar setHidden:true];
+    
     overLayView = [[UIView alloc] initWithFrame:self.view.frame];
 
     overLayView.tag = 222;
@@ -202,7 +206,7 @@
     
     lineView.backgroundColor = [UIColor appOrangeColor];
     
-    commentTextView = [[UITextView alloc] initWithFrame:CGRectMake(insideView.frame.size.width*0.07, lineView.frame.origin.y + lineView.frame.size.height + 20, insideView.frame.size.width*0.86, 30)];
+    commentTextView = [[UITextView alloc] initWithFrame:CGRectMake(insideView.frame.size.width*0.07, lineView.frame.origin.y + lineView.frame.size.height + 20, insideView.frame.size.width*0.86, 70)];
     
     //UIView* paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 30)];
     
@@ -267,6 +271,196 @@
 //    }];
 }
 
+
+-(void)addDetailsView:(TableViewButton*)sender
+{
+    
+    //    overLayView = [[UIView alloc] initWithFrame:CGRectMake(sender.frame.origin.x, sender.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.navigationController.navigationBar setHidden:true];
+//
+//    overLayView = [[UIView alloc] initWithFrame:self.view.frame];
+//
+//    overLayView.tag = 222;
+//
+//    overLayView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:1.0];
+////
+//    UITapGestureRecognizer* tapToDismissNotif = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
+//
+//    [self.view addGestureRecognizer:tapToDismissNotif];
+//
+//    tapToDismissNotif.delegate = self;
+    
+    //    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, -100, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73)];
+    //
+    //    self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
+    long indexPathRow = sender.indexPathRow;
+    
+    AudioDetails* audioDetails = [self.completedFilesForTableViewArray objectAtIndex:indexPathRow];
+    
+    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    
+    //    self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
+    
+    scrollView.delegate = self;
+    
+    self.automaticallyAdjustsScrollViewInsets = false;
+    
+
+    scrollView.backgroundColor = [UIColor whiteColor];
+    
+    UIView* insideView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, scrollView.frame.size.width, 500)];
+    
+    insideView.backgroundColor = [UIColor whiteColor];
+    
+    scrollView.layer.cornerRadius = 4.0;
+    
+    insideView.layer.cornerRadius = 4.0;
+    
+    UILabel* referenceLabel = [[UILabel alloc] initWithFrame:CGRectMake(insideView.frame.size.width/2 - 60, 30, 120, 35)];
+    
+    referenceLabel.textAlignment = NSTextAlignmentCenter;
+    
+    referenceLabel.text = @"Details";
+    
+    referenceLabel.textColor = [UIColor appOrangeColor];
+    
+    UIImageView* crossImageView = [[UIImageView alloc] initWithFrame:CGRectMake(insideView.frame.size.width - 50, 30, 30, 30)];
+    
+    crossImageView.image = [UIImage imageNamed:@"Info"];
+    
+    UIButton* crossButton = [[UIButton alloc] initWithFrame:CGRectMake(insideView.frame.size.width - 60, 0, 60, 60)];
+    
+//    [crossButton setImage:[UIImage imageNamed:@"Referral"] forState:UIControlStateNormal];
+    
+    [crossButton setBackgroundColor:[UIColor clearColor]];
+    
+    [crossButton addTarget:self action:@selector(crossButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    //UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(0, referenceLabel.frame.origin.y + referenceLabel.frame.size.height + 10, insideView.frame.size.width, 2)];
+    
+    //lineView.backgroundColor = [UIColor appOrangeColor];
+    float titleLabelXPosition = insideView.frame.size.width*0.1;
+    float titleValueLabelXPosition = insideView.frame.size.width*0.5;
+
+    UILabel* audioIdTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, referenceLabel.frame.origin.y + referenceLabel.frame.size.height , insideView.frame.size.width*0.4, 30)];
+    
+    audioIdTitleLabel.textColor = [UIColor colorWithRed:148/255.0 green:148/255.0 blue:148/255.0 alpha:1.0];
+    
+    audioIdTitleLabel.font = [UIFont systemFontOfSize:14];
+    
+    audioIdTitleLabel.text = @"Audio ID";
+    
+    UILabel* audioIdLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, referenceLabel.frame.origin.y + referenceLabel.frame.size.height, insideView.frame.size.width*0.5, 30)];
+
+    audioIdLabel.font = [UIFont systemFontOfSize:14];
+
+    audioIdLabel.text = audioDetails.fileName;
+    
+    UIView* separatorLineView = [[UIView alloc] initWithFrame:CGRectMake(10, audioIdTitleLabel.frame.origin.y + audioIdTitleLabel.frame.size.height + 5, insideView.frame.size.width-20, 1)];
+    separatorLineView.backgroundColor = [UIColor colorWithRed:208/255.0 green:208/255.0 blue:208/255.0 alpha:1.0];
+    
+    
+    UILabel* dictatedByTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, separatorLineView.frame.origin.y + 10 , insideView.frame.size.width*0.5, 30)];
+    
+    dictatedByTitleLabel.textColor = [UIColor colorWithRed:148/255.0 green:148/255.0 blue:148/255.0 alpha:1.0];
+    
+    dictatedByTitleLabel.font = [UIFont systemFontOfSize:14];
+    
+    dictatedByTitleLabel.text = @"Dictated By";
+    
+    UILabel* dictatedByLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, separatorLineView.frame.origin.y + 10, insideView.frame.size.width*0.4, 30)];
+    
+    dictatedByLabel.font = [UIFont systemFontOfSize:14];
+    
+    dictatedByLabel.text = @"Test Consultant 1";
+    
+    UIView* separatorLineView1 = [[UIView alloc] initWithFrame:CGRectMake(10, dictatedByLabel.frame.origin.y + dictatedByLabel.frame.size.height + 5, insideView.frame.size.width-20, 1)];
+    separatorLineView1.backgroundColor = [UIColor colorWithRed:208/255.0 green:208/255.0 blue:208/255.0 alpha:1.0];
+    
+    
+    UILabel* dictatedOnTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, separatorLineView1.frame.origin.y + 10 , insideView.frame.size.width*0.4, 30)];
+    
+    dictatedOnTitleLabel.textColor= [UIColor colorWithRed:148/255.0 green:148/255.0 blue:148/255.0 alpha:1.0];
+    
+    dictatedOnTitleLabel.font = [UIFont systemFontOfSize:14];
+    
+    dictatedOnTitleLabel.text = @"Dictated On";
+    
+    UILabel* dictatedOnLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, separatorLineView1.frame.origin.y + 10, insideView.frame.size.width*0.5, 30)];
+    
+    dictatedOnLabel.font = [UIFont systemFontOfSize:14];
+    
+    dictatedOnLabel.text = [NSString stringWithFormat:@"%@",audioDetails.recordingDate];
+    
+    UIView* separatorLineView2 = [[UIView alloc] initWithFrame:CGRectMake(10, dictatedOnLabel.frame.origin.y + dictatedOnLabel.frame.size.height + 5, insideView.frame.size.width-20, 1)];
+    separatorLineView2.backgroundColor = [UIColor colorWithRed:208/255.0 green:208/255.0 blue:208/255.0 alpha:1.0];
+
+    UILabel* uploadedDateTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, separatorLineView2.frame.origin.y + 10 , insideView.frame.size.width*0.4, 30)];
+    
+    uploadedDateTitleLabel.textColor = [UIColor colorWithRed:148/255.0 green:148/255.0 blue:148/255.0 alpha:1.0];
+    
+    uploadedDateTitleLabel.font = [UIFont systemFontOfSize:14];
+    
+    uploadedDateTitleLabel.text = @"Transfer Date";
+    
+    UILabel* uploadedDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, separatorLineView2.frame.origin.y + 10, insideView.frame.size.width*0.5, 30)];
+    
+    uploadedDateLabel.font = [UIFont systemFontOfSize:14];
+    
+    uploadedDateLabel.text = audioDetails.transferDate;
+    
+    UIView* separatorLineView3 = [[UIView alloc] initWithFrame:CGRectMake(10, uploadedDateLabel.frame.origin.y + uploadedDateLabel.frame.size.height + 5, insideView.frame.size.width-20, 1)];
+    separatorLineView3.backgroundColor = [UIColor colorWithRed:208/255.0 green:208/255.0 blue:208/255.0 alpha:1.0];
+    //textField.leftView = paddingView;
+    
+    //textField.leftViewMode = UITextFieldViewModeAlways;
+    
+    commentTextView.font = [UIFont systemFontOfSize:14.0];
+    
+    commentTextView.delegate = self;
+    
+    [insideView addSubview:referenceLabel];
+    [insideView addSubview:crossButton];
+    [insideView addSubview:crossImageView];
+
+    [insideView addSubview:audioIdTitleLabel];
+    [insideView addSubview:audioIdLabel];
+    [insideView addSubview:separatorLineView];
+    
+    [insideView addSubview:dictatedByTitleLabel];
+    [insideView addSubview:dictatedByLabel];
+    [insideView addSubview:separatorLineView1];
+    
+    [insideView addSubview:dictatedOnTitleLabel];
+    [insideView addSubview:dictatedOnLabel];
+    [insideView addSubview:separatorLineView2];
+    
+    [insideView addSubview:uploadedDateTitleLabel];
+    [insideView addSubview:uploadedDateLabel];
+    [insideView addSubview:separatorLineView3];
+    
+    [scrollView addSubview:insideView];
+    
+   // [overLayView addSubview:scrollView];
+    
+    [self.view addSubview:scrollView];
+    
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.9 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
+        
+        //            self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
+        
+        self.scrollView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+    //    overLayView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    //    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    //        overLayView.transform = CGAffineTransformIdentity;
+    //    } completion:^(BOOL finished){
+    //        // do something once the animation finishes, put it here
+    //    }];
+}
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
     if ([textView.text isEqualToString:@"Comment here"])
@@ -314,6 +508,26 @@
 //    }];
 }
 
+-(void)crossButtonTapped:(UIButton*)touch
+{
+    [self.navigationController.navigationBar setHidden:false];
+
+    
+    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
+        
+        //            self.scrollView.frame = CGRectMake(-self.view.frame.size.width, -self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
+
+        self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, -self.view.frame.size.height, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
+        [self.scrollView removeFromSuperview];
+
+        
+    } completion:^(BOOL finished) {
+        
+       // [[self.view viewWithTag:222] removeFromSuperview];
+        
+    }];
+    
+}
 -(void)removeCommentView
 {
     [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
@@ -325,6 +539,8 @@
     } completion:^(BOOL finished) {
         
         [[self.view viewWithTag:222] removeFromSuperview];
+        [self.navigationController.navigationBar setHidden:false];
+
     }];
     
 }
@@ -375,7 +591,7 @@
     [commentButton addTarget:self action:@selector(addCommentView:) forControlEvents:UIControlEventTouchUpInside];
 
     UIButton* detailsButton = [cell viewWithTag:103];
-    [detailsButton addTarget:self action:@selector(detailsButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [detailsButton addTarget:self action:@selector(addDetailsView:) forControlEvents:UIControlEventTouchUpInside];
 
     TableViewButton* downloadButton = [cell viewWithTag:104];
     [downloadButton addTarget:self action:@selector(downloadButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
