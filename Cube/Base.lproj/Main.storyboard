@@ -1715,20 +1715,20 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="File" translatesAutoresizingMaskIntoConstraints="NO" id="1cN-GC-jw1">
-                                                    <rect key="frame" x="10" y="10" width="25" height="19"/>
+                                                    <rect key="frame" x="10" y="10" width="20" height="25"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="19" id="Fhw-je-naO"/>
-                                                        <constraint firstAttribute="width" constant="25" id="Iwr-w7-bzm"/>
+                                                        <constraint firstAttribute="height" constant="25" id="Fhw-je-naO"/>
+                                                        <constraint firstAttribute="width" constant="20" id="Iwr-w7-bzm"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="105" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="docFileToView.doc" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jZ-Ea-F3K">
-                                                    <rect key="frame" x="44.999999999999993" y="10" width="118.33333333333331" height="17"/>
+                                                    <rect key="frame" x="39.999999999999993" y="10" width="118.33333333333331" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.1176470588" green="0.50588235290000005" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="EL6-iW-DiX">
-                                                    <rect key="frame" x="10.000000000000014" y="49" width="248.33333333333337" height="29"/>
+                                                    <rect key="frame" x="10.000000000000014" y="55" width="248.33333333333337" height="29"/>
                                                     <subviews>
                                                         <button opaque="NO" tag="104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oG2-2r-u1a" customClass="TableViewButton">
                                                             <rect key="frame" x="0.0" y="0.0" width="119.33333333333333" height="29"/>
@@ -1759,15 +1759,19 @@
                                                     </subviews>
                                                 </stackView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Comment" translatesAutoresizingMaskIntoConstraints="NO" id="xiv-kb-hGG">
-                                                    <rect key="frame" x="279" y="48" width="30" height="30"/>
+                                                    <rect key="frame" x="285" y="56.666666666666657" width="28" height="25"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="6sf-ne-Pjf"/>
-                                                        <constraint firstAttribute="width" constant="30" id="aKr-KF-vOA"/>
+                                                        <constraint firstAttribute="height" constant="25" id="6sf-ne-Pjf"/>
+                                                        <constraint firstAttribute="width" constant="28" id="aKr-KF-vOA"/>
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OMS-Nw-g8O" customClass="TableViewButton">
-                                                    <rect key="frame" x="278.33333333333331" y="49" width="30" height="29"/>
+                                                    <rect key="frame" x="278.33333333333331" y="49.666666666666657" width="40" height="40"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="Klg-6f-kQa"/>
+                                                        <constraint firstAttribute="height" constant="40" id="wxa-FN-VFs"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1779,15 +1783,19 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Info" translatesAutoresizingMaskIntoConstraints="NO" id="MZD-SP-eTv">
-                                                    <rect key="frame" x="324" y="48.666666666666664" width="30" height="29.999999999999993"/>
+                                                    <rect key="frame" x="340" y="55.666666666666657" width="28" height="28"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="AUZ-Gx-asF"/>
-                                                        <constraint firstAttribute="width" constant="30" id="Yrs-ij-uCU"/>
+                                                        <constraint firstAttribute="height" constant="28" id="AUZ-Gx-asF"/>
+                                                        <constraint firstAttribute="width" constant="28" id="Yrs-ij-uCU"/>
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I2N-7e-iNh" customClass="TableViewButton">
-                                                    <rect key="frame" x="323.33333333333331" y="49" width="30" height="29"/>
+                                                    <rect key="frame" x="333.33333333333331" y="49.666666666666657" width="40" height="40"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="ByE-gB-3Vn"/>
+                                                        <constraint firstAttribute="height" constant="40" id="k72-Sk-yV4"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3985,13 +3993,13 @@
         <image name="AlertActive" width="24" height="22"/>
         <image name="AlertGray" width="24" height="22"/>
         <image name="Back" width="12" height="19"/>
-        <image name="Comment" width="20" height="20"/>
+        <image name="Comment" width="28" height="25"/>
         <image name="Delete" width="15" height="21"/>
         <image name="Edit" width="18" height="20"/>
-        <image name="File" width="25" height="18"/>
+        <image name="File" width="29" height="35"/>
         <image name="HomeActive" width="24" height="24"/>
         <image name="HomeGray" width="24" height="24"/>
-        <image name="Info" width="20" height="20"/>
+        <image name="Info" width="28" height="28"/>
         <image name="LaunchImage-1" width="66" height="66"/>
         <image name="ListActive" width="24" height="19"/>
         <image name="ListGray" width="24" height="19"/>

@@ -206,7 +206,7 @@
     
     lineView.backgroundColor = [UIColor appOrangeColor];
     
-    commentTextView = [[UITextView alloc] initWithFrame:CGRectMake(insideView.frame.size.width*0.07, lineView.frame.origin.y + lineView.frame.size.height + 20, insideView.frame.size.width*0.86, 70)];
+    commentTextView = [[UITextView alloc] initWithFrame:CGRectMake(insideView.frame.size.width*0.07, lineView.frame.origin.y + lineView.frame.size.height + 20, insideView.frame.size.width*0.86, 110)];
     
     //UIView* paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 30)];
     
@@ -218,7 +218,9 @@
     
     commentTextView.delegate = self;
     
-    TableViewButton* submitButton = [[TableViewButton alloc] initWithFrame:CGRectMake(insideView.frame.size.width/2 - 50, commentTextView.frame.origin.y + commentTextView.frame.size.height + 20, 100, 40)];
+    TableViewButton* submitButton = [[TableViewButton alloc] initWithFrame:CGRectMake(commentTextView.frame.origin.x+commentTextView.frame.size.width*0.05, commentTextView.frame.origin.y + commentTextView.frame.size.height + 20, commentTextView.frame.size.width*0.9, 35)];
+    
+    submitButton.layer.cornerRadius = 4.0;
     
     submitButton.indexPathRow = sender.indexPathRow;
     
@@ -278,17 +280,17 @@
     //    overLayView = [[UIView alloc] initWithFrame:CGRectMake(sender.frame.origin.x, sender.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height)];
     [self.navigationController.navigationBar setHidden:true];
 //
-//    overLayView = [[UIView alloc] initWithFrame:self.view.frame];
+    overLayView = [[UIView alloc] initWithFrame:self.view.frame];
+
+    overLayView.tag = 222;
+
+    overLayView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
 //
-//    overLayView.tag = 222;
+    UITapGestureRecognizer* tapToDismissNotif = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(crossButtonTapped:)];
+
+    [self.view addGestureRecognizer:tapToDismissNotif];
 //
-//    overLayView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:1.0];
-////
-//    UITapGestureRecognizer* tapToDismissNotif = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
-//
-//    [self.view addGestureRecognizer:tapToDismissNotif];
-//
-//    tapToDismissNotif.delegate = self;
+    tapToDismissNotif.delegate = self;
     
     //    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, -100, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73)];
     //
@@ -299,7 +301,7 @@
     
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
     
-    //    self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
+     self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.05, -self.view.frame.size.height, self.view.frame.size.width*0.9, self.view.frame.size.height*0.73);
     
     scrollView.delegate = self;
     
@@ -316,17 +318,19 @@
     
     insideView.layer.cornerRadius = 4.0;
     
-    UILabel* referenceLabel = [[UILabel alloc] initWithFrame:CGRectMake(insideView.frame.size.width/2 - 60, 30, 120, 35)];
+    UILabel* referenceLabel = [[UILabel alloc] initWithFrame:CGRectMake(insideView.frame.size.width/2 - 60, 12, 120, 40)];
     
     referenceLabel.textAlignment = NSTextAlignmentCenter;
     
     referenceLabel.text = @"Details";
     
+    referenceLabel.font = [UIFont systemFontOfSize:18];
+    
     referenceLabel.textColor = [UIColor appOrangeColor];
     
-    UIImageView* crossImageView = [[UIImageView alloc] initWithFrame:CGRectMake(insideView.frame.size.width - 50, 30, 30, 30)];
+    UIImageView* crossImageView = [[UIImageView alloc] initWithFrame:CGRectMake(insideView.frame.size.width - 40, 20, 20, 20)];
     
-    crossImageView.image = [UIImage imageNamed:@"Info"];
+    crossImageView.image = [UIImage imageNamed:@"Cross"];
     
     UIButton* crossButton = [[UIButton alloc] initWithFrame:CGRectMake(insideView.frame.size.width - 60, 0, 60, 60)];
     
@@ -338,10 +342,10 @@
     //UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(0, referenceLabel.frame.origin.y + referenceLabel.frame.size.height + 10, insideView.frame.size.width, 2)];
     
     //lineView.backgroundColor = [UIColor appOrangeColor];
-    float titleLabelXPosition = insideView.frame.size.width*0.1;
-    float titleValueLabelXPosition = insideView.frame.size.width*0.5;
+    float titleLabelXPosition = insideView.frame.size.width*0.05;
+    float titleValueLabelXPosition = insideView.frame.size.width*0.49;
 
-    UILabel* audioIdTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, referenceLabel.frame.origin.y + referenceLabel.frame.size.height , insideView.frame.size.width*0.4, 30)];
+    UILabel* audioIdTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, referenceLabel.frame.origin.y + referenceLabel.frame.size.height+7 , insideView.frame.size.width*0.4, 30)];
     
     audioIdTitleLabel.textColor = [UIColor colorWithRed:148/255.0 green:148/255.0 blue:148/255.0 alpha:1.0];
     
@@ -349,7 +353,7 @@
     
     audioIdTitleLabel.text = @"Audio ID";
     
-    UILabel* audioIdLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, referenceLabel.frame.origin.y + referenceLabel.frame.size.height, insideView.frame.size.width*0.5, 30)];
+    UILabel* audioIdLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, referenceLabel.frame.origin.y + referenceLabel.frame.size.height+7, insideView.frame.size.width*0.5, 30)];
 
     audioIdLabel.font = [UIFont systemFontOfSize:14];
 
@@ -440,15 +444,16 @@
     
     [scrollView addSubview:insideView];
     
-   // [overLayView addSubview:scrollView];
+    [overLayView addSubview:scrollView];
     
-    [self.view addSubview:scrollView];
+    [self.view addSubview:overLayView];
     
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.9 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
         
         //            self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
-        
-        self.scrollView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+        self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.05, self.view.frame.size.height*0.09, self.view.frame.size.width*0.9, self.view.frame.size.height*0.73);
+
+        //self.scrollView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         
     } completion:^(BOOL finished) {
         
@@ -490,7 +495,7 @@
     else
     {
         AudioDetails* audioDetails = [self.completedFilesForTableViewArray objectAtIndex:sender.indexPathRow];
-        [[APIManager sharedManager] sendComment:commentTextView.text dictationId:[NSString stringWithFormat:@"%d",9015099]];
+        [[APIManager sharedManager] sendComment:commentTextView.text dictationId:[NSString stringWithFormat:@"%d",audioDetails.mobiledictationidval]];
         [commentTextView resignFirstResponder];
     }
     
@@ -518,12 +523,13 @@
         //            self.scrollView.frame = CGRectMake(-self.view.frame.size.width, -self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
 
         self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, -self.view.frame.size.height, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
-        [self.scrollView removeFromSuperview];
+        //[self.scrollView removeFromSuperview];
+        overLayView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
 
         
     } completion:^(BOOL finished) {
         
-       // [[self.view viewWithTag:222] removeFromSuperview];
+        [[self.view viewWithTag:222] removeFromSuperview];
         
     }];
     
@@ -635,14 +641,14 @@
 {
     
 }
--(void)commentButtonClicked:(TableViewButton*)sender
-{
-    
-}
--(void)detailsButtonClicked:(UIButton*)sender
-{
-    
-}
+//-(void)commentButtonClicked:(TableViewButton*)sender
+//{
+//
+//}
+//-(void)detailsButtonClicked:(UIButton*)sender
+//{
+//
+//}
 -(void)downloadButtonClicked:(TableViewButton*)sender
 {
     int indexPathRow = sender.indexPathRow;
