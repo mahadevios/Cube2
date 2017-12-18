@@ -80,11 +80,59 @@
     
     [self.tabBarController.tabBar setHidden:YES];
 
+    
+
+    
+
     //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"ResumeTrans"] style:UIBarButtonItemStylePlain target:self action:@selector(resetTranscription)];
     
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self addTranscriptionStatusAnimationView];
     
+    self.timerSeconds = 60;
+    
+   // [self addCricleViews];
 }
 
+//-(void)addCricleViews
+//{
+//    float circlViewSizeAndWidth = self.view.frame.size.width*.18;
+//    float startAndEndSpace = self.view.frame.size.width*.16;
+//    float middleSpace = self.view.frame.size.width*0.07;
+//
+//    UIButton* startTranscriptionButton = [[UIButton alloc] initWithFrame:CGRectMake(startAndEndSpace, self.navigationController.navigationBar.frame.size.height+self.view.frame.size.width*0.05+10, circlViewSizeAndWidth, circlViewSizeAndWidth)];
+//
+//    UIButton* stopTranscriptionButton = [[UIButton alloc] initWithFrame:CGRectMake(startTranscriptionButton.frame.origin.x+startTranscriptionButton.frame.size.width+middleSpace, startTranscriptionButton.frame.origin.y, circlViewSizeAndWidth, circlViewSizeAndWidth)];
+//
+//    UIButton* createDocFileButton = [[UIButton alloc] initWithFrame:CGRectMake(stopTranscriptionButton.frame.origin.x+stopTranscriptionButton.frame.size.width+middleSpace, startTranscriptionButton.frame.origin.y, circlViewSizeAndWidth, circlViewSizeAndWidth)];
+//
+//    startTranscriptionButton.layer.cornerRadius = startTranscriptionButton.frame.size.width/2.0;
+//    stopTranscriptionButton.layer.cornerRadius = startTranscriptionButton.frame.size.width/2.0;
+//    createDocFileButton.layer.cornerRadius = startTranscriptionButton.frame.size.width/2.0;
+//
+//    startTranscriptionButton.layer.borderColor = [UIColor appOrangeColor].CGColor;
+//    stopTranscriptionButton.layer.borderColor = [UIColor appOrangeColor].CGColor;
+//    createDocFileButton.layer.borderColor = [UIColor appOrangeColor].CGColor;
+//
+//    startTranscriptionButton.layer.borderWidth = 3.0;
+//    stopTranscriptionButton.layer.borderWidth = 3.0;
+//    createDocFileButton.layer.borderWidth = 3.0;
+//
+//    [self.view addSubview:startTranscriptionButton];
+//    [self.view addSubview:stopTranscriptionButton];
+//    [self.view addSubview:createDocFileButton];
+//
+//    [startTranscriptionButton setBackgroundColor:[UIColor clearColor]];
+//    [stopTranscriptionButton setBackgroundColor:[UIColor clearColor]];
+//    [createDocFileButton setBackgroundColor:[UIColor clearColor]];
+//
+//    [startTranscriptionButton setImage:[UIImage imageNamed:@"RecordTab"] forState:UIControlStateNormal];
+//    [stopTranscriptionButton setImage:[UIImage imageNamed:@"Stop"] forState:UIControlStateNormal];
+//    [createDocFileButton setImage:[UIImage imageNamed:@"File"] forState:UIControlStateNormal];
+//
+//}
 -(void)demoTimer
 {
     demoTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(checkState) userInfo:nil repeats:YES];
@@ -150,12 +198,7 @@
     }
     
 }
--(void)viewWillAppear:(BOOL)animated
-{
-    [self addTranscriptionStatusAnimationView];
-    
-    self.timerSeconds = 60;
-}
+
 
 -(void)addTranscriptionStatusAnimationView
 {
