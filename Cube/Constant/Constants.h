@@ -97,6 +97,7 @@
 #define SELECTED_DEPARTMENT_NAME               @"Selected Department"
 #define SELECTED_DEPARTMENT_NAME_COPY          @"Selected Department Copy"
 #define AUDIO_FILES_FOLDER_NAME                @"Audio files"
+#define DOC_VRS_FILES_FOLDER_NAME              @"VRSDOC files"
 #define DATE_TIME_FORMAT                       @"MM-dd-yyyy HH:mm:ss"
 #define RESPONSE_CODE                          @"code"
 #define RESPONSE_PIN_VERIFY                    @"pinverify"
@@ -114,4 +115,16 @@ typedef enum
     DOWNLOADING,
     DOWNLOADED
 }DownloadingStatus;
+
+typedef enum
+{
+    NODELETE,
+    DELETED
+}DeleteStatus;
+
+typedef enum
+{
+    NOUPLOAD,
+    UPLOADED
+}UploadStatus;
 #endif /* Header_h */

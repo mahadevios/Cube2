@@ -125,7 +125,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 6;
     
 }
 
@@ -151,13 +151,18 @@
             noDictationLabel.text=[NSString stringWithFormat:@"%ld",[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count];
             break;
             
-        case 3:inCompleteDictationLabel.text=@"Doc Files";
+        case 3:inCompleteDictationLabel.text=@"Completed Doc Files";
             noDictationLabel.text=[NSString stringWithFormat:@"%d",0];
             break;
             
         case 4:inCompleteDictationLabel.text=@"Speech Transcription";
             noDictationLabel.text=[NSString stringWithFormat:@"%d",0];
             break;
+        
+        case 5:inCompleteDictationLabel.text=@"VRS Doc Files";
+            noDictationLabel.text=[NSString stringWithFormat:@"%d",0];
+            break;
+            
         default:
             break;
     }
@@ -187,6 +192,11 @@
         case 4:
             [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SpeechRecognitionViewController"] animated:YES];
             break;
+        
+        case 5:
+            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectFileViewController"] animated:YES];
+            break;
+            
         default:
             break;
     }

@@ -10,6 +10,7 @@ dependencies: \
   /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/Libraries/SBJson/SBJson4.h \
   /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/API\ Manager/DownloadMetaDataJob.h \
   /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/API\ Manager/APIManager.h \
+  /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/Models/DocFileDetails.h \
   /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/Models/AudioDetails.h \
   /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/Models/DepartMent.h \
   /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/Database/Database.h \

@@ -7,40 +7,43 @@
 //
 
 #import "SelectFileViewController.h"
-
 @interface SelectFileViewController ()
 
 @end
 
 @implementation SelectFileViewController
 
+@synthesize VRSDocFilesArray;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    APIManager* app = [APIManager sharedManager];
+    //APIManager* app = [APIManager sharedManager];
     
-    app.awaitingFileTransferNamesArray= [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"];
+    VRSDocFilesArray = [NSMutableArray new];
+    
+    VRSDocFilesArray = [[Database shareddatabase] getVRSDocFiles];
 
+    
     // Do any additional setup after loading the view.
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [APIManager sharedManager].awaitingFileTransferNamesArray.count;
+    return VRSDocFilesArray.count;
     
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    NSDictionary* awaitingFileTransferDict;
 
-    awaitingFileTransferDict = [[APIManager sharedManager].awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
+    DocFileDetails* docFileDetails = [VRSDocFilesArray objectAtIndex:indexPath.row];
     
     UILabel* fileNameLabel = [cell viewWithTag:101];
     
-    fileNameLabel.text = [awaitingFileTransferDict valueForKey:@"RecordItemName"];
+    fileNameLabel.text = docFileDetails.docFileName;
     
     return cell;
     
@@ -52,11 +55,38 @@
     
     UILabel* fileNameLabel = [cell viewWithTag:101];
     
-    [self.delegate setFileName:fileNameLabel.text];
+   // [self.delegate setFileName:fileNameLabel.text];
+    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",DOC_VRS_FILES_FOLDER_NAME,fileNameLabel.text]];
     
-    [self dismissViewControllerAnimated:true completion:nil];
+    NSString* newDestPath = [destpath stringByAppendingFormat:@".txt"];
+    
+    UIDocumentInteractionController* interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:newDestPath]];
+    
+    interactionController.delegate = self;
+    
+    [interactionController presentPreviewAnimated:true];
+    //[interactionController presentOpenInMenuFromRect:self.view.frame inView:self.view animated:true];
+    //[self dismissViewControllerAnimated:true completion:nil];
 
 }
+
+-(CGRect)documentInteractionControllerRectForPreview:(UIDocumentInteractionController *)controller
+{
+    return self.view.frame;
+    
+}
+-(UIView *)documentInteractionControllerViewForPreview:(UIDocumentInteractionController *)controller
+{
+    return self.view;
+    
+}
+
+-(UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller
+{
+    
+    return self;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

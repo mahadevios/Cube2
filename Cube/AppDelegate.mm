@@ -63,13 +63,31 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [AppPreferences sharedAppPreferences].filesInUploadingQueueArray = [[NSMutableArray alloc] init];
 
 
+    
+    [self checkAndCopyDatabase];
+    
+    NSString* currentVersion = [[NSUserDefaults standardUserDefaults] valueForKey:CURRENT_VESRION];
+    
     NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
     
-    NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+    NSString* bundleVersion = infoDictionary[@"CFBundleShortVersionString"];
     
-    [[NSUserDefaults standardUserDefaults] setValue:currentVersion forKey:CURRENT_VESRION];
-    
-   [self checkAndCopyDatabase];
+    if (currentVersion == nil)
+    {
+        // version change first time execution code
+        [[Database shareddatabase] createDocFileTable];
+        
+        [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
+    }
+    else
+        if (currentVersion != bundleVersion)
+        {
+            // version change first time execution code
+            [[Database shareddatabase] createDocFileTable];
+            
+            [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
+            
+        }
     
     
   //  [[NSUserDefaults standardUserDefaults] setValue:timeLabel.text forKey:LOW_STORAGE_THRESHOLD];

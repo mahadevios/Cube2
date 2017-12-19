@@ -15,7 +15,7 @@
 @end
 
 @implementation SpeechRecognitionViewController
-@synthesize audioEngine,request,recognitionTask,speechRecognizer,isStartedNewRequest, transcriptionStatusView,timerSeconds,startTranscriptionButton,stopTranscriptionButton,timerLabel,transcriptionStatusLabel,transcriptionTextLabel,audioFileName;
+@synthesize audioEngine,request,recognitionTask,speechRecognizer,isStartedNewRequest, transcriptionStatusView,timerSeconds,startTranscriptionButton,stopTranscriptionButton,timerLabel,transcriptionStatusLabel,transcriptionTextLabel,audioFileName,transFIleImageVIew,transStopImageView,transRecordImageView,startLabel,stopLabel,docFileLabel,docFileButton;
 
 - (void)viewDidLoad
 {
@@ -84,15 +84,22 @@
 
     
 
-    //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"ResumeTrans"] style:UIBarButtonItemStylePlain target:self action:@selector(resetTranscription)];
+    //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"TransReset"] style:UIBarButtonItemStylePlain target:self action:@selector(resetTranscription)];
     
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [self addTranscriptionStatusAnimationView];
     
-    self.timerSeconds = 60;
+    self.timerSeconds = 59;
     
+    docFileLabel.alpha = 0.5;
+    
+    transFIleImageVIew.alpha = 0.5;
+    
+    [docFileButton setEnabled:false];
+    
+    docFileButton.alpha = 0.5;
    // [self addCricleViews];
 }
 
@@ -162,7 +169,7 @@
     
     transcriptionTextLabel.text = @"";
     
-    timerSeconds = 60;
+    timerSeconds = 59;
     
     if (self.capture != nil && [self.capture isRunning])
     {
@@ -193,7 +200,7 @@
     }
     else
     {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"ResumeTrans"] style:UIBarButtonItemStylePlain target:self action:@selector(resetTranscription)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"TransReset"] style:UIBarButtonItemStylePlain target:self action:@selector(resetTranscription)];
 
     }
     
@@ -222,7 +229,7 @@
     
     timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width/2-30, 30, 60, 15)];
     
-    timerLabel.text = @"00:60";
+    timerLabel.text = @"00:59";
     
     timerLabel.font = [UIFont systemFontOfSize:15];
 
@@ -255,7 +262,7 @@
         
     } completion:^(BOOL finished) {
         
-        timerLabel.text = @"00:60";
+        timerLabel.text = @"00:59";
     }];
 }
 - (IBAction)startLiveAudioTranscription:(UIButton*)sender
@@ -267,11 +274,25 @@
         {
             self.stopTranscriptionButton.hidden = false;
         
+            [newRequestTimer invalidate];
+            
+            transRecordImageView.alpha = 0.5;
+            
+            startLabel.alpha = 0.5;  //enable color
+
             if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Resume"])
             {
                 isStartedNewRequest = true; // set true for resume and using dis append text in delegate
                 
-                timerSeconds = 60;  // reset after resume
+                timerSeconds = 59;  // reset after resume
+                
+                [docFileButton setEnabled:false];
+                
+                docFileButton.alpha = 0.5;
+                
+                transFIleImageVIew.alpha = 0.5;
+                
+                docFileLabel.alpha = 0.5;
 
             }
 
@@ -288,7 +309,7 @@
         }
         else
         {
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }
     else
@@ -326,7 +347,7 @@
     
     [self hideRightBarButton:false];
     
-    timerSeconds = 60;
+    timerSeconds = 59;
     
     
 
@@ -338,8 +359,24 @@
     
     startTranscriptionButton.alpha = 1.0;
     
+    transRecordImageView.alpha = 1.0;
+    
+    startLabel.alpha = 1.0;
+    
+    [docFileButton setEnabled:true];
+    
+    docFileButton.alpha = 1.0;
+
+    docFileLabel.alpha = 1.0;
+    
+    transFIleImageVIew.alpha = 1.0;
+    
     [startTranscriptionButton setTitle:@"Resume" forState:UIControlStateNormal];
 
+    transRecordImageView.image = [UIImage imageNamed:@"TransResume"];
+    
+    startLabel.text = @"Resume";
+    
     if (self.capture != nil && [self.capture isRunning])
     {
         [self.capture stopRunning];
@@ -352,7 +389,7 @@
     
     //[recognitionTask cancel];
     
-    [newRequestTimer invalidate];
+    //[newRequestTimer invalidate];
     
     //UIView* keyWindow = [UIApplication sharedApplication].keyWindow;
 
@@ -679,17 +716,37 @@
                    {
                        if (timerSeconds == 0)
                        {
-                           [newRequestTimer invalidate];
+                           //[newRequestTimer invalidate];
                            
                           // [self startTranscriptionStatusViewAnimationToDown:false];
 
+                           if ([recognitionTask isCancelled])
+                           {
+                               
+                           }
                            [self subStopLiveAudioTranscription];
                            
-                           [startTranscriptionButton setEnabled:true];
+                           [self.startTranscriptionButton setEnabled:true];
                            
                            startTranscriptionButton.alpha = 1.0;
+                           
+                           transRecordImageView.alpha = 1.0;
+                           
+                           startLabel.alpha = 1.0;
+                           
+                           [docFileButton setEnabled:true];
+                           
+                           docFileButton.alpha = 1.0;
+                           
+                           docFileLabel.alpha = 1.0;
+                           
+                           transFIleImageVIew.alpha = 1.0;
 
                            [startTranscriptionButton setTitle:@"Resume" forState:UIControlStateNormal];
+                           
+                           transRecordImageView.image = [UIImage imageNamed:@"TransResume"];
+                           
+                           startLabel.text = @"Resume";
                            
                            transcriptionStatusLabel.text = @"Press Resume to continue";
                            
@@ -917,7 +974,7 @@
     NSString* filePath = [documentsDirectory stringByAppendingPathComponent:fileName];
     
     NSURL* url = [NSURL fileURLWithPath:filePath];
-    AVAudioFile* file = [[AVAudioFile alloc] init];
+    //AVAudioFile* file = [[AVAudioFile alloc] init];
     
     
     return url;
@@ -937,5 +994,95 @@
  // Pass the selected object to the new view controller.
  }
  */
+- (IBAction)createDocFileButtonClicked:(id)sender
+{
+    long todaysSerialNumberCount;
+    NSDateFormatter* dateFormatter = [NSDateFormatter new];
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    NSString* todaysDate = [dateFormatter stringFromDate:[NSDate new]];
+    
+    NSString* storedTodaysDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"TodaysDate"];
+    
+    
+    if ([todaysDate isEqualToString:storedTodaysDate])
+    {
+        todaysSerialNumberCount = [[[NSUserDefaults standardUserDefaults] valueForKey:@"todaysDocSerialNumberCount"] longLongValue];
+        
+        if (todaysSerialNumberCount == 0)
+        {
+            todaysSerialNumberCount = 0;
+        }
+        todaysSerialNumberCount++;
+        
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:@"TodaysDate"];
+        [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:@"todaysDocSerialNumberCount"];
+        NSString* countString=[[NSUserDefaults standardUserDefaults] valueForKey:@"todaysDocSerialNumberCount"];
+        todaysSerialNumberCount = [countString longLongValue];
+        
+        todaysSerialNumberCount++;
+        
+    }
+    
+    todaysDate=[todaysDate stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    
+    NSString* fileNamePrefix;
+    
+    fileNamePrefix=[[NSUserDefaults standardUserDefaults] valueForKey:@"FileNamePrefix"];
+    //fileNamePrefix = [[NSUserDefaults standardUserDefaults] valueForKey:@"fileNamePrefix"];
+    
+    NSString* docFileName=[NSString stringWithFormat:@"%@%@-%02ldVRS",fileNamePrefix,todaysDate,todaysSerialNumberCount];
+    
+    BOOL isWritten = [self checkAndCreateDocFile:docFileName];
+    DocFileDetails* docFileDetails = [DocFileDetails new];
+    
+    docFileDetails.docFileName = docFileName;
+    
+    docFileDetails.audioFileName = docFileName;
+
+    docFileDetails.uploadStatus = NOUPLOAD;
+    
+    docFileDetails.deleteStatus = NODELETE;
+    
+    docFileDetails.createdDate = [[APIManager sharedManager] getDateAndTimeString];
+    
+    docFileDetails.uploadDate = @"";
+    
+    [[Database shareddatabase] addDocFileInDB:docFileDetails];
+}
+
+-(BOOL)checkAndCreateDocFile:(NSString*)docFileName
+{
+    NSError* error;
+    
+    NSString* folderPath=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:DOC_VRS_FILES_FOLDER_NAME]];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
+        
+        [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+    
+    
+    
+//    NSString* homeDirectoryFileName = [sharedAudioFilePathString lastPathComponent];//store on same name as shared file name
+//
+//    homeDirectoryFileName=[homeDirectoryFileName stringByDeletingPathExtension];
+    NSString* docFilePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",DOC_VRS_FILES_FOLDER_NAME,docFileName]];
+    
+    docFilePath = [docFilePath stringByAppendingFormat:@".txt"];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:docFilePath])
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:docFilePath error:nil];
+    }
+    
+    BOOL isWritten1 = [[self.transcriptionTextLabel.text dataUsingEncoding:NSUTF8StringEncoding] writeToFile:docFilePath atomically:true];
+    //BOOL isWritten = [self.transcriptionTextLabel.text writeToFile:docFilePath atomically:true encoding:NSUTF8StringEncoding error:&error];
+    
+    return isWritten1;
+}
 @end
 

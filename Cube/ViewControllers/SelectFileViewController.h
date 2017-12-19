@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "CommonDelegate.h"
 
-@interface SelectFileViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface SelectFileViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIDocumentInteractionControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(readwrite , assign) id<CommonDelegate>delegate;
+@property(nonatomic, strong)NSMutableArray* VRSDocFilesArray;
 - (IBAction)backButtonPressed:(id)sender;
 
 @end

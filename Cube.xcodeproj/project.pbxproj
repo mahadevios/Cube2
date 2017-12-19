@@ -49,6 +49,7 @@
 		8488B7BD1FC6EA00006FE0FA /* UIColor+ApplicationColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7BC1FC6E9FF006FE0FA /* UIColor+ApplicationColors.m */; };
 		848B31041FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B31031FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m */; };
 		848B31071FC8204900CE3AC8 /* sample1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 848B31061FC8204900CE3AC8 /* sample1.wav */; };
+		849094AF1FE92B6500B00C0B /* DocFileDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 849094AE1FE92B6500B00C0B /* DocFileDetails.m */; };
 		849A20791E080F000004DDD2 /* BrowseMusicViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 849A20781E080F000004DDD2 /* BrowseMusicViewController.mm */; };
 		849F02671D75328000E74723 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 849F02661D75328000E74723 /* User.m */; };
 		849F02751D754B7400E74723 /* Cube_DB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 849F02741D754B7400E74723 /* Cube_DB.sqlite */; };
@@ -200,6 +201,8 @@
 		848B31031FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpeechRecognitionViewController.m; sourceTree = "<group>"; };
 		848B31051FC7ECF700CE3AC8 /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = System/Library/Frameworks/Speech.framework; sourceTree = SDKROOT; };
 		848B31061FC8204900CE3AC8 /* sample1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sample1.wav; sourceTree = "<group>"; };
+		849094AD1FE92B6500B00C0B /* DocFileDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DocFileDetails.h; sourceTree = "<group>"; };
+		849094AE1FE92B6500B00C0B /* DocFileDetails.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DocFileDetails.m; sourceTree = "<group>"; };
 		849A20771E080F000004DDD2 /* BrowseMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseMusicViewController.h; sourceTree = "<group>"; };
 		849A20781E080F000004DDD2 /* BrowseMusicViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BrowseMusicViewController.mm; sourceTree = "<group>"; };
 		849A207A1E0811F40004DDD2 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -577,6 +580,8 @@
 			children = (
 				844C4A771D4B736700CF3DB4 /* SwitchCreation.h */,
 				844C4A781D4B736700CF3DB4 /* SwitchCreation.m */,
+				849094AD1FE92B6500B00C0B /* DocFileDetails.h */,
+				849094AE1FE92B6500B00C0B /* DocFileDetails.m */,
 				846DE6901D730CC20004C886 /* AudioDetails.h */,
 				846DE6911D730CC20004C886 /* AudioDetails.m */,
 				84CC5F741D74351900D1E982 /* DepartMent.h */,
@@ -852,6 +857,7 @@
 				847D95B41D5F157C00145C32 /* Reachability.m in Sources */,
 				847222431D47368A00C00F20 /* main.m in Sources */,
 				84FCCFAE1D48CED300E3D7AE /* AlertViewController.m in Sources */,
+				849094AF1FE92B6500B00C0B /* DocFileDetails.m in Sources */,
 				840AC7561D8280F200EF6AF7 /* CAXException.mm in Sources */,
 				8430D3DD1D4A1A7D005FCA33 /* TransferListViewController.m in Sources */,
 				849F02671D75328000E74723 /* User.m in Sources */,

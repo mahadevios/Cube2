@@ -33,11 +33,21 @@
 
 - (IBAction)startLiveAudioTranscription:(id)sender;
 - (IBAction)stopLiveAudioTranscription:(id)sender;
+- (IBAction)createDocFileButtonClicked:(id)sender;
+
 - (IBAction)segmentChanged:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *startTranscriptionButton;
 @property (weak, nonatomic) IBOutlet UIButton *stopTranscriptionButton;
+@property (weak, nonatomic) IBOutlet UIButton *docFileButton;
+
 @property (weak, nonatomic) IBOutlet UILabel *fileNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *transcriptionTextLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollVIew;
+@property (weak, nonatomic) IBOutlet UIImageView *transRecordImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *transStopImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *transFIleImageVIew;
+@property (weak, nonatomic) IBOutlet UILabel *startLabel;
+@property (weak, nonatomic) IBOutlet UILabel *stopLabel;
+@property (weak, nonatomic) IBOutlet UILabel *docFileLabel;
 
 @end
