@@ -113,4 +113,6 @@
 
 -(NSMutableArray*)getVRSDocFiles;
 
+-(void)deleteDocFileRecordFromDatabase:(NSString*)docFileName;
+
 @end

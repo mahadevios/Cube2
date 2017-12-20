@@ -13,7 +13,7 @@
 @end
 
 @implementation AlertViewController
-
+@synthesize VRSDocFilesArray;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -31,6 +31,8 @@
     self.navigationItem.title=@"Alert";
     app.incompleteFileTransferCount= [db getCountOfTransfersOfDicatationStatus:@"RecordingPause"];
     [[Database shareddatabase] getlistOfimportedFilesAudioDetailsArray:5];
+
+    VRSDocFilesArray = [[Database shareddatabase] getVRSDocFiles];
 
     [self.tableView reloadData];
     
@@ -152,15 +154,15 @@
             break;
             
         case 3:inCompleteDictationLabel.text=@"Completed Doc Files";
-            noDictationLabel.text=[NSString stringWithFormat:@"%d",0];
+            noDictationLabel.text = @"";
             break;
             
-        case 4:inCompleteDictationLabel.text=@"Speech Transcription";
-            noDictationLabel.text=[NSString stringWithFormat:@"%d",0];
+        case 4:inCompleteDictationLabel.text = @"Speech Transcription";
+            noDictationLabel.text = @"";
             break;
         
         case 5:inCompleteDictationLabel.text=@"VRS Doc Files";
-            noDictationLabel.text=[NSString stringWithFormat:@"%d",0];
+            noDictationLabel.text=[NSString stringWithFormat:@"%d",VRSDocFilesArray.count];
             break;
             
         default:

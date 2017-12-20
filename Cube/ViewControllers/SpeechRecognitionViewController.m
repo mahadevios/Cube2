@@ -15,7 +15,7 @@
 @end
 
 @implementation SpeechRecognitionViewController
-@synthesize audioEngine,request,recognitionTask,speechRecognizer,isStartedNewRequest, transcriptionStatusView,timerSeconds,startTranscriptionButton,stopTranscriptionButton,timerLabel,transcriptionStatusLabel,transcriptionTextLabel,audioFileName,transFIleImageVIew,transStopImageView,transRecordImageView,startLabel,stopLabel,docFileLabel,docFileButton;
+@synthesize audioEngine,request,recognitionTask,speechRecognizer,isStartedNewRequest, transcriptionStatusView,timerSeconds,startTranscriptionButton,stopTranscriptionButton,timerLabel,transcriptionStatusLabel,transcriptionTextLabel,audioFileName,transFIleImageVIew,transStopImageView,transRecordImageView,startLabel,stopLabel,docFileLabel,docFileButton,alertController;
 
 - (void)viewDidLoad
 {
@@ -80,8 +80,22 @@
     
     [self.tabBarController.tabBar setHidden:YES];
 
-    
-
+//    NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:@"asdf.m4a",@"sample9.m4a",@"sample45.m4a",@"sampleAudio.wav",@"sampleAudio1.wav",@"sampleAudio2.m4a",@"sampleAudio9.m4a",@"sampleAudio99.wav",@"take.m4a",@"takeone.wav",@"takethis.wav",@"takethis1.wav",@"top.wav",@"top1.wav", nil];
+//    
+//    for (int i=0; i<arr.count; i++)
+//    {
+//        NSString* docFilePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@",[arr objectAtIndex:i]]];
+//        
+//        
+//        if ([[NSFileManager defaultManager] fileExistsAtPath:docFilePath])
+//        {
+//           BOOL removed =  [[NSFileManager defaultManager] removeItemAtPath:docFilePath error:nil];
+//            
+//            self.navigationItem.title = @"Speech Transcription";
+//
+//        }
+//    }
+   
     
 
     //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"TransReset"] style:UIBarButtonItemStylePlain target:self action:@selector(resetTranscription)];
@@ -93,16 +107,80 @@
     
     self.timerSeconds = 59;
     
+    [self disableStopAndDocOption];
+}
+
+-(void)disableStopAndDocOption
+{
     docFileLabel.alpha = 0.5;
     
     transFIleImageVIew.alpha = 0.5;
     
     [docFileButton setEnabled:false];
     
-    docFileButton.alpha = 0.5;
-   // [self addCricleViews];
+    
+    stopLabel.alpha = 0.5;
+    
+    transStopImageView.alpha = 0.5;
+    
+    [stopTranscriptionButton setEnabled:false];
 }
 
+-(void)disableStartAndDocOption:(BOOL)disable
+{
+    if (disable == true)
+    {
+        transRecordImageView.alpha = 0.5;
+        
+        startLabel.alpha = 0.5;  //enable color
+        
+        [startTranscriptionButton setEnabled:false];
+        
+        
+        [docFileButton setEnabled:false];
+        
+        transFIleImageVIew.alpha = 0.5;
+        
+        docFileLabel.alpha = 0.5;
+    }
+    else
+    {
+        transRecordImageView.alpha = 1.0;
+        
+        startLabel.alpha = 1.0;  //enable color
+        
+        [startTranscriptionButton setEnabled:true];
+        
+        
+        [docFileButton setEnabled:true];
+        
+        transFIleImageVIew.alpha = 1.0;
+        
+        docFileLabel.alpha = 1.0;
+    }
+    
+}
+
+-(void)enableStopOption:(BOOL)enable
+{
+    if (enable == true)
+    {
+        [stopTranscriptionButton setEnabled:true];
+        
+        transStopImageView.alpha = 1.0;
+        
+        stopLabel.alpha = 1.0;
+    }
+    else
+    {
+        [stopTranscriptionButton setEnabled:false];
+        
+        transStopImageView.alpha = 0.5;
+        
+        stopLabel.alpha = 0.5;
+    }
+    
+}
 //-(void)addCricleViews
 //{
 //    float circlViewSizeAndWidth = self.view.frame.size.width*.18;
@@ -157,10 +235,16 @@
 
 -(void)resetTranscription
 {
+    [self disableStopAndDocOption];
+
     [self startTranscriptionStatusViewAnimationToDown:false]; // animate trans status to upperside
     
-    [startTranscriptionButton setTitle:@"Start Transcription" forState:UIControlStateNormal]; // chnage title
+    [startTranscriptionButton setTitle:@"Start Transcription" forState:UIControlStateNormal]; // chnage title dont remove this
 
+    transRecordImageView.image = [UIImage imageNamed:@"TransRecord"];
+    
+    startLabel.text = @"Start";
+    
     startTranscriptionButton.alpha = 1.0;
     
     [startTranscriptionButton setEnabled:true];
@@ -186,6 +270,8 @@
     
     transcriptionStatusLabel.text = @"Go ahead, I'm listening!";
     
+    timerLabel.text = @"00:59";
+
     [self.previousTranscriptedArray removeAllObjects]; // remove  prev. trans. text
     
     [self.previousTranscriptedArray addObject:@""];
@@ -272,36 +358,25 @@
     {
         if ([[AppPreferences sharedAppPreferences] isReachable])
         {
-            self.stopTranscriptionButton.hidden = false;
+            //self.stopTranscriptionButton.hidden = false;
         
             [newRequestTimer invalidate];
             
-            transRecordImageView.alpha = 0.5;
+            [self disableStartAndDocOption:true];
             
-            startLabel.alpha = 0.5;  //enable color
-
+            [self enableStopOption:true];
+            
             if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Resume"])
             {
                 isStartedNewRequest = true; // set true for resume and using dis append text in delegate
                 
                 timerSeconds = 59;  // reset after resume
-                
-                [docFileButton setEnabled:false];
-                
-                docFileButton.alpha = 0.5;
-                
-                transFIleImageVIew.alpha = 0.5;
-                
-                docFileLabel.alpha = 0.5;
 
             }
 
             
             [self authorizeAndTranscribe:sender];
             
-            [self.startTranscriptionButton setEnabled:false];
-            
-            startTranscriptionButton.alpha = 0.5;
             
             transcriptionStatusLabel.text = @"Go ahead, I'm listening";
             
@@ -355,21 +430,9 @@
 
 -(void)subStopLiveAudioTranscription
 {
-    [self.startTranscriptionButton setEnabled:true];
+    [self disableStartAndDocOption:false];
     
-    startTranscriptionButton.alpha = 1.0;
-    
-    transRecordImageView.alpha = 1.0;
-    
-    startLabel.alpha = 1.0;
-    
-    [docFileButton setEnabled:true];
-    
-    docFileButton.alpha = 1.0;
-
-    docFileLabel.alpha = 1.0;
-    
-    transFIleImageVIew.alpha = 1.0;
+    [self enableStopOption:false];
     
     [startTranscriptionButton setTitle:@"Resume" forState:UIControlStateNormal];
 
@@ -555,6 +618,8 @@
     [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject: self.transcriptionTextLabel.text];
     NSLog(@"3");
     NSLog(@"Finished sucessfully");
+    [self disableStartAndDocOption:false];
+
 }
 
 -(void)speechRecognitionTask:(SFSpeechRecognitionTask *)task didFinishRecognition:(SFSpeechRecognitionResult *)recognitionResult
@@ -714,33 +779,20 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^
                    {
+                      
                        if (timerSeconds == 0)
                        {
                            //[newRequestTimer invalidate];
                            
                           // [self startTranscriptionStatusViewAnimationToDown:false];
 
-                           if ([recognitionTask isCancelled])
-                           {
-                               
-                           }
+                           BOOL isFinishing = [recognitionTask isFinishing];
+
+                           [recognitionTask finish];
+                          
                            [self subStopLiveAudioTranscription];
                            
-                           [self.startTranscriptionButton setEnabled:true];
-                           
-                           startTranscriptionButton.alpha = 1.0;
-                           
-                           transRecordImageView.alpha = 1.0;
-                           
-                           startLabel.alpha = 1.0;
-                           
-                           [docFileButton setEnabled:true];
-                           
-                           docFileButton.alpha = 1.0;
-                           
-                           docFileLabel.alpha = 1.0;
-                           
-                           transFIleImageVIew.alpha = 1.0;
+//                           [self disableStartAndDocOption:false];
 
                            [startTranscriptionButton setTitle:@"Resume" forState:UIControlStateNormal];
                            
@@ -760,6 +812,7 @@
                        }
                        else
                        {
+                           
                            --timerSeconds;
                            
                            timerLabel.text = [NSString stringWithFormat:@"00:%02d",timerSeconds];
@@ -996,6 +1049,56 @@
  */
 - (IBAction)createDocFileButtonClicked:(id)sender
 {
+    if (transcriptionTextLabel.text.length < 1)
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"File Size" withMessage:@"File size is too small to save" withCancelText:@"Cancel" withOkText:@"Ok" withAlertTag:1000];
+    }
+    else
+    {
+        alertController = [UIAlertController alertControllerWithTitle:@"Create Doc File?"
+                                                              message:@"Are you sure to create doc file of below text?"
+                                                       preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* actionCreate = [UIAlertAction actionWithTitle:@"Create"
+                                            style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction * action)
+                    {
+                        dispatch_async(dispatch_get_main_queue(), ^
+                                       {
+                                           //NSLog(@"Reachable");
+                                           //[[AppPreferences sharedAppPreferences] showHudWithTitle:@"Creating Doc File" detailText:@"Please wait.."];
+                                          BOOL isWritten = [self createDocFile];
+                                           
+                                           if (isWritten == true)
+                                           {
+                                               [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Doc File Created" withMessage:@"Doc file crated successfully, check doc files in alert tab" withCancelText:@"Cancel" withOkText:@"Ok" withAlertTag:1000];
+
+                                               [self resetTranscription];
+                                           }
+                                           //[[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
+                                       });
+                    }]; //You can use a block here to handle a press on this button
+        
+        UIAlertAction* actionCancel = [UIAlertAction actionWithTitle:@"Cancel"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action)
+                                       {
+                                           
+                                       }];
+        
+        [alertController addAction:actionCreate];
+        
+        [alertController addAction:actionCancel];
+
+        [self presentViewController:alertController animated:YES completion:nil];
+    
+    }
+       
+    
+}
+
+-(BOOL)createDocFile
+{
     long todaysSerialNumberCount;
     NSDateFormatter* dateFormatter = [NSDateFormatter new];
     
@@ -1003,29 +1106,29 @@
     
     NSString* todaysDate = [dateFormatter stringFromDate:[NSDate new]];
     
-    NSString* storedTodaysDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"TodaysDate"];
+    NSString* storedTodaysDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"TodaysDateForVSR"];
     
     
     if ([todaysDate isEqualToString:storedTodaysDate])
     {
         todaysSerialNumberCount = [[[NSUserDefaults standardUserDefaults] valueForKey:@"todaysDocSerialNumberCount"] longLongValue];
         
-        if (todaysSerialNumberCount == 0)
-        {
-            todaysSerialNumberCount = 0;
-        }
         todaysSerialNumberCount++;
         
+        [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld",todaysSerialNumberCount] forKey:@"todaysDocSerialNumberCount"];
+
     }
     else
     {
-        [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:@"TodaysDate"];
+        [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:@"TodaysDateForVSR"];
         [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:@"todaysDocSerialNumberCount"];
         NSString* countString=[[NSUserDefaults standardUserDefaults] valueForKey:@"todaysDocSerialNumberCount"];
         todaysSerialNumberCount = [countString longLongValue];
         
         todaysSerialNumberCount++;
         
+        [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld",todaysSerialNumberCount] forKey:@"todaysDocSerialNumberCount"];
+
     }
     
     todaysDate=[todaysDate stringByReplacingOccurrencesOfString:@"-" withString:@""];
@@ -1038,23 +1141,29 @@
     NSString* docFileName=[NSString stringWithFormat:@"%@%@-%02ldVRS",fileNamePrefix,todaysDate,todaysSerialNumberCount];
     
     BOOL isWritten = [self checkAndCreateDocFile:docFileName];
-    DocFileDetails* docFileDetails = [DocFileDetails new];
     
-    docFileDetails.docFileName = docFileName;
+    if (isWritten == true)
+    {
+        DocFileDetails* docFileDetails = [DocFileDetails new];
+        
+        docFileDetails.docFileName = docFileName;
+        
+        docFileDetails.audioFileName = docFileName;
+        
+        docFileDetails.uploadStatus = NOUPLOAD;
+        
+        docFileDetails.deleteStatus = NODELETE;
+        
+        docFileDetails.createdDate = [[APIManager sharedManager] getDateAndTimeString];
+        
+        docFileDetails.uploadDate = @"";
+        
+        [[Database shareddatabase] addDocFileInDB:docFileDetails];
+    }
     
-    docFileDetails.audioFileName = docFileName;
+    return isWritten;
 
-    docFileDetails.uploadStatus = NOUPLOAD;
-    
-    docFileDetails.deleteStatus = NODELETE;
-    
-    docFileDetails.createdDate = [[APIManager sharedManager] getDateAndTimeString];
-    
-    docFileDetails.uploadDate = @"";
-    
-    [[Database shareddatabase] addDocFileInDB:docFileDetails];
 }
-
 -(BOOL)checkAndCreateDocFile:(NSString*)docFileName
 {
     NSError* error;

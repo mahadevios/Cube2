@@ -14,5 +14,7 @@
 @property(readwrite , assign) id<CommonDelegate>delegate;
 @property(nonatomic, strong)NSMutableArray* VRSDocFilesArray;
 - (IBAction)backButtonPressed:(id)sender;
+@property(nonatomic, strong)UIAlertController* alertController;
+
 
 @end

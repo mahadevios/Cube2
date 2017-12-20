@@ -30,6 +30,7 @@
 @property(nonatomic)BOOL isStartedNewRequest;
 @property(nonatomic)int timerSeconds;
 @property(nonatomic, strong)AVAudioFile* audioFileName;
+@property(nonatomic, strong)UIAlertController* alertController;
 
 - (IBAction)startLiveAudioTranscription:(id)sender;
 - (IBAction)stopLiveAudioTranscription:(id)sender;
