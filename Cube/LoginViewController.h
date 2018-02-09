@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "Constants.h"
+#import "APIManager.h"
+#import "AppPreferences.h"
+#import "Database.h"
+
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 
 {

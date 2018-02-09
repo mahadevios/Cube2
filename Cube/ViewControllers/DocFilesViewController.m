@@ -7,6 +7,10 @@
 //
 
 #import "DocFilesViewController.h"
+#import "Database.h"
+#import "APIManager.h"
+#import "AppPreferences.h"
+#import "Constants.h"
 
 @interface DocFilesViewController ()
 
@@ -48,7 +52,7 @@
     
     NSString* uploadedFilesDictationIdString = [uploadedFilesDictationIdArray componentsJoinedByString:@","];
     
-    uploadedFilesDictationIdString = [uploadedFilesDictationIdString stringByAppendingString:@",6987636"];
+    //uploadedFilesDictationIdString = [uploadedFilesDictationIdString stringByAppendingString:@",6987636"];
     
     [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
     
@@ -621,6 +625,12 @@
 
     fileNameLabel.text = audioDetails.fileName;
     
+    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",audioDetails.fileName]];
+    
+    NSString* newDestPath = [destpath stringByAppendingPathExtension:@"doc"];
+    
+    NSError* error;
+    NSString* content = [NSString stringWithContentsOfFile:newDestPath encoding:NSMacOSRomanStringEncoding error:&error];
 //    UILabel* inCompleteDictationLabel=[cell viewWithTag:101];
 //    UILabel* noDictationLabel=[cell viewWithTag:102];
     

@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -4088,6 +4089,114 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jlp-6d-X8q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7672" y="134"/>
+        </scene>
+        <!--Edit Docx View Controller-->
+        <scene sceneID="Ivi-uy-D8T">
+            <objects>
+                <viewController storyboardIdentifier="EditDocxViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VAV-aB-v0I" customClass="EditDocxViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9hf-17-4gY"/>
+                        <viewControllerLayoutGuide type="bottom" id="r4c-0z-DQg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ttv-nR-dpw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPZ-jc-Lty">
+                                <rect key="frame" x="41" y="28" width="42" height="30"/>
+                                <state key="normal" title="UnZip"/>
+                                <connections>
+                                    <action selector="unZipDoc:" destination="VAV-aB-v0I" eventType="touchUpInside" id="Wkr-OK-SMb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RVj-8X-n5F">
+                                <rect key="frame" x="140.33333333333334" y="28" width="30" height="30"/>
+                                <state key="normal" title="Zip"/>
+                                <connections>
+                                    <action selector="zipDoc:" destination="VAV-aB-v0I" eventType="touchUpInside" id="Otp-OC-QGX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bTc-at-hbI">
+                                <rect key="frame" x="223.66666666666663" y="28" width="70" height="30"/>
+                                <state key="normal" title="ParseXML"/>
+                                <connections>
+                                    <action selector="parseXMLFiles:" destination="VAV-aB-v0I" eventType="touchUpInside" id="sTk-wL-haQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F2i-UV-sPE">
+                                <rect key="frame" x="355.66666666666669" y="28" width="34" height="30"/>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveEditedFile:" destination="VAV-aB-v0I" eventType="touchUpInside" id="gFE-0U-LyB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vx0-KY-fwO">
+                                <rect key="frame" x="316" y="66" width="46" height="30"/>
+                                <state key="normal" title="View"/>
+                                <connections>
+                                    <action selector="viewNewlyCreatedDocx:" destination="VAV-aB-v0I" eventType="touchUpInside" id="wbs-fu-Zuk"/>
+                                </connections>
+                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pxM-ff-wVK">
+                                <rect key="frame" x="0.0" y="106" width="414" height="630"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Twp-aw-vGP">
+                                        <rect key="frame" x="0.0" y="1" width="414" height="128"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" text="hjkn" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eHa-kI-O7r">
+                                                <rect key="frame" x="10" y="10" width="372.66666666666669" height="32"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="32" id="txj-mu-yCd"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="eHa-kI-O7r" firstAttribute="top" secondItem="Twp-aw-vGP" secondAttribute="top" constant="10" id="2Vb-ug-ob0"/>
+                                            <constraint firstItem="eHa-kI-O7r" firstAttribute="width" secondItem="Twp-aw-vGP" secondAttribute="width" multiplier="0.9" id="AA0-8j-po9"/>
+                                            <constraint firstItem="eHa-kI-O7r" firstAttribute="leading" secondItem="Twp-aw-vGP" secondAttribute="leading" constant="10" id="LGW-6y-Lm7"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Twp-aw-vGP" firstAttribute="leading" secondItem="pxM-ff-wVK" secondAttribute="leading" id="4o9-wU-6gy"/>
+                                    <constraint firstItem="Twp-aw-vGP" firstAttribute="top" secondItem="pxM-ff-wVK" secondAttribute="top" constant="1" id="H07-3y-BQa"/>
+                                    <constraint firstAttribute="bottom" secondItem="Twp-aw-vGP" secondAttribute="bottom" id="X2W-Vv-s0N"/>
+                                    <constraint firstAttribute="trailing" secondItem="Twp-aw-vGP" secondAttribute="trailing" id="tzA-yO-VOm"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RVj-8X-n5F" firstAttribute="centerY" secondItem="pPZ-jc-Lty" secondAttribute="centerY" id="0Xg-53-UQE"/>
+                            <constraint firstItem="pxM-ff-wVK" firstAttribute="leading" secondItem="ttv-nR-dpw" secondAttribute="leading" id="5Ql-Kh-pXW"/>
+                            <constraint firstItem="vx0-KY-fwO" firstAttribute="centerX" secondItem="F2i-UV-sPE" secondAttribute="centerX" id="BVw-kE-YYZ"/>
+                            <constraint firstItem="vx0-KY-fwO" firstAttribute="top" secondItem="F2i-UV-sPE" secondAttribute="bottom" constant="8" id="InN-OD-bUJ"/>
+                            <constraint firstItem="r4c-0z-DQg" firstAttribute="top" secondItem="pxM-ff-wVK" secondAttribute="bottom" id="aZ2-GV-T1l"/>
+                            <constraint firstItem="F2i-UV-sPE" firstAttribute="centerX" secondItem="ttv-nR-dpw" secondAttribute="centerX" multiplier="1.8" id="cvb-RD-7Rn"/>
+                            <constraint firstItem="RVj-8X-n5F" firstAttribute="centerX" secondItem="ttv-nR-dpw" secondAttribute="centerX" multiplier="0.75" id="czU-Cs-fSf"/>
+                            <constraint firstAttribute="trailing" secondItem="pxM-ff-wVK" secondAttribute="trailing" id="dt2-jI-UTc"/>
+                            <constraint firstItem="Twp-aw-vGP" firstAttribute="width" secondItem="ttv-nR-dpw" secondAttribute="width" id="g1X-n8-3Zq"/>
+                            <constraint firstItem="pPZ-jc-Lty" firstAttribute="top" secondItem="9hf-17-4gY" secondAttribute="bottom" constant="8" id="jBy-pE-cZp"/>
+                            <constraint firstItem="pxM-ff-wVK" firstAttribute="top" secondItem="vx0-KY-fwO" secondAttribute="bottom" constant="10" id="m3f-S5-F9Z"/>
+                            <constraint firstItem="bTc-at-hbI" firstAttribute="centerY" secondItem="RVj-8X-n5F" secondAttribute="centerY" id="pff-N2-KRk"/>
+                            <constraint firstItem="pPZ-jc-Lty" firstAttribute="centerX" secondItem="ttv-nR-dpw" secondAttribute="centerX" multiplier="0.3" id="qbC-sx-iNP"/>
+                            <constraint firstItem="F2i-UV-sPE" firstAttribute="centerY" secondItem="bTc-at-hbI" secondAttribute="centerY" id="xQh-yr-4fw"/>
+                            <constraint firstItem="bTc-at-hbI" firstAttribute="centerX" secondItem="ttv-nR-dpw" secondAttribute="centerX" multiplier="1.25" id="z3F-Id-jzP"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="insideView" destination="Twp-aw-vGP" id="r6G-Eo-Pfk"/>
+                        <outlet property="referenceTextView" destination="eHa-kI-O7r" id="RXw-P0-HHv"/>
+                        <outlet property="scrollView" destination="pxM-ff-wVK" id="XYz-Bc-ekI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xH0-bF-hp8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8593" y="141"/>
         </scene>
     </scenes>
     <resources>

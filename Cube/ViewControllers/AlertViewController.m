@@ -8,6 +8,11 @@
 
 #import "AlertViewController.h"
 #import "PopUpCustomView.h"
+#import "Database.h"
+#import "APIManager.h"
+#import "AppPreferences.h"
+#import "Constants.h"
+
 @interface AlertViewController ()
 
 @end

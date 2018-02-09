@@ -8,6 +8,11 @@
 
 #import "ImportedAudioViewController.h"
 #import "AudioDetailsViewController.h"
+#import "Database.h"
+#import "APIManager.h"
+#import "AppPreferences.h"
+#import "Constants.h"
+
 extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSType outputFormat, Float64 outputSampleRate);
 
 @interface ImportedAudioViewController ()

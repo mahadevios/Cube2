@@ -8,6 +8,11 @@
 
 #import "RegistrationViewController.h"
 #import "PinRegistrationViewController.h"
+#import "APIManager.h"
+#import "AppPreferences.h"
+#import "Constants.h"
+#import "Keychain.h"
+
 @interface RegistrationViewController ()
 
 @end

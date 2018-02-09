@@ -10,6 +10,7 @@
 #import "RegistrationViewController.h"
 #import "LoginViewController.h"
 #import "User.h"
+#import "Keychain.h"
 @interface PinRegistrationViewController ()
 
 @end

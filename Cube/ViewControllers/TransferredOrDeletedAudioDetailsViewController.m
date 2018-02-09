@@ -8,6 +8,11 @@
 
 #import "TransferredOrDeletedAudioDetailsViewController.h"
 #import "PopUpCustomView.h"
+#import "Database.h"
+#import "APIManager.h"
+#import "AppPreferences.h"
+#import "Constants.h"
+
 #define IMPEDE_PLAYBACK NO
 
 @interface TransferredOrDeletedAudioDetailsViewController ()

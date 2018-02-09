@@ -11,6 +11,10 @@
 #import <AVFoundation/AVFoundation.h>
 #import "AudioSessionManager.h"
 #import "MBProgressHUD.h"
+#import "Database.h"
+#import "APIManager.h"
+#import "Constants.h"
+
 @interface InCompleteRecordViewController : UIViewController<UIGestureRecognizerDelegate,AVAudioPlayerDelegate>
 
 {

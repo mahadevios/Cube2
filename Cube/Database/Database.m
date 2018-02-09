@@ -8,6 +8,8 @@
 //
 
 #import "Database.h"
+#import "APIManager.h"
+#import "Constants.h"
 
 static Database *db;
 @implementation Database
@@ -2841,7 +2843,28 @@ static Database *db;
         // NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
     }
     
+    DocFileDetails*  headerObj1=[[DocFileDetails alloc]init];
+    DocFileDetails*  headerObj2=[[DocFileDetails alloc]init];
+    DocFileDetails*  temp=[[DocFileDetails alloc]init];
+    NSComparisonResult result;
     
+    for (int i=0; i<VRSDocFilesArray.count; i++)
+    {
+        for (int j=1; j<VRSDocFilesArray.count-i; j++)
+        {
+            headerObj1= [VRSDocFilesArray objectAtIndex:j-1];
+            headerObj2=  [VRSDocFilesArray objectAtIndex:j];
+            result=[headerObj1.createdDate compare:headerObj2.createdDate];
+            if (result==NSOrderedAscending)
+            {
+                temp=[VRSDocFilesArray objectAtIndex:j-1];
+                [VRSDocFilesArray replaceObjectAtIndex:j-1 withObject:[VRSDocFilesArray objectAtIndex:j]];
+                [VRSDocFilesArray replaceObjectAtIndex:j withObject:temp];
+                
+            }
+        }
+    }
+
     return VRSDocFilesArray;
     
 }

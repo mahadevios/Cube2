@@ -14,7 +14,8 @@
 {
     NSTimer* newRequestTimer;
     NSTimer* demoTimer;
-
+    BOOL isTranscripting;
+    
 }
 @property(nonatomic, strong)AVAudioEngine* audioEngine;
 @property(nonatomic, strong)SFSpeechRecognizer* speechRecognizer;
@@ -31,6 +32,9 @@
 @property(nonatomic)int timerSeconds;
 @property(nonatomic, strong)AVAudioFile* audioFileName;
 @property(nonatomic, strong)UIAlertController* alertController;
+//@property(nonatomic, strong)NSString* recFileName;
+//@property(nonatomic)int recNum;
+//@property(nonatomic)int numOfTrimFiles;
 
 - (IBAction)startLiveAudioTranscription:(id)sender;
 - (IBAction)stopLiveAudioTranscription:(id)sender;

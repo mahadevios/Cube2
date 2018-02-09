@@ -9,6 +9,11 @@
 #import "SpeechRecognitionViewController.h"
 #import "SelectFileViewController.h"
 #import "UIColor+ApplicationColors.h"
+#import "Database.h"
+#import "APIManager.h"
+#import "AppPreferences.h"
+#import "Constants.h"
+#import "DocFileDetails.h"
 
 @interface SpeechRecognitionViewController ()
 
@@ -35,11 +40,11 @@
 
     audioEngine = [[AVAudioEngine alloc] init];
  
-    speechRecognizer = [[SFSpeechRecognizer alloc] init];
+    speechRecognizer = [[SFSpeechRecognizer alloc] initWithLocale:[NSLocale localeWithLocaleIdentifier:@"en-US"]];
     
     request = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
     
-    speechRecognizer = [[SFSpeechRecognizer alloc] init];
+    //speechRecognizer = [[SFSpeechRecognizer alloc] init];
 
     NSDictionary *audioCompressionSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                                                                                             [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
@@ -97,7 +102,119 @@
 //    }
    
     
+    NSString* file2 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/663265576_ebojdoxz"]];
+    NSURL *audioFileOutput = [NSURL fileURLWithPath:file2];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput error:NULL];
+    
+    NSString* file3 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/663265576_ebojdoxz1.m4a"]];
+    NSURL *audioFileOutput1 = [NSURL fileURLWithPath:file3];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput1 error:NULL];
+    
+    NSString* file4 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/663265576_ebojdoxz2.m4a"]];
+    NSURL *audioFileOutput3 = [NSURL fileURLWithPath:file4];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput3 error:NULL];
+    
+    NSString* file5 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/1088117284_covedcht1.m4a"]];
+    NSURL *audioFileOutput4 = [NSURL fileURLWithPath:file5];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput4 error:NULL];
+    
+    NSString* file6 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/1088117284_covedcht2.m4a"]];
+    NSURL *audioFileOutput5 = [NSURL fileURLWithPath:file6];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput5 error:NULL];
+    
+    NSString* file7 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/sample"]];
+    NSURL *audioFileOutput6 = [NSURL fileURLWithPath:file7];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput6 error:NULL];
+    
+    
+    
+    
+    
+    
+    NSString* file8 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/sample3.m4a"]];
+    NSURL *audioFileOutput7 = [NSURL fileURLWithPath:file8];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput7 error:NULL];
+    
+    NSString* file9 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/sample4.m4a"]];
+    NSURL *audioFileOutput8 = [NSURL fileURLWithPath:file9];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput8 error:NULL];
+    
+    NSString* file10 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/top1.wav"]];
+    NSURL *audioFileOutput9 = [NSURL fileURLWithPath:file10];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput9 error:NULL];
+    
+    
+    
+    
+    
+    
+    
+    NSString* file11 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/sample"]];
+    NSURL *audioFileOutput10 = [NSURL fileURLWithPath:file11];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput10 error:NULL];
+    
+    NSString* file12 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/661985131_gfahwufg"]];
+    NSURL *audioFileOutput11 = [NSURL fileURLWithPath:file12];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput11 error:NULL];
+    
+    NSString* file13 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/662629925_fyyvyagm"]];
+    NSURL *audioFileOutput12 = [NSURL fileURLWithPath:file13];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput12 error:NULL];
+    
+    NSString* file14 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/663011102_yiutvmln"]];
+    NSURL *audioFileOutput13 = [NSURL fileURLWithPath:file14];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput13 error:NULL];
+    
+    NSString* file15 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/1087448980_crkifvmb"]];
+    NSURL *audioFileOutput14 = [NSURL fileURLWithPath:file15];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput14 error:NULL];
+    
+    NSString* file16 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/1088119059_zlypqvcx"]];
+    NSURL *audioFileOutput15 = [NSURL fileURLWithPath:file16];
+    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput15 error:NULL];
+    
+    
+    //self.recFileName = @"663265576_ebojdoxz";
+    for (int i =1 ; i<3; i++)
+    {
+        NSString* file16 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/1088455050_ibaklkuf%d.m4a",i]];
+        NSURL *audioFileOutput15 = [NSURL fileURLWithPath:file16];
+        [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput15 error:NULL];
+    }
+    
+    for (int i =1 ; i<3; i++)
+    {
+        NSString* file16 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/662629925_fyyvyagm%d.m4a",i]];
+        NSURL *audioFileOutput15 = [NSURL fileURLWithPath:file16];
+        [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput15 error:NULL];
+    }
 
+    for (int i =1 ; i<3; i++)
+    {
+        NSString* file16 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/1088119059_zlypqvcx%d.m4a",i]];
+        NSURL *audioFileOutput15 = [NSURL fileURLWithPath:file16];
+        [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput15 error:NULL];
+    }
+//    self.recFileName = @"1087652623_qhceboxs";
+
+//    self.recFileName = @"";
+
+//    self.recFileName = @"662629925_fyyvyagm";
+    //self.recFileName = @"1088119059_zlypqvcx";
+//    self.recFileName = @"1088455050_ibaklkuf";
+//    self.recFileName = @"1087726363_kxhxmnzd";
+//    self.recFileName = @"1088451780_qzfrnjmj";
+//
+//    
+//
+//    self.recNum = 2;
+//    
+//    [self trimAudio];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(startNewTrans) name:@"sample"
+//                                               object:nil];
+    
     //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"TransReset"] style:UIBarButtonItemStylePlain target:self action:@selector(resetTranscription)];
     
 }
@@ -229,7 +346,42 @@
 }
 -(void)popViewController:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (isTranscripting)
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Transcripting.." withMessage:@"Please stop the transcription" withCancelText:@"Ok" withOkText:@"" withAlertTag:1000];
+    }
+    else if (transcriptionTextLabel.text.length>0)
+    {
+        alertController = [UIAlertController alertControllerWithTitle:@"Transcription not saved!"
+                                                              message:@"Save transcription as doc file?"
+                                                       preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* actionCreate = [UIAlertAction actionWithTitle:@"Save"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action)
+                                       {
+                                           
+                                           [self createSubDocFileButtonClicked];
+                                       }]; //You can use a block here to handle a press on this button
+        
+        UIAlertAction* actionCancel = [UIAlertAction actionWithTitle:@"Don't save"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action)
+                                       {
+                                           [self.navigationController popViewControllerAnimated:YES];
+
+                                       }];
+        
+        [alertController addAction:actionCreate];
+        
+        [alertController addAction:actionCancel];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+
+    }
     
 }
 
@@ -263,7 +415,7 @@
     [audioEngine stop];
     
     [request endAudio];
-    
+
     //[recognitionTask cancel];
     
     [newRequestTimer invalidate];
@@ -276,6 +428,8 @@
     
     [self.previousTranscriptedArray addObject:@""];
     
+    [self hideRightBarButton:true];
+
 }
 
 -(void)hideRightBarButton:(BOOL)hide
@@ -359,7 +513,8 @@
         if ([[AppPreferences sharedAppPreferences] isReachable])
         {
             //self.stopTranscriptionButton.hidden = false;
-        
+            isTranscripting = true;
+            
             [newRequestTimer invalidate];
             
             [self disableStartAndDocOption:true];
@@ -430,6 +585,7 @@
 
 -(void)subStopLiveAudioTranscription
 {
+
     [self disableStartAndDocOption:false];
     
     [self enableStopOption:false];
@@ -589,9 +745,11 @@
 //    NSLog(@"%ld",status);
 
 }
+
+
 -(void)speechRecognitionDidDetectSpeech:(SFSpeechRecognitionTask *)task
 {
-    
+    NSLog(@"Task cancelled");
 }
 
 -(void)speechRecognitionTaskWasCancelled:(SFSpeechRecognitionTask *)task
@@ -614,13 +772,42 @@
 //        isStartedNewRequest = true;
 //    }
     
+//    [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+    isTranscripting = false;
+
+    [recognitionTask cancel];
+    
     [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+    
     [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject: self.transcriptionTextLabel.text];
     NSLog(@"3");
     NSLog(@"Finished sucessfully");
     [self disableStartAndDocOption:false];
+    
+    
+   // [[NSNotificationCenter defaultCenter] postNotificationName:@"sample" object:nil];//to pause and remove audio player
+
+    
 
 }
+
+//-(void)startNewTrans
+//{
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//
+//        self.numOfTrimFiles = self.numOfTrimFiles - 1;
+//        self.recNum = self.recNum + 1;
+//        //    self.recFileName = [NSString stringWithFormat:@"%@%d",self.recFileName,self.recNum];
+//
+//        if (self.numOfTrimFiles>0)
+//        {
+//            [self transcribePreRecordedAudio];
+//
+//        }        //[self transcribeLiveAudio];
+//    });
+//
+//
+//}
 
 -(void)speechRecognitionTask:(SFSpeechRecognitionTask *)task didFinishRecognition:(SFSpeechRecognitionResult *)recognitionResult
 {
@@ -628,8 +815,14 @@
     SFTranscription* transcription = recognitionResult.bestTranscription;
     NSString* formattedString =  transcription.formattedString;
     
-    
-    [recognitionTask cancel];
+    if(recognitionResult.isFinal)
+    {
+         [recognitionTask cancel];
+        
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
+    }
+   
     
     
 //    if (self.previousTranscriptedArray.count > 0)
@@ -732,7 +925,7 @@
                 {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         
-                        
+                        //[self transcribePreRecordedAudio];
                         [self transcribeLiveAudio];
                     });
                    
@@ -777,21 +970,32 @@
 
 -(void)updateTime:(id) sender
 {
+    if (timerSeconds == -10)
+    {
+        isTranscripting = false;
+        
+        [recognitionTask cancel];
+        
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+    }
     dispatch_async(dispatch_get_main_queue(), ^
                    {
                       
+                       
                        if (timerSeconds == 0)
                        {
                            //[newRequestTimer invalidate];
                            
                           // [self startTranscriptionStatusViewAnimationToDown:false];
 
+                           
                            BOOL isFinishing = [recognitionTask isFinishing];
 
-                           [recognitionTask finish];
                           
                            [self subStopLiveAudioTranscription];
                            
+                           [recognitionTask finish];
+
 //                           [self disableStartAndDocOption:false];
 
                            [startTranscriptionButton setTitle:@"Resume" forState:UIControlStateNormal];
@@ -971,16 +1175,31 @@
 }
 -(void) transcribePreRecordedAudio
 {
-    //NSString* filePath = [[NSBundle mainBundle] pathForResource:@"sample1" ofType:@"wav"];
+    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"sample" ofType:@"mp3"];
     
-    NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.fileNameLabel.text]];
+    //self.recFileName = [NSString stringWithFormat:@"%@%d",self.recFileName,self.recNum];
+
+   // NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@",self.recFileName]];
+
+    
+    filePath = [filePath stringByAppendingPathExtension:@"m4a"];
+//    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"sample" ofType:@"mp3"];
+    //NSString* filePath = [[NSBundle mainBundle] pathForResource:@"CallCsample1" ofType:@"mp3"];
+
+
     dispatch_async(dispatch_get_main_queue(), ^
                    {
                        //NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.fileNameLabel.text]];
                        
+                       //speechRecognizer = [[SFSpeechRecognizer alloc] initWithLocale:[NSLocale localeWithLocaleIdentifier:@"en-US"]];
+                       
+                       //request = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
+                       
                        NSURL* url = [[NSURL alloc] initFileURLWithPath:filePath];
                        
                        self.urlRequest = [[SFSpeechURLRecognitionRequest alloc] initWithURL:url];
+                       
+                       NSLocale* locale = [speechRecognizer locale];
                        
                        [speechRecognizer recognitionTaskWithRequest:self.urlRequest delegate:self];
                        
@@ -1062,21 +1281,8 @@
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction * action)
                     {
-                        dispatch_async(dispatch_get_main_queue(), ^
-                                       {
-                                           //NSLog(@"Reachable");
-                                           //[[AppPreferences sharedAppPreferences] showHudWithTitle:@"Creating Doc File" detailText:@"Please wait.."];
-                                          BOOL isWritten = [self createDocFile];
-                                           
-                                           if (isWritten == true)
-                                           {
-                                               [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Doc File Created" withMessage:@"Doc file crated successfully, check doc files in alert tab" withCancelText:@"Cancel" withOkText:@"Ok" withAlertTag:1000];
-
-                                               [self resetTranscription];
-                                           }
-                                           //[[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
-
-                                       });
+                        
+                        [self createSubDocFileButtonClicked];
                     }]; //You can use a block here to handle a press on this button
         
         UIAlertAction* actionCancel = [UIAlertAction actionWithTitle:@"Cancel"
@@ -1097,6 +1303,25 @@
     
 }
 
+-(void)createSubDocFileButtonClicked
+{
+    dispatch_async(dispatch_get_main_queue(), ^
+                   {
+                       //NSLog(@"Reachable");
+                       //[[AppPreferences sharedAppPreferences] showHudWithTitle:@"Creating Doc File" detailText:@"Please wait.."];
+                       BOOL isWritten = [self createDocFile];
+                       
+                       if (isWritten == true)
+                       {
+                           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Doc File Created" withMessage:@"Doc file created successfully, check doc files in alert tab" withCancelText:@"Ok" withOkText:nil withAlertTag:1000];
+                           
+                           [self resetTranscription];
+                       }
+                       //[[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+                       
+                   });
+    
+}
 -(BOOL)createDocFile
 {
     long todaysSerialNumberCount;
@@ -1193,5 +1418,94 @@
     
     return isWritten1;
 }
+
+//- (void)trimAudio
+//{
+//
+//
+//
+//    NSString* dirPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@",self.recFileName]];
+//
+//    NSString* bundlePath = [[NSBundle mainBundle] pathForResource:self.recFileName ofType:@"mp3"];
+//
+//    NSURL* audioFileInput = [NSURL fileURLWithPath:bundlePath];
+//
+//    NSURL *audioFileOutput = [NSURL fileURLWithPath:dirPath];
+//
+//    [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput error:NULL];
+//
+//
+//    NSError* err;
+//
+//    BOOL copied = [[NSFileManager defaultManager] copyItemAtPath:bundlePath toPath:dirPath error:&err];
+//
+//    NSString* file2 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@",self.recFileName]];
+//
+//
+//    AVAudioPlayer* player= [[AVAudioPlayer alloc] initWithContentsOfURL:audioFileOutput error:&err];
+//
+//    float duration = player.duration;
+//
+//    self.numOfTrimFiles = duration/59;
+//
+//    for (float i = 0, j=1; i<=duration; i=i+59,j++)
+//    {
+//        float vocalStartMarker = i;
+//
+//        float vocalEndMarker = i+59;
+//
+//        int k = j;
+//
+//        file2 = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@%d",self.recFileName, k]];
+//
+//        file2 = [file2 stringByAppendingPathExtension:@"m4a"];
+//
+//        NSURL *audioFileOutput = [NSURL fileURLWithPath:file2];
+//
+//        [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput error:NULL];
+//
+//        if (!audioFileInput || !audioFileOutput)
+//        {
+//
+//        }
+//
+//        [[NSFileManager defaultManager] removeItemAtURL:audioFileOutput error:NULL];
+//
+//        AVAsset *asset = [AVAsset assetWithURL:audioFileInput];
+//
+//        AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:asset
+//                                                                                presetName:AVAssetExportPresetAppleM4A];
+//
+//        if (exportSession == nil)
+//        {
+//
+//        }
+//
+//        CMTime startTime = CMTimeMake((int)(floor(vocalStartMarker * 100)), 100);
+//        CMTime stopTime = CMTimeMake((int)(ceil(vocalEndMarker * 100)), 100);
+//        CMTimeRange exportTimeRange = CMTimeRangeFromTimeToTime(startTime, stopTime);
+//
+//        exportSession.outputURL = audioFileOutput;
+//        exportSession.outputFileType = AVFileTypeAppleM4A;
+//        exportSession.timeRange = exportTimeRange;
+//
+//        [exportSession exportAsynchronouslyWithCompletionHandler:^
+//         {
+//             if (AVAssetExportSessionStatusCompleted == exportSession.status)
+//             {
+//                 // It worked!
+//                 NSLog(@"suuucess");
+//             }
+//             else if (AVAssetExportSessionStatusFailed == exportSession.status)
+//             {
+//                 NSLog(@"failed");
+//
+//                 // It failed...
+//             }
+//         }];
+//
+//    }
+//
+//}
 @end
 

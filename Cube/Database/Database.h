@@ -11,6 +11,8 @@
 #import "DepartMent.h"
 #import "AudioDetails.h"
 #import "DocFileDetails.h"
+#import "AppPreferences.h"
+
 @interface Database : NSObject
 
 +(Database *)shareddatabase;

@@ -8,6 +8,10 @@
 
 #import "SelectFileViewController.h"
 #import "TableViewButton.h"
+#import "Database.h"
+#import "Constants.h"
+#import "DocFileDetails.h"
+#import "AppPreferences.h"
 
 @interface SelectFileViewController ()
 
@@ -96,6 +100,8 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Opening File" detailText:@"Please wait.."];
+        [self setTimer];
+
 
     });
 
@@ -206,6 +212,21 @@
     //});
 }
 
+-(void)setTimer
+{
+    newRequestTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTime:) userInfo:nil repeats:NO];
+    
+}
+
+-(void)updateTime:(id)sender
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+    
+    [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+    
+    });
+    
+}
 
 - (void)didReceiveMemoryWarning
 {

@@ -10,6 +10,10 @@
 #import "CommonDelegate.h"
 
 @interface SelectFileViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIDocumentInteractionControllerDelegate>
+{
+    NSTimer* newRequestTimer;
+
+}
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(readwrite , assign) id<CommonDelegate>delegate;
 @property(nonatomic, strong)NSMutableArray* VRSDocFilesArray;

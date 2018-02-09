@@ -13,6 +13,8 @@
 #import "UIDevice+Identifier.h"
 #import "PopUpCustomView.h"
 #import "NSData+AES256.h"
+#import "Keychain.h"
+
 @interface SplashScreenViewController ()
 
 @end

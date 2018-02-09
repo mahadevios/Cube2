@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "Database.h"
+#import "APIManager.h"
+
 @interface AlertViewController : UIViewController
 {
     Database* db;
