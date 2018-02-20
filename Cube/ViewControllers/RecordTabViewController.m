@@ -7,6 +7,8 @@
 //
 
 #import "RecordTabViewController.h"
+#import "AppPreferences.h"
+#import "Constants.h"
 
 @interface RecordTabViewController ()
 

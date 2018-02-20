@@ -44,7 +44,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     // Override point for customization after application launch.
     
-    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreFlexSolutions.CubeDictate"];
+//    NSError* error;
+//    
+//    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",@"SU40720171201-01"]];
+//    
+//    NSString* newDestPath = [destpath stringByAppendingPathExtension:@"doc"];
+//    
+//    BOOL removed = [[NSFileManager defaultManager] removeItemAtPath:newDestPath error:&error];
+    //NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreFlexSolutions.CubeDictate"];
 
     //NSString* fileSizeInBytes = [sharedDefaults objectForKey:@"output1"];
     
@@ -56,7 +63,31 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [AppPreferences sharedAppPreferences].filesInUploadingQueueArray = [[NSMutableArray alloc] init];
 
 
-   [self checkAndCopyDatabase];
+    
+    [self checkAndCopyDatabase];
+    
+    NSString* currentVersion = [[NSUserDefaults standardUserDefaults] valueForKey:CURRENT_VESRION];
+    
+    NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    
+    NSString* bundleVersion = infoDictionary[@"CFBundleShortVersionString"];
+    
+    if (currentVersion == nil)
+    {
+        // version change first time execution code
+        [[Database shareddatabase] createDocFileTable];
+        
+        [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
+    }
+    else
+        if (currentVersion != bundleVersion)
+        {
+            // version change first time execution code
+            [[Database shareddatabase] createDocFileTable];
+            
+            [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
+            
+        }
     
     
   //  [[NSUserDefaults standardUserDefaults] setValue:timeLabel.text forKey:LOW_STORAGE_THRESHOLD];
@@ -254,6 +285,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 
 
+
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
 //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -365,7 +397,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     UInt8 theInterruptionType = [[notification.userInfo valueForKey:AVAudioSessionInterruptionTypeKey] intValue];
     
     printf("Session interrupted! --- %s ---\n", theInterruptionType == AVAudioSessionInterruptionTypeBegan ? "Begin Interruption" : "End Interruption");
-	   
+	
+    [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryPlayAndRecord];
+
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_PAUSE_RECORDING object:nil];//to pause audio player and save the recording from bg.we have change the setting for this in app capabilities setting to stop from the bg.
 
 //    if (theInterruptionType == AVAudioSessionInterruptionTypeBegan) {
@@ -933,11 +967,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         [[Database shareddatabase] insertRecordingData:audioRecordDetailsDict];
     
-        NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
-
-        NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
-
-        [[NSUserDefaults standardUserDefaults] setValue:currentVersion forKey:CURRENT_VESRION];
+        
     
     
 }

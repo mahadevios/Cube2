@@ -8,6 +8,8 @@
 //
 
 #import "Database.h"
+#import "APIManager.h"
+#import "Constants.h"
 
 static Database *db;
 @implementation Database
@@ -351,6 +353,62 @@ static Database *db;
     return departmentNameArray;
 }
 
+
+-(NSString*)getfileNameFromDictationID:(NSString*)mobileDictationIdVal
+{
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement;
+    NSString* companyId;
+    sqlite3* feedbackAndQueryTypesDB;
+    //NSMutableArray* departmentNameArray=[[NSMutableArray alloc]init];;
+    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName from CubeData Where mobileDictationIdVal=%d",[mobileDictationIdVal intValue]];
+    
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
+    {
+        if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query3 UTF8String], -1, &statement, NULL) == SQLITE_OK)// 2. Prepare the query
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                
+                // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
+                companyId=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+                // [departmentNameArray addObject:companyId];
+                
+            }
+        }
+        else
+        {
+            //NSLog(@"Can't preapre query due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    else
+    {
+        //NSLog(@"can't open db due error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+    {
+    }
+    //NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        //NSLog(@"db is closed");
+    }
+    else
+    {
+        //NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    
+    return companyId;
+}
 -(DepartMent*)getDepartMentFromDepartmentName:(NSString*)name
 {
     Database *db=[Database shareddatabase];
@@ -2578,7 +2636,7 @@ static Database *db;
     
     
     
-    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate, mobiledictationidval, CurrentDuration, FileSize, Department, NewDataSend from CubeData Where TransferStatus = 1 and DeleteStatus = 0"];
+    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate, mobiledictationidval, CurrentDuration, FileSize, Department, NewDataSend,RecordingDate from CubeData Where TransferStatus = 1 and DeleteStatus = 0"];
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
@@ -2603,6 +2661,9 @@ static Database *db;
                 audioDetails.department = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
 
                 audioDetails.downloadStatus =  sqlite3_column_int(statement, 6);
+                
+                audioDetails.recordingDate = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 7)];
+
 
                 [uploadedFilesArray addObject:audioDetails];
                 
@@ -2639,6 +2700,226 @@ static Database *db;
     
     
     return uploadedFilesArray;
+    
+}
+
+-(void)createDocFileTable
+{
+    Database *db=[Database shareddatabase];
+    NSString *dbPathString=[db getDatabasePath];
+    const char *dbpath = [dbPathString UTF8String];
+    sqlite3* feedbackAndQueryTypesDB;
+    if (sqlite3_open(dbpath, &feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        char *errMsg;
+        const char *sql_stmt = "create table if not exists DocFiles (DocFileName text primary key, AudioFileName text, UploadStatus integer, DeleteStatus integer, CreatedDate text, UploadedDate text)";
+        
+        if (sqlite3_exec(feedbackAndQueryTypesDB, sql_stmt, NULL, NULL, &errMsg) != SQLITE_OK)
+        {
+            NSLog(@"TaskIdentifier created" );
+        }
+        sqlite3_close(feedbackAndQueryTypesDB);
+    }
+    else
+    {
+        
+    }
+    
+    
+    
+    
+}
+
+
+-(void)addDocFileInDB:(DocFileDetails*)docFileDetails
+{
+    
+    NSString *query3=[NSString stringWithFormat:@"INSERT INTO DocFiles values(\"%@\",\"%@\",\"%d\",\"%d\",\"%@\",\"%@\")",docFileDetails.docFileName,docFileDetails.docFileName,docFileDetails.uploadStatus,docFileDetails.deleteStatus,docFileDetails.uploadDate,docFileDetails.createdDate];
+    
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement;
+    sqlite3* feedbackAndQueryTypesDB;
+    
+    
+    const char * queryi3=[query3 UTF8String];
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
+    {
+        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            // NSLog(@"report data inserted");
+            // NSLog(@"%@",NSHomeDirectory());
+            sqlite3_reset(statement);
+        }
+        else
+        {
+            // NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    else
+    {
+        //NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+    {
+        
+    }
+    // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        //NSLog(@"db is closed");
+    }
+    else
+    {
+        //NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+}
+
+
+
+-(NSMutableArray*)getVRSDocFiles
+{
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement;
+    sqlite3* feedbackAndQueryTypesDB;
+    int mobiledictationidval;
+    NSString *query3=[NSString stringWithFormat:@"Select * from DocFiles"];
+    NSMutableArray* VRSDocFilesArray = [NSMutableArray new];
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
+    {
+        if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query3 UTF8String], -1, &statement, NULL) == SQLITE_OK)// 2. Prepare the query
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                
+                // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
+                DocFileDetails* docFileDetails = [DocFileDetails new];
+                
+                docFileDetails.docFileName = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+                docFileDetails.audioFileName = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
+                docFileDetails.uploadDate = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
+                docFileDetails.createdDate = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+
+                docFileDetails.uploadStatus = sqlite3_column_int(statement, 2);
+                docFileDetails.deleteStatus = sqlite3_column_int(statement, 3);
+
+                [VRSDocFilesArray addObject:docFileDetails];
+            }
+        }
+        else
+        {
+            //NSLog(@"Can't preapre query due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    else
+    {
+        //NSLog(@"can't open db due error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+        // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    {}
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        //NSLog(@"db is closed");
+    }
+    else
+    {
+        // NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    DocFileDetails*  headerObj1=[[DocFileDetails alloc]init];
+    DocFileDetails*  headerObj2=[[DocFileDetails alloc]init];
+    DocFileDetails*  temp=[[DocFileDetails alloc]init];
+    NSComparisonResult result;
+    
+    for (int i=0; i<VRSDocFilesArray.count; i++)
+    {
+        for (int j=1; j<VRSDocFilesArray.count-i; j++)
+        {
+            headerObj1= [VRSDocFilesArray objectAtIndex:j-1];
+            headerObj2=  [VRSDocFilesArray objectAtIndex:j];
+            result=[headerObj1.createdDate compare:headerObj2.createdDate];
+            if (result==NSOrderedAscending)
+            {
+                temp=[VRSDocFilesArray objectAtIndex:j-1];
+                [VRSDocFilesArray replaceObjectAtIndex:j-1 withObject:[VRSDocFilesArray objectAtIndex:j]];
+                [VRSDocFilesArray replaceObjectAtIndex:j withObject:temp];
+                
+            }
+        }
+    }
+
+    return VRSDocFilesArray;
+    
+}
+
+-(void)deleteDocFileRecordFromDatabase:(NSString*)docFileName
+{
+    
+    NSString *query3=[NSString stringWithFormat:@"Delete from DocFiles Where DocFileName='%@'",docFileName];
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement;
+    sqlite3* feedbackAndQueryTypesDB;
+    
+    
+    const char * queryi3=[query3 UTF8String];
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
+    {
+        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            //NSLog(@"report data inserted");
+            //NSLog(@"%@",NSHomeDirectory());
+            sqlite3_reset(statement);
+        }
+        else
+        {
+            //NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    
+    else
+    {
+        //NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        // NSLog(@"statement is finalized");
+    }
+    else
+        // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    {
+        
+    }
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        //NSLog(@"db is closed");
+    }
+    else
+    {
+        //NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    
     
 }
 //-(void)updateAudioFileName

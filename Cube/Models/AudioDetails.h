@@ -18,6 +18,7 @@
 @property(nonatomic, strong) NSString* department;
 @property(nonatomic) int mobiledictationidval;
 @property(nonatomic, strong) NSString* currentDuration;
+@property(nonatomic, strong) NSString* recordingDate;
 @property(nonatomic, strong) NSString* fileSize;
 
 @end

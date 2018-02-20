@@ -7,6 +7,11 @@
 //
 
 #import "SelectFileViewController.h"
+#import "TableViewButton.h"
+#import "Database.h"
+#import "Constants.h"
+#import "DocFileDetails.h"
+#import "AppPreferences.h"
 
 @interface SelectFileViewController ()
 
@@ -14,33 +19,77 @@
 
 @implementation SelectFileViewController
 
+@synthesize VRSDocFilesArray,alertController;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    APIManager* app = [APIManager sharedManager];
+    //APIManager* app = [APIManager sharedManager];
     
-    app.awaitingFileTransferNamesArray= [[Database shareddatabase] getListOfFileTransfersOfStatus:@"RecordingComplete"];
+    VRSDocFilesArray = [NSMutableArray new];
+    
+    VRSDocFilesArray = [[Database shareddatabase] getVRSDocFiles];
 
+    self.navigationItem.title = @"VRS DOC Files";
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+    
+    [self.tabBarController.tabBar setHidden:YES];
     // Do any additional setup after loading the view.
 }
 
+-(void)popViewController:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [APIManager sharedManager].awaitingFileTransferNamesArray.count;
+    return VRSDocFilesArray.count;
     
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70;
+    
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    NSDictionary* awaitingFileTransferDict;
 
-    awaitingFileTransferDict = [[APIManager sharedManager].awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    DocFileDetails* docFileDetails = [VRSDocFilesArray objectAtIndex:indexPath.row];
+    
+    NSString* dateAndTimeString = docFileDetails.createdDate;
+    
+    NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     
     UILabel* fileNameLabel = [cell viewWithTag:101];
+
+    UILabel* timeLabel = [cell viewWithTag:102];
+
+    UILabel* departmentLabel=[cell viewWithTag:103];
+
+    UILabel* dateLabel=[cell viewWithTag:104];
+
+    TableViewButton* deleteButton = [cell viewWithTag:105];
+
+    deleteButton.indexPathRow = indexPath.row;
+
+    [deleteButton addTarget:self action:@selector(deleteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+
+    if (dateAndTimeArray.count>1)
+        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
     
-    fileNameLabel.text = [awaitingFileTransferDict valueForKey:@"RecordItemName"];
+    dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
+    
+    departmentLabel.text = deptObj.departmentName;
+    
+    fileNameLabel.text = docFileDetails.docFileName;
     
     return cell;
     
@@ -48,15 +97,137 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Opening File" detailText:@"Please wait.."];
+        [self setTimer];
+
+
+    });
+
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     
     UILabel* fileNameLabel = [cell viewWithTag:101];
     
-    [self.delegate setFileName:fileNameLabel.text];
+   // [self.delegate setFileName:fileNameLabel.text];
+    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",DOC_VRS_FILES_FOLDER_NAME,fileNameLabel.text]];
     
-    [self dismissViewControllerAnimated:true completion:nil];
+    NSString* newDestPath = [destpath stringByAppendingFormat:@".txt"];
+    
+    
+    UIDocumentInteractionController* interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:newDestPath]];
+    
+    interactionController.delegate = self;
+    
+    
+    [interactionController presentPreviewAnimated:true];
+    
+    //[interactionController presentOpenInMenuFromRect:self.view.frame inView:self.view animated:true];
+    //[self dismissViewControllerAnimated:true completion:nil];
 
 }
+
+-(void)deleteButtonClicked:(TableViewButton*)sender
+{
+    alertController = [UIAlertController alertControllerWithTitle:@"Delete Doc File?"
+                                                          message:@"Are you sure to delete this doc file?"
+                                                   preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* actionCreate = [UIAlertAction actionWithTitle:@"Delete"
+                                                           style:UIAlertActionStyleDestructive
+                                                         handler:^(UIAlertAction * action)
+                                   {
+                                       dispatch_async(dispatch_get_main_queue(), ^
+                                                      {
+                                                          //NSLog(@"Reachable");
+                                                          //[[AppPreferences sharedAppPreferences] showHudWithTitle:@"Creating Doc File" detailText:@"Please wait.."];
+                                                          DocFileDetails* docFileDetails = [VRSDocFilesArray objectAtIndex:sender.indexPathRow];
+                                                          
+                                                          [[Database shareddatabase] deleteDocFileRecordFromDatabase:docFileDetails.docFileName];
+                                                          
+                                                          [self deleteDocFile:docFileDetails.docFileName];
+                                                          
+                                                          NSIndexPath* indexPath = [NSIndexPath indexPathForRow:sender.indexPathRow inSection:0];
+                                                          
+                                                          [VRSDocFilesArray removeObjectAtIndex:sender.indexPathRow];
+                                                          
+                                                          [self.tableView deleteRowsAtIndexPaths:[[NSArray alloc] initWithObjects:indexPath, nil]  withRowAnimation:UITableViewRowAnimationTop];
+                                                          [self.tableView reloadData];
+//                                                              [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Doc File Created" withMessage:@"Doc file crated successfully, check doc files in alert tab" withCancelText:@"Cancel" withOkText:@"Ok" withAlertTag:1000];
+                                                          
+                                                          //[[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+                                                          
+                                                      });
+                                   }]; //You can use a block here to handle a press on this button
+    
+    UIAlertAction* actionCancel = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action)
+                                   {
+                                       
+                                   }];
+    
+    [alertController addAction:actionCreate];
+    
+    [alertController addAction:actionCancel];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+}
+
+-(void)deleteDocFile:(NSString*)docFileName
+{
+    NSString* docFilePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",DOC_VRS_FILES_FOLDER_NAME,docFileName]];
+    
+    docFilePath = [docFilePath stringByAppendingFormat:@".txt"];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:docFilePath])
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:docFilePath error:nil];
+    }
+}
+
+//-(CGRect)documentInteractionControllerRectForPreview:(UIDocumentInteractionController *)controller
+//{
+//    return self.view.frame;
+//
+//}
+//-(UIView *)documentInteractionControllerViewForPreview:(UIDocumentInteractionController *)controller
+//{
+//    return self.view;
+//
+//}
+
+-(UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller
+{
+    
+    return self;
+}
+
+-(void)documentInteractionControllerWillBeginPreview:(UIDocumentInteractionController *)controller
+{
+    //dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
+    //});
+}
+
+-(void)setTimer
+{
+    newRequestTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTime:) userInfo:nil repeats:NO];
+    
+}
+
+-(void)updateTime:(id)sender
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+    
+    [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+    
+    });
+    
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

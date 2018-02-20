@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Database.h"
+#import "Constants.h"
+#import "APIManager.h"
 
 @interface SelectDepartmentViewController : UIViewController
 {

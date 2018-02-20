@@ -528,6 +528,46 @@ static APIManager *singleton = nil;
     
     
 }
+
+-(void)sendComment:(NSString*)comment dictationId:(NSString*)mobielDictationIdVal
+{
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+        
+        NSError* error;
+        
+        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",mobielDictationIdVal,@"DictationID",comment,@"strComment", nil];
+        
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
+                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
+                                                             error:&error];
+        
+        
+        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
+        
+        
+        
+        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
+        
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+        
+        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+        
+        [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Submitting" detailText:@"Please wait.."];
+        
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:SEND_COMMENT_API withRequestParameter:array withResourcePath:SEND_COMMENT_API withHttpMethd:POST downloadMethodType:@""];
+        
+        [downloadmetadatajob startMetaDataDownLoad];
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+    
+    
+}
 -(void)downloafFileUsingSession:(NSString*)mobielDictationIdVal
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])

@@ -10,6 +10,11 @@
 //check in cell for row at index path where we adding the indexpath to array
 #import "TransferListViewController.h"
 #import "AudioDetailsViewController.h"
+#import "Database.h"
+#import "APIManager.h"
+#import "AppPreferences.h"
+#import "Constants.h"
+
 @interface TransferListViewController ()
 
 @end

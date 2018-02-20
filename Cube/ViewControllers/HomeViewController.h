@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "Database.h"
+#import "APIManager.h"
+#import "AppPreferences.h"
+#import "Constants.h"
 
 @interface HomeViewController : UIViewController
 {

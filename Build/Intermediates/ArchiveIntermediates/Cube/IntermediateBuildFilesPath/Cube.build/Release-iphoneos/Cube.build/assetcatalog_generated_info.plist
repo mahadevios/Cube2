@@ -13,6 +13,8 @@
 				<string>AppIcon57x57</string>
 				<string>AppIcon60x60</string>
 			</array>
+			<key>CFBundleIconName</key>
+			<string>AppIcon</string>
 		</dict>
 	</dict>
 	<key>UILaunchImageFile</key>

@@ -12,6 +12,11 @@
 #import "DepartMent.h"
 #import "PopUpCustomView.h"
 #import "InCompleteRecordViewController.h"
+#import "Database.h"
+#import "APIManager.h"
+#import "AppPreferences.h"
+#import "Constants.h"
+
 #define IMPEDE_PLAYBACK NO
 
 @interface AudioDetailsViewController ()

@@ -10,6 +10,8 @@
 #import <sqlite3.h>
 #import "DepartMent.h"
 #import "AudioDetails.h"
+#import "DocFileDetails.h"
+#import "AppPreferences.h"
 
 @interface Database : NSObject
 
@@ -104,5 +106,15 @@
 -(NSArray*) getUploadedFileList;
 
 -(NSArray*) getUploadedFilesDictationIdList;
+
+-(NSString*)getfileNameFromDictationID:(NSString*)mobileDictationIdVal;
+
+-(void)addDocFileInDB:(DocFileDetails*)docFileDetails;
+
+-(void)createDocFileTable;
+
+-(NSMutableArray*)getVRSDocFiles;
+
+-(void)deleteDocFileRecordFromDatabase:(NSString*)docFileName;
 
 @end

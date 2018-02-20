@@ -34,6 +34,7 @@
 #define  PIN_CANGE_API                        @"encrdecr_MobilePINChange"
 #define  FILE_DOWNLOAD_API                    @"encedecr_MobileDownloadDocFile"
 #define  SEND_DICTATION_IDS_API               @"encrdecr_MobileRequestForCompleteFiles"
+#define  SEND_COMMENT_API                     @"encdecr_MobileDocFileComment"
 
 #define  SECRET_KEY                           @"cubemob"
 #define  POST                           @"POST"
@@ -64,6 +65,7 @@
 #define NOTIFICATION_SAVE_RECORDING                 @"saveRecording"
 #define NOTIFICATION_FILE_IMPORTED                  @"fileImportingCompleted"
 #define NOTIFICATION_UPLOAD_NEXT_FILE               @"uploadNextFile"
+#define NOTIFICATION_SEND_COMMENT_API               @"commentNotification"
 
 //Settimg Constants
 
@@ -95,6 +97,7 @@
 #define SELECTED_DEPARTMENT_NAME               @"Selected Department"
 #define SELECTED_DEPARTMENT_NAME_COPY          @"Selected Department Copy"
 #define AUDIO_FILES_FOLDER_NAME                @"Audio files"
+#define DOC_VRS_FILES_FOLDER_NAME              @"VRSDOC files"
 #define DATE_TIME_FORMAT                       @"MM-dd-yyyy HH:mm:ss"
 #define RESPONSE_CODE                          @"code"
 #define RESPONSE_PIN_VERIFY                    @"pinverify"
@@ -112,4 +115,16 @@ typedef enum
     DOWNLOADING,
     DOWNLOADED
 }DownloadingStatus;
+
+typedef enum
+{
+    NODELETE,
+    DELETED
+}DeleteStatus;
+
+typedef enum
+{
+    NOUPLOAD,
+    UPLOADED
+}UploadStatus;
 #endif /* Header_h */

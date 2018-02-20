@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "DownloadMetaDataJob.h"
 #import "NSData+AES256.h"
+#import "AppPreferences.h"
+#import "Database.h"
+
 @interface APIManager : NSObject<NSURLSessionDelegate,NSURLSessionTaskDelegate,NSURLSessionDataDelegate>
 {
     NSDictionary* result;
@@ -76,4 +79,7 @@
 -(void)downloafFileUsingSession:(NSString*)mobielDictationIdVal;
 
 -(void)sendDictationIds:(NSString*)dictationIdArray;
+
+-(void)sendComment:(NSString*)comment dictationId:(NSString*)mobielDictationIdVal;
+
 @end

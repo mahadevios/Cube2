@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Database.h"
+#import "APIManager.h"
+#import "AppPreferences.h"
+#import "Constants.h"
 
 @interface UserSettingsViewController : UIViewController<UIGestureRecognizerDelegate,UITextFieldDelegate>
 {

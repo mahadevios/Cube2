@@ -12,6 +12,8 @@
 #import "AlertViewController.h"
 #import "NSData+AES256.h"
 #import "SharedSession.h"
+
+
 //#import <iTunesLibrary/ITLibrary.h>
 
 
@@ -102,14 +104,16 @@
 
     if ([[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE]== NULL)//for first time to check files to be purge are available or not
     {
-        [self needsUpdate];
+       
         [self deleteDictation];
+         [self needsUpdate];
     }
     else
     if (!([[[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE] isEqualToString:todaysDate]))// this wil be 2nd day after pressing later or pressing delete
     {
-         [self needsUpdate];
         [self deleteDictation];
+        [self needsUpdate];
+
        // [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];
 
 
@@ -160,11 +164,11 @@
                                                                            {
                                                                                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms://itunes.com/apps/CubeDictate"]];
                                                                                
-                                                                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                                                                               formatter.dateFormat = @"MM-dd-yyyy";
-                                                                               NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
-                                                                               
-                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
+//                                                                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//                                                                               formatter.dateFormat = @"MM-dd-yyyy";
+//                                                                               NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
+//
+//                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
                                                                            }]; //You can use a block here to handle a press on this button
                                                            [alertController addAction:actionDelete];
                                                            
@@ -175,11 +179,11 @@
                                                                            {
                                                                                [alertController dismissViewControllerAnimated:YES completion:nil];
                                                                                
-                                                                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                                                                               formatter.dateFormat = @"MM-dd-yyyy";
-                                                                               NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
-
-                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
+//                                                                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//                                                                               formatter.dateFormat = @"MM-dd-yyyy";
+//                                                                               NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
+//
+//                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
 
                                                                                
                                                                            }]; //You can use a block here to handle a press on this button

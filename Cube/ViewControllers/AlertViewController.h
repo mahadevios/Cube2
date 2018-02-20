@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "Database.h"
+#import "APIManager.h"
+
 @interface AlertViewController : UIViewController
 {
     Database* db;
@@ -17,4 +20,6 @@
 
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property(nonatomic, strong)NSMutableArray* VRSDocFilesArray;
+
 @end

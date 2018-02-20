@@ -13,6 +13,10 @@
 #import "MBProgressHUD.h"
 #import <AudioToolbox/AudioToolbox.h>
 
+#import "Database.h"
+#import "APIManager.h"
+#import "AppPreferences.h"
+#import "Constants.h"
 // helpers
 //#include "CAXException.h"
 //#include "CAStreamBasicDescription.h"

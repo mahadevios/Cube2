@@ -410,6 +410,28 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
         }
     }
     
+    if ([self.downLoadEntityJobName isEqualToString:SEND_COMMENT_API])
+    {
+        
+        if (response != nil)
+        {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+            
+            if ([[response objectForKey:@"code"] isEqualToString:@"200"])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_COMMENT_API object:response];
+                
+                
+            }else
+            {
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            }
+        }else
+        {
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
+    }
+    
     if ([self.downLoadEntityJobName isEqualToString:DATA_SYNCHRONISATION_API])
     {
         
@@ -445,6 +467,10 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
                 
                 NSString* byteCodeString = [response valueForKey:@"ByteDocForDownload"];
                 
+                NSString* DictationID = [response valueForKey:@"DictationID"];
+                
+                NSString* fileName = [[Database shareddatabase] getfileNameFromDictationID:DictationID];
+                
                 NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:byteCodeString options:0];
                 
                 //NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -455,17 +481,20 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
                 
                 //bool isWritten = [decodedData writeToFile:appFile atomically:YES];
                 
-                NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",@"sample.doc"]];
+                NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",fileName]];
+                
+                NSString* newDestPath = [destpath stringByAppendingPathExtension:@"doc"];
                 
                 NSString* filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads"]];
                 
-                if (![[NSFileManager defaultManager] fileExistsAtPath:destpath])
+                
+                if (![[NSFileManager defaultManager] fileExistsAtPath:newDestPath])
                 {
                     NSError* error;
                     if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
                         [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
                     
-                   BOOL iswritten =  [decodedData writeToFile:destpath atomically:YES];
+                   BOOL iswritten =  [decodedData writeToFile:newDestPath atomically:YES];
                     
                 }
                 else

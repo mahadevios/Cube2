@@ -8,12 +8,17 @@
 
 #import "AlertViewController.h"
 #import "PopUpCustomView.h"
+#import "Database.h"
+#import "APIManager.h"
+#import "AppPreferences.h"
+#import "Constants.h"
+
 @interface AlertViewController ()
 
 @end
 
 @implementation AlertViewController
-
+@synthesize VRSDocFilesArray;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -31,6 +36,8 @@
     self.navigationItem.title=@"Alert";
     app.incompleteFileTransferCount= [db getCountOfTransfersOfDicatationStatus:@"RecordingPause"];
     [[Database shareddatabase] getlistOfimportedFilesAudioDetailsArray:5];
+
+    VRSDocFilesArray = [[Database shareddatabase] getVRSDocFiles];
 
     [self.tableView reloadData];
     
@@ -125,7 +132,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 7;
     
 }
 
@@ -151,13 +158,22 @@
             noDictationLabel.text=[NSString stringWithFormat:@"%ld",[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count];
             break;
             
-        case 3:inCompleteDictationLabel.text=@"Doc Files";
-            noDictationLabel.text=[NSString stringWithFormat:@"%d",0];
+        case 3:inCompleteDictationLabel.text=@"Completed Doc Files";
+            noDictationLabel.text = @"";
             break;
             
-        case 4:inCompleteDictationLabel.text=@"Speech Transcription";
-            noDictationLabel.text=[NSString stringWithFormat:@"%d",0];
+        case 4:inCompleteDictationLabel.text = @"Speech Transcription";
+            noDictationLabel.text = @"";
             break;
+        
+        case 5:inCompleteDictationLabel.text=@"VRS Doc Files";
+            noDictationLabel.text=[NSString stringWithFormat:@"%d",VRSDocFilesArray.count];
+            break;
+        
+        case 6:inCompleteDictationLabel.text = @"Custom Docx Editor";
+            noDictationLabel.text = @"";
+            break;
+            
         default:
             break;
     }
@@ -187,6 +203,15 @@
         case 4:
             [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SpeechRecognitionViewController"] animated:YES];
             break;
+        
+        case 5:
+            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectFileViewController"] animated:YES];
+            break;
+        
+        case 6:
+            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"EditDocxViewController"] animated:YES];
+            break;
+            
         default:
             break;
     }
