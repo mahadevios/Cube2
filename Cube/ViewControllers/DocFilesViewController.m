@@ -56,6 +56,7 @@
     
     [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
     
+    
     [self.tabBarController.tabBar setHidden:YES];
 
    // self.navigationController.navigationBar.translucent = NO;
