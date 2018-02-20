@@ -3851,7 +3851,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.96854275465011597" green="0.96868163347244263" blue="0.96851247549057007" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="p8Y-Kg-Yv6" firstAttribute="centerY" secondItem="rpq-8Z-hb0" secondAttribute="centerY" multiplier="1.15" id="pVX-iS-eVz"/>
                                     <constraint firstItem="p8Y-Kg-Yv6" firstAttribute="centerX" secondItem="rpq-8Z-hb0" secondAttribute="centerX" id="xC3-rz-b9C"/>
@@ -4102,49 +4102,50 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPZ-jc-Lty">
-                                <rect key="frame" x="41" y="28" width="42" height="30"/>
-                                <state key="normal" title="UnZip"/>
-                                <connections>
-                                    <action selector="unZipDoc:" destination="VAV-aB-v0I" eventType="touchUpInside" id="Wkr-OK-SMb"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RVj-8X-n5F">
-                                <rect key="frame" x="140.33333333333334" y="28" width="30" height="30"/>
-                                <state key="normal" title="Zip"/>
-                                <connections>
-                                    <action selector="zipDoc:" destination="VAV-aB-v0I" eventType="touchUpInside" id="Otp-OC-QGX"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bTc-at-hbI">
-                                <rect key="frame" x="223.66666666666663" y="28" width="70" height="30"/>
-                                <state key="normal" title="ParseXML"/>
-                                <connections>
-                                    <action selector="parseXMLFiles:" destination="VAV-aB-v0I" eventType="touchUpInside" id="sTk-wL-haQ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F2i-UV-sPE">
-                                <rect key="frame" x="355.66666666666669" y="28" width="34" height="30"/>
-                                <state key="normal" title="Save"/>
-                                <connections>
-                                    <action selector="saveEditedFile:" destination="VAV-aB-v0I" eventType="touchUpInside" id="gFE-0U-LyB"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vx0-KY-fwO">
-                                <rect key="frame" x="316" y="66" width="46" height="30"/>
-                                <state key="normal" title="View"/>
-                                <connections>
-                                    <action selector="viewNewlyCreatedDocx:" destination="VAV-aB-v0I" eventType="touchUpInside" id="wbs-fu-Zuk"/>
-                                </connections>
-                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZD-BD-GFi">
+                                <rect key="frame" x="0.0" y="20" width="414" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bTc-at-hbI">
+                                        <rect key="frame" x="70.666666666666671" y="15" width="66.000000000000014" height="30"/>
+                                        <state key="normal" title="Edit Docx"/>
+                                        <connections>
+                                            <action selector="parseXMLFiles:" destination="VAV-aB-v0I" eventType="touchUpInside" id="sTk-wL-haQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F2i-UV-sPE">
+                                        <rect key="frame" x="190" y="15" width="34" height="30"/>
+                                        <state key="normal" title="Save"/>
+                                        <connections>
+                                            <action selector="saveEditedFile:" destination="VAV-aB-v0I" eventType="touchUpInside" id="gFE-0U-LyB"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vx0-KY-fwO">
+                                        <rect key="frame" x="274" y="15" width="73" height="30"/>
+                                        <state key="normal" title="View Docx"/>
+                                        <connections>
+                                            <action selector="viewNewlyCreatedDocx:" destination="VAV-aB-v0I" eventType="touchUpInside" id="wbs-fu-Zuk"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.96854275465011597" green="0.96868163347244263" blue="0.96851247549057007" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="vx0-KY-fwO" firstAttribute="centerX" secondItem="kZD-BD-GFi" secondAttribute="centerX" multiplier="1.5" id="2F6-gE-jyI"/>
+                                    <constraint firstAttribute="height" constant="60" id="Lot-jH-wBs"/>
+                                    <constraint firstItem="F2i-UV-sPE" firstAttribute="centerY" secondItem="bTc-at-hbI" secondAttribute="centerY" id="OBI-1e-Ijp"/>
+                                    <constraint firstItem="F2i-UV-sPE" firstAttribute="centerX" secondItem="kZD-BD-GFi" secondAttribute="centerX" id="R7n-eF-r8P"/>
+                                    <constraint firstItem="bTc-at-hbI" firstAttribute="centerX" secondItem="kZD-BD-GFi" secondAttribute="centerX" multiplier="0.5" id="diu-CY-LhO"/>
+                                    <constraint firstItem="bTc-at-hbI" firstAttribute="centerY" secondItem="kZD-BD-GFi" secondAttribute="centerY" id="jF0-q4-neH"/>
+                                    <constraint firstItem="vx0-KY-fwO" firstAttribute="centerY" secondItem="F2i-UV-sPE" secondAttribute="centerY" id="ov8-ZC-8UF"/>
+                                </constraints>
+                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pxM-ff-wVK">
-                                <rect key="frame" x="0.0" y="106" width="414" height="630"/>
+                                <rect key="frame" x="3" y="106" width="408" height="630"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Twp-aw-vGP">
-                                        <rect key="frame" x="0.0" y="1" width="414" height="128"/>
+                                        <rect key="frame" x="0.0" y="1" width="408" height="128"/>
                                         <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" text="hjkn" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eHa-kI-O7r">
-                                                <rect key="frame" x="10" y="10" width="372.66666666666669" height="32"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eHa-kI-O7r">
+                                                <rect key="frame" x="5" y="3" width="398" height="32"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="32" id="txj-mu-yCd"/>
@@ -4155,37 +4156,38 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="eHa-kI-O7r" firstAttribute="top" secondItem="Twp-aw-vGP" secondAttribute="top" constant="10" id="2Vb-ug-ob0"/>
-                                            <constraint firstItem="eHa-kI-O7r" firstAttribute="width" secondItem="Twp-aw-vGP" secondAttribute="width" multiplier="0.9" id="AA0-8j-po9"/>
-                                            <constraint firstItem="eHa-kI-O7r" firstAttribute="leading" secondItem="Twp-aw-vGP" secondAttribute="leading" constant="10" id="LGW-6y-Lm7"/>
+                                            <constraint firstItem="eHa-kI-O7r" firstAttribute="top" secondItem="Twp-aw-vGP" secondAttribute="top" constant="3" id="2Vb-ug-ob0"/>
+                                            <constraint firstItem="eHa-kI-O7r" firstAttribute="width" secondItem="Twp-aw-vGP" secondAttribute="width" constant="-10" id="AA0-8j-po9"/>
+                                            <constraint firstItem="eHa-kI-O7r" firstAttribute="leading" secondItem="Twp-aw-vGP" secondAttribute="leading" constant="5" id="LGW-6y-Lm7"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Twp-aw-vGP" firstAttribute="leading" secondItem="pxM-ff-wVK" secondAttribute="leading" id="4o9-wU-6gy"/>
-                                    <constraint firstItem="Twp-aw-vGP" firstAttribute="top" secondItem="pxM-ff-wVK" secondAttribute="top" constant="1" id="H07-3y-BQa"/>
+                                    <constraint firstItem="Twp-aw-vGP" firstAttribute="top" secondItem="pxM-ff-wVK" secondAttribute="top" id="H07-3y-BQa"/>
                                     <constraint firstAttribute="bottom" secondItem="Twp-aw-vGP" secondAttribute="bottom" id="X2W-Vv-s0N"/>
                                     <constraint firstAttribute="trailing" secondItem="Twp-aw-vGP" secondAttribute="trailing" id="tzA-yO-VOm"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="RVj-8X-n5F" firstAttribute="centerY" secondItem="pPZ-jc-Lty" secondAttribute="centerY" id="0Xg-53-UQE"/>
-                            <constraint firstItem="pxM-ff-wVK" firstAttribute="leading" secondItem="ttv-nR-dpw" secondAttribute="leading" id="5Ql-Kh-pXW"/>
-                            <constraint firstItem="vx0-KY-fwO" firstAttribute="centerX" secondItem="F2i-UV-sPE" secondAttribute="centerX" id="BVw-kE-YYZ"/>
-                            <constraint firstItem="vx0-KY-fwO" firstAttribute="top" secondItem="F2i-UV-sPE" secondAttribute="bottom" constant="8" id="InN-OD-bUJ"/>
-                            <constraint firstItem="r4c-0z-DQg" firstAttribute="top" secondItem="pxM-ff-wVK" secondAttribute="bottom" id="aZ2-GV-T1l"/>
-                            <constraint firstItem="F2i-UV-sPE" firstAttribute="centerX" secondItem="ttv-nR-dpw" secondAttribute="centerX" multiplier="1.8" id="cvb-RD-7Rn"/>
-                            <constraint firstItem="RVj-8X-n5F" firstAttribute="centerX" secondItem="ttv-nR-dpw" secondAttribute="centerX" multiplier="0.75" id="czU-Cs-fSf"/>
-                            <constraint firstAttribute="trailing" secondItem="pxM-ff-wVK" secondAttribute="trailing" id="dt2-jI-UTc"/>
-                            <constraint firstItem="Twp-aw-vGP" firstAttribute="width" secondItem="ttv-nR-dpw" secondAttribute="width" id="g1X-n8-3Zq"/>
-                            <constraint firstItem="pPZ-jc-Lty" firstAttribute="top" secondItem="9hf-17-4gY" secondAttribute="bottom" constant="8" id="jBy-pE-cZp"/>
-                            <constraint firstItem="pxM-ff-wVK" firstAttribute="top" secondItem="vx0-KY-fwO" secondAttribute="bottom" constant="10" id="m3f-S5-F9Z"/>
-                            <constraint firstItem="bTc-at-hbI" firstAttribute="centerY" secondItem="RVj-8X-n5F" secondAttribute="centerY" id="pff-N2-KRk"/>
-                            <constraint firstItem="pPZ-jc-Lty" firstAttribute="centerX" secondItem="ttv-nR-dpw" secondAttribute="centerX" multiplier="0.3" id="qbC-sx-iNP"/>
-                            <constraint firstItem="F2i-UV-sPE" firstAttribute="centerY" secondItem="bTc-at-hbI" secondAttribute="centerY" id="xQh-yr-4fw"/>
-                            <constraint firstItem="bTc-at-hbI" firstAttribute="centerX" secondItem="ttv-nR-dpw" secondAttribute="centerX" multiplier="1.25" id="z3F-Id-jzP"/>
+                            <constraint firstItem="pxM-ff-wVK" firstAttribute="leading" secondItem="ttv-nR-dpw" secondAttribute="leading" constant="3" id="5Ql-Kh-pXW"/>
+                            <constraint firstItem="pxM-ff-wVK" firstAttribute="top" secondItem="kZD-BD-GFi" secondAttribute="bottom" constant="5" id="W3A-kc-Rgj"/>
+                            <constraint firstItem="kZD-BD-GFi" firstAttribute="top" secondItem="9hf-17-4gY" secondAttribute="bottom" id="YV1-23-bnT"/>
+                            <constraint firstItem="r4c-0z-DQg" firstAttribute="top" secondItem="pxM-ff-wVK" secondAttribute="bottom" constant="3" id="aZ2-GV-T1l"/>
+                            <constraint firstItem="kZD-BD-GFi" firstAttribute="centerX" secondItem="ttv-nR-dpw" secondAttribute="centerX" id="b7w-J5-Yp1"/>
+                            <constraint firstAttribute="trailing" secondItem="pxM-ff-wVK" secondAttribute="trailing" constant="3" id="dt2-jI-UTc"/>
+                            <constraint firstItem="kZD-BD-GFi" firstAttribute="width" secondItem="ttv-nR-dpw" secondAttribute="width" id="eQA-tp-j3L"/>
+                            <constraint firstItem="Twp-aw-vGP" firstAttribute="width" secondItem="ttv-nR-dpw" secondAttribute="width" constant="-6" id="g1X-n8-3Zq"/>
                         </constraints>
                     </view>
                     <connections>
@@ -4196,7 +4198,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xH0-bF-hp8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8593" y="141"/>
+            <point key="canvasLocation" x="8592.753623188406" y="140.21739130434784"/>
         </scene>
     </scenes>
     <resources>

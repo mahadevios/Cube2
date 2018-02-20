@@ -62,7 +62,6 @@
 		847B83FB202B072100D69755 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 847B83E2202B072100D69755 /* DDXMLNode.m */; };
 		847B83FC202B072100D69755 /* NSString+DDXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 847B83E5202B072100D69755 /* NSString+DDXML.m */; };
 		847B83FF202B0F5100D69755 /* EditDocxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847B83FE202B0F5100D69755 /* EditDocxViewController.m */; };
-		847B8401202B139600D69755 /* Kuldeep.docx in Resources */ = {isa = PBXBuildFile; fileRef = 847B8400202B139600D69755 /* Kuldeep.docx */; };
 		847D95951D5F14DC00145C32 /* AppPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 847D95941D5F14DC00145C32 /* AppPreferences.m */; };
 		847D959A1D5F150200145C32 /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 847D95971D5F150200145C32 /* APIManager.m */; };
 		847D959B1D5F150200145C32 /* DownloadMetaDataJob.m in Sources */ = {isa = PBXBuildFile; fileRef = 847D95991D5F150200145C32 /* DownloadMetaDataJob.m */; };
@@ -82,6 +81,8 @@
 		84B87BCE1D76859A002B91FB /* UIDevice+Identifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B87BCD1D76859A002B91FB /* UIDevice+Identifier.m */; };
 		84B87BD11D770D1D002B91FB /* SplashScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B87BD01D770D1D002B91FB /* SplashScreenViewController.m */; };
 		84BD03061FC2DD7C006C45A6 /* DocFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */; };
+		84BECDF7202D897500F40BA1 /* Docx2.docx in Resources */ = {isa = PBXBuildFile; fileRef = 84BECDF6202D897400F40BA1 /* Docx2.docx */; };
+		84BECDF9202DAC0A00F40BA1 /* sample.docx in Resources */ = {isa = PBXBuildFile; fileRef = 84BECDF8202DAC0900F40BA1 /* sample.docx */; };
 		84CC5F731D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC5F721D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m */; };
 		84CC5F761D74351900D1E982 /* DepartMent.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC5F751D74351900D1E982 /* DepartMent.m */; };
 		84CC5F791D747B8200D1E982 /* PinRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC5F781D747B8200D1E982 /* PinRegistrationViewController.m */; };
@@ -256,7 +257,6 @@
 		847B83E5202B072100D69755 /* NSString+DDXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDXML.m"; sourceTree = "<group>"; };
 		847B83FD202B0F5100D69755 /* EditDocxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDocxViewController.h; sourceTree = "<group>"; };
 		847B83FE202B0F5100D69755 /* EditDocxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDocxViewController.m; sourceTree = "<group>"; };
-		847B8400202B139600D69755 /* Kuldeep.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kuldeep.docx; sourceTree = "<group>"; };
 		847D95931D5F14DC00145C32 /* AppPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppPreferences.h; sourceTree = "<group>"; };
 		847D95941D5F14DC00145C32 /* AppPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppPreferences.m; sourceTree = "<group>"; };
 		847D95961D5F150200145C32 /* APIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIManager.h; sourceTree = "<group>"; };
@@ -296,6 +296,8 @@
 		84B87BD01D770D1D002B91FB /* SplashScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashScreenViewController.m; sourceTree = "<group>"; };
 		84BD03041FC2DD7C006C45A6 /* DocFilesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DocFilesViewController.h; sourceTree = "<group>"; };
 		84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DocFilesViewController.m; sourceTree = "<group>"; };
+		84BECDF6202D897400F40BA1 /* Docx2.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = Docx2.docx; sourceTree = "<group>"; };
+		84BECDF8202DAC0900F40BA1 /* sample.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.docx; sourceTree = "<group>"; };
 		84CC5F711D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferredOrDeletedAudioDetailsViewController.h; sourceTree = "<group>"; };
 		84CC5F721D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferredOrDeletedAudioDetailsViewController.m; sourceTree = "<group>"; };
 		84CC5F741D74351900D1E982 /* DepartMent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepartMent.h; sourceTree = "<group>"; };
@@ -478,7 +480,8 @@
 				84B87BCC1D76859A002B91FB /* UIDevice+Identifier.h */,
 				84B87BCD1D76859A002B91FB /* UIDevice+Identifier.m */,
 				847222441D47368A00C00F20 /* AppDelegate.h */,
-				847B8400202B139600D69755 /* Kuldeep.docx */,
+				84BECDF8202DAC0900F40BA1 /* sample.docx */,
+				84BECDF6202D897400F40BA1 /* Docx2.docx */,
 				847222451D47368A00C00F20 /* AppDelegate.mm */,
 				8472224A1D47368A00C00F20 /* Main.storyboard */,
 				8472224D1D47368A00C00F20 /* Assets.xcassets */,
@@ -941,10 +944,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				849F02751D754B7400E74723 /* Cube_DB.sqlite in Resources */,
+				84BECDF7202D897500F40BA1 /* Docx2.docx in Resources */,
 				847222511D47368A00C00F20 /* LaunchScreen.storyboard in Resources */,
 				8472224E1D47368A00C00F20 /* Assets.xcassets in Resources */,
+				84BECDF9202DAC0A00F40BA1 /* sample.docx in Resources */,
 				847B83E6202B072100D69755 /* Info.plist in Resources */,
-				847B8401202B139600D69755 /* Kuldeep.docx in Resources */,
 				8472224C1D47368A00C00F20 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

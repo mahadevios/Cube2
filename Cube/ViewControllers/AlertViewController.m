@@ -132,7 +132,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return 7;
     
 }
 
@@ -169,6 +169,10 @@
         case 5:inCompleteDictationLabel.text=@"VRS Doc Files";
             noDictationLabel.text=[NSString stringWithFormat:@"%d",VRSDocFilesArray.count];
             break;
+        
+        case 6:inCompleteDictationLabel.text = @"Custom Docx Editor";
+            noDictationLabel.text = @"";
+            break;
             
         default:
             break;
@@ -202,6 +206,10 @@
         
         case 5:
             [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectFileViewController"] animated:YES];
+            break;
+        
+        case 6:
+            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"EditDocxViewController"] animated:YES];
             break;
             
         default:
