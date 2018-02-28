@@ -118,12 +118,14 @@
 
 
     }
+    
     NSLog(@"%@",NSHomeDirectory());
     // [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms://itunes.com/apps/CubeDictate"]];
   //  [[Database shareddatabase] updateAudioFileName];
 
  //   [[NSUserDefaults standardUserDefaults] setValue:NULL forKey:PURGE_DATA_DATE];
-
+     self.tabBarController.tabBar.userInteractionEnabled = true;
+    
      [self.tabBarController.tabBar setHidden:NO];
     
     
