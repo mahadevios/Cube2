@@ -32,5 +32,6 @@
 @property (weak, nonatomic) IBOutlet UIView *transferredView;
 @property (weak, nonatomic) IBOutlet UIView *awaitingTransferView;
 @property (weak, nonatomic) IBOutlet UIView *transferFailedView;
+@property (weak, nonatomic) IBOutlet UILabel *failedCountLabel;
 
 @end
