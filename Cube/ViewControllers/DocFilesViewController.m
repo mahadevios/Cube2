@@ -75,10 +75,14 @@
     
     NSArray* completedFilesResponseArray = [response valueForKey:@"CompletedList"];
     
+    
 //    NSData* completedFilesResponseData = [completedFilesResponseString dataUsingEncoding:NSUTF8StringEncoding];
 //
 //    NSError* error;
+    //    NSError* error;
+
 //
+    
 //    NSArray* completedFilesResponseArray = [NSJSONSerialization JSONObjectWithData:completedFilesResponseData options:NSJSONReadingAllowFragments error:&error];
     
     [self.completedFilesResponseArray removeAllObjects];

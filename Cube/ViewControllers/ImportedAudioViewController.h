@@ -24,6 +24,7 @@
     UIAlertAction *actionDelete;
     UIAlertAction *actionCancel;
     AVAudioPlayer* player;
+    
 }
 
 @property(nonatomic,strong)NSString* audioFilePath;

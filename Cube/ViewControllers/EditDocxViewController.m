@@ -23,6 +23,7 @@
     [super viewDidLoad];
     
     modifiedTextViewTagsArray = [NSMutableArray new];
+    
     textViewContentHeightDict = [NSMutableDictionary new];
     referenceTextView.translatesAutoresizingMaskIntoConstraints = true;
     [referenceTextView sizeToFit];
