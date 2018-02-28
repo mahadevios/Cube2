@@ -15,6 +15,7 @@
 @end
 
 @implementation EditDocxViewController
+
 @synthesize referenceTextView,textViewCount,scrollView,insideView,textAdded,elementChanged,modifiedTextViewTagsArray,XPathForTextViewDict,theDocument,elementIndexDict,bundleFileName,zipDocxFileName,unzipFolderName,textViewContentHeightDict;
 - (void)viewDidLoad
 {
