@@ -22,7 +22,7 @@
 @end
 
 @implementation HomeViewController
-@synthesize transferredView,transferFailedView,awaitingTransferView;
+@synthesize transferredView,transferFailedView,awaitingTransferView,failedCountLabel;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
