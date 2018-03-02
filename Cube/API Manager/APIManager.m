@@ -460,7 +460,7 @@ static APIManager *singleton = nil;
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-        [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Loading Files" detailText:@"Please wait.."];
+        //[[AppPreferences sharedAppPreferences] showHudWithTitle:@"Loading Files" detailText:@"Please wait.."];
         
         NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
         

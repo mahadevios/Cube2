@@ -33,5 +33,10 @@
 @property (weak, nonatomic) IBOutlet UIView *awaitingTransferView;
 @property (weak, nonatomic) IBOutlet UIView *transferFailedView;
 @property (weak, nonatomic) IBOutlet UILabel *failedCountLabel;
+@property (strong, nonatomic) NSMutableArray *completedFilesResponseArray;
+@property (strong, nonatomic) NSMutableArray *completedFilesForTableViewArray;
+@property (strong, nonatomic) NSMutableArray *downloadingFilesDictationIdsArray;
+@property (strong, nonatomic) NSArray *uploadedFilesArray;
+@property (weak, nonatomic) IBOutlet UILabel *completedDocCountLabel;
 
 @end

@@ -436,6 +436,9 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" tag="503" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="33g-OF-g6A">
                                         <rect key="frame" x="12.000000000000004" y="50.666666666666686" width="47.333333333333343" height="51.333333333333343"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="47.329999999999998" id="Z4v-Ha-aEh"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="43"/>
                                         <color key="textColor" red="0.084668464467005045" green="0.084668464467005045" blue="0.084668464467005045" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -522,6 +525,7 @@
                     <navigationItem key="navigationItem" title="Cube Dictate" id="6yd-B1-oME"/>
                     <connections>
                         <outlet property="awaitingTransferView" destination="X3j-PS-gde" id="uVX-mu-k7C"/>
+                        <outlet property="completedDocCountLabel" destination="33g-OF-g6A" id="EHk-av-Iqs"/>
                         <outlet property="failedCountLabel" destination="WMt-Ds-vog" id="M0N-M8-WEh"/>
                         <outlet property="transferFailedView" destination="KH2-Tl-D5J" id="oMY-VC-LDL"/>
                         <outlet property="transferredView" destination="UKb-cu-0jh" id="FxQ-qn-HSA"/>
