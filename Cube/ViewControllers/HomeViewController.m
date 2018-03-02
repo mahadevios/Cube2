@@ -37,13 +37,17 @@
     
     tapRecogniser=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
     tapRecogniser1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
-    tapRecogniser2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+    tapRecogniser2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showCompletedDocFIlesView:)];
     [transferredView addGestureRecognizer:tapRecogniser];
     [awaitingTransferView addGestureRecognizer:tapRecogniser1];
     [transferFailedView addGestureRecognizer:tapRecogniser2];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(getCounts) name:NOTIFICATION_FILE_UPLOAD_API
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(validateSendIdsResponse:) name:NOTIFICATION_SEND_DICTATION_IDS_API
                                                object:nil];
     // Do any additional setup after loading the view.
 }
@@ -128,9 +132,70 @@
     
      [self.tabBarController.tabBar setHidden:NO];
     
+     NSArray* uploadedFilesDictationIdArray = [[Database shareddatabase] getUploadedFilesDictationIdList];
+    
+     NSString* uploadedFilesDictationIdString = [uploadedFilesDictationIdArray componentsJoinedByString:@","];
     
     
+     [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
+    
+    // show spinner on completed doc view in front of count
+    //creating a spinner
+    UIActivityIndicatorView * completedDocSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    completedDocSpinner.frame = CGRectMake(_completedDocCountLabel.frame.origin.x+_completedDocCountLabel.frame.size.width+20,_completedDocCountLabel.frame.origin.y+10 ,30 ,30 );
+    completedDocSpinner.tag = 12;
+    //Adding spinner to Completed Doc view
+    [transferFailedView addSubview:completedDocSpinner];
+    // starting the spinner.
+    [completedDocSpinner startAnimating];
 //    [[Database shareddatabase] setDepartment];//to insert default department for imported files
+}
+
+
+-(void)validateSendIdsResponse:(NSNotification*)obj
+{
+    int completedDocCount=0;
+    NSString* response = obj.object;
+    // getting completed files count.
+    NSArray* completedFilesResponseArray = [response valueForKey:@"CompletedList"];
+    completedDocCount = [completedFilesResponseArray count];
+    //converting integer value of completed doc count to string.
+    NSString* completedDocCountStrValue = [NSString stringWithFormat:@"%i",completedDocCount];
+ //remove spinner from completed doc view
+    [[self.view viewWithTag:12] removeFromSuperview];
+    //set completed doc count to completedDocCountLabel
+    self.completedDocCountLabel.text = completedDocCountStrValue;
+    
+//    [self.completedFilesResponseArray removeAllObjects];
+//
+//    for (int i=0; i<completedFilesResponseArray.count; i++)
+//    {
+//        NSDictionary* dic = [completedFilesResponseArray objectAtIndex:i];
+//
+//        NSString* dictationId = [dic valueForKey:@"DictationID"];
+//
+//        [self.completedFilesResponseArray addObject:dictationId];
+//    }
+//
+//    for (int i=0; i<self.uploadedFilesArray.count; i++)
+//    {
+//        AudioDetails* audioDetails = [self.uploadedFilesArray objectAtIndex:i];
+//
+//        NSString* dictationId = [NSString stringWithFormat:@"%d", audioDetails.mobiledictationidval];
+//
+//        if ([self.completedFilesResponseArray containsObject:dictationId])
+//        {
+//            //            [self.completedFilesResponseArray removeObject:audioDetails];
+//            [self.completedFilesForTableViewArray addObject:audioDetails];
+//        }
+//        else
+//        {
+//            //            [self.completedFilesForTableViewArray addObject:audioDetails];
+//        }
+//    }
+    
+    
+    
 }
 
 -(BOOL) needsUpdate
@@ -425,6 +490,13 @@
     //NSLog(@"%@",self.tabBarController);
     
 }
+
+-(void)showCompletedDocFIlesView:(UITapGestureRecognizer*)sender
+{
+   [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"DocFilesViewController"] animated:YES];
+    
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
