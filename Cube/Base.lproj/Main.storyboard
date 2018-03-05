@@ -652,25 +652,6 @@
             </objects>
             <point key="canvasLocation" x="4634" y="142"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="sNg-cU-0i5">
-            <objects>
-                <viewController id="0xK-xH-xb7" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="7cE-Oi-5sr"/>
-                        <viewControllerLayoutGuide type="bottom" id="4iN-Ix-rRI"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="2yC-ci-3VX">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="vWV-j9-wt4"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="e9y-ai-Evu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2955.072463768116" y="-563.31521739130437"/>
-        </scene>
         <!--Audio Details-->
         <scene sceneID="LuP-UT-Gz4">
             <objects>
@@ -1696,7 +1677,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dEv-Ib-VcC">
-                                <rect key="frame" x="0.0" y="20" width="414" height="70"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="70"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Agd-v4-q4m">
                                         <rect key="frame" x="66.333333333333314" y="-9.6666666666666643" width="74.666666666666686" height="75.333333333333314"/>
@@ -1741,21 +1722,21 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TransRecord" translatesAutoresizingMaskIntoConstraints="NO" id="3CX-zD-yNn">
-                                        <rect key="frame" x="86.666666666666671" y="10.666666666666668" width="35" height="35"/>
+                                        <rect key="frame" x="86.666666666666671" y="10.666666666666671" width="35" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="35" id="Ywi-JS-lWX"/>
                                             <constraint firstAttribute="height" constant="35" id="sjR-di-GBM"/>
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TransStop" translatesAutoresizingMaskIntoConstraints="NO" id="WzH-VW-fcx">
-                                        <rect key="frame" x="189.33333333333334" y="10.666666666666668" width="35" height="35"/>
+                                        <rect key="frame" x="189.33333333333334" y="10.666666666666671" width="35" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="2JN-JH-wTH"/>
                                             <constraint firstAttribute="width" constant="35" id="x3X-Ik-HWk"/>
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TransFile" translatesAutoresizingMaskIntoConstraints="NO" id="eAT-k8-IEG">
-                                        <rect key="frame" x="294" y="10.666666666666668" width="35" height="35"/>
+                                        <rect key="frame" x="294" y="10.666666666666671" width="35" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="kDW-2m-SCs"/>
                                             <constraint firstAttribute="width" constant="35" id="p9e-3P-ggK"/>
@@ -1809,7 +1790,7 @@
                                 </constraints>
                             </view>
                             <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="w1G-4r-nfB">
-                                <rect key="frame" x="113.66666666666669" y="30" width="187" height="29"/>
+                                <rect key="frame" x="113.66666666666669" y="74" width="187" height="29"/>
                                 <segments>
                                     <segment title="PreRecorded"/>
                                     <segment title="Live"/>
@@ -1819,7 +1800,7 @@
                                 </connections>
                             </segmentedControl>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7qx-uS-fCj">
-                                <rect key="frame" x="0.0" y="105" width="414" height="631"/>
+                                <rect key="frame" x="0.0" y="149" width="414" height="538"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ku-cA-TVA">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
@@ -1862,6 +1843,7 @@
                             <constraint firstItem="dEv-Ib-VcC" firstAttribute="centerX" secondItem="l3t-eG-frr" secondAttribute="centerX" id="x1R-Pa-rRG"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="BpP-Qt-VpH"/>
                     <connections>
                         <outlet property="docFileButton" destination="j0A-dp-LwK" id="aYC-Ri-JDq"/>
                         <outlet property="docFileLabel" destination="k6M-e2-ddV" id="kHG-co-9je"/>
@@ -1878,7 +1860,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bld-x8-Tlj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2637.68115942029" y="1558.6956521739132"/>
+            <point key="canvasLocation" x="3041" y="-563"/>
         </scene>
         <!--Doc Files View Controller-->
         <scene sceneID="bD9-W6-Qrt">
@@ -4305,7 +4287,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="0xK-xH-xb7" kind="relationship" relationship="rootViewController" id="aBs-tp-bef"/>
+                        <segue destination="7Gc-rA-3Zl" kind="relationship" relationship="rootViewController" id="saY-F1-1iA"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AM3-jW-bFX" userLabel="First Responder" sceneMemberID="firstResponder"/>
