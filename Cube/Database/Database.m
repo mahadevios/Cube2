@@ -668,7 +668,7 @@ static Database *db;
         if ([status isEqualToString:@"RecordingComplete"])
         {
 
-    query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') or DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') and (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')  or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@'))",status,@"RecordingFileUpload",@"NotTransferred",@"Resend",@"ResendFailed"];
+    query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') or DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') and (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')  or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')   or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@'))",status,@"RecordingFileUpload",@"NotTransferred",@"Resend",@"ResendFailed",@"TransferFailed"];
         }
     
     else
