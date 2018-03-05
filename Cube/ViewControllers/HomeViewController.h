@@ -38,5 +38,7 @@
 @property (strong, nonatomic) NSMutableArray *downloadingFilesDictationIdsArray;
 @property (strong, nonatomic) NSArray *uploadedFilesArray;
 @property (weak, nonatomic) IBOutlet UILabel *completedDocCountLabel;
+@property (weak, nonatomic) IBOutlet UIView *transferFailedCountView;
+@property (weak, nonatomic) IBOutlet UILabel *transferFailedCountLabel;
 
 @end

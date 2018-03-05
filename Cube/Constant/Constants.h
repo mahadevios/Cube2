@@ -88,7 +88,7 @@
 #define CURRENT_VESRION                        @"currentVersion"
 
 #define RECORDING_LIMIT                        3600
-
+#define ALERT_TAB_LOCATION                     4
 #define PURGE_DATA_DATE                        @"purgeDataDate"
 //#define APPLICATION_TERMINATE_CALLED           @"applicationTerminate"
 

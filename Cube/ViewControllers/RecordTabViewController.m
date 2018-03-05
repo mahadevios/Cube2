@@ -25,7 +25,7 @@
 {
     //NSLog(@"%@",self.view.window.rootViewController);
     [AppPreferences sharedAppPreferences].selectedTabBarIndex=2;
-    UIViewController *alertViewController = [self.tabBarController.viewControllers objectAtIndex:3];
+    UIViewController *alertViewController = [self.tabBarController.viewControllers objectAtIndex:ALERT_TAB_LOCATION];
     
      NSString* alertCount=[[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
     if ([alertCount isEqualToString:@"0"])
