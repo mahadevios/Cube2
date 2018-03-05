@@ -140,9 +140,11 @@
     
      [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
     
-    // show spinner on completed doc view in front of count
     //creating a spinner
-    UIActivityIndicatorView * completedDocSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    UIActivityIndicatorView * completedDocSpinner = [[UIActivityIndicatorView alloc]init];
+    
+    //changing color of completed document spinner
+    completedDocSpinner.color = [UIColor blackColor];
     
     // setting position of spinner on ui
     completedDocSpinner.frame = CGRectMake(_completedDocCountLabel.frame.origin.x,_completedDocCountLabel.frame.origin.y+10 ,30 ,30 );
