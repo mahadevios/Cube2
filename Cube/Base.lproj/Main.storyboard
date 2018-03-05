@@ -348,7 +348,8 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" tag="501" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vjr-fw-tmf">
+
+                                    <label opaque="NO" userInteractionEnabled="NO" tag="501" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vjr-fw-tmf">
 
                                         <rect key="frame" x="12.000000000000004" y="51.333333333333343" width="47.333333333333343" height="51.333333333333343"/>
 
@@ -386,7 +387,8 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" tag="502" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZg-GV-Irw">
+
+                                    <label opaque="NO" userInteractionEnabled="NO" tag="502" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZg-GV-Irw">
 
                                         <rect key="frame" x="13.000000000000002" y="51.666666666666657" width="27.666666666666671" height="51.333333333333343"/>
 
@@ -449,7 +451,7 @@
 
                                 <rect key="frame" x="4.3333333333333286" y="264" width="198.66666666666669" height="139.66666666666663"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" tag="503" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="33g-OF-g6A">
+                                    <label opaque="NO" userInteractionEnabled="NO" tag="503" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="33g-OF-g6A">
                                         <rect key="frame" x="12.000000000000004" y="50.666666666666686" width="47.333333333333343" height="51.333333333333343"/>
 
                                         <constraints>
@@ -492,8 +494,10 @@
                                 <rect key="frame" x="211" y="264" width="199" height="139.66666666666663"/>
 
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" tag="503" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ROv-Pp-uJU">
-                                        <rect key="frame" x="18" y="24.5" width="48.5" height="51"/>
+
+                                    <label opaque="NO" userInteractionEnabled="NO" tag="503" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ROv-Pp-uJU">
+                                        <rect key="frame" x="18.000000000000004" y="51" width="48.333333333333343" height="51.333333333333343"/>
+
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="43"/>
                                         <color key="textColor" red="0.084668464467005045" green="0.064070422926866322" blue="0.043627062401701659" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -553,6 +557,8 @@
                         <outlet property="awaitingTransferView" destination="X3j-PS-gde" id="uVX-mu-k7C"/>
                         <outlet property="completedDocCountLabel" destination="33g-OF-g6A" id="EHk-av-Iqs"/>
                         <outlet property="failedCountLabel" destination="WMt-Ds-vog" id="M0N-M8-WEh"/>
+                        <outlet property="transferFailedCountLabel" destination="WMt-Ds-vog" id="MmX-7r-0Ff"/>
+                        <outlet property="transferFailedCountView" destination="YPv-Dj-lJU" id="ZEj-eM-sEy"/>
                         <outlet property="transferFailedView" destination="KH2-Tl-D5J" id="oMY-VC-LDL"/>
                         <outlet property="transferredView" destination="UKb-cu-0jh" id="FxQ-qn-HSA"/>
                     </connections>
@@ -3645,8 +3651,7 @@
         <scene sceneID="faf-HR-Nqv">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9tW-Si-fq6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="NewRecordTab" selectedImage="NewRecordTab" id="hLK-zm-P2o">
-                        <inset key="imageInsets" minX="50" minY="50" maxX="50" maxY="50"/>
+                    <tabBarItem key="tabBarItem" title="" image="RecordTab" selectedImage="RecordTab" id="hLK-zm-P2o">
                         <inset key="largeContentSizeImageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
@@ -4364,8 +4369,8 @@
         <image name="ListActive" width="24" height="19"/>
         <image name="ListGray" width="24" height="19"/>
         <image name="More" width="6" height="21"/>
-        <image name="NewRecordTab" width="90" height="72"/>
         <image name="PlayRecrding" width="65" height="65"/>
+        <image name="RecordTab" width="22" height="26"/>
         <image name="SpeechTab" width="24" height="24"/>
         <image name="StopNew" width="78" height="78"/>
         <image name="TransFile" width="35" height="35"/>

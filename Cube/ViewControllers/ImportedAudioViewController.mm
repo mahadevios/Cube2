@@ -97,7 +97,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     NSString* alertCount=[[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
     
-    UIViewController *alertViewController = [self.tabBarController.viewControllers objectAtIndex:3];
+    UIViewController *alertViewController = [self.tabBarController.viewControllers objectAtIndex:ALERT_TAB_LOCATION];
     
     if ([alertCount isEqualToString:@"0"])
     {

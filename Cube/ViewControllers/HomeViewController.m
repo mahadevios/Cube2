@@ -136,6 +136,7 @@
     
      NSString* uploadedFilesDictationIdString = [uploadedFilesDictationIdArray componentsJoinedByString:@","];
     
+     [self showTransferFailedCount];
     
      [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
     
@@ -150,7 +151,25 @@
     [completedDocSpinner startAnimating];
 //    [[Database shareddatabase] setDepartment];//to insert default department for imported files
 }
-
+// showing 1 Failed view depending on transfer failed count.
+-(void) showTransferFailedCount
+{
+    // getting array of transfered failed
+    NSArray * transferFailedCountArray = [db getListOfFileTransfersOfStatus:@"TransferFailed"];
+    
+    // getting count for transfer failed array
+    int transferFailedCount = [transferFailedCountArray count];
+    if(transferFailedCount==0)
+    {
+        self.transferFailedCountView.hidden = NO;
+        self.transferFailedCountLabel.hidden = NO;
+    }
+    else
+    {
+        self.transferFailedCountView.hidden = YES;
+        self.transferFailedCountLabel.hidden = YES;
+    }
+}
 
 -(void)validateSendIdsResponse:(NSNotification*)obj
 {
@@ -393,7 +412,7 @@
     
     NSString* alertCount=[[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
     
-    UIViewController *alertViewController = [self.tabBarController.viewControllers objectAtIndex:3];
+    UIViewController *alertViewController = [self.tabBarController.viewControllers objectAtIndex:ALERT_TAB_LOCATION];
 
     if ([alertCount isEqualToString:@"0"])
     {
