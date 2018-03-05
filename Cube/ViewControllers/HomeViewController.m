@@ -140,15 +140,29 @@
     
      [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
     
-    // show spinner on completed doc view in front of count
     //creating a spinner
-    UIActivityIndicatorView * completedDocSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    completedDocSpinner.frame = CGRectMake(_completedDocCountLabel.frame.origin.x+_completedDocCountLabel.frame.size.width+20,_completedDocCountLabel.frame.origin.y+10 ,30 ,30 );
+    UIActivityIndicatorView * completedDocSpinner = [[UIActivityIndicatorView alloc]init];
+    
+    //changing color of completed document spinner
+    completedDocSpinner.color = [UIColor blackColor];
+    
+    // setting position of spinner on ui
+    completedDocSpinner.frame = CGRectMake(_completedDocCountLabel.frame.origin.x,_completedDocCountLabel.frame.origin.y+10 ,30 ,30 );
+    
+    //making spinner height and weight bigger than the default size of spinner.
+    completedDocSpinner.transform = CGAffineTransformMakeScale(1.75, 1.75);
+    
     completedDocSpinner.tag = 12;
+    
     //Adding spinner to Completed Doc view
     [transferFailedView addSubview:completedDocSpinner];
+    
     // starting the spinner.
     [completedDocSpinner startAnimating];
+    
+    //hide completed document count label if spinner is visible
+    self.completedDocCountLabel.hidden = YES;
+
 //    [[Database shareddatabase] setDepartment];//to insert default department for imported files
 }
 // showing 1 Failed view depending on transfer failed count.
@@ -159,14 +173,18 @@
     
     // getting count for transfer failed array
     int transferFailedCount = [transferFailedCountArray count];
+    
+    // if transferFailedCount is 0, don't show tansfer failed count view
     if(transferFailedCount==0)
     {
         self.transferFailedCountView.hidden = YES;
+        
         self.transferFailedCountLabel.hidden = YES;
     }
     else
     {
         self.transferFailedCountView.hidden = NO;
+        
         self.transferFailedCountLabel.hidden = NO;
     }
 }
@@ -184,19 +202,24 @@
         //converting integer value of completed doc count to string.
         NSString* completedDocCountStrValue = [NSString stringWithFormat:@"%i",completedDocCount];
         //remove spinner from completed doc view
+
         dispatch_async(dispatch_get_main_queue(), ^
                        {
                            //NSLog(@"Reachable");
+                           self.completedDocCountLabel.hidden = NO;
                            [[self.view viewWithTag:12] removeFromSuperview];
                        });
+        
         //set completed doc count to completedDocCountLabel
         self.completedDocCountLabel.text = completedDocCountStrValue;
+
     }
     else
     {
         dispatch_async(dispatch_get_main_queue(), ^
                        {
                            //NSLog(@"Reachable");
+                           self.completedDocCountLabel.hidden = NO;
                            [[self.view viewWithTag:12] removeFromSuperview];
                        });
         
