@@ -271,6 +271,7 @@
     UILabel* departmentNameLabel=[cell viewWithTag:101];
     departmentNameLabel.text=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
     NSString* dateAndTimeString=[awaitingFileTransferDict valueForKey:@"RecordCreatedDate"];
+    NSString* transferStatusString=[awaitingFileTransferDict valueForKey:@"TransferStatus"];
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     
     UILabel* timeLabel=[cell viewWithTag:102];
@@ -284,6 +285,11 @@
 
     UILabel* dateLabel=[cell viewWithTag:104];
     dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
+    
+    if ([transferStatusString  isEqual: @"2"])
+    {
+        deleteStatusLabel.text = @"Failed";
+    }
     
     if ([self.currentViewName isEqualToString:@"Today's Transferred"])
     {
