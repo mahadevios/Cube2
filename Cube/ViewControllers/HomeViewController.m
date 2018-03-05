@@ -140,6 +140,13 @@
     
      [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
     
+  
+
+//    [[Database shareddatabase] setDepartment];//to insert default department for imported files
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
     //creating a spinner
     UIActivityIndicatorView * completedDocSpinner = [[UIActivityIndicatorView alloc]init];
     
@@ -162,8 +169,6 @@
     
     //hide completed document count label if spinner is visible
     self.completedDocCountLabel.hidden = YES;
-
-//    [[Database shareddatabase] setDepartment];//to insert default department for imported files
 }
 // showing 1 Failed view depending on transfer failed count.
 -(void) showTransferFailedCount
