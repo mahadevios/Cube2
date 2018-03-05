@@ -110,13 +110,13 @@
     {
        
         [self deleteDictation];
-         [self needsUpdate];
+         //[self needsUpdate];
     }
     else
     if (!([[[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE] isEqualToString:todaysDate]))// this wil be 2nd day after pressing later or pressing delete
     {
         [self deleteDictation];
-        [self needsUpdate];
+       //  [self needsUpdate];
 
        // [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];
 
@@ -155,16 +155,34 @@
 -(void)validateSendIdsResponse:(NSNotification*)obj
 {
     int completedDocCount=0;
-    NSString* response = obj.object;
-    // getting completed files count.
-    NSArray* completedFilesResponseArray = [response valueForKey:@"CompletedList"];
-    completedDocCount = [completedFilesResponseArray count];
-    //converting integer value of completed doc count to string.
-    NSString* completedDocCountStrValue = [NSString stringWithFormat:@"%i",completedDocCount];
- //remove spinner from completed doc view
-    [[self.view viewWithTag:12] removeFromSuperview];
-    //set completed doc count to completedDocCountLabel
-    self.completedDocCountLabel.text = completedDocCountStrValue;
+    NSDictionary* response = obj.object;
+    
+    if ([[response valueForKey:@"code"]  isEqual: @"200"])
+    {
+        // getting completed files count.
+        NSArray* completedFilesResponseArray = [response valueForKey:@"CompletedList"];
+        completedDocCount = [completedFilesResponseArray count];
+        //converting integer value of completed doc count to string.
+        NSString* completedDocCountStrValue = [NSString stringWithFormat:@"%i",completedDocCount];
+        //remove spinner from completed doc view
+        dispatch_async(dispatch_get_main_queue(), ^
+                       {
+                           //NSLog(@"Reachable");
+                           [[self.view viewWithTag:12] removeFromSuperview];
+                       });
+        //set completed doc count to completedDocCountLabel
+        self.completedDocCountLabel.text = completedDocCountStrValue;
+    }
+    else
+    {
+        dispatch_async(dispatch_get_main_queue(), ^
+                       {
+                           //NSLog(@"Reachable");
+                           [[self.view viewWithTag:12] removeFromSuperview];
+                       });
+        
+    }
+ 
     
 //    [self.completedFilesResponseArray removeAllObjects];
 //
