@@ -161,13 +161,13 @@
     int transferFailedCount = [transferFailedCountArray count];
     if(transferFailedCount==0)
     {
-        self.transferFailedCountView.hidden = NO;
-        self.transferFailedCountLabel.hidden = NO;
+        self.transferFailedCountView.hidden = YES;
+        self.transferFailedCountLabel.hidden = YES;
     }
     else
     {
-        self.transferFailedCountView.hidden = YES;
-        self.transferFailedCountLabel.hidden = YES;
+        self.transferFailedCountView.hidden = NO;
+        self.transferFailedCountLabel.hidden = NO;
     }
 }
 
