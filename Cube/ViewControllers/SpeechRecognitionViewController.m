@@ -96,6 +96,10 @@
     self.timerSeconds = 59;
     
     [self disableStopAndDocOption];
+    
+    self.tabBarController.tabBar.hidden = true;
+    
+     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
 }
 
 -(void)disableStopAndDocOption
@@ -238,7 +242,7 @@
                                                                style:UIAlertActionStyleDefault
                                                              handler:^(UIAlertAction * action)
                                        {
-                                           [self.navigationController popViewControllerAnimated:YES];
+                                           [self.navigationController.tabBarController setSelectedIndex:0];
 
                                        }];
         
@@ -250,7 +254,8 @@
     }
     else
     {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController.tabBarController setSelectedIndex:0];
+//        [self.navigationController popViewControllerAnimated:YES];
 
     }
     
