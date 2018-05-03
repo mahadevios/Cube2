@@ -17,6 +17,68 @@
  // Drawing code
  }
  */
+//- (UIView*)initWithFrame:(CGRect)frame andSubViews:(NSArray*)subViewNamesArray :(id)sender
+//{
+//    self = [super initWithFrame:frame];
+//    self.tag=561;
+//    self.backgroundColor=[UIColor whiteColor];
+//    overlay= [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    tap=[[UITapGestureRecognizer alloc]initWithTarget:sender action:@selector(dismissPopView:)];
+//    tap.delegate=sender;
+//
+//    overlay=[[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//
+//    [overlay addGestureRecognizer:tap];
+//    overlay.tag=111;
+//
+//    overlay.backgroundColor=[[UIColor blackColor] colorWithAlphaComponent:0.2];
+//
+//    if (self)
+//    {
+//        // Initialization code
+//        // initilize all your UIView components
+//        UIButton* userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(5, 0, 0, 0)];
+//        UIView* seperatorLineView;
+//        for (int i=0; i<subViewNamesArray.count; i++)
+//        {
+//            //userSettingsButton.titleLabel.textAlignment=NSTextAlignmentCenter;
+//
+//            userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(0, userSettingsButton.frame.origin.x+userSettingsButton.frame.size.height, 150, 30)];
+//            if (subViewNamesArray.count>1)
+//            {
+//                if (i==0)
+//                {
+//                    seperatorLineView=[[UIView alloc]initWithFrame:CGRectMake(0, frame.size.height/2, frame.size.width, 1)];
+//                    seperatorLineView.backgroundColor=[UIColor lightGrayColor];
+//                }
+//
+//            }
+//            if (i==1)
+//            {
+//                userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(0, userSettingsButton.frame.origin.x+userSettingsButton.frame.size.height+14, 160, 30)];
+//
+//            }
+//            [userSettingsButton setTitle:[subViewNamesArray objectAtIndex:i] forState:UIControlStateNormal];
+//            [userSettingsButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//            userSettingsButton.titleLabel.font=[UIFont systemFontOfSize:14];
+//            [userSettingsButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+//
+//            NSString* selector=[NSString stringWithFormat:@"%@",[subViewNamesArray objectAtIndex:i]];
+//            selector = [selector stringByReplacingOccurrencesOfString:@" " withString:@""];
+//            [userSettingsButton addTarget:sender action:NSSelectorFromString(selector) forControlEvents:UIControlEventTouchUpInside];
+//
+//            //    [userSettingsButton setBackgroundColor:[UIColor colorWithRed:(i*155)/255.0 green:(i*155)/255.0 blue:(i*155)/255.0 alpha:1]];
+//            [self addSubview:userSettingsButton];
+//            self.layer.cornerRadius=2.0f;
+//            //            selectSetting
+//        }
+//        if (subViewNamesArray.count>1)
+//        [self addSubview:seperatorLineView];
+//        [overlay addSubview:self];
+//    }
+//    return overlay;
+//}
+
 - (UIView*)initWithFrame:(CGRect)frame andSubViews:(NSArray*)subViewNamesArray :(id)sender
 {
     self = [super initWithFrame:frame];
@@ -31,6 +93,7 @@
     [overlay addGestureRecognizer:tap];
     overlay.tag=111;
     
+    double buttonHeight = 32;
     overlay.backgroundColor=[[UIColor blackColor] colorWithAlphaComponent:0.2];
     
     if (self)
@@ -39,23 +102,25 @@
         // initilize all your UIView components
         UIButton* userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(5, 0, 0, 0)];
         UIView* seperatorLineView;
+        userSettingsButton = [[UIButton alloc]initWithFrame:CGRectMake(0, userSettingsButton.frame.origin.x+userSettingsButton.frame.size.height, 150, buttonHeight)];
+
         for (int i=0; i<subViewNamesArray.count; i++)
         {
             //userSettingsButton.titleLabel.textAlignment=NSTextAlignmentCenter;
             
-            userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(0, userSettingsButton.frame.origin.x+userSettingsButton.frame.size.height, 150, 30)];
             if (subViewNamesArray.count>1)
             {
-                if (i==0)
+                if (i < subViewNamesArray.count-1)
                 {
-                    seperatorLineView=[[UIView alloc]initWithFrame:CGRectMake(0, frame.size.height/2, frame.size.width, 1)];
-                    seperatorLineView.backgroundColor=[UIColor lightGrayColor];
+                    seperatorLineView = [[UIView alloc]initWithFrame:CGRectMake(0, frame.size.height/subViewNamesArray.count*(i+1), frame.size.width, 1)];
+                    seperatorLineView.backgroundColor = [UIColor lightGrayColor];
+                    [self addSubview:seperatorLineView];
                 }
-
+                
             }
-                        if (i==1)
+            if (i > 0)
             {
-                userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(0, userSettingsButton.frame.origin.x+userSettingsButton.frame.size.height+14, 160, 30)];
+                userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(0, userSettingsButton.frame.origin.y+userSettingsButton.frame.size.height+10, 160, buttonHeight)];
                 
             }
             [userSettingsButton setTitle:[subViewNamesArray objectAtIndex:i] forState:UIControlStateNormal];
@@ -65,6 +130,8 @@
             
             NSString* selector=[NSString stringWithFormat:@"%@",[subViewNamesArray objectAtIndex:i]];
             selector = [selector stringByReplacingOccurrencesOfString:@" " withString:@""];
+            selector = [selector stringByReplacingOccurrencesOfString:@"." withString:@""];
+
             [userSettingsButton addTarget:sender action:NSSelectorFromString(selector) forControlEvents:UIControlEventTouchUpInside];
             
             //    [userSettingsButton setBackgroundColor:[UIColor colorWithRed:(i*155)/255.0 green:(i*155)/255.0 blue:(i*155)/255.0 alpha:1]];
@@ -72,8 +139,8 @@
             self.layer.cornerRadius=2.0f;
             //            selectSetting
         }
-        if (subViewNamesArray.count>1)
-        [self addSubview:seperatorLineView];
+//        if (subViewNamesArray.count>1)
+            [self addSubview:seperatorLineView];
         [overlay addSubview:self];
     }
     return overlay;
@@ -264,7 +331,12 @@
     [overlay addSubview:self];
     return overlay;
 }
-
+- (UIView*)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    
+    return self;
+}
 //- (UIView*)initWithFrame:(CGRect)frame sender:(id)sender
 //{
 //    self = [super initWithFrame:frame];

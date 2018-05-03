@@ -13,7 +13,7 @@
 #import "RecordViewController.h"
 #import "PopUpCustomView.h"
 #import "DepartMent.h"
-
+#import "SpeechRecognitionViewController.h"
 #import <AVKit/AVKit.h>
 
 #define IMPEDE_PLAYBACK NO
@@ -27,7 +27,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 @implementation RecordViewController
 
-@synthesize player, recordedAudioFileName, recorder,recordedAudioURL,recordCreatedDateString,hud,deleteButton,stopNewButton,stopNewImageView,stopLabel,recordLAbel;
+@synthesize player, recordedAudioFileName, recorder,recordedAudioURL,recordCreatedDateString,hud,deleteButton,stopNewButton,stopNewImageView,stopLabel,recordLAbel, SpeechToTextView;
 
 
 #pragma mark: View Delegate Methods
@@ -1474,9 +1474,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [stopLabel setHidden:NO];
 
-    
     [cirecleTimerLAbel setHidden:NO];
    
+    [SpeechToTextView setHidden:YES];
+    
     [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld",todaysSerialNumberCount] forKey:@"todaysSerialNumberCount"];
     
     [self audioRecord];
@@ -3425,4 +3426,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
 }
 
+- (IBAction)speechToTextButtonClicked:(id)sender
+{
+    SpeechRecognitionViewController* spvc = [self.storyboard instantiateViewControllerWithIdentifier:@"SpeechRecognitionViewController"];
+    
+    [self presentViewController:spvc animated:true completion:nil];
+}
 @end

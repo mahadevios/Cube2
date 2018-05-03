@@ -132,7 +132,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 7;
+    return 4;
     
 }
 
@@ -158,19 +158,19 @@
             noDictationLabel.text=[NSString stringWithFormat:@"%ld",[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count];
             break;
             
-        case 3:inCompleteDictationLabel.text=@"Completed Doc Files";
-            noDictationLabel.text = @"";
-            break;
-            
-        case 4:inCompleteDictationLabel.text = @"Speech Transcription";
-            noDictationLabel.text = @"";
-            break;
+//        case 3:inCompleteDictationLabel.text=@"Completed Doc Files";
+//            noDictationLabel.text = @"";
+//            break;
+//
+//        case 4:inCompleteDictationLabel.text = @"Speech Transcription";
+//            noDictationLabel.text = @"";
+//            break;
+//
+//        case 5:inCompleteDictationLabel.text=@"VRS Doc Files";
+//            noDictationLabel.text=[NSString stringWithFormat:@"%d",VRSDocFilesArray.count];
+//            break;
         
-        case 5:inCompleteDictationLabel.text=@"VRS Doc Files";
-            noDictationLabel.text=[NSString stringWithFormat:@"%d",VRSDocFilesArray.count];
-            break;
-        
-        case 6:inCompleteDictationLabel.text = @"Custom Docx Editor";
+        case 3:inCompleteDictationLabel.text = @"Custom Docx Editor";
             noDictationLabel.text = @"";
             break;
             

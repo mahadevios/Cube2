@@ -35,6 +35,7 @@
 //@property(nonatomic, strong)NSString* recFileName;
 //@property(nonatomic)int recNum;
 //@property(nonatomic)int numOfTrimFiles;
+- (IBAction)backButtonPressed:(id)sender;
 
 - (IBAction)startLiveAudioTranscription:(id)sender;
 - (IBAction)stopLiveAudioTranscription:(id)sender;

@@ -22,7 +22,7 @@
 @end
 
 @implementation HomeViewController
-@synthesize transferredView,transferFailedView,awaitingTransferView,failedCountLabel;
+@synthesize transferredView,transferFailedView,awaitingTransferView,failedCountLabel,VRSDOCFilesView,VRSFilesCountLabel,VRSDocFilesArray;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -38,10 +38,13 @@
     tapRecogniser=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
     tapRecogniser1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
     tapRecogniser2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showCompletedDocFIlesView:)];
+    tapRecogniser3=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showVRSDocFilesView:)];
+
     [transferredView addGestureRecognizer:tapRecogniser];
     [awaitingTransferView addGestureRecognizer:tapRecogniser1];
     [transferFailedView addGestureRecognizer:tapRecogniser2];
-    
+    [VRSDOCFilesView addGestureRecognizer:tapRecogniser3];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(getCounts) name:NOTIFICATION_FILE_UPLOAD_API
                                                object:nil];
@@ -138,14 +141,29 @@
     
      [self showTransferFailedCount];
     
+     [self showVRSFileCount];
+    
      [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
     
-  
+
 
 //    [[Database shareddatabase] setDepartment];//to insert default department for imported files
 }
 
 -(void)viewDidAppear:(BOOL)animated
+{
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+        [self showActivityIndicator];
+    }
+    else
+    {
+        
+    }
+  
+}
+
+-(void)showActivityIndicator
 {
     //creating a spinner
     UIActivityIndicatorView * completedDocSpinner = [[UIActivityIndicatorView alloc]init];
@@ -194,6 +212,13 @@
     }
 }
 
+-(void)showVRSFileCount
+{
+    VRSDocFilesArray = [[Database shareddatabase] getVRSDocFiles];
+    
+    VRSFilesCountLabel.text = [NSString stringWithFormat:@"%ld",VRSDocFilesArray.count];
+
+}
 -(void)validateSendIdsResponse:(NSNotification*)obj
 {
     int completedDocCount=0;
@@ -493,7 +518,7 @@
     //    [[[UIApplication sharedApplication] keyWindow] addSubview:overlayView];
     
     NSArray* subViewArray=[NSArray arrayWithObjects:@"User Settings",@"Logout", nil];
-    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-175, self.view.frame.origin.y+20, 160, 80) andSubViews:subViewArray :self];
+    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-175, self.view.frame.origin.y+20, 160, 84) andSubViews:subViewArray :self];
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
     
     
@@ -562,6 +587,11 @@
     
 }
 
+-(void)showVRSDocFilesView:(UITapGestureRecognizer*)sender
+{
+    [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectFileViewController"] animated:YES];
+
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

@@ -110,5 +110,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *stopLabel;
 @property (weak, nonatomic) IBOutlet UILabel *recordLAbel;
 - (IBAction)editAudioButtonPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *SpeechToTextView;
+- (IBAction)speechToTextButtonClicked:(id)sender;
 
 @end

@@ -11,6 +11,7 @@
 #import "APIManager.h"
 #import "AppPreferences.h"
 #import "Constants.h"
+#import "PopUpCustomView.h"
 
 @interface DocFilesViewController ()
 
@@ -38,6 +39,8 @@
     
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
+//    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
+    
     self.completedFilesResponseArray = [NSMutableArray new];
 
     self.uploadedFilesArray = [NSMutableArray new];
@@ -53,9 +56,12 @@
     NSString* uploadedFilesDictationIdString = [uploadedFilesDictationIdArray componentsJoinedByString:@","];
     
     //uploadedFilesDictationIdString = [uploadedFilesDictationIdString stringByAppendingString:@",6987636"];
-    
-    [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
-    
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+        [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Loading Files" detailText:@"Please wait.."];
+        
+        [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
+    }
     
     [self.tabBarController.tabBar setHidden:YES];
 
@@ -86,7 +92,9 @@
 //    NSArray* completedFilesResponseArray = [NSJSONSerialization JSONObjectWithData:completedFilesResponseData options:NSJSONReadingAllowFragments error:&error];
     
     [self.completedFilesResponseArray removeAllObjects];
-    
+
+    [self.completedFilesForTableViewArray removeAllObjects];
+
     for (int i=0; i<completedFilesResponseArray.count; i++)
     {
         NSDictionary* dic = [completedFilesResponseArray objectAtIndex:i];
@@ -158,12 +166,18 @@
     [self removeCommentView];
 
 }
+-(void)addMoreView:(TableViewButton*)sender
+{
+    CGRect rect = sender.frame;
+    [self addPopView:sender];
+}
 
 -(void)addCommentView:(TableViewButton*)sender
 {
     
 //    overLayView = [[UIView alloc] initWithFrame:CGRectMake(sender.frame.origin.x, sender.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.navigationController.navigationBar setHidden:true];
+    
+//    [self.navigationController.navigationBar setHidden:true];
     
     overLayView = [[UIView alloc] initWithFrame:self.view.frame];
 
@@ -173,7 +187,7 @@
     
     UITapGestureRecognizer* tapToDismissNotif = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
     
-    [self.view addGestureRecognizer:tapToDismissNotif];
+    [overLayView addGestureRecognizer:tapToDismissNotif];
     
     tapToDismissNotif.delegate = self;
     
@@ -203,8 +217,16 @@
     
     referenceLabel.textAlignment = NSTextAlignmentCenter;
     
-    referenceLabel.text = @"Comment";
     
+    
+    if ([[sender titleForState:UIControlStateNormal] isEqualToString:@"Approve"])
+    {
+        referenceLabel.text = @"Comment & Approve";
+    }
+    else
+    {
+        referenceLabel.text = @"Comment & For Approval";
+    }
     referenceLabel.textColor = [UIColor appOrangeColor];
     
     UIImageView* referenceImageView = [[UIImageView alloc] initWithFrame:CGRectMake(insideView.frame.size.width/2 - 60, 14, 17, 23)];
@@ -262,8 +284,10 @@
     
     [overLayView addSubview:scrollView];
     
-    [self.view addSubview:overLayView];
-    
+//    [self.view addSubview:overLayView];
+
+    [[UIApplication sharedApplication].keyWindow addSubview:overLayView];
+
     [UIView animateWithDuration:0.6 delay:0 usingSpringWithDamping:.7 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
 
 //            self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
@@ -283,11 +307,12 @@
 }
 
 
--(void)addDetailsView:(TableViewButton*)sender
+-(void)addDetailsViewindexPathRow:(long)indexPathRow
 {
     
     //    overLayView = [[UIView alloc] initWithFrame:CGRectMake(sender.frame.origin.x, sender.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.navigationController.navigationBar setHidden:true];
+    
+//    [self.navigationController.navigationBar setHidden:true];
 //
     overLayView = [[UIView alloc] initWithFrame:self.view.frame];
 
@@ -297,14 +322,14 @@
 //
     UITapGestureRecognizer* tapToDismissNotif = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(crossButtonTapped:)];
 
-    [self.view addGestureRecognizer:tapToDismissNotif];
+    [overLayView addGestureRecognizer:tapToDismissNotif];
 //
     tapToDismissNotif.delegate = self;
     
     //    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, -100, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73)];
     //
     //    self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
-    long indexPathRow = sender.indexPathRow;
+//    long indexPathRow = sender.indexPathRow;
     
     AudioDetails* audioDetails = [self.completedFilesForTableViewArray objectAtIndex:indexPathRow];
     
@@ -455,7 +480,7 @@
     
     [overLayView addSubview:scrollView];
     
-    [self.view addSubview:overLayView];
+    [[UIApplication sharedApplication].keyWindow addSubview:overLayView];
     
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.9 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
         
@@ -524,7 +549,7 @@
 
 -(void)crossButtonTapped:(UIButton*)touch
 {
-    [self.navigationController.navigationBar setHidden:false];
+//    [self.navigationController.navigationBar setHidden:false];
 
     
     [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
@@ -538,11 +563,14 @@
         
     } completion:^(BOOL finished) {
         
-        [[self.view viewWithTag:222] removeFromSuperview];
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:222] removeFromSuperview];
+
+//        [[self.view viewWithTag:222] removeFromSuperview];
         
     }];
     
 }
+
 -(void)removeCommentView
 {
     [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
@@ -553,15 +581,21 @@
         
     } completion:^(BOOL finished) {
         
-        [[self.view viewWithTag:222] removeFromSuperview];
-        [self.navigationController.navigationBar setHidden:false];
+//        [[self.view viewWithTag:222] removeFromSuperview];
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:222] removeFromSuperview];
+
+//        [self.navigationController.navigationBar setHidden:false];
 
     }];
     
 }
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    if(touch.view == self.overLayView)
+    UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+
+    UIView* commentOrDetailsView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:222];
+
+    if(touch.view == commentOrDetailsView || touch.view == popUpView)
     {
         return true;
     }
@@ -595,22 +629,29 @@
     UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
     AudioDetails* audioDetails = [self.completedFilesForTableViewArray objectAtIndex:indexPath.row];
-    
-    
-    UIButton* approveButton = [cell viewWithTag:101];
-    
-    [approveButton addTarget:self action:@selector(approveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
-    TableViewButton* commentButton = [cell viewWithTag:102];
-    commentButton.indexPathRow = indexPath.row;
-    [commentButton addTarget:self action:@selector(addCommentView:) forControlEvents:UIControlEventTouchUpInside];
+//    TableViewButton* commentButton = [cell viewWithTag:102];
+//    commentButton.indexPathRow = indexPath.row;
+//    [commentButton addTarget:self action:@selector(addCommentView:) forControlEvents:UIControlEventTouchUpInside];
 
-    UIButton* detailsButton = [cell viewWithTag:103];
-    [detailsButton addTarget:self action:@selector(addDetailsView:) forControlEvents:UIControlEventTouchUpInside];
+//    UIButton* detailsButton = [cell viewWithTag:103];
+//    [detailsButton addTarget:self action:@selector(addDetailsView:) forControlEvents:UIControlEventTouchUpInside];
 
     TableViewButton* downloadButton = [cell viewWithTag:104];
     [downloadButton addTarget:self action:@selector(downloadButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     downloadButton.indexPathRow = indexPath.row;
+    
+    TableViewButton* approveButton = [cell viewWithTag:101];
+    [approveButton addTarget:self action:@selector(addCommentView:) forControlEvents:UIControlEventTouchUpInside];
+    approveButton.indexPathRow = indexPath.row;
+
+    TableViewButton* forApprovalButton = [cell viewWithTag:106];
+    [forApprovalButton addTarget:self action:@selector(addCommentView:) forControlEvents:UIControlEventTouchUpInside];
+    forApprovalButton.indexPathRow = indexPath.row;
+    
+    TableViewButton* moreButton = [cell viewWithTag:701];
+    [moreButton addTarget:self action:@selector(addMoreView:) forControlEvents:UIControlEventTouchUpInside];
+    moreButton.indexPathRow = indexPath.row;
     
     if (audioDetails.downloadStatus == DOWNLOADING)
     {
@@ -723,6 +764,169 @@
     return self;
 }
 
+
+-(void)showUserSettings:(id)sender
+{
+//    [self addPopView];
+}
+
+
+-(void)addPopView:(TableViewButton*)sender
+{
+    self.selectedRow = sender.indexPathRow;
+    
+   NSIndexPath* indexPath = [NSIndexPath indexPathForRow:sender.indexPathRow inSection:0];
+   UITableViewCell* tappedCell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    UIImageView* moreImageView = [tappedCell viewWithTag:702];
+    NSArray* subViewArray=[NSArray arrayWithObjects:@"Info.",@"Edit Docx",@"Delete Docx", nil];
+//    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-175, self.view.frame.origin.y+20, 160, 126) andSubViews:subViewArray :self];
+//    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(tappedCell.frame.size.width-175, tappedCell.frame.size.height + tappedCell.frame.origin.y+10, 160, 126) andSubViews:subViewArray :self];
+
+    double navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    double popUpViewXPosition = moreImageView.frame.origin.x  - moreImageView.frame.size.width - 160;
+    double popUpViewYPosition = navigationBarHeight + tappedCell.frame.origin.y + moreImageView.frame.origin.y + 20;
+
+    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(popUpViewXPosition, popUpViewYPosition, 160, 126) andSubViews:subViewArray :self];
+
+    [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
+
+//    [tappedCell addSubview:pop];
+    
+}
+
+-(void)dismissPopView:(id)sender
+{
+    
+    UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+    if ([popUpView isKindOfClass:[UIView class]])
+    {
+        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    }
+    
+}
+-(void)Info
+{
+    [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    
+    [self addDetailsViewindexPathRow:self.selectedRow];
+//    [self.navigationController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
+}
+
+-(void)EditDocx
+{
+    [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    
+    
+    [self.navigationController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"EditDocxViewController"] animated:YES completion:nil];
+}
+
+-(void)DeleteDocx
+{
+    [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    
+    
+    [self.navigationController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
+}
+
+-(void)deleteRecording
+{
+    alertController = [UIAlertController alertControllerWithTitle:@"Delete?"
+                                                          message:DELETE_MESSAGE
+                                                   preferredStyle:UIAlertControllerStyleAlert];
+    actionDelete = [UIAlertAction actionWithTitle:@"Delete"
+                                            style:UIAlertActionStyleDestructive
+                                          handler:^(UIAlertAction * action)
+                    {
+                        
+//                        for (int i = 0; i< self.completedFilesForTableViewArray.count; i++)
+//                        {
+                               AudioDetails* audioDetails = [self.completedFilesForTableViewArray objectAtIndex:self.selectedRow];
+                            
+                                audioDetails.downloadStatus = DOWNLOADED;
+                                
+                                [self.completedFilesForTableViewArray replaceObjectAtIndex:self.selectedRow withObject:audioDetails];
+                                
+                                [self.tableView reloadRowsAtIndexPaths:[[NSArray alloc] initWithObjects:[NSIndexPath indexPathForRow:self.selectedRow inSection:0], nil] withRowAnimation:UITableViewRowAnimationNone];
+//                        }
+                        [[Database shareddatabase] updateDownloadingStatus:DOWNLOADEDANDDELETED dictationId:audioDetails.mobiledictationidval];
+//                        APIManager* app=[APIManager sharedManager];
+//
+//                        Database* db=[Database shareddatabase];
+//
+//                        NSString* fileName=[audiorecordDict valueForKey:@"RecordItemName"];
+//
+//                        NSString* dateAndTimeString=[app getDateAndTimeString];
+//
+//                        [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
+//
+//                        [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
+//
+//                        BOOL delete= [app deleteFile:fileName];
+//
+//                        if ([self.selectedView isEqualToString:@"Imported"])
+//                        {
+//                            NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
+//
+//                            // NSString* sharedAudioFolderPathString=[sharedDefaults objectForKey:@"audioFolderPath"];
+//
+//                            NSMutableArray* sharedAudioNamesArray=[NSMutableArray new];
+//
+//                            NSArray* copyArray=[NSArray new];
+//
+//                            copyArray=[sharedDefaults objectForKey:@"audioNamesArray"];
+//
+//                            sharedAudioNamesArray=[copyArray mutableCopy];
+//
+//                            NSMutableArray* forDeleteStatusProxyArray = [NSMutableArray new];
+//
+//                            for (int i=0; i<sharedAudioNamesArray.count; i++)
+//                            {
+//
+//                                NSString* fileNameWithoutExtension=[[sharedAudioNamesArray objectAtIndex:i] stringByDeletingPathExtension];
+//
+//                                NSString* pathExtension= [[sharedAudioNamesArray objectAtIndex:i] pathExtension];
+//
+//                                NSString* fileNameWithExtension=[NSString stringWithFormat:@"%@.%@",fileName,pathExtension];
+//                                //
+//                                if ([sharedAudioNamesArray containsObject:fileNameWithExtension])
+//                                {
+//                                    [sharedAudioNamesArray removeObject:fileNameWithExtension];
+//
+//                                    break;
+//
+//                                }
+//
+//                            }
+//
+//                            [sharedDefaults setObject:sharedAudioNamesArray forKey:@"audioNamesArray"];
+//
+//                            [sharedDefaults synchronize];
+//                        }
+//                        if (delete)
+//                        {
+//                            [self dismissViewControllerAnimated:YES completion:nil];
+//                        }
+//
+                    }]; //You can use a block here to handle a press on this button
+    [alertController addAction:actionDelete];
+    
+    
+    actionCancel = [UIAlertAction actionWithTitle:@"Cancel"
+                                            style:UIAlertActionStyleCancel
+                                          handler:^(UIAlertAction * action)
+                    {
+                        [alertController dismissViewControllerAnimated:YES completion:nil];
+                        
+                    }]; //You can use a block here to handle a press on this button
+    
+    [alertController addAction:actionCancel];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+    
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

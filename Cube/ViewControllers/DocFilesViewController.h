@@ -11,6 +11,11 @@
 #import "UIColor+ApplicationColors.h"
 
 @interface DocFilesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate, UIDocumentInteractionControllerDelegate, UIGestureRecognizerDelegate,UITextViewDelegate>
+{
+    UIAlertController *alertController;
+    UIAlertAction *actionDelete;
+    UIAlertAction *actionCancel;
+}
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *completedFilesResponseArray;
 @property (strong, nonatomic) NSMutableArray *completedFilesForTableViewArray;
@@ -19,5 +24,6 @@
 @property (strong, nonatomic) UIScrollView* scrollView;
 @property (strong, nonatomic) NSArray *uploadedFilesArray;
 @property (strong, nonatomic) UITextView* commentTextView;
+@property (nonatomic) long selectedRow;
 
 @end
