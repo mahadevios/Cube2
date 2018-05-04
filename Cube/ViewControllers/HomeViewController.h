@@ -18,6 +18,8 @@
     UITapGestureRecognizer* tapRecogniser;
     UITapGestureRecognizer* tapRecogniser1;
     UITapGestureRecognizer* tapRecogniser2;
+    UITapGestureRecognizer* tapRecogniser3;
+
     UIView* overlayView;
     UITapGestureRecognizer* tap;
     APIManager* app;
@@ -32,7 +34,9 @@
 @property (weak, nonatomic) IBOutlet UIView *transferredView;
 @property (weak, nonatomic) IBOutlet UIView *awaitingTransferView;
 @property (weak, nonatomic) IBOutlet UIView *transferFailedView;
+@property (weak, nonatomic) IBOutlet UIView *VRSDOCFilesView;
 @property (weak, nonatomic) IBOutlet UILabel *failedCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *VRSFilesCountLabel;
 @property (strong, nonatomic) NSMutableArray *completedFilesResponseArray;
 @property (strong, nonatomic) NSMutableArray *completedFilesForTableViewArray;
 @property (strong, nonatomic) NSMutableArray *downloadingFilesDictationIdsArray;
@@ -40,5 +44,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *completedDocCountLabel;
 @property (weak, nonatomic) IBOutlet UIView *transferFailedCountView;
 @property (weak, nonatomic) IBOutlet UILabel *transferFailedCountLabel;
+@property(nonatomic, strong)NSMutableArray* VRSDocFilesArray;
 
 @end

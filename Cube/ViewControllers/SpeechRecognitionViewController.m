@@ -219,47 +219,7 @@
 {
     NSLog(@"state is = %ld", (long)recognitionTask.state);
 }
--(void)popViewController:(id)sender
-{
-    if (isTranscripting)
-    {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Transcripting.." withMessage:@"Please stop the transcription" withCancelText:@"Ok" withOkText:@"" withAlertTag:1000];
-    }
-    else if (transcriptionTextLabel.text.length>0)
-    {
-        alertController = [UIAlertController alertControllerWithTitle:@"Transcription not saved!"
-                                                              message:@"Save transcription as doc file?"
-                                                       preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* actionCreate = [UIAlertAction actionWithTitle:@"Save"
-                                                               style:UIAlertActionStyleDefault
-                                                             handler:^(UIAlertAction * action)
-                                       {
-                                           
-                                           [self createSubDocFileButtonClicked];
-                                       }]; //You can use a block here to handle a press on this button
-        
-        UIAlertAction* actionCancel = [UIAlertAction actionWithTitle:@"Don't save"
-                                                               style:UIAlertActionStyleDefault
-                                                             handler:^(UIAlertAction * action)
-                                       {
-                                           [self.navigationController.tabBarController setSelectedIndex:0];
 
-                                       }];
-        
-        [alertController addAction:actionCreate];
-        
-        [alertController addAction:actionCancel];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
-    else
-    {
-        [self.navigationController.tabBarController setSelectedIndex:0];
-//        [self.navigationController popViewControllerAnimated:YES];
-
-    }
-    
-}
 
 -(void)resetTranscription
 {
@@ -381,6 +341,57 @@
         timerLabel.text = @"00:59";
     }];
 }
+
+-(void)popViewController:(id)sender
+{
+    if (isTranscripting)
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Transcripting.." withMessage:@"Please stop the transcription" withCancelText:@"Ok" withOkText:@"" withAlertTag:1000];
+    }
+    else if (transcriptionTextLabel.text.length>0)
+    {
+        alertController = [UIAlertController alertControllerWithTitle:@"Transcription not saved!"
+                                                              message:@"Save transcription as doc file?"
+                                                       preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* actionCreate = [UIAlertAction actionWithTitle:@"Save"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action)
+                                       {
+                                           
+                                           [self createSubDocFileButtonClicked];
+                                       }]; //You can use a block here to handle a press on this button
+        
+        UIAlertAction* actionCancel = [UIAlertAction actionWithTitle:@"Don't save"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action)
+                                       {
+                                           //                                           [self.navigationController.tabBarController setSelectedIndex:0];
+                                           [self dismissViewControllerAnimated:true completion:nil];
+                                           
+                                           //                                           [self.navigationController popViewControllerAnimated:YES];
+                                           
+                                       }];
+        
+        [alertController addAction:actionCreate];
+        
+        [alertController addAction:actionCancel];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    else
+    {
+        //                [self.navigationController popViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:true completion:nil];
+        //        [self.navigationController.tabBarController setSelectedIndex:0];
+        
+    }
+    
+}
+- (IBAction)backButtonPressed:(id)sender
+{
+    [self popViewController:sender];
+}
+
 - (IBAction)startLiveAudioTranscription:(UIButton*)sender
 {
     
@@ -1383,5 +1394,6 @@
 //    }
 //
 //}
+
 @end
 
