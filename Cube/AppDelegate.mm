@@ -75,7 +75,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if (currentVersion == nil)
     {
         // version change first time execution code
-        [[Database shareddatabase] createDocFileTable];
+        
+        [[Database shareddatabase] createFileNameidentifierRelationshipTable];
+
+        [[Database shareddatabase] createDocFileAndDownloadedDocxFileTable];
         
         [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
     }
@@ -83,7 +86,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         if (currentVersion != bundleVersion)
         {
             // version change first time execution code
-            [[Database shareddatabase] createDocFileTable];
+            
+            [[Database shareddatabase] createFileNameidentifierRelationshipTable];
+
+            [[Database shareddatabase] createDocFileAndDownloadedDocxFileTable];
             
             [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
             
@@ -237,7 +243,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     NSString *destpath=[NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Cube_DB.sqlite"];
    // NSString *sourcepath=[[NSBundle mainBundle]pathForResource:@"Cube_DB" ofType:@"sqlite"];
     NSString *sourcepath=[[NSBundle mainBundle]pathForResource:@"Cube_DB" ofType:@"sqlite"];
-
+    NSLog(@"%@",NSHomeDirectory());
     if(![[NSFileManager defaultManager] fileExistsAtPath:destpath])
     {
     //  NSLog(@"%@",NSHomeDirectory());

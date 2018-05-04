@@ -2703,7 +2703,7 @@ static Database *db;
     
 }
 
--(void)createDocFileTable
+-(void)createDocFileAndDownloadedDocxFileTable
 {
     Database *db=[Database shareddatabase];
     NSString *dbPathString=[db getDatabasePath];
@@ -2716,8 +2716,16 @@ static Database *db;
         
         if (sqlite3_exec(feedbackAndQueryTypesDB, sql_stmt, NULL, NULL, &errMsg) != SQLITE_OK)
         {
-            NSLog(@"TaskIdentifier created" );
+            NSLog(@"DocFiles created" );
         }
+        
+        const char *sql_stmt1 = "create table if not exists DownloadedDocxFiles (FileName text primary key, MobileDictationIdVal integer, DownloadStatus integer, DeleteStatus integer, ApproveStatus integer, ForApprovalStatus integer, Comment text, EditStatus integer)";
+        
+        if (sqlite3_exec(feedbackAndQueryTypesDB, sql_stmt1, NULL, NULL, &errMsg) != SQLITE_OK)
+        {
+            NSLog(@"DownloadedDocxFiles created" );
+        }
+        
         sqlite3_close(feedbackAndQueryTypesDB);
     }
     else
@@ -2869,10 +2877,12 @@ static Database *db;
     
 }
 
--(void)deleteDocFileRecordFromDatabase:(NSString*)docFileName
+// for VRS doc files
+-(void)deleteDocFileRecordFromDatabase:(int)docFileName deleteStatus:(NSString*)deleteStatus
 {
-    
-    NSString *query3=[NSString stringWithFormat:@"Delete from DocFiles Where DocFileName='%@'",docFileName];
+    NSString *query3=[NSString stringWithFormat:@"Update DocFiles set DeleteStatus=%d Where DocFileName=%@",deleteStatus,docFileName];
+
+//    NSString *query3=[NSString stringWithFormat:@"Delete from DocFiles Where DocFileName='%@'",docFileName];
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement;
@@ -2920,6 +2930,58 @@ static Database *db;
     }
     
     
+    
+}
+
+// for Dowloaded docx files
+-(void)updateDeleteStatusOfDocx:(int)deleteStatus dictationId:(NSString*)fileName
+{
+    
+    NSString *query3=[NSString stringWithFormat:@"Update DownloadedDocxDiles set DeleteStatus=%d Where FileName=%@",deleteStatus,fileName];
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement;
+    sqlite3* feedbackAndQueryTypesDB;
+    
+    
+    const char * queryi3=[query3 UTF8String];
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
+    {
+        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            // NSLog(@"report data inserted");
+            // NSLog(@"%@",NSHomeDirectory());
+            sqlite3_reset(statement);
+        }
+        else
+        {
+            // NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    
+    else
+    {
+        // NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        // NSLog(@"statement is finalized");
+    }
+    else
+        //NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    {
+    }
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        // NSLog(@"db is closed");
+    }
+    else
+    {
+        // NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
     
 }
 //-(void)updateAudioFileName

@@ -102,7 +102,7 @@
         // initilize all your UIView components
         UIButton* userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(5, 0, 0, 0)];
         UIView* seperatorLineView;
-        userSettingsButton = [[UIButton alloc]initWithFrame:CGRectMake(0, userSettingsButton.frame.origin.x+userSettingsButton.frame.size.height, 150, buttonHeight)];
+        userSettingsButton = [[UIButton alloc]initWithFrame:CGRectMake(0, userSettingsButton.frame.origin.x+userSettingsButton.frame.size.height, frame.size.width, buttonHeight)];
 
         for (int i=0; i<subViewNamesArray.count; i++)
         {
@@ -120,7 +120,7 @@
             }
             if (i > 0)
             {
-                userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(0, userSettingsButton.frame.origin.y+userSettingsButton.frame.size.height+10, 160, buttonHeight)];
+                userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(0, userSettingsButton.frame.origin.y+userSettingsButton.frame.size.height+10, frame.size.width, buttonHeight)];
                 
             }
             [userSettingsButton setTitle:[subViewNamesArray objectAtIndex:i] forState:UIControlStateNormal];
@@ -140,7 +140,7 @@
             //            selectSetting
         }
 //        if (subViewNamesArray.count>1)
-            [self addSubview:seperatorLineView];
+//            [self addSubview:seperatorLineView];
         [overlay addSubview:self];
     }
     return overlay;

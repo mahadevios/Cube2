@@ -79,6 +79,7 @@
 #define PURGE_DELETED_DATA                     @"Purge data by"
 #define CHANGE_YOUR_PASSWORD                   @"Change your pin"
 #define DELETE_MESSAGE                         @"Do you want to delete this recording?"
+#define DELETE_MESSAGE_DOCX                    @"Do you want to delete this file?"
 #define TRANSFER_MESSAGE_MULTIPLES             @"Are you sure you want to transfer this recording(s)?"
 #define TRANSFER_MESSAGE                       @"Are you sure you want to transfer this recording?"
 #define RESEND_MESSAGE                         @"Are you sure you want to resend this recording?"
@@ -97,6 +98,7 @@
 #define SELECTED_DEPARTMENT_NAME               @"Selected Department"
 #define SELECTED_DEPARTMENT_NAME_COPY          @"Selected Department Copy"
 #define AUDIO_FILES_FOLDER_NAME                @"Audio files"
+#define DOCX_FILES_FOLDER_NAME                 @"Downloads"
 #define DOC_VRS_FILES_FOLDER_NAME              @"VRSDOC files"
 #define DATE_TIME_FORMAT                       @"MM-dd-yyyy HH:mm:ss"
 #define RESPONSE_CODE                          @"code"
@@ -114,7 +116,7 @@ typedef enum
     NODOWNLOAD,
     DOWNLOADING,
     DOWNLOADED,
-//    DOWNLOADEDANDDELETED
+    DOWNLOADEDANDDELETED
 }DownloadingStatus;
 
 typedef enum

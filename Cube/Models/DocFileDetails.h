@@ -14,6 +14,8 @@
 @property(nonatomic, strong) NSString* audioFileName;
 
 @property(nonatomic) int uploadStatus;
+@property(nonatomic) int dictationId;
+
 @property(nonatomic, strong) NSString* uploadDate;
 @property(nonatomic, strong) NSString* createdDate;
 @property(nonatomic) int deleteStatus;

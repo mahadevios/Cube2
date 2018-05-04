@@ -111,10 +111,11 @@
 
 -(void)addDocFileInDB:(DocFileDetails*)docFileDetails;
 
--(void)createDocFileTable;
+-(void)createDocFileAndDownloadedDocxFileTable;
 
 -(NSMutableArray*)getVRSDocFiles;
 
 -(void)deleteDocFileRecordFromDatabase:(NSString*)docFileName;
 
+-(void)updateDeleteStatusOfDocx:(int)deleteStatus dictationId:(NSString*)fileName;
 @end

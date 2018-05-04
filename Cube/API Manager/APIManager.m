@@ -170,6 +170,22 @@ static APIManager *singleton = nil;
     }
 }
 
+-(BOOL)deleteDocxFile:(NSString*)fileName
+{
+    NSError* error;
+//    NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.docx",DOCX_FILES_FOLDER_NAME,fileName]];
+    NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.doc",DOCX_FILES_FOLDER_NAME,fileName]];
+
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+    {
+        return  false;
+    }
+    else
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+        return true;
+    }
+}
 -(void) checkDeviceRegistrationMacID:(NSString*)macID
 {
     

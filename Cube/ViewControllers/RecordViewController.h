@@ -112,5 +112,6 @@
 - (IBAction)editAudioButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *SpeechToTextView;
 - (IBAction)speechToTextButtonClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *speechToTextCircleView;
 
 @end

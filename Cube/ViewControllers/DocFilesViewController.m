@@ -662,6 +662,11 @@
         [downloadButton setTitle:@"View" forState:UIControlStateNormal];
 
     }
+    else if (audioDetails.downloadStatus == DOWNLOADEDANDDELETED)
+    {
+        [downloadButton setTitle:@"Restore" forState:UIControlStateNormal];
+        
+    }
     else
     {
         [downloadButton setTitle:@"Download" forState:UIControlStateNormal];
@@ -716,7 +721,7 @@
     NSString* fileName = [[Database shareddatabase] getfileNameFromDictationID:[NSString stringWithFormat:@"%d", dictationId]];
    // [[APIManager sharedManager] downloadFileUsingConnection:[NSString stringWithFormat:@"%d",dictationId]];
 
-    if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Download"])
+    if ([[sender titleForState:UIControlStateNormal]  isEqual: @"Download"] || [[sender titleForState:UIControlStateNormal]  isEqual: @"Restore"])
     {
         //[[APIManager sharedManager] downloadFileUsingConnection:@"6753263"];
         [[APIManager sharedManager] downloadFileUsingConnection:[NSString stringWithFormat:@"%d",dictationId]];
@@ -775,19 +780,44 @@
 {
     self.selectedRow = sender.indexPathRow;
     
-   NSIndexPath* indexPath = [NSIndexPath indexPathForRow:sender.indexPathRow inSection:0];
-   UITableViewCell* tappedCell = [self.tableView cellForRowAtIndexPath:indexPath];
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:sender.indexPathRow inSection:0];
+    
+    AudioDetails* audioDetails = [self.completedFilesForTableViewArray objectAtIndex:self.selectedRow];
+    
+    UITableViewCell* tappedCell = [self.tableView cellForRowAtIndexPath:indexPath];
     
     UIImageView* moreImageView = [tappedCell viewWithTag:702];
-    NSArray* subViewArray=[NSArray arrayWithObjects:@"Info.",@"Edit Docx",@"Delete Docx", nil];
 //    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-175, self.view.frame.origin.y+20, 160, 126) andSubViews:subViewArray :self];
 //    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(tappedCell.frame.size.width-175, tappedCell.frame.size.height + tappedCell.frame.origin.y+10, 160, 126) andSubViews:subViewArray :self];
+    NSArray* subViewArray;
 
+    double popViewHeightHeight;
+    double popViewHeightWidth = 160;
+
+    if (audioDetails.downloadStatus == DOWNLOADED)
+    {
+        subViewArray=[NSArray arrayWithObjects:@"Info.",@"Edit Docx",@"Delete Docx", nil];
+        
+        popViewHeightHeight = 126;
+    }
+    else
+    {
+        subViewArray=[NSArray arrayWithObjects:@"Info.", nil];
+        
+        popViewHeightHeight = 40;
+        
+        popViewHeightWidth = 120;
+    }
+    
     double navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
-    double popUpViewXPosition = moreImageView.frame.origin.x  - moreImageView.frame.size.width - 160;
+    double popUpViewXPosition = moreImageView.frame.origin.x  - moreImageView.frame.size.width - popViewHeightWidth;
     double popUpViewYPosition = navigationBarHeight + tappedCell.frame.origin.y + moreImageView.frame.origin.y + 20;
 
-    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(popUpViewXPosition, popUpViewYPosition, 160, 126) andSubViews:subViewArray :self];
+    
+    
+   
+    
+    UIView* pop = [[PopUpCustomView alloc]initWithFrame:CGRectMake(popUpViewXPosition, popUpViewYPosition, popViewHeightWidth, popViewHeightHeight) andSubViews:subViewArray :self];
 
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 
@@ -825,14 +855,14 @@
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     
-    
-    [self.navigationController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
+    [self deleteDocxAndUpdateStatus];
+//    [self.navigationController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
 }
 
--(void)deleteRecording
+-(void)deleteDocxAndUpdateStatus
 {
     alertController = [UIAlertController alertControllerWithTitle:@"Delete?"
-                                                          message:DELETE_MESSAGE
+                                                          message:DELETE_MESSAGE_DOCX
                                                    preferredStyle:UIAlertControllerStyleAlert];
     actionDelete = [UIAlertAction actionWithTitle:@"Delete"
                                             style:UIAlertActionStyleDestructive
@@ -841,71 +871,23 @@
                         
 //                        for (int i = 0; i< self.completedFilesForTableViewArray.count; i++)
 //                        {
-                               AudioDetails* audioDetails = [self.completedFilesForTableViewArray objectAtIndex:self.selectedRow];
+                       AudioDetails* audioDetails = [self.completedFilesForTableViewArray objectAtIndex:self.selectedRow];
                             
-                                audioDetails.downloadStatus = DOWNLOADED;
+                       audioDetails.downloadStatus = DOWNLOADEDANDDELETED;
                                 
-                                [self.completedFilesForTableViewArray replaceObjectAtIndex:self.selectedRow withObject:audioDetails];
+                       [self.completedFilesForTableViewArray replaceObjectAtIndex:self.selectedRow withObject:audioDetails];
                                 
-                                [self.tableView reloadRowsAtIndexPaths:[[NSArray alloc] initWithObjects:[NSIndexPath indexPathForRow:self.selectedRow inSection:0], nil] withRowAnimation:UITableViewRowAnimationNone];
+                       [self.tableView reloadRowsAtIndexPaths:[[NSArray alloc] initWithObjects:[NSIndexPath indexPathForRow:self.selectedRow inSection:0], nil] withRowAnimation:UITableViewRowAnimationNone];
 //                        }
-                        [[Database shareddatabase] updateDownloadingStatus:DOWNLOADEDANDDELETED dictationId:audioDetails.mobiledictationidval];
-//                        APIManager* app=[APIManager sharedManager];
-//
-//                        Database* db=[Database shareddatabase];
-//
-//                        NSString* fileName=[audiorecordDict valueForKey:@"RecordItemName"];
-//
-//                        NSString* dateAndTimeString=[app getDateAndTimeString];
-//
-//                        [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
-//
-//                        [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
-//
-//                        BOOL delete= [app deleteFile:fileName];
-//
-//                        if ([self.selectedView isEqualToString:@"Imported"])
+//                       BOOL deleted = [[APIManager sharedManager] deleteDocxFile:[NSString stringWithFormat:@"%@",audioDetails.fileName]];
+                        
+                        [self updateDocxFileDeleteStatus:audioDetails.mobiledictationidval status:DOWNLOADEDANDDELETED];
+                        
+                        [self deleteDocxFromStorage:audioDetails.fileName];
+
+//                        if (deleted)
 //                        {
-//                            NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:SHARED_GROUP_IDENTIFIER];
-//
-//                            // NSString* sharedAudioFolderPathString=[sharedDefaults objectForKey:@"audioFolderPath"];
-//
-//                            NSMutableArray* sharedAudioNamesArray=[NSMutableArray new];
-//
-//                            NSArray* copyArray=[NSArray new];
-//
-//                            copyArray=[sharedDefaults objectForKey:@"audioNamesArray"];
-//
-//                            sharedAudioNamesArray=[copyArray mutableCopy];
-//
-//                            NSMutableArray* forDeleteStatusProxyArray = [NSMutableArray new];
-//
-//                            for (int i=0; i<sharedAudioNamesArray.count; i++)
-//                            {
-//
-//                                NSString* fileNameWithoutExtension=[[sharedAudioNamesArray objectAtIndex:i] stringByDeletingPathExtension];
-//
-//                                NSString* pathExtension= [[sharedAudioNamesArray objectAtIndex:i] pathExtension];
-//
-//                                NSString* fileNameWithExtension=[NSString stringWithFormat:@"%@.%@",fileName,pathExtension];
-//                                //
-//                                if ([sharedAudioNamesArray containsObject:fileNameWithExtension])
-//                                {
-//                                    [sharedAudioNamesArray removeObject:fileNameWithExtension];
-//
-//                                    break;
-//
-//                                }
-//
-//                            }
-//
-//                            [sharedDefaults setObject:sharedAudioNamesArray forKey:@"audioNamesArray"];
-//
-//                            [sharedDefaults synchronize];
-//                        }
-//                        if (delete)
-//                        {
-//                            [self dismissViewControllerAnimated:YES completion:nil];
+                            [alertController dismissViewControllerAnimated:YES completion:nil];
 //                        }
 //
                     }]; //You can use a block here to handle a press on this button
@@ -927,6 +909,21 @@
     
     
 }
+
+-(void)updateDocxFileDeleteStatus:(long)mobiledictationidval status:(int)deleteStatus
+{
+    [[Database shareddatabase] updateDownloadingStatus:DOWNLOADEDANDDELETED dictationId:mobiledictationidval];
+
+}
+
+-(void)deleteDocxFromStorage:(NSString*)fileName
+{
+    BOOL deleted = [[APIManager sharedManager] deleteDocxFile:[NSString stringWithFormat:@"%@",fileName]];
+
+    
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

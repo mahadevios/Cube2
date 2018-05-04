@@ -196,19 +196,19 @@
             [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ImportedAudioViewController"] animated:YES];
             break;
          
+//        case 3:
+//            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"DocFilesViewController"] animated:YES];
+//            break;
+//
+//        case 4:
+//            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SpeechRecognitionViewController"] animated:YES];
+//            break;
+//
+//        case 5:
+//            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectFileViewController"] animated:YES];
+//            break;
+        
         case 3:
-            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"DocFilesViewController"] animated:YES];
-            break;
-        
-        case 4:
-            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SpeechRecognitionViewController"] animated:YES];
-            break;
-        
-        case 5:
-            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectFileViewController"] animated:YES];
-            break;
-        
-        case 6:
             [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"EditDocxViewController"] animated:YES];
             break;
             
