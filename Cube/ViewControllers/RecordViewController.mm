@@ -75,6 +75,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryPlayAndRecord];
     }
     
+    self.speechToTextCircleView.layer.borderColor = [UIColor darkGrayColor].CGColor;
   //AVAudioSessionPortBuiltInMic;
 }
 

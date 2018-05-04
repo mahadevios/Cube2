@@ -82,4 +82,6 @@
 
 -(void)sendComment:(NSString*)comment dictationId:(NSString*)mobielDictationIdVal;
 
+-(BOOL)deleteDocxFile:(NSString*)fileName;
+
 @end

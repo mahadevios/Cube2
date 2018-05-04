@@ -53,14 +53,33 @@
 //    unzipFolderName = @"TemplateDocx2";
 //    zipDocxFileName = @"TemplateDocx2Zipped";
     // Do any additional setup after loading the view, typically from a nib.
+    
+    self.saveDocxButton.layer.cornerRadius = 4.0;
+    
+    self.saveDocxButton.layer.borderWidth = 1.0;
+//    3,122,255
+    self.saveDocxButton.layer.borderColor = [UIColor colorWithRed:3/255.0 green:122/255.0 blue:1 alpha:1.0].CGColor;
+    
+    self.viewDocxButton.layer.cornerRadius = 4.0;
+    
+    self.viewDocxButton.layer.borderWidth = 1.0;
+    
+    self.viewDocxButton.layer.borderColor = [UIColor colorWithRed:3/255.0 green:122/255.0 blue:1 alpha:1.0].CGColor;
+    
     [self copyBundleDocxFileToDirectory];
     
     [self unZipToMakeXML];
+    
+    [self parseXMLFiles:nil];
 }
 
+- (IBAction)backButtonClicked:(id)sender
+{
+    [self popViewController:sender];
+}
 -(void)popViewController:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:true completion:nil];
     
 }
 
@@ -262,7 +281,7 @@
 
     NSString* destDocxPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.docx",zipDocxFileName]];
 
-    [[NSFileManager defaultManager] copyItemAtPath:sourcePath toPath:destDocxPath error:nil];
+    BOOL copied = [[NSFileManager defaultManager] copyItemAtPath:sourcePath toPath:destDocxPath error:nil];
     NSLog(@"");
 }
 

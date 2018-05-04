@@ -34,6 +34,8 @@
 
 @property(nonatomic,strong) DDXMLDocument *theDocument;
 - (IBAction)saveEditedFile:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *saveDocxButton;
+@property (weak, nonatomic) IBOutlet UIButton *viewDocxButton;
 
 - (IBAction)unZipDoc:(id)sender;
 - (IBAction)zipDoc:(id)sender;

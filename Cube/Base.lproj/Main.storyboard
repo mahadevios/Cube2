@@ -2627,21 +2627,41 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view tag="400" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zqn-V3-xN7">
-                                <rect key="frame" x="32" y="409" width="256" height="71"/>
+                                <rect key="frame" x="32" y="413.5" width="256" height="71"/>
                                 <subviews>
-                                    <button opaque="NO" tag="401" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejK-Ly-8gA">
-                                        <rect key="frame" x="103" y="-7" width="50" height="50"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XyS-En-TuG">
+                                        <rect key="frame" x="95" y="2.5" width="66" height="66"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="ZXE-eE-H34"/>
-                                            <constraint firstAttribute="height" constant="50" id="u8b-hd-qxY"/>
+                                            <constraint firstAttribute="width" constant="66" id="FBJ-90-Olc"/>
+                                            <constraint firstAttribute="height" constant="66" id="jfD-2m-9Z1"/>
                                         </constraints>
-                                        <state key="normal" title="Button" image="SpeechTab"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="33"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                <integer key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <button opaque="NO" tag="401" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejK-Ly-8gA">
+                                        <rect key="frame" x="114.5" y="13" width="31" height="39"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="31" id="ZXE-eE-H34"/>
+                                            <constraint firstAttribute="height" constant="39" id="u8b-hd-qxY"/>
+                                        </constraints>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="SpeechToText">
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="speechToTextButtonClicked:" destination="tpP-gc-M7j" eventType="touchUpInside" id="Y9C-8j-kR9"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" tag="402" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Speech to Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wG0-ej-zBy">
-                                        <rect key="frame" x="77" y="53" width="102.5" height="18"/>
+                                        <rect key="frame" x="77" y="79" width="102.5" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.29408872127532959" green="0.29413613677024841" blue="0.29407835006713867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2649,11 +2669,13 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="wG0-ej-zBy" firstAttribute="top" secondItem="ejK-Ly-8gA" secondAttribute="bottom" constant="10" id="XSb-Kf-K5f"/>
-                                    <constraint firstItem="ejK-Ly-8gA" firstAttribute="centerY" secondItem="Zqn-V3-xN7" secondAttribute="centerY" multiplier="0.5" id="cnz-bd-svJ"/>
-                                    <constraint firstItem="ejK-Ly-8gA" firstAttribute="centerX" secondItem="Zqn-V3-xN7" secondAttribute="centerX" id="dIy-Cp-Qpe"/>
-                                    <constraint firstItem="wG0-ej-zBy" firstAttribute="centerX" secondItem="ejK-Ly-8gA" secondAttribute="centerX" id="j5T-bB-9zK"/>
+                                    <constraint firstItem="wG0-ej-zBy" firstAttribute="centerX" secondItem="Zqn-V3-xN7" secondAttribute="centerX" id="4n8-dq-3O0"/>
+                                    <constraint firstItem="XyS-En-TuG" firstAttribute="centerY" secondItem="Zqn-V3-xN7" secondAttribute="centerY" id="Hgy-xI-zmp"/>
                                     <constraint firstAttribute="height" constant="71" id="kUT-M1-IFc"/>
+                                    <constraint firstItem="ejK-Ly-8gA" firstAttribute="centerX" secondItem="XyS-En-TuG" secondAttribute="centerX" constant="2" id="mAz-VP-Kc9"/>
+                                    <constraint firstItem="XyS-En-TuG" firstAttribute="centerX" secondItem="Zqn-V3-xN7" secondAttribute="centerX" id="nb3-Zd-Lg7"/>
+                                    <constraint firstItem="ejK-Ly-8gA" firstAttribute="centerY" secondItem="XyS-En-TuG" secondAttribute="centerY" constant="-3" id="r42-hy-Ejn"/>
+                                    <constraint firstItem="wG0-ej-zBy" firstAttribute="top" secondItem="XyS-En-TuG" secondAttribute="bottom" constant="10" id="y6e-ql-DmA"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2685,7 +2707,7 @@
                             <constraint firstItem="cze-Vm-ZIm" firstAttribute="top" secondItem="iWT-gL-ksp" secondAttribute="bottom" constant="25" id="snE-CL-vm2"/>
                             <constraint firstItem="qp8-LI-rWW" firstAttribute="width" secondItem="WUf-9E-OrI" secondAttribute="width" multiplier="0.8" id="tmb-SI-yso"/>
                             <constraint firstItem="cze-Vm-ZIm" firstAttribute="centerX" secondItem="WUf-9E-OrI" secondAttribute="centerX" id="urh-iN-o1c"/>
-                            <constraint firstItem="Zqn-V3-xN7" firstAttribute="top" secondItem="qp8-LI-rWW" secondAttribute="bottom" constant="18.5" id="vNp-hi-J9B"/>
+                            <constraint firstItem="Zqn-V3-xN7" firstAttribute="top" secondItem="qp8-LI-rWW" secondAttribute="bottom" constant="23" id="vNp-hi-J9B"/>
                             <constraint firstItem="EIu-68-PUL" firstAttribute="top" secondItem="JWV-ta-8Eg" secondAttribute="bottom" constant="10" id="z7X-CF-7Jx"/>
                         </constraints>
                         <variation key="default">
@@ -2700,6 +2722,7 @@
                         <outlet property="SpeechToTextView" destination="Zqn-V3-xN7" id="hQx-bC-ORK"/>
                         <outlet property="deleteButton" destination="63P-Hc-ukf" id="DGu-Jz-hjN"/>
                         <outlet property="recordLAbel" destination="iWT-gL-ksp" id="vDj-bD-cPM"/>
+                        <outlet property="speechToTextCircleView" destination="XyS-En-TuG" id="Wuj-Y3-L0c"/>
                         <outlet property="stopLabel" destination="6C3-pp-k95" id="azS-Kc-OZS"/>
                         <outlet property="stopNewButton" destination="5j2-zy-tlz" id="mXu-4z-Osp"/>
                         <outlet property="stopNewImageView" destination="cze-Vm-ZIm" id="nMO-pD-gcU"/>
@@ -4241,25 +4264,73 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZD-BD-GFi">
-                                <rect key="frame" x="0.0" y="20" width="320" height="60"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wRq-qr-Cac">
+                                <rect key="frame" x="0.0" y="4" width="320" height="70"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bTc-at-hbI">
-                                        <rect key="frame" x="47" y="15" width="66" height="30"/>
-                                        <state key="normal" title="Edit Docx"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Back" translatesAutoresizingMaskIntoConstraints="NO" id="yNq-Bj-Uak">
+                                        <rect key="frame" x="13" y="28" width="13" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="13" id="MGj-69-rf2"/>
+                                            <constraint firstAttribute="height" constant="21" id="wh4-BD-gWP"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oSI-00-dbN">
+                                        <rect key="frame" x="0.0" y="-0.5" width="70" height="70"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="m1V-ZD-zKm"/>
+                                            <constraint firstAttribute="width" constant="70" id="qfE-Uu-a3I"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="m1V-ZD-zKm"/>
+                                            </mask>
+                                        </variation>
                                         <connections>
-                                            <action selector="parseXMLFiles:" destination="VAV-aB-v0I" eventType="touchUpInside" id="sTk-wL-haQ"/>
+                                            <action selector="backButtonClicked:" destination="VAV-aB-v0I" eventType="touchUpInside" id="QMa-ao-bKh"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Docx Editor" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lqp-aO-FVD">
+                                        <rect key="frame" x="60" y="26.5" width="200" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="JfM-VL-aoU"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <color key="textColor" red="0.98039215690000003" green="0.63529411759999999" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.96854275465011597" green="0.96868163347244263" blue="0.96851247549057007" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="oSI-00-dbN" firstAttribute="height" secondItem="wRq-qr-Cac" secondAttribute="height" id="0nQ-YD-Rae"/>
+                                    <constraint firstItem="Lqp-aO-FVD" firstAttribute="centerX" secondItem="wRq-qr-Cac" secondAttribute="centerX" id="9qU-ji-0CM"/>
+                                    <constraint firstAttribute="height" constant="70" id="J6c-1v-hx1"/>
+                                    <constraint firstItem="Lqp-aO-FVD" firstAttribute="centerY" secondItem="wRq-qr-Cac" secondAttribute="centerY" multiplier="1.1" id="O5m-fh-uuH"/>
+                                    <constraint firstItem="yNq-Bj-Uak" firstAttribute="centerY" secondItem="wRq-qr-Cac" secondAttribute="centerY" multiplier="1.1" id="QJ8-gW-e6m"/>
+                                    <constraint firstItem="oSI-00-dbN" firstAttribute="leading" secondItem="wRq-qr-Cac" secondAttribute="leading" id="Xy2-8m-wAl"/>
+                                    <constraint firstItem="yNq-Bj-Uak" firstAttribute="leading" secondItem="wRq-qr-Cac" secondAttribute="leading" constant="13" id="h6S-1d-20K"/>
+                                    <constraint firstItem="oSI-00-dbN" firstAttribute="centerY" secondItem="wRq-qr-Cac" secondAttribute="centerY" id="xmQ-ZK-Ywl"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZD-BD-GFi">
+                                <rect key="frame" x="0.0" y="79" width="320" height="60"/>
+                                <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F2i-UV-sPE">
-                                        <rect key="frame" x="143" y="15" width="34" height="30"/>
-                                        <state key="normal" title="Save"/>
+                                        <rect key="frame" x="30" y="15" width="100" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="ZaG-Kc-bBV"/>
+                                        </constraints>
+                                        <state key="normal" title="Save Docx">
+                                            <color key="titleColor" red="0.013406815007328987" green="0.47966843843460083" blue="0.99926894903182983" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="saveEditedFile:" destination="VAV-aB-v0I" eventType="touchUpInside" id="gFE-0U-LyB"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vx0-KY-fwO">
-                                        <rect key="frame" x="203.5" y="15" width="73" height="30"/>
+                                        <rect key="frame" x="190" y="15" width="100" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="oVx-LT-nFl"/>
+                                        </constraints>
                                         <state key="normal" title="View Docx"/>
                                         <connections>
                                             <action selector="viewNewlyCreatedDocx:" destination="VAV-aB-v0I" eventType="touchUpInside" id="wbs-fu-Zuk"/>
@@ -4270,10 +4341,8 @@
                                 <constraints>
                                     <constraint firstItem="vx0-KY-fwO" firstAttribute="centerX" secondItem="kZD-BD-GFi" secondAttribute="centerX" multiplier="1.5" id="2F6-gE-jyI"/>
                                     <constraint firstAttribute="height" constant="60" id="Lot-jH-wBs"/>
-                                    <constraint firstItem="F2i-UV-sPE" firstAttribute="centerY" secondItem="bTc-at-hbI" secondAttribute="centerY" id="OBI-1e-Ijp"/>
-                                    <constraint firstItem="F2i-UV-sPE" firstAttribute="centerX" secondItem="kZD-BD-GFi" secondAttribute="centerX" id="R7n-eF-r8P"/>
-                                    <constraint firstItem="bTc-at-hbI" firstAttribute="centerX" secondItem="kZD-BD-GFi" secondAttribute="centerX" multiplier="0.5" id="diu-CY-LhO"/>
-                                    <constraint firstItem="bTc-at-hbI" firstAttribute="centerY" secondItem="kZD-BD-GFi" secondAttribute="centerY" id="jF0-q4-neH"/>
+                                    <constraint firstItem="F2i-UV-sPE" firstAttribute="centerX" secondItem="kZD-BD-GFi" secondAttribute="centerX" multiplier="0.5" id="R7n-eF-r8P"/>
+                                    <constraint firstItem="F2i-UV-sPE" firstAttribute="centerY" secondItem="kZD-BD-GFi" secondAttribute="centerY" id="naN-uC-VwB"/>
                                     <constraint firstItem="vx0-KY-fwO" firstAttribute="centerY" secondItem="F2i-UV-sPE" secondAttribute="centerY" id="ov8-ZC-8UF"/>
                                 </constraints>
                             </view>
@@ -4320,19 +4389,24 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="pxM-ff-wVK" firstAttribute="leading" secondItem="ttv-nR-dpw" secondAttribute="leading" constant="3" id="5Ql-Kh-pXW"/>
+                            <constraint firstItem="wRq-qr-Cac" firstAttribute="centerX" secondItem="ttv-nR-dpw" secondAttribute="centerX" id="G5Z-OI-YeX"/>
                             <constraint firstItem="pxM-ff-wVK" firstAttribute="top" secondItem="kZD-BD-GFi" secondAttribute="bottom" constant="5" id="W3A-kc-Rgj"/>
-                            <constraint firstItem="kZD-BD-GFi" firstAttribute="top" secondItem="9hf-17-4gY" secondAttribute="bottom" id="YV1-23-bnT"/>
                             <constraint firstItem="r4c-0z-DQg" firstAttribute="top" secondItem="pxM-ff-wVK" secondAttribute="bottom" constant="3" id="aZ2-GV-T1l"/>
                             <constraint firstItem="kZD-BD-GFi" firstAttribute="centerX" secondItem="ttv-nR-dpw" secondAttribute="centerX" id="b7w-J5-Yp1"/>
+                            <constraint firstItem="wRq-qr-Cac" firstAttribute="width" secondItem="ttv-nR-dpw" secondAttribute="width" id="cr5-wS-JEN"/>
                             <constraint firstAttribute="trailing" secondItem="pxM-ff-wVK" secondAttribute="trailing" constant="3" id="dt2-jI-UTc"/>
                             <constraint firstItem="kZD-BD-GFi" firstAttribute="width" secondItem="ttv-nR-dpw" secondAttribute="width" id="eQA-tp-j3L"/>
                             <constraint firstItem="Twp-aw-vGP" firstAttribute="width" secondItem="ttv-nR-dpw" secondAttribute="width" constant="-6" id="g1X-n8-3Zq"/>
+                            <constraint firstItem="kZD-BD-GFi" firstAttribute="top" secondItem="wRq-qr-Cac" secondAttribute="bottom" constant="5" id="gzu-7S-Qoo"/>
+                            <constraint firstItem="wRq-qr-Cac" firstAttribute="top" secondItem="9hf-17-4gY" secondAttribute="bottom" constant="-16" id="lt0-0g-4Re"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="insideView" destination="Twp-aw-vGP" id="r6G-Eo-Pfk"/>
                         <outlet property="referenceTextView" destination="eHa-kI-O7r" id="RXw-P0-HHv"/>
+                        <outlet property="saveDocxButton" destination="F2i-UV-sPE" id="O5R-ng-1Em"/>
                         <outlet property="scrollView" destination="pxM-ff-wVK" id="XYz-Bc-ekI"/>
+                        <outlet property="viewDocxButton" destination="vx0-KY-fwO" id="d9H-lE-qEd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xH0-bF-hp8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4355,7 +4429,7 @@
         <image name="More" width="6" height="21"/>
         <image name="PlayRecrding" width="65" height="65"/>
         <image name="RecordTab" width="22" height="26"/>
-        <image name="SpeechTab" width="24" height="24"/>
+        <image name="SpeechToText" width="31" height="39"/>
         <image name="StopNew" width="78" height="78"/>
         <image name="TransFile" width="35" height="35"/>
         <image name="TransRecord" width="35" height="35"/>
