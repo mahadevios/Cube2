@@ -22,4 +22,6 @@ dependencies: \
   /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/Libraries/SBJson/SBJson4StreamTokeniser.h \
   /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/API\ Manager/SharedSession.h \
   /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/Categories/NSData+AES256.h \
-  /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/Constant/Constants.h
+  /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/Constant/Constants.h \
+  /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/ViewControllers/SpeechRecognitionViewController.h \
+  /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/Categories/CommonDelegate.h

@@ -13,6 +13,7 @@
 #import "RegistrationViewController.h"
 #import "MainTabBarViewController.h"
 #import "SharedSession.h"
+#import "AppDelegate.h"
 
 @interface SelectDepartmentViewController ()
 
@@ -78,10 +79,21 @@
     
     
      NSURLSession*  session = [SharedSession getSharedSession:[APIManager sharedManager]];
-        
+    
+//    [self.view endEditing:true];
     
 
+    
+    [self dismissViewControllerAnimated:true completion:nil];
+
+    [[self presentingViewController] dismissViewControllerAnimated:true completion:nil];
+//
     [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
+
+    
+//    AppDelegate* appDelegate = [[UIApplication sharedApplication] delegate];
+//
+//    [appDelegate.window setRootViewController:vc];
    // [self dismissViewControllerAnimated:NO completion:^{[self checkAndDismissViewController];}];
     
     //    [self performSelector:@selector(checkAndDismissViewController) withObject:nil afterDelay:0.5];

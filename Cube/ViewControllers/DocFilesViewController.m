@@ -39,10 +39,34 @@
     
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
-//    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showFilterSettings:)];
+
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Last 5 days" style:UIBarButtonItemStylePlain target:self action:@selector(showFilterSettings:)];
+    
+    [self setRightBarButtonItem:@"Last 5 Days"];
+
+    [self getCompletedFilesForDays:@"5"];
+    
+    [self.tabBarController.tabBar setHidden:YES];
+
+   // self.navigationController.navigationBar.translucent = NO;
+
+    // Do any additional setup after loading the view.
+}
+
+
+-(void)getCompletedFilesForDays:(NSString*)filterDaysNumber
+{
+    self.completedFilesResponseArray = nil;
+    
+    self.uploadedFilesArray = nil;
+    
+    self.completedFilesForTableViewArray = nil;
+    
+    self.downloadingFilesDictationIdsArray = nil;
     
     self.completedFilesResponseArray = [NSMutableArray new];
-
+    
     self.uploadedFilesArray = [NSMutableArray new];
     
     self.completedFilesForTableViewArray = [NSMutableArray new];
@@ -51,7 +75,7 @@
     
     self.uploadedFilesArray = [[Database shareddatabase] getUploadedFileList];
     
-    NSArray* uploadedFilesDictationIdArray = [[Database shareddatabase] getUploadedFilesDictationIdList];
+    NSArray* uploadedFilesDictationIdArray = [[Database shareddatabase] getUploadedFilesDictationIdList:true filterDate:filterDaysNumber];
     
     NSString* uploadedFilesDictationIdString = [uploadedFilesDictationIdArray componentsJoinedByString:@","];
     
@@ -63,13 +87,40 @@
         [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
     }
     
-    [self.tabBarController.tabBar setHidden:YES];
-
-   // self.navigationController.navigationBar.translucent = NO;
-
-    // Do any additional setup after loading the view.
 }
 
+-(void)setRightBarButtonItem:(NSString*)barButtonTitleString
+{
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Last 5 days" style:UIBarButtonItemStylePlain target:self action:@selector(showFilterSettings:)];
+    NSArray* daysArray = [barButtonTitleString componentsSeparatedByString:@" "];
+    NSString* dayString = [daysArray objectAtIndex:1];
+//    self.navigationItem.rightBarButtonItem = nil;
+    
+//    UIBarButtonItem* rightBarButton = [[UIBarButtonItem alloc] initWithTitle:barButtonTitleString style:UIBarButtonItemStylePlain target:self action:@selector(showFilterSettings:)];
+    
+    UIButton* rightBarCustomButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 0, 40, 30)];
+    
+
+    [rightBarCustomButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:14.0]];
+    
+    [rightBarCustomButton setTitle:barButtonTitleString forState:UIControlStateNormal];
+    
+    [rightBarCustomButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    
+//    [rightBarButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+//                                            [UIFont fontWithName:@"Helvetica" size:14.0], NSFontAttributeName,
+//                                            [UIColor darkGrayColor], NSForegroundColorAttributeName,
+//                                            nil] forState:UIControlStateNormal];
+    
+    rightBarCustomButton.adjustsImageWhenHighlighted = NO;
+    
+    [rightBarCustomButton addTarget:self action:@selector(showFilterSettings:) forControlEvents:UIControlEventTouchUpInside];
+
+    UIBarButtonItem *barBtn = [[UIBarButtonItem alloc] initWithCustomView:rightBarCustomButton];
+    
+    self.navigationItem.rightBarButtonItem = barBtn;
+    
+}
 -(void)popViewController:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -213,7 +264,7 @@
     
     insideView.layer.cornerRadius = 4.0;
     
-    UILabel* referenceLabel = [[UILabel alloc] initWithFrame:CGRectMake(insideView.frame.size.width/2 - 60, 10, 120, 35)];
+    UILabel* referenceLabel = [[UILabel alloc] initWithFrame:CGRectMake(insideView.frame.size.width/2 - 100, 10, 200, 35)];
     
     referenceLabel.textAlignment = NSTextAlignmentCenter;
     
@@ -259,7 +310,7 @@
     
     [submitButton setTitle:@"Submit" forState:UIControlStateNormal];
     
-    submitButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    submitButton.titleLabel.font = [UIFont systemFontOfSize:16];
     
     [submitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
@@ -288,7 +339,7 @@
 
     [[UIApplication sharedApplication].keyWindow addSubview:overLayView];
 
-    [UIView animateWithDuration:0.6 delay:0 usingSpringWithDamping:.7 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:.9 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
 
 //            self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
 
@@ -770,11 +821,133 @@
 }
 
 
--(void)showUserSettings:(id)sender
+-(void)showFilterSettings:(id)sender
 {
-//    [self addPopView];
+    [self addPopViewForRightBarButton:sender];
 }
 
+
+-(void)addPopViewForRightBarButton:(id)sender
+{
+//    self.selectedRow = sender.indexPathRow;
+    
+//    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:sender.indexPathRow inSection:0];
+    
+//    AudioDetails* audioDetails = [self.completedFilesForTableViewArray objectAtIndex:self.selectedRow];
+    
+//    UITableViewCell* tappedCell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+//    UIImageView* moreImageView = [tappedCell viewWithTag:702];
+    //    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-175, self.view.frame.origin.y+20, 160, 126) andSubViews:subViewArray :self];
+    //    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(tappedCell.frame.size.width-175, tappedCell.frame.size.height + tappedCell.frame.origin.y+10, 160, 126) andSubViews:subViewArray :self];
+    NSArray* subViewArray;
+    
+    double popViewHeight;
+    double popViewWidth = 160;
+    
+   
+    subViewArray=[NSArray arrayWithObjects:@"Last 5 Days",@"Last 10 Days",@"Last 15 Days",@"No Filter", nil];
+        
+    popViewHeight = 168; // 41 for each including top and bottom space
+   
+    
+    double navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    double popUpViewXPosition = self.view.frame.size.width - popViewWidth;
+    double popUpViewYPosition = navigationBarHeight + 20;
+    
+    
+    
+    
+    
+    UIView* overlayView = [[PopUpCustomView alloc]initWithFrame:CGRectMake(popUpViewXPosition, popUpViewYPosition, popViewWidth, popViewHeight) andSubViews:subViewArray :self];
+    
+    UIView* popUpView = [overlayView viewWithTag:561];
+    
+//    popUpView.frame = CGRectMake(popUpViewXPosition, popUpViewYPosition, popViewWidth, popViewHeight);
+
+    popUpView.frame = CGRectMake(popUpViewXPosition+(popViewWidth/2), popUpViewYPosition, 0, 0);
+    
+    [[[UIApplication sharedApplication] keyWindow] addSubview:overlayView];
+    
+    [UIView animateWithDuration:0.2 delay:0 usingSpringWithDamping:.9 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
+
+    
+        popUpView.frame = CGRectMake(popUpViewXPosition, popUpViewYPosition, popViewWidth, popViewHeight);
+        
+    } completion:^(BOOL finished) {
+
+    }];
+    //    [tappedCell addSubview:pop];
+    
+}
+
+-(void)Last5Days
+{
+    
+    UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+    if ([popUpView isKindOfClass:[UIView class]])
+    {
+        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    }
+    
+    [self setRightBarButtonItem:@"Last 5 Days"];
+    
+    [self getCompletedFilesForDays:@"5"];
+
+}
+
+-(void)Last10Days
+{
+    UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+    if ([popUpView isKindOfClass:[UIView class]])
+    {
+        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    }
+    
+    [self setRightBarButtonItem:@"Last 10 Days"];
+
+    [self getCompletedFilesForDays:@"10"];
+}
+
+-(void)Last15Days
+{
+    UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+    if ([popUpView isKindOfClass:[UIView class]])
+    {
+        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    }
+    
+    [self setRightBarButtonItem:@"Last 15 Days"];
+
+    [self getCompletedFilesForDays:@"15"];
+}
+
+-(void)Last30Days
+{
+    UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+    if ([popUpView isKindOfClass:[UIView class]])
+    {
+        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    }
+    
+    [self setRightBarButtonItem:@"Last 30 Days"];
+    
+    [self getCompletedFilesForDays:@"30"];
+}
+
+-(void)NoFilter
+{
+    UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+    if ([popUpView isKindOfClass:[UIView class]])
+    {
+        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    }
+    
+    [self setRightBarButtonItem:@"No Filter"];
+    
+    [self getCompletedFilesForDays:@"365"];
+
+}
 
 -(void)addPopView:(TableViewButton*)sender
 {
@@ -791,35 +964,48 @@
 //    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(tappedCell.frame.size.width-175, tappedCell.frame.size.height + tappedCell.frame.origin.y+10, 160, 126) andSubViews:subViewArray :self];
     NSArray* subViewArray;
 
-    double popViewHeightHeight;
-    double popViewHeightWidth = 160;
+    double popViewHeight;
+    double popViewWidth = 160;
 
     if (audioDetails.downloadStatus == DOWNLOADED)
     {
         subViewArray=[NSArray arrayWithObjects:@"Info.",@"Edit Docx",@"Delete Docx", nil];
         
-        popViewHeightHeight = 126;
+        popViewHeight = 126;
     }
     else
     {
         subViewArray=[NSArray arrayWithObjects:@"Info.", nil];
         
-        popViewHeightHeight = 40;
+        popViewHeight = 40;
         
-        popViewHeightWidth = 120;
+        popViewWidth = 120;
     }
     
     double navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
-    double popUpViewXPosition = moreImageView.frame.origin.x  - moreImageView.frame.size.width - popViewHeightWidth;
+    double popUpViewXPosition = moreImageView.frame.origin.x - popViewWidth;
+//    double popUpViewXPosition = self.view.frame.size.width - popViewWidth;
+
     double popUpViewYPosition = navigationBarHeight + tappedCell.frame.origin.y + moreImageView.frame.origin.y + 20;
 
-    
-    
-   
-    
-    UIView* pop = [[PopUpCustomView alloc]initWithFrame:CGRectMake(popUpViewXPosition, popUpViewYPosition, popViewHeightWidth, popViewHeightHeight) andSubViews:subViewArray :self];
+    UIView* overlayView = [[PopUpCustomView alloc]initWithFrame:CGRectMake(popUpViewXPosition, popUpViewYPosition, popViewWidth, popViewHeight) andSubViews:subViewArray :self];
 
-    [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
+    UIView* popUpView = [overlayView viewWithTag:561];
+    
+    popUpView.frame = CGRectMake(popUpViewXPosition, popUpViewYPosition, popViewWidth, popViewHeight);
+    
+    popUpView.frame = CGRectMake(popUpViewXPosition+popViewWidth, popUpViewYPosition, 0, 0);
+    
+    [[[UIApplication sharedApplication] keyWindow] addSubview:overlayView];
+    
+    [UIView animateWithDuration:0.2 delay:0 usingSpringWithDamping:.9 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
+    
+    
+            popUpView.frame = CGRectMake(popUpViewXPosition, popUpViewYPosition, popViewWidth, popViewHeight);
+    
+    } completion:^(BOOL finished) {
+    
+    }];
 
 //    [tappedCell addSubview:pop];
     
@@ -828,11 +1014,54 @@
 -(void)dismissPopView:(id)sender
 {
     
-    UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
-    if ([popUpView isKindOfClass:[UIView class]])
+    
+    UIView* overlayView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+
+    UIView* popUpView = [overlayView viewWithTag:561];
+
+    if (popUpView.frame.size.height < 150)  // for tableview cell more popup dismiss
+    {
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:self.selectedRow inSection:0];
+        
+        UITableViewCell* tappedCell = [self.tableView cellForRowAtIndexPath:indexPath];
+        
+        UIImageView* moreImageView = [tappedCell viewWithTag:702];
+        
+        double navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+        
+        double popUpViewYPosition = navigationBarHeight + tappedCell.frame.origin.y + moreImageView.frame.origin.y + 20;
+        
+        double popUpViewXPosition = moreImageView.frame.origin.x;
+        
+        [UIView animateWithDuration:0.2 delay:0 usingSpringWithDamping:.9 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
+            
+            NSArray* subViews = [popUpView subviews];
+            
+            for (UIView* view in subViews)
+            {
+                view.frame = CGRectMake(popUpViewXPosition, popUpViewYPosition, 0, 0);
+            }
+            
+            popUpView.frame = CGRectMake(popUpViewXPosition, popUpViewYPosition, 0, 0);
+            
+            
+            
+        } completion:^(BOOL finished) {
+            
+            if ([popUpView isKindOfClass:[UIView class]])
+            {
+                [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+            }
+            
+        }];
+        
+    }
+    else // for navigation bar more popup dismiss
     {
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+
     }
+   
     
 }
 -(void)Info

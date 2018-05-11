@@ -102,6 +102,95 @@
     [pinCode1TextField resignFirstResponder];
 
 }
+//-(void)validatePinResponseCheck:(NSNotification*)dictObj;
+//{
+//    NSDictionary* responseDict=dictObj.object;
+//
+//    NSString* responseCodeString=  [responseDict valueForKey:RESPONSE_CODE];
+//
+//    NSString* responsePinString=  [responseDict valueForKey:@"pinvalidflag"];
+//
+//    if ([responseCodeString intValue]==401 && [responsePinString intValue]==0)
+//    {
+//        [hud hideAnimated:YES];
+//
+//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Incorrect PIN entered" withMessage:@"Please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//        pinCode1TextField.text=@"";
+//        pinCode2TextField.text=@"";
+//        pinCode3TextField.text=@"";
+//        pinCode4TextField.text=@"";
+//        [pinCode1TextField becomeFirstResponder];
+//    }
+//
+//    if ([responseCodeString intValue]==200 && [responsePinString intValue]==1)
+//    {
+//
+//        [hud hideAnimated:YES];
+//
+//        if([AppPreferences sharedAppPreferences].userObj == nil)
+//        {
+//            [AppPreferences sharedAppPreferences].userObj = [[User alloc] init];
+//        }
+//
+//        NSString* pin=[NSString stringWithFormat:@"%@%@%@%@",pinCode1TextField.text,pinCode2TextField.text,pinCode3TextField.text,pinCode4TextField.text];
+//
+//        [AppPreferences sharedAppPreferences].userObj.userPin = pin;
+//
+//
+//
+//        NSArray* departmentArray=  [responseDict valueForKey:@"DepartmentList"];
+//
+//        NSMutableArray* deptForDatabaseArray=[[NSMutableArray alloc]init];
+//
+//        for (int i=0; i<departmentArray.count; i++)
+//        {
+//            DepartMent* deptObj=[[DepartMent alloc]init];
+//
+//            NSDictionary* deptDict= [departmentArray objectAtIndex:i];
+//
+//            deptObj.Id= [[deptDict valueForKey:@"ID"]longLongValue];
+//
+//            deptObj.departmentName=[deptDict valueForKey:@"DeptName"];
+//
+//            [deptForDatabaseArray addObject:deptObj];
+//        }
+//
+//        Database *db=[Database shareddatabase];
+//
+//        [db insertDepartMentData:deptForDatabaseArray];
+//
+//
+//        //get user firstname,lastname and userId for file prefix
+//
+//        NSString* fileNamePrefix = [responseDict valueForKey:@"FileNamePrefix"];
+//
+//        [[NSUserDefaults standardUserDefaults] setValue:fileNamePrefix forKey:@"FileNamePrefix"];
+//
+//        [pinCode4TextField resignFirstResponder];
+//
+//        [self dismissViewControllerAnimated:NO completion:nil];
+//
+//
+//        MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
+//
+//        [[UIApplication sharedApplication] keyWindow].rootViewController = nil;
+//
+//        [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
+//
+//        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
+//        {
+//
+//            [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+//
+//        }
+//        else
+//            [self dismissViewControllerAnimated:NO completion:nil];
+//
+//    }
+//
+//
+//}
+
 -(void)validatePinResponseCheck:(NSNotification*)dictObj;
 {
     NSDictionary* responseDict=dictObj.object;
@@ -113,7 +202,7 @@
     if ([responseCodeString intValue]==401 && [responsePinString intValue]==0)
     {
         [hud hideAnimated:YES];
-
+        
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Incorrect PIN entered" withMessage:@"Please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         pinCode1TextField.text=@"";
         pinCode2TextField.text=@"";
@@ -124,7 +213,7 @@
     
     if ([responseCodeString intValue]==200 && [responsePinString intValue]==1)
     {
-
+        
         [hud hideAnimated:YES];
         
         if([AppPreferences sharedAppPreferences].userObj == nil)
@@ -133,11 +222,11 @@
         }
         
         NSString* pin=[NSString stringWithFormat:@"%@%@%@%@",pinCode1TextField.text,pinCode2TextField.text,pinCode3TextField.text,pinCode4TextField.text];
-
+        
         [AppPreferences sharedAppPreferences].userObj.userPin = pin;
         
         
-
+        
         NSArray* departmentArray=  [responseDict valueForKey:@"DepartmentList"];
         
         NSMutableArray* deptForDatabaseArray=[[NSMutableArray alloc]init];
@@ -154,7 +243,7 @@
             
             [deptForDatabaseArray addObject:deptObj];
         }
-
+        
         Database *db=[Database shareddatabase];
         
         [db insertDepartMentData:deptForDatabaseArray];
@@ -166,31 +255,36 @@
         
         [[NSUserDefaults standardUserDefaults] setValue:fileNamePrefix forKey:@"FileNamePrefix"];
         
-        [pinCode4TextField resignFirstResponder];
-        
-        [self dismissViewControllerAnimated:NO completion:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.view endEditing:true];
 
+            [pinCode4TextField resignFirstResponder];
 
-        MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
+        });
         
-        [[UIApplication sharedApplication] keyWindow].rootViewController = nil;
+//        [self dismissViewControllerAnimated:NO completion:nil];
         
-        [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
-
+        
+//        MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
+//        
+//        [[UIApplication sharedApplication] keyWindow].rootViewController = nil;
+//        
+//        [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
+        
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
         {
+            [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+//            [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
             
-            [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
-
         }
         else
             [self dismissViewControllerAnimated:NO completion:nil];
         
     }
-
-
+    
+    
 }
-
 - (void) checkAndDismissViewController
 {
     id viewController = [self topViewController];

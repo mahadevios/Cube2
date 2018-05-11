@@ -22,33 +22,42 @@
 @end
 
 @implementation HomeViewController
+
 @synthesize transferredView,transferFailedView,awaitingTransferView,failedCountLabel,VRSDOCFilesView,VRSFilesCountLabel,VRSDocFilesArray;
+
+#pragma mark: View Delegate And Associate methods
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 //    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
-    db=[Database shareddatabase];
+    db = [Database shareddatabase];
 
-    
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-    transferFailedView.layer.cornerRadius=4.0f;
-    transferredView.layer.cornerRadius=4.0f;
-    awaitingTransferView.layer.cornerRadius=4.0f;
     
-    tapRecogniser=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
-    tapRecogniser1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
-    tapRecogniser2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showCompletedDocFIlesView:)];
-    tapRecogniser3=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showVRSDocFilesView:)];
+    transferFailedView.layer.cornerRadius = 4.0f;
+    
+    transferredView.layer.cornerRadius = 4.0f;
+    
+    awaitingTransferView.layer.cornerRadius = 4.0f;
+    
+    // tap gesture recognisers for four title views
+    transferredTodayViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+    awaitingViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
+    completedDocViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showCompletedDocFIlesView:)];
+    vrsDocViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showVRSDocFilesView:)];
 
-    [transferredView addGestureRecognizer:tapRecogniser];
-    [awaitingTransferView addGestureRecognizer:tapRecogniser1];
-    [transferFailedView addGestureRecognizer:tapRecogniser2];
-    [VRSDOCFilesView addGestureRecognizer:tapRecogniser3];
+    [transferredView addGestureRecognizer:transferredTodayViewTapRecogniser];
+    [awaitingTransferView addGestureRecognizer:awaitingViewTapRecogniser];
+    [transferFailedView addGestureRecognizer:completedDocViewTapRecogniser];
+    [VRSDOCFilesView addGestureRecognizer:vrsDocViewTapRecogniser];
 
+    // observer for transfer, awiating, failed recording counts change
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(getCounts) name:NOTIFICATION_FILE_UPLOAD_API
+                                             selector:@selector(getCountsOfTransferredAwaitingFiles) name:NOTIFICATION_FILE_UPLOAD_API
                                                object:nil];
     
+    // observer for completed doc API response
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(validateSendIdsResponse:) name:NOTIFICATION_SEND_DICTATION_IDS_API
                                                object:nil];
@@ -57,101 +66,68 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-        //[{"macid":"e0:2c:b2:ec:5a:8f"}]
-    //NSLog(@"%@",NSHomeDirectory());
-    //[db insertDepartMentData];
-    
-//    NSString* str=@"Hello mahadev";
-//    NSData* data=[str dataUsingEncoding:NSUTF8StringEncoding];
-//    NSData* encr=[data AES256EncryptWithKey:@"mahadev"];
-//    
-//    NSData* str1= [encr AES256DecryptWithKey:@"mahadev"];
-//    
-//    NSString* df=[[NSString alloc]initWithData:str1 encoding:NSUTF8StringEncoding];
 
-//    if (!session)
-//    {
-//        session = [SharedSession getSharedSession:[APIManager sharedManager]];
-//
-//    }
-    [AppPreferences sharedAppPreferences].isRecordView=NO;
-//    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-//    transferFailedView.layer.cornerRadius=4.0f;
-//    transferredView.layer.cornerRadius=4.0f;
-//    awaitingTransferView.layer.cornerRadius=4.0f;
-//    
-//    tapRecogniser=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
-//    tapRecogniser1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
-//    tapRecogniser2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
-//    [transferredView addGestureRecognizer:tapRecogniser];
-//    [awaitingTransferView addGestureRecognizer:tapRecogniser1];
-//    [transferFailedView addGestureRecognizer:tapRecogniser2];
-    [self getCounts];
-    
-  
+    [AppPreferences sharedAppPreferences].isRecordView = NO;
+
     [UIApplication sharedApplication].idleTimerDisabled = YES;
+
+    self.tabBarController.tabBar.userInteractionEnabled = true;
+
+    [self.tabBarController.tabBar setHidden:NO];
     
-//    [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
-//        if (granted) {
-//            NSLog(@"granted");
-//        } else {
-//            NSLog(@"denied");
-//            
-//            
-//            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Microphone Access Denied" withMessage:@"You must allow microphone access in Settings > Privacy > Microphone" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-//          //  [alert show];
-//        }
-//    }];
+    // get count of Today's transferred, Awaiting transfer
+    [self getCountsOfTransferredAwaitingFiles];
     
+    // show count of transfer failed
+    [self showTransferFailedCount];
     
+    // show vrs doc files count
+    [self showVRSFileCount];
+
+    // check for complted docx file count
+    [self checkForCompletedDocFiles];
+    
+    // check files tobe purge
+    [self checkFilesToBePurge];
+    
+    NSLog(@"%@",NSHomeDirectory());
+   
+    
+}
+
+-(void)checkFilesToBePurge
+{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"MM-dd-yyyy";
+    
+    formatter.dateFormat = @"yyyy-MM-dd";
+    
     NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
     
-
-    if ([[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE]== NULL)//for first time to check files to be purge are available or not
+    //for first time to check files to be purge are available or not
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE]== NULL)
     {
-       
+        
         [self deleteDictation];
-         //[self needsUpdate];
+        //[self needsUpdate];
     }
     else
     if (!([[[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE] isEqualToString:todaysDate]))// this wil be 2nd day after pressing later or pressing delete
     {
         [self deleteDictation];
-       //  [self needsUpdate];
-
-       // [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];
-
-
+        //  [self needsUpdate];
     }
-    
-    NSLog(@"%@",NSHomeDirectory());
-    // [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms://itunes.com/apps/CubeDictate"]];
-  //  [[Database shareddatabase] updateAudioFileName];
-
- //   [[NSUserDefaults standardUserDefaults] setValue:NULL forKey:PURGE_DATA_DATE];
-     self.tabBarController.tabBar.userInteractionEnabled = true;
-    
-     [self.tabBarController.tabBar setHidden:NO];
-    
-     NSArray* uploadedFilesDictationIdArray = [[Database shareddatabase] getUploadedFilesDictationIdList];
-    
-     NSString* uploadedFilesDictationIdString = [uploadedFilesDictationIdArray componentsJoinedByString:@","];
-    
-     [self showTransferFailedCount];
-    
-     [self showVRSFileCount];
-    
-     [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
-    
-
-
-//    [[Database shareddatabase] setDepartment];//to insert default department for imported files
 }
 
--(void)viewDidAppear:(BOOL)animated
+-(void)checkForCompletedDocFiles
 {
+    // get mobiledicataionid to send it to the server
+    NSArray* uploadedFilesDictationIdArray = [[Database shareddatabase] getUploadedFilesDictationIdList:false filterDate:@"5"];
+    
+    NSString* uploadedFilesDictationIdString = [uploadedFilesDictationIdArray componentsJoinedByString:@","];
+    
+    // send dictation ids to server to get list of completed doc
+    [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
+    
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
         [self showActivityIndicator];
@@ -160,11 +136,16 @@
     {
         
     }
-  
 }
 
 -(void)showActivityIndicator
 {
+    // remove spinner if already exist
+    if ([transferFailedView viewWithTag:12] != nil)
+    {
+        [[transferFailedView viewWithTag:12] removeFromSuperview];
+    }
+    
     //creating a spinner
     UIActivityIndicatorView * completedDocSpinner = [[UIActivityIndicatorView alloc]init];
     
@@ -188,6 +169,7 @@
     //hide completed document count label if spinner is visible
     self.completedDocCountLabel.hidden = YES;
 }
+
 // showing 1 Failed view depending on transfer failed count.
 -(void) showTransferFailedCount
 {
@@ -209,6 +191,17 @@
         self.transferFailedCountView.hidden = NO;
         
         self.transferFailedCountLabel.hidden = NO;
+        
+        if (transferFailedCount > 9)
+        {
+            self.transferFailedCountLabel.text = [NSString stringWithFormat:@"9+ Failed"];
+
+        }
+        else
+        {
+            self.transferFailedCountLabel.text = [NSString stringWithFormat:@"%d Failed", transferFailedCount];
+
+        }
     }
 }
 
@@ -219,29 +212,35 @@
     VRSFilesCountLabel.text = [NSString stringWithFormat:@"%ld",VRSDocFilesArray.count];
 
 }
+
 -(void)validateSendIdsResponse:(NSNotification*)obj
 {
-    int completedDocCount=0;
+    long completedDocCount = 0;
+    
     NSDictionary* response = obj.object;
     
     if ([[response valueForKey:@"code"]  isEqual: @"200"])
     {
         // getting completed files count.
         NSArray* completedFilesResponseArray = [response valueForKey:@"CompletedList"];
+        
         completedDocCount = [completedFilesResponseArray count];
         //converting integer value of completed doc count to string.
-        NSString* completedDocCountStrValue = [NSString stringWithFormat:@"%i",completedDocCount];
+        NSString* completedDocCountStrValue = [NSString stringWithFormat:@"%ld",completedDocCount];
         //remove spinner from completed doc view
 
         dispatch_async(dispatch_get_main_queue(), ^
                        {
                            //NSLog(@"Reachable");
                            self.completedDocCountLabel.hidden = NO;
-                           [[self.view viewWithTag:12] removeFromSuperview];
+                           
+                           [[transferFailedView viewWithTag:12] removeFromSuperview]; // reomve spinner
+                           
+                           self.completedDocCountLabel.text = completedDocCountStrValue; // show completed doc count
+
                        });
         
         //set completed doc count to completedDocCountLabel
-        self.completedDocCountLabel.text = completedDocCountStrValue;
 
     }
     else
@@ -250,41 +249,13 @@
                        {
                            //NSLog(@"Reachable");
                            self.completedDocCountLabel.hidden = NO;
-                           [[self.view viewWithTag:12] removeFromSuperview];
+                           
+                           [[self.view viewWithTag:12] removeFromSuperview]; // reomve spinner
+                           
+                           self.completedDocCountLabel.text = @"0";
                        });
         
     }
- 
-    
-//    [self.completedFilesResponseArray removeAllObjects];
-//
-//    for (int i=0; i<completedFilesResponseArray.count; i++)
-//    {
-//        NSDictionary* dic = [completedFilesResponseArray objectAtIndex:i];
-//
-//        NSString* dictationId = [dic valueForKey:@"DictationID"];
-//
-//        [self.completedFilesResponseArray addObject:dictationId];
-//    }
-//
-//    for (int i=0; i<self.uploadedFilesArray.count; i++)
-//    {
-//        AudioDetails* audioDetails = [self.uploadedFilesArray objectAtIndex:i];
-//
-//        NSString* dictationId = [NSString stringWithFormat:@"%d", audioDetails.mobiledictationidval];
-//
-//        if ([self.completedFilesResponseArray containsObject:dictationId])
-//        {
-//            //            [self.completedFilesResponseArray removeObject:audioDetails];
-//            [self.completedFilesForTableViewArray addObject:audioDetails];
-//        }
-//        else
-//        {
-//            //            [self.completedFilesForTableViewArray addObject:audioDetails];
-//        }
-//    }
-    
-    
     
 }
 
@@ -292,13 +263,18 @@
 {
     
     NSDictionary* infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    
     NSString* appID = infoDictionary[@"CFBundleIdentifier"];
+    
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
+    
     NSURLSession         *  session = [NSURLSession sharedSession];
+    
     NSURLSessionDataTask *  theTask = [session dataTaskWithRequest: [NSURLRequest requestWithURL: url] completionHandler:
                                        ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
                                        {
                                            NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                                           
                                            if ([lookup[@"resultCount"] integerValue] == 1)
                                            {
                                                
@@ -311,10 +287,10 @@
                                                {
                                                            NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
                                                            //
-                                                           
                                                            alertController = [UIAlertController alertControllerWithTitle:@"Update available for Cube dictate"
                                                                                                                  message:nil
                                                                                                           preferredStyle:UIAlertControllerStyleAlert];
+                                                   
                                                            actionDelete = [UIAlertAction actionWithTitle:@"Update"
                                                                                                    style:UIAlertActionStyleDefault
                                                                                                  handler:^(UIAlertAction * action)
@@ -356,6 +332,7 @@
                                        }];
     
     [theTask resume];
+    
     return NO;
 }
 
@@ -364,44 +341,49 @@
 
 - (void)deleteDictation
 {
-    
+//    [[Database shareddatabase] updateDateFormat];
     NSString* purgeDeleteDataKey =  [[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DELETED_DATA];
 
     if (![purgeDeleteDataKey isEqualToString:@"Do not purge"])
     {
+ 
+        NSArray* filesToBePurgedArray = [[Database shareddatabase] getFilesToBePurged];
         
-  
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        
+        formatter.dateFormat = @"yyyy-MM-dd";
+        
+        NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
     
-   NSArray* filesToBePurgedArray = [[Database shareddatabase] getFilesToBePurged];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"MM-dd-yyyy";
-    NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
-    
-    if (filesToBePurgedArray.count>0)
-    {
-        alertController = [UIAlertController alertControllerWithTitle:@"Purge old dictations?"
+        if (filesToBePurgedArray.count>0)
+        {
+            alertController = [UIAlertController alertControllerWithTitle:@"Purge Old Dictations?"
                                                               message:nil
                                                        preferredStyle:UIAlertControllerStyleAlert];
-        actionDelete = [UIAlertAction actionWithTitle:@"Purge"
+            actionDelete = [UIAlertAction actionWithTitle:@"Purge"
                                                 style:UIAlertActionStyleDestructive
                                               handler:^(UIAlertAction * action)
                         {
                             hud.minSize = CGSizeMake(150.f, 100.f);
+                            
                             hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                            
                             hud.mode = MBProgressHUDModeIndeterminate;
-                            hud.label.text = @"Purging..";
-                            hud.detailsLabel.text = @"Please wait";
+                            
+                            hud.label.text = @"Deleting";
+                            
+                            hud.detailsLabel.text = @"Please wait..";
+                            
                             for (int i=0; i< filesToBePurgedArray.count; i++)
                             {
                           
-                            
-                            NSString* fileName = [filesToBePurgedArray objectAtIndex:i];
-                            NSString* dateAndTimeString = [app getDateAndTimeString];
-//                            [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
+                                NSString* fileName = [filesToBePurgedArray objectAtIndex:i];
+                                
                                 [db deleteFileRecordFromDatabase:fileName];
-                            [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
-                            BOOL delete= [[APIManager sharedManager] deleteFile:fileName];
-                            
+                                
+                                [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
+                                
+                                BOOL delete= [[APIManager sharedManager] deleteFile:fileName];
                                 
                             }
                             
@@ -409,59 +391,64 @@
                             
                             [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
                             
-                            //                            if (delete)
-                            //                            {
                             [self dismissViewControllerAnimated:YES completion:nil];
-                            // }
 
                         }]; //You can use a block here to handle a press on this button
-        [alertController addAction:actionDelete];
+        
+            [alertController addAction:actionDelete];
         
         
-        actionCancel = [UIAlertAction actionWithTitle:@"Later"
+        
+            actionCancel = [UIAlertAction actionWithTitle:@"Later"
                                                 style:UIAlertActionStyleCancel
                                               handler:^(UIAlertAction * action)
                         {
                            
-                                               //NSLog(@"Reachable");
-                                               
-                                               [alertController dismissViewControllerAnimated:YES completion:nil];
-                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];
-// [[NSUserDefaults standardUserDefaults] setValue:NULL forKey:PURGE_DATA_DATE];
+                            [alertController dismissViewControllerAnimated:YES completion:nil];
                             
+                            [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];
                             
                         }]; //You can use a block here to handle a press on this button
-        [alertController addAction:actionCancel];
+            
+            [alertController addAction:actionCancel];
         
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
+            [self presentViewController:alertController animated:YES completion:nil];
+    
+        }
     }
 }
 
--(void)getCounts
+-(void)getCountsOfTransferredAwaitingFiles
 {
   
-    app=[APIManager sharedManager];
-    app.awaitingFileTransferCount= [db getCountOfTransfersOfDicatationStatus:@"RecordingComplete"];
-    app.todaysFileTransferCount=[db getCountOfTodaysTransfer:[app getDateAndTimeString]];
-    app.transferFailedCount=[db getCountOfTransferFailed];
+    app = [APIManager sharedManager];
     
+    app.awaitingFileTransferCount = [db getCountOfTransfersOfDicatationStatus:@"RecordingComplete"];
+    
+    app.todaysFileTransferCount = [db getCountOfTodaysTransfer:[app getDateAndTimeString]];
+    
+//    app.transferFailedCount = [db getCountOfTransferFailed];
+    
+    // show awaitng and todays file count
     UITextField* awaitingFileTransferCountTextFiled=[self.view viewWithTag:502];
-    awaitingFileTransferCountTextFiled.text=[NSString stringWithFormat:@"%d",app.awaitingFileTransferCount];
     
     UITextField* todaysFileTransferCountTextFiled=[self.view viewWithTag:501];
+
+    awaitingFileTransferCountTextFiled.text=[NSString stringWithFormat:@"%d",app.awaitingFileTransferCount];
+    
     todaysFileTransferCountTextFiled.text=[NSString stringWithFormat:@"%d",app.todaysFileTransferCount];
     
-    UITextField* transferFailedCountTextFiled=[self.view viewWithTag:503];
-    transferFailedCountTextFiled.text=[NSString stringWithFormat:@"%d",app.transferFailedCount];
+//    UITextField* transferFailedCountTextFiled=[self.view viewWithTag:503];
+//    transferFailedCountTextFiled.text=[NSString stringWithFormat:@"%d",app.transferFailedCount];
     
+    // get incomplete and imported files count to show on alert tab
     int count= [db getCountOfTransfersOfDicatationStatus:@"RecordingPause"];
     
     [[Database shareddatabase] getlistOfimportedFilesAudioDetailsArray:5];//get count of imported non transferred files
 
-    int importedFileCount=[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count;
+    long importedFileCount = [AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count;
     
-    [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%d",count+importedFileCount] forKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
+    [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld",count+importedFileCount] forKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
     
     NSString* alertCount=[[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
     
@@ -474,119 +461,83 @@
     else
     alertViewController.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
 
-    
-
-
-
 }
 
 -(void)showUserSettings:(id)sender
 {
-    [self addPopView];
+    [self addPopViewForMoreOptions];
 }
 
-
--(void)addPopView
+-(void)addPopViewForMoreOptions
 {
-    //    tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissPopView:)];
-    //
-    //    overlayView=[[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    //
-    //    [overlayView addGestureRecognizer:tap];
-    //    overlayView.tag=111;
-    //
-    //    overlayView.backgroundColor=[[UIColor blackColor] colorWithAlphaComponent:0.1];
-    //
-    //    UIView* popUpView=[[UIView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-170, self.view.frame.origin.y+20, 160, 80)];
-    //    popUpView.backgroundColor=[UIColor whiteColor];
-    //
-    //    UIButton* userSettingsButton=[[UIButton alloc]initWithFrame:CGRectMake(20, 12, 100, 20)];
-    //    [userSettingsButton setTitle:@"User Settings" forState:UIControlStateNormal];
-    //    [userSettingsButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    //    userSettingsButton.titleLabel.font=[UIFont systemFontOfSize:14];
-    //    [userSettingsButton addTarget:self action:@selector(selectSetting:) forControlEvents:UIControlEventTouchUpInside];
-    //    [popUpView addSubview:userSettingsButton];
-    //
-    //    UIButton* logoutButton=[[UIButton alloc]initWithFrame:CGRectMake(userSettingsButton.frame.origin.x, userSettingsButton.frame.origin.x+userSettingsButton.frame.size.height+10, 100, 20)];
-    //    [logoutButton setTitle:@"Logout" forState:UIControlStateNormal];
-    //    [logoutButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    //    logoutButton.titleLabel.font=[UIFont systemFontOfSize:14];
-    //    [logoutButton addTarget:self action:@selector(selectSetting:) forControlEvents:UIControlEventTouchUpInside];
-    //    [popUpView addSubview:logoutButton];
-    //
-    //    [overlayView addSubview:popUpView];
-    //    [[[UIApplication sharedApplication] keyWindow] addSubview:overlayView];
-    
     NSArray* subViewArray=[NSArray arrayWithObjects:@"User Settings",@"Logout", nil];
-    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-175, self.view.frame.origin.y+20, 160, 84) andSubViews:subViewArray :self];
+    
+    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 84) andSubViews:subViewArray :self];
+    
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
-    
-    
 }
+
 -(void)UserSettings
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    
     [self.navigationController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
 }
-
-
 
 -(void)Logout
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    
     [AppPreferences sharedAppPreferences].userObj = nil;
-
-   // LoginViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     
-   UIViewController* vc= [self.storyboard  instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    UIViewController* vc= [self.storyboard  instantiateViewControllerWithIdentifier:@"LoginViewController"];
     
-    //[[[UIApplication sharedApplication] keyWindow] setRootViewController:nil];
     [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
-
-   // [[[[UIApplication sharedApplication] keyWindow] setRootViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"LoginViewController"] animated:YES completion:nil] ];
-   // [[UIApplication sharedApplication] keyWindow] setRootViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"LoginViewController"] animated:YES completion:nil] ;
-    
 }
+
+// dismiss popview ForMoreOptions
 -(void)dismissPopView:(id)sender
 {
-    
     UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+    
     if ([popUpView isKindOfClass:[UIView class]])
     {
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     }
-    
 }
 
+// show awaiting or todays view after tapped
 -(void)showList:(UITapGestureRecognizer*)sender
 {
     TransferListViewController* vc=[self.storyboard instantiateViewControllerWithIdentifier:@"TransferListViewController"];
     //app=[APIManager sharedManager];
-    if (sender==tapRecogniser)
+    if (sender == transferredTodayViewTapRecogniser)
     {
         vc.currentViewName=@"Today's Transferred";
     }
-    if (sender==tapRecogniser1)
+    if (sender==awaitingViewTapRecogniser)
     {
         vc.currentViewName=@"Awaiting Transfer";
         
     }
-    if (sender==tapRecogniser2)
-    {
-        vc.currentViewName=@"Transfer Failed";
-    }
+//    if (sender==tapRecogniser2)
+//    {
+//        vc.currentViewName=@"Transfer Failed";
+//    }
     [self.navigationController pushViewController:vc animated:YES];
     
     //NSLog(@"%@",self.tabBarController);
     
 }
 
+// show completed docx view after tapped
 -(void)showCompletedDocFIlesView:(UITapGestureRecognizer*)sender
 {
    [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"DocFilesViewController"] animated:YES];
     
 }
 
+// show vrs doc file view after tapped
 -(void)showVRSDocFilesView:(UITapGestureRecognizer*)sender
 {
     [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectFileViewController"] animated:YES];

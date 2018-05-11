@@ -284,12 +284,12 @@
     UILabel* deleteStatusLabel=[cell viewWithTag:105];
 
     UILabel* dateLabel=[cell viewWithTag:104];
-    dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
-    
-    if ([transferStatusString  isEqual: @"2"])
+    if (dateAndTimeArray.count >0)
     {
-        deleteStatusLabel.text = @"Failed";
+            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
     }
+    
+   
     
     if ([self.currentViewName isEqualToString:@"Today's Transferred"])
     {
@@ -300,7 +300,26 @@
         if (dateAndTimeArray.count>1)
         {
             timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
-            dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
+            
+//            NSDateFormatter *df = [[NSDateFormatter alloc] init];
+//            [df setDateFormat:@"MM-dd-yyyy"];
+//
+//            NSDate* date = [df dateFromString:[dateAndTimeArray objectAtIndex:0]];
+//
+//            [df setDateFormat:@"yyyy-MM-dd"];
+//            NSString *updatedDate = [df stringFromDate:date];
+//            dateLabel.text = [NSString stringWithFormat:@"%@",updatedDate];
+//
+//            if (updatedDate == nil)
+//            {
+                dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
+                
+//            }
+//            else
+//            {
+//                dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",updatedDate]];
+//
+//            }
         }
         
 
@@ -311,6 +330,17 @@
     }
     else
         deleteStatusLabel.text=@"";
+    
+    if ([transferStatusString  isEqualToString: @"TransferFailed"])
+    {
+//        [deleteStatusLabel setHidden:false];
+        deleteStatusLabel.text = @"Transfer Failed";
+    }
+    else
+    {
+        deleteStatusLabel.text=@"";
+    }
+    
     if ([[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"] && ([[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"NotTransferred"] || [[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"Resend"] || [[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"ResendFailed"]))
     {
         if (![progressIndexPathArray containsObject:indexPath])

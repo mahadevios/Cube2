@@ -87,6 +87,7 @@
 #define MAXIMUM_RECORDING_LIMIT_MESSAGE        @"Recording duration length exceeded,please start new recording for further dictation"
 #define RECORDING_SAVED_MESSAGE                @"Recording duration length exceeded,your recording has been saved in awaiting transfer,please start new recording for further dictation"
 #define CURRENT_VESRION                        @"currentVersion"
+#define IS_DATE_FORMAT_UPDATED                 @"dateFormatUpdated"
 
 #define RECORDING_LIMIT                        3600
 #define ALERT_TAB_LOCATION                     3
@@ -100,7 +101,9 @@
 #define AUDIO_FILES_FOLDER_NAME                @"Audio files"
 #define DOCX_FILES_FOLDER_NAME                 @"Downloads"
 #define DOC_VRS_FILES_FOLDER_NAME              @"VRSDOC files"
-#define DATE_TIME_FORMAT                       @"MM-dd-yyyy HH:mm:ss"
+//#define DATE_TIME_FORMAT                       @"MM-dd-yyyy HH:mm:ss"
+#define DATE_TIME_FORMAT                       @"yyyy-MM-dd HH:mm:ss"
+
 #define RESPONSE_CODE                          @"code"
 #define RESPONSE_PIN_VERIFY                    @"pinverify"
 

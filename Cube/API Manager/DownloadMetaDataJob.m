@@ -119,7 +119,7 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     
-    NSLog(@"%@",data);
+//    NSLog(@"%@",data);
     
 	[responseData appendData:data];
 }
@@ -404,7 +404,7 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
             else
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_DICTATION_IDS_API object:response];
-//                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Message" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
             }
         }else
         {
