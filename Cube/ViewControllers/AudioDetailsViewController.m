@@ -90,7 +90,11 @@
     {
         audiorecordDict= [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRow];
         
-        [self addEditDeleteAndUploadButtons];
+        if (![[audiorecordDict valueForKey:@"TransferStatus"] isEqualToString:@"TransferFailed"])
+        {
+            [self addEditDeleteAndUploadButtons];
+        }
+       
         
     }
     else
@@ -293,7 +297,7 @@
 {
     NSArray* subViewArray=[NSArray arrayWithObjects:@"Edit Department", nil];
     
-    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-170, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
+    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
     
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 }
@@ -649,10 +653,10 @@
                             
                             
                                                NSLog(@"Today's Transferred before DB");
-                                               [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
-                                               int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
+                           [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+                           int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
                                                
-                                               [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                           [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
                                                
                             NSLog(@"Today's Transferred after DB");
 
@@ -703,23 +707,29 @@
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction * action)
                     {
-                        APIManager* app=[APIManager sharedManager];
+                        APIManager* app = [APIManager sharedManager];
                         
-                        NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
+                        NSString* filName = [audiorecordDict valueForKey:@"RecordItemName"];
                         
+                        NSString* transferStatus = [audiorecordDict valueForKey:@"TransferStatus"];
+
                         [transferDictationButton setHidden:YES];
                         
                         [deleteDictationButton setHidden:YES];
-                        
-                    
-                       
                         
                         if ([AppPreferences sharedAppPreferences].isReachable)
                         {
                             [AppPreferences sharedAppPreferences].fileUploading=YES;
                         }
                         
-                        
+                        if ([transferStatus isEqualToString:@"TransferFailed"])
+                        {
+                            int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
+                            
+                            NSString* date=[app getDateAndTimeString];
+
+                            [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                        }
                             [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
 
                             [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:801] removeFromSuperview];//remove uploading buuton
@@ -780,11 +790,11 @@
                                     [deleteDictationButton setHidden:YES];
                                     
                                     
-                                                       [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+                                   [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
                                                        
-                                                       int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
+                                   int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
                                                        
-                                                       [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                                   [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
                                     
                                     
                                     

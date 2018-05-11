@@ -115,10 +115,36 @@
     departmentNameLabel.text=[awaitingFileTransferDict valueForKey:@"Department"];
     
     UILabel* dateLabel=[cell viewWithTag:104];
-    dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
     
-    UILabel* timeLabel=[cell viewWithTag:105];
-    timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+    if (dateAndTimeArray.count>1)
+    {
+        
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"yyyy-MM-dd"];
+        
+        NSDate* date = [df dateFromString:[dateAndTimeArray objectAtIndex:0]];
+        
+        [df setDateFormat:@"yyyy-MM-dd"];
+        NSString *updatedDate = [df stringFromDate:date];
+        dateLabel.text = [NSString stringWithFormat:@"%@",updatedDate];
+        
+        if (updatedDate == nil)
+        {
+            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
+            
+        }
+        else
+        {
+            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",updatedDate]];
+            
+        }
+        
+        UILabel* timeLabel=[cell viewWithTag:105];
+        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+    }
+//    dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
+    
+    
     
     
     

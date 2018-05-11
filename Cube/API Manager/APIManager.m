@@ -1010,7 +1010,6 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 
 
 -(void)uploadFileToServerUsingNSURLSession:(NSString*)str
-
 {
    
     if ([[AppPreferences sharedAppPreferences] isReachable])
@@ -1043,11 +1042,13 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 
 -(void)uploadFileAfterGettingdatabaseValues:(NSString*)str departmentID:(int)departmentID transferStatus:(int)transferStatus mobileDictationIdVal:(int)mobileDictationIdVal
 {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    
+    });
     NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:
                           [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,str] ];
     

@@ -134,8 +134,11 @@ static AppPreferences *singleton = nil;
                        
                        dispatch_sync(currentQueue, ^
                                      {
-                                         alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelText otherButtonTitles:okText, nil];
-                                         alertView.tag = tag;
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                             alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelText otherButtonTitles:okText, nil];
+                                             alertView.tag = tag;
+                                         });
+                                        
                                          
                                      });
                        
@@ -165,7 +168,29 @@ static AppPreferences *singleton = nil;
     return result == 0;
 }
 
-
+-(void)createDatabaseReplica
+{
+    NSString *destpath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Cube_DB_Replica.sqlite"];
+    // NSString *sourcepath=[[NSBundle mainBundle]pathForResource:@"Cube_DB" ofType:@"sqlite"];
+    NSString *sourcepath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Cube_DB.sqlite"];
+    
+    NSLog(@"%@",NSHomeDirectory());
+    
+    if(![[NSFileManager defaultManager] fileExistsAtPath:destpath])
+    {
+        //  NSLog(@"%@",NSHomeDirectory());
+        
+        [[NSFileManager defaultManager] copyItemAtPath:sourcepath toPath:destpath error:nil];
+    }
+    else
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:destpath error:nil];
+        
+        [[NSFileManager defaultManager] copyItemAtPath:sourcepath toPath:destpath error:nil];
+        
+    }
+    
+}
 
 
 

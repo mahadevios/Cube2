@@ -15,10 +15,10 @@
 
 @interface HomeViewController : UIViewController
 {
-    UITapGestureRecognizer* tapRecogniser;
-    UITapGestureRecognizer* tapRecogniser1;
-    UITapGestureRecognizer* tapRecogniser2;
-    UITapGestureRecognizer* tapRecogniser3;
+    UITapGestureRecognizer* transferredTodayViewTapRecogniser;
+    UITapGestureRecognizer* awaitingViewTapRecogniser;
+    UITapGestureRecognizer* completedDocViewTapRecogniser;
+    UITapGestureRecognizer* vrsDocViewTapRecogniser;
 
     UIView* overlayView;
     UITapGestureRecognizer* tap;

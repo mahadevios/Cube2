@@ -381,7 +381,7 @@
 {
     
     NSArray* subViewArray=[NSArray arrayWithObjects:@"User Settings", nil];
-    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-170, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
+    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
     
 }
@@ -448,19 +448,48 @@
     fileNameLabel.text=[dict valueForKey:@"RecordItemName"];
     NSString* dateAndTimeString=[dict valueForKey:@"Date"];
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
-    if (segment.selectedSegmentIndex==0) {
+    if (segment.selectedSegmentIndex==0)
+    {
+        if (dateAndTimeArray.count>1)
         timeLabel.text=[NSString stringWithFormat:@"Transferred %@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]]];
 
     }
     else
-        timeLabel.text=[NSString stringWithFormat:@"Deleted %@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]]];
+    {
+        if (dateAndTimeArray.count>1)
+            timeLabel.text=[NSString stringWithFormat:@"Deleted %@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]]];
+
+
+    }
 
     
     //timeLabel.text=[NSString stringWithFormat:@"%@",@"Transferred 12:18:00 PM"];
 
     transferByLabel.text=[dict valueForKey:@"Department"];
     
-    dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
+    if (dateAndTimeArray.count>0)
+    {
+//        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+//        [df setDateFormat:@"MM-dd-yyyy"];
+//
+//        NSDate* date = [df dateFromString:[dateAndTimeArray objectAtIndex:0]];
+//
+//        [df setDateFormat:@"yyyy-MM-dd"];
+//        NSString *updatedDate = [df stringFromDate:date];
+//        dateLabel.text = [NSString stringWithFormat:@"%@",updatedDate];
+//
+//        if (updatedDate == nil)
+//        {
+            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
+
+//        }
+//        else
+//        {
+//            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",updatedDate]];
+//
+//        }
+
+    }
     
     if ([arrayOfMarked containsObject:indexPath])
     {

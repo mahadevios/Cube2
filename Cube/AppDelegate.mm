@@ -72,9 +72,22 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     NSString* bundleVersion = infoDictionary[@"CFBundleShortVersionString"];
     
+    NSString* isDateFormatUpdated = [[NSUserDefaults standardUserDefaults] valueForKey:IS_DATE_FORMAT_UPDATED];
+
+    if (isDateFormatUpdated == nil)
+    {
+        [[AppPreferences sharedAppPreferences] createDatabaseReplica];
+
+        [[Database shareddatabase] updateDateFormat];
+        
+        [[NSUserDefaults standardUserDefaults] setValue:@"Updated" forKey:IS_DATE_FORMAT_UPDATED];
+        
+    }
+    
     if (currentVersion == nil)
     {
         // version change first time execution code
+       
         
         [[Database shareddatabase] createFileNameidentifierRelationshipTable];
 
@@ -181,6 +194,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
        return YES;
 }
+
+
 
 -(void)uploadNextFile
 {

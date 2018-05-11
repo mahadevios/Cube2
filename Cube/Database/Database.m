@@ -660,7 +660,7 @@ static Database *db;
 
     if ([status isEqualToString:@"Transferred"])
     {
-               query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and TransferDate LIKE '%@%%'",status,dateAndTimeString];
+               query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and TransferDate LIKE '%@%%') order by TransferDate desc",status,dateAndTimeString];
 
     }
     else
@@ -668,7 +668,7 @@ static Database *db;
         if ([status isEqualToString:@"RecordingComplete"])
         {
 
-    query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') or DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') and (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')  or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')   or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@'))",status,@"RecordingFileUpload",@"NotTransferred",@"Resend",@"ResendFailed",@"TransferFailed"];
+    query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') or DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') and (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')  or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')   or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')) order by RecordingDate desc",status,@"RecordingFileUpload",@"NotTransferred",@"Resend",@"ResendFailed",@"TransferFailed"];
         }
     
     else
@@ -681,7 +681,7 @@ static Database *db;
         if ([status isEqualToString:@"RecordingPause"])
         {
             
-            query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@')",status];
+            query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') order by RecordingDate desc",status];
         }
 
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
@@ -831,27 +831,27 @@ static Database *db;
     // sorting for latest date file on top
 
     
-    NSDictionary*  headerObj1=[[NSDictionary alloc]init];
-    NSDictionary*  headerObj2=[[NSDictionary alloc]init];
-    NSDictionary*  temp=[[NSDictionary alloc]init];
-    NSComparisonResult result;
-    
-    for (int i=0; i<listArray.count; i++)
-    {
-        for (int j=1; j<listArray.count-i; j++)
-        {
-            headerObj1= [listArray objectAtIndex:j-1];
-            headerObj2=  [listArray objectAtIndex:j];
-            result=[[headerObj1 valueForKey:@"RecordCreatedDate" ] compare:[headerObj2 valueForKey:@"RecordCreatedDate" ]];
-            if (result==NSOrderedAscending)
-            {
-                temp=[listArray objectAtIndex:j-1];
-                [listArray replaceObjectAtIndex:j-1 withObject:[listArray objectAtIndex:j]];
-                [listArray replaceObjectAtIndex:j withObject:temp];
-                
-            }
-        }
-    }
+//    NSDictionary*  headerObj1=[[NSDictionary alloc]init];
+//    NSDictionary*  headerObj2=[[NSDictionary alloc]init];
+//    NSDictionary*  temp=[[NSDictionary alloc]init];
+//    NSComparisonResult result;
+//
+//    for (int i=0; i<listArray.count; i++)
+//    {
+//        for (int j=1; j<listArray.count-i; j++)
+//        {
+//            headerObj1= [listArray objectAtIndex:j-1];
+//            headerObj2=  [listArray objectAtIndex:j];
+//            result=[[headerObj1 valueForKey:@"RecordCreatedDate" ] compare:[headerObj2 valueForKey:@"RecordCreatedDate" ]];
+//            if (result==NSOrderedAscending)
+//            {
+//                temp=[listArray objectAtIndex:j-1];
+//                [listArray replaceObjectAtIndex:j-1 withObject:[listArray objectAtIndex:j]];
+//                [listArray replaceObjectAtIndex:j withObject:temp];
+//
+//            }
+//        }
+//    }
 
     return listArray;
 
@@ -1195,13 +1195,13 @@ static Database *db;
     NSString* query3,*statusQuery;
     if ([listName isEqual:@"Transferred"])
     {
-        query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate,Department,RecordCreateDate,DeleteStatus,TransferDate from CubeData Where TransferStatus=(Select Id from TransferStatus Where TransferStatus='Transferred') and DeleteStatus!=%d",1];
+        query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate,Department,RecordCreateDate,DeleteStatus,TransferDate from CubeData Where (TransferStatus=(Select Id from TransferStatus Where TransferStatus='Transferred') and DeleteStatus!=%d) order by TransferDate desc",1];
         
         statusQuery=[NSString stringWithFormat:@"Select DeleteStatus from DeleteStatus Where Id='%@'",status];
     }
     if ([listName isEqual:@"Deleted"])
     {
-        query3=[NSString stringWithFormat:@"Select RecordItemName,DeleteDate,Department,RecordCreateDate,TransferStatus,TransferDate from CubeData Where DeleteStatus=1"];
+        query3=[NSString stringWithFormat:@"Select RecordItemName,DeleteDate,Department,RecordCreateDate,TransferStatus,TransferDate from CubeData Where DeleteStatus=1 order by DeleteDate desc"];
         statusQuery=[NSString stringWithFormat:@"Select TransferStatus from TransferStatus Where Id='%@'",status];
 
     }
@@ -1311,27 +1311,35 @@ static Database *db;
     // sorting for latest date file on top
     
     
-    NSDictionary*  headerObj1=[[NSDictionary alloc]init];
-    NSDictionary*  headerObj2=[[NSDictionary alloc]init];
-    NSDictionary*  temp=[[NSDictionary alloc]init];
-    NSComparisonResult result;
-    
-    for (int i=0; i<listArray.count; i++)
-    {
-        for (int j=1; j<listArray.count-i; j++)
-        {
-            headerObj1= [listArray objectAtIndex:j-1];
-            headerObj2=  [listArray objectAtIndex:j];
-            result=[[headerObj1 valueForKey:@"Date" ] compare:[headerObj2 valueForKey:@"Date" ]];
-            if (result==NSOrderedAscending)
-            {
-                temp=[listArray objectAtIndex:j-1];
-                [listArray replaceObjectAtIndex:j-1 withObject:[listArray objectAtIndex:j]];
-                [listArray replaceObjectAtIndex:j withObject:temp];
-                
-            }
-        }
-    }
+//    NSDictionary*  headerObj1=[[NSDictionary alloc]init];
+//    NSDictionary*  headerObj2=[[NSDictionary alloc]init];
+//    NSDictionary*  temp=[[NSDictionary alloc]init];
+//    NSComparisonResult result;
+//
+//    for (int i=0; i<listArray.count; i++)
+//    {
+//        for (int j=1; j<listArray.count-i; j++)
+//        {
+//            headerObj1= [listArray objectAtIndex:j-1];
+//            headerObj2=  [listArray objectAtIndex:j];
+//
+//            NSDateFormatter *df = [[NSDateFormatter alloc] init];
+//            [df setDateFormat:@"MM/dd/yyyy HH:mm:ss"];
+//            NSDate* date = [df dateFromString:[headerObj1 valueForKey:@"Date"]];
+//            NSDate* date1 = [df dateFromString:[headerObj2 valueForKey:@"Date"]];
+//
+//            result=[date compare:date1];
+//
+////            result=[[headerObj1 valueForKey:@"Date" ] compare:[headerObj2 valueForKey:@"Date" ]];
+//            if (result==NSOrderedAscending)
+//            {
+//                temp=[listArray objectAtIndex:j-1];
+//                [listArray replaceObjectAtIndex:j-1 withObject:[listArray objectAtIndex:j]];
+//                [listArray replaceObjectAtIndex:j withObject:temp];
+//
+//            }
+//        }
+//    }
 
     return listArray;
     
@@ -2041,7 +2049,7 @@ static Database *db;
     NSString *TransferStatus,*CurrentDuration,*transferDate,*deleteStatus,*dictationStatus,* recordItemName,*recordCreateDate,*Department;
     NSMutableDictionary* dict=[[NSMutableDictionary alloc]init];
     app.importedFilesAudioDetailsArray=[[NSMutableArray alloc]init];
-    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where NewDataUpdate=%d and TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and DeleteStatus=0 and (DictationStatus !=(Select Id from DictationStatus Where RecordingStatus='%@') and DictationStatus !=(Select Id from DictationStatus Where RecordingStatus='%@'))",newDataUpdate,@"NotTransferred",@"RecordingFileUpload",@"RecordingPause"];
+    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where NewDataUpdate=%d and TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and DeleteStatus=0 and (DictationStatus !=(Select Id from DictationStatus Where RecordingStatus='%@') and DictationStatus !=(Select Id from DictationStatus Where RecordingStatus='%@')) order by RecordCreateDate desc",newDataUpdate,@"NotTransferred",@"RecordingFileUpload",@"RecordingPause"];
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
@@ -2189,27 +2197,27 @@ static Database *db;
     }
     
     //sorting for latest date file on top
-    NSDictionary*  headerObj1=[[NSDictionary alloc]init];
-    NSDictionary*  headerObj2=[[NSDictionary alloc]init];
-    NSDictionary*  temp=[[NSDictionary alloc]init];
-    NSComparisonResult result;
-    
-    for (int i=0; i<app.importedFilesAudioDetailsArray.count; i++)
-    {
-        for (int j=1; j<app.importedFilesAudioDetailsArray.count-i; j++)
-        {
-            headerObj1= [app.importedFilesAudioDetailsArray objectAtIndex:j-1];
-            headerObj2=  [app.importedFilesAudioDetailsArray objectAtIndex:j];
-            result=[[headerObj1 valueForKey:@"RecordCreatedDate" ] compare:[headerObj2 valueForKey:@"RecordCreatedDate" ]];
-            if (result==NSOrderedAscending)
-            {
-                temp=[app.importedFilesAudioDetailsArray objectAtIndex:j-1];
-                [app.importedFilesAudioDetailsArray replaceObjectAtIndex:j-1 withObject:[app.importedFilesAudioDetailsArray objectAtIndex:j]];
-                [app.importedFilesAudioDetailsArray replaceObjectAtIndex:j withObject:temp];
-                
-            }
-        }
-    }
+//    NSDictionary*  headerObj1=[[NSDictionary alloc]init];
+//    NSDictionary*  headerObj2=[[NSDictionary alloc]init];
+//    NSDictionary*  temp=[[NSDictionary alloc]init];
+//    NSComparisonResult result;
+//
+//    for (int i=0; i<app.importedFilesAudioDetailsArray.count; i++)
+//    {
+//        for (int j=1; j<app.importedFilesAudioDetailsArray.count-i; j++)
+//        {
+//            headerObj1= [app.importedFilesAudioDetailsArray objectAtIndex:j-1];
+//            headerObj2=  [app.importedFilesAudioDetailsArray objectAtIndex:j];
+//            result=[[headerObj1 valueForKey:@"RecordCreatedDate" ] compare:[headerObj2 valueForKey:@"RecordCreatedDate" ]];
+//            if (result==NSOrderedAscending)
+//            {
+//                temp=[app.importedFilesAudioDetailsArray objectAtIndex:j-1];
+//                [app.importedFilesAudioDetailsArray replaceObjectAtIndex:j-1 withObject:[app.importedFilesAudioDetailsArray objectAtIndex:j]];
+//                [app.importedFilesAudioDetailsArray replaceObjectAtIndex:j withObject:temp];
+//
+//            }
+//        }
+//    }
 
     
     
@@ -2474,11 +2482,18 @@ static Database *db;
    // NSDate *purgeDataDate = [[NSDate date] dateByAddingTimeInterval:-5*24*60*60];
 
     
-    formatter.dateFormat = @"MM-dd-yyyy";
+//    formatter.dateFormat = @"MM-dd-yyyy";
     
-    NSString* newDate = [formatter stringFromDate:nextDate];
+    formatter.dateFormat = @"yyyy-MM-dd";
 
-    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate from CubeData Where TransferStatus = 1 and DeleteStatus = 0 and TransferDate < '%@'",newDate];
+    NSString* newDate = [formatter stringFromDate:nextDate];
+    
+    
+//    NSString* newDate1 = [formatter stringFromDate:nextDate];
+
+//    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate from CubeData Where TransferStatus = 1 and DeleteStatus = 0 and (TransferDate < '%@' or TransferDate < '%@')",newDate,newDate1];
+
+     NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate from CubeData Where TransferStatus = 1 and DeleteStatus = 0 and TransferDate < '%@'",newDate];
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
@@ -2563,7 +2578,7 @@ static Database *db;
 
 }
 
--(NSArray*) getUploadedFilesDictationIdList
+-(NSArray*) getUploadedFilesDictationIdList:(BOOL)filter filterDate:(NSString*)filterDate  // get uploaded files ids to send it to server to get completed doc list
 {
     
     Database *db=[Database shareddatabase];
@@ -2573,8 +2588,36 @@ static Database *db;
     NSMutableArray* uploadedFilesDictationIdArray = [[NSMutableArray alloc]init];
     int dictationId = 0;
     
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+//    [df setDateFormat:@"MM/dd/yyyy HH:mm:ss"];
     
-    NSString *query3=[NSString stringWithFormat:@"Select mobiledictationidval from CubeData Where TransferStatus = 1 and DeleteStatus = 0"];
+//    NSDate* date = [df dateFromString:@"05-07-2018 05:09:12"];
+//    NSDate* date = [NSDate new];
+
+    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+    dayComponent.day = -[filterDate intValue];
+    
+    NSCalendar *theCalendar = [NSCalendar currentCalendar];
+    //    NSDate *nextDate = [theCalendar dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
+    NSDate *nextDate = [theCalendar dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
+    
+    df.dateFormat = @"yyyy-MM-dd";
+    
+//    NSString* newDate = [df stringFromDate:nextDate];
+    
+//    NSString* date = [[APIManager sharedManager] getDateAndTimeString];
+    //    NSString *query3=[NSString stringWithFormat:@"Select mobiledictationidval from CubeData Where TransferStatus = 1 and DeleteStatus = 0"];
+
+    
+    NSString *query3=[NSString stringWithFormat:@"Select mobiledictationidval from CubeData Where TransferStatus = 1 and TransferDate >= date('now', '%@ days')",[NSString stringWithFormat:@"%d",-[filterDate intValue]]];
+
+//    NSString *query3=[NSString stringWithFormat:@"Select mobiledict ationidval,recorditemname from CubeData Where TransferStatus = 1 and DeleteStatus = 0 and TransferDate >= date('now', '0 days')"];
+    
+//    NSString *query3=[NSString stringWithFormat:@"Select mobiledictationidval,recorditemname from CubeData Where TransferStatus = 1 and DeleteStatus = 0 and TransferDate >= date('now', '%@ days')",[NSString stringWithFormat:@"%d",-[filterDate intValue]]];
+
+//    NSString *query4=[NSString stringWithFormat:@"UPDATE CubeData SET TransferDate = DATE(STR_TO_DATE(date_field, '%yyyy/%mm/%dd')) WHERE DATE(STR_TO_DATE(date_field, '%m/%d/%Y')) <> '0000-00-00'"];
+   
+    NSString* recordItemName;
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
@@ -2586,6 +2629,10 @@ static Database *db;
                 // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
                 
                 dictationId = sqlite3_column_int(statement, 0);
+                
+//                recordItemName=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
+
+//                NSLog(@"%@",recordItemName);
                 
                 [uploadedFilesDictationIdArray addObject:[NSString stringWithFormat:@"%d",dictationId]];
                 
@@ -2801,7 +2848,7 @@ static Database *db;
     sqlite3_stmt *statement;
     sqlite3* feedbackAndQueryTypesDB;
     int mobiledictationidval;
-    NSString *query3=[NSString stringWithFormat:@"Select * from DocFiles"];
+    NSString *query3=[NSString stringWithFormat:@"Select * from DocFiles order by UploadedDate desc"];
     NSMutableArray* VRSDocFilesArray = [NSMutableArray new];
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
@@ -2851,27 +2898,27 @@ static Database *db;
         // NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
     }
     
-    DocFileDetails*  headerObj1=[[DocFileDetails alloc]init];
-    DocFileDetails*  headerObj2=[[DocFileDetails alloc]init];
-    DocFileDetails*  temp=[[DocFileDetails alloc]init];
-    NSComparisonResult result;
-    
-    for (int i=0; i<VRSDocFilesArray.count; i++)
-    {
-        for (int j=1; j<VRSDocFilesArray.count-i; j++)
-        {
-            headerObj1= [VRSDocFilesArray objectAtIndex:j-1];
-            headerObj2=  [VRSDocFilesArray objectAtIndex:j];
-            result=[headerObj1.createdDate compare:headerObj2.createdDate];
-            if (result==NSOrderedAscending)
-            {
-                temp=[VRSDocFilesArray objectAtIndex:j-1];
-                [VRSDocFilesArray replaceObjectAtIndex:j-1 withObject:[VRSDocFilesArray objectAtIndex:j]];
-                [VRSDocFilesArray replaceObjectAtIndex:j withObject:temp];
-                
-            }
-        }
-    }
+//    DocFileDetails*  headerObj1=[[DocFileDetails alloc]init];
+//    DocFileDetails*  headerObj2=[[DocFileDetails alloc]init];
+//    DocFileDetails*  temp=[[DocFileDetails alloc]init];
+//    NSComparisonResult result;
+//
+//    for (int i=0; i<VRSDocFilesArray.count; i++)
+//    {
+//        for (int j=1; j<VRSDocFilesArray.count-i; j++)
+//        {
+//            headerObj1= [VRSDocFilesArray objectAtIndex:j-1];
+//            headerObj2=  [VRSDocFilesArray objectAtIndex:j];
+//            result=[headerObj1.createdDate compare:headerObj2.createdDate];
+//            if (result==NSOrderedAscending)
+//            {
+//                temp=[VRSDocFilesArray objectAtIndex:j-1];
+//                [VRSDocFilesArray replaceObjectAtIndex:j-1 withObject:[VRSDocFilesArray objectAtIndex:j]];
+//                [VRSDocFilesArray replaceObjectAtIndex:j withObject:temp];
+//
+//            }
+//        }
+//    }
 
     return VRSDocFilesArray;
     
@@ -2984,58 +3031,114 @@ static Database *db;
     }
     
 }
-//-(void)updateAudioFileName
-//{
-//    
+-(void)updateDateFormat
+{
+//    NSString *query3=[NSString stringWithFormat:@"UPDATE CubeData SET TransferDate = DATE_FORMAT(STR_TO_DATE(TransferDate,'%m/%d/%y HH:mm:ss'),'%Y/%m/%d HH:mm:ss')"];
+   
+//    NSString *query3=[NSString stringWithFormat:@"select strftime('%m/%d/%Y HH:mm:ss',datetime(substr(TransferDate, 7, 4) || '-' || substr(TransferDate, 1, 2) || '-' || substr(TransferDate, 2, 2))) from CubeData"];
+   
+    NSString *query3=[NSString stringWithFormat:@"UPDATE CubeData SET TransferDate = (substr(TransferDate, 7, 4) || '-' || substr(TransferDate, 1, 2) || '-' || substr(TransferDate, 4, 2) || ' ' || substr(TransferDate, 12, 8)) Where TransferStatus = 1"];
+
+     NSString *query4=[NSString stringWithFormat:@"UPDATE CubeData SET RecordCreateDate = (substr(RecordCreateDate, 7, 4) || '-' || substr(RecordCreateDate, 1, 2) || '-' || substr(RecordCreateDate, 4, 2) || ' ' || substr(RecordCreateDate, 12, 8))"];
+    
+     NSString *query5=[NSString stringWithFormat:@"UPDATE CubeData SET RecordingDate = (substr(RecordingDate, 7, 4) || '-' || substr(RecordingDate, 1, 2) || '-' || substr(RecordingDate, 4, 2) || ' ' || substr(RecordingDate, 12, 8))"];
+
+    NSString *query6=[NSString stringWithFormat:@"UPDATE CubeData SET DeleteDate = (substr(DeleteDate, 7, 4) || '-' || substr(DeleteDate, 1, 2) || '-' || substr(DeleteDate, 4, 2) || ' ' || substr(DeleteDate, 12, 8))"];
 //    NSString *query3=[NSString stringWithFormat:@"Update CubeData set TransferDate='02-21-2017 17:25:20'"];
-//    Database *db=[Database shareddatabase];
-//    NSString *dbPath=[db getDatabasePath];
-//    sqlite3_stmt *statement;
-//    sqlite3* feedbackAndQueryTypesDB;
-//    
-//    
-//    const char * queryi3=[query3 UTF8String];
-//    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
-//    {
-//        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
-//        if(sqlite3_step(statement)==SQLITE_DONE)
-//        {
-//            // NSLog(@"report data inserted");
-//            //NSLog(@"%@",NSHomeDirectory());
-//            sqlite3_reset(statement);
-//        }
-//        else
-//        {
-//            //NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
-//        }
-//    }
-//    
-//    else
-//    {
-//        //NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
-//    }
-//    
-//    if (sqlite3_finalize(statement) == SQLITE_OK)
-//    {
-//        //NSLog(@"statement is finalized");
-//    }
-//    else
-//        // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
-//    {
-//    }
-//    
-//    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
-//    {
-//        //NSLog(@"db is closed");
-//    }
-//    else
-//    {
-//        // NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
-//    }
-//    
-//    
-//    
-//}
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement;
+    sqlite3* feedbackAndQueryTypesDB;
+    
+    
+    const char * queryi3=[query3 UTF8String];
+    
+    const char * queryi4=[query4 UTF8String];
+
+    const char * queryi5=[query5 UTF8String];
+
+    const char * queryi6=[query6 UTF8String];
+
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
+    {
+        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            // NSLog(@"report data inserted");
+            //NSLog(@"%@",NSHomeDirectory());
+            sqlite3_reset(statement);
+        }
+        else
+        {
+            //NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+        
+        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi4, -1, &statement, NULL);
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            // NSLog(@"report data inserted");
+            //NSLog(@"%@",NSHomeDirectory());
+            sqlite3_reset(statement);
+        }
+        else
+        {
+            //NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+        
+        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi5, -1, &statement, NULL);
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            // NSLog(@"report data inserted");
+            //NSLog(@"%@",NSHomeDirectory());
+            sqlite3_reset(statement);
+        }
+        else
+        {
+            //NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+        
+        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi6, -1, &statement, NULL);
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            // NSLog(@"report data inserted");
+            //NSLog(@"%@",NSHomeDirectory());
+            sqlite3_reset(statement);
+        }
+        else
+        {
+            //NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+        
+    }
+    
+    else
+    {
+        //NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+        // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    {
+    }
+    
+    
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        //NSLog(@"db is closed");
+    }
+    else
+    {
+        // NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    
+    
+}
 
 
 @end

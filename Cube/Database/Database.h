@@ -105,7 +105,7 @@
 
 -(NSArray*) getUploadedFileList;
 
--(NSArray*) getUploadedFilesDictationIdList;
+-(NSArray*) getUploadedFilesDictationIdList:(BOOL)filter filterDate:(NSString*)filterDate;
 
 -(NSString*)getfileNameFromDictationID:(NSString*)mobileDictationIdVal;
 
@@ -118,4 +118,7 @@
 -(void)deleteDocFileRecordFromDatabase:(NSString*)docFileName;
 
 -(void)updateDeleteStatusOfDocx:(int)deleteStatus dictationId:(NSString*)fileName;
+
+-(void)updateDateFormat;
+
 @end
