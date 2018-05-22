@@ -11,8 +11,8 @@
 #import "APIManager.h"
 #import "AppPreferences.h"
 #import "Constants.h"
-
-@interface ListViewController : UIViewController<UIGestureRecognizerDelegate>
+#import "TransferredOrDeletedAudioDetailsViewController.h"
+@interface ListViewController : UIViewController<UIGestureRecognizerDelegate,UISplitViewControllerDelegate>
 
 {
     UIAlertController *alertController;
@@ -23,6 +23,9 @@
     BOOL isMultipleFilesActivated;
     BOOL toolBarAdded;
     UILabel* selectedCountLabel;
+    BOOL collapseDetailViewController;
+    TransferredOrDeletedAudioDetailsViewController* detailVC;
+    BOOL isShownDetailsView;
 }
 - (IBAction)segmentChanged:(id)sender;
 @property (strong, nonatomic) NSMutableArray* checkedIndexPath;

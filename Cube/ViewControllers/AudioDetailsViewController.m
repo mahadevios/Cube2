@@ -40,6 +40,8 @@
     
     forTableViewObj=[[PopUpCustomView alloc]init];
     
+
+    
 }
 -(void)pausePlayerFromBackGround
 {
@@ -203,6 +205,7 @@
            // [self dismissViewControllerAnimated:YES completion:nil];
         }
     }
+    
 }
 
 

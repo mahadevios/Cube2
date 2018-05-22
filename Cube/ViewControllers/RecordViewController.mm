@@ -30,23 +30,191 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 @synthesize player, recordedAudioFileName, recorder,recordedAudioURL,recordCreatedDateString,hud,deleteButton,stopNewButton,stopNewImageView,stopLabel,recordLAbel, SpeechToTextView;
 
 
-#pragma mark: View Delegate Methods
+#pragma mark- View Delegate And Associate Methods
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    app=[APIManager sharedManager];
+    [self setViewForViewDidLoad];
     
-    db=[Database shareddatabase];
+  //AVAudioSessionPortBuiltInMic;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [AppPreferences sharedAppPreferences].isRecordView=YES;
     
-    popupView=[[UIView alloc]init];
+    if (![APIManager sharedManager].userSettingsOpened)
+    {
+        [self setUpView];
+        
+//        NSDate *date = [[NSDate alloc] init];
+//
+//        NSTimeInterval seconds = [date timeIntervalSinceReferenceDate];
+//
+//        long milliseconds = seconds*1000;
+//
+//        self.recordedAudioFileName = [NSString stringWithFormat:@"%ld", milliseconds];
+        
+        //---set and show recording file name when view will appear---//
+
+       
+        [self setRecordingAudioFileName];
+        
+        [self setTodaysDateAndDepartment];
+        
+        [self setMinutesValueToPauseRecord];
+        
+        self.navigationItem.title = @"Record";
+        
+        
+        if (!IMPEDE_PLAYBACK)
+        {
+            [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryRecord];
+        }
+        
+        //recordingNew=YES;
+        
+        
+        
+    }
+}
+
+-(void)setUpView
+{
+    // start recording
+    UIView* startRecordingView1 = [self.view viewWithTag:203];
     
-    forTableViewObj=[[PopUpCustomView alloc]init];
+    [self performSelector:@selector(addView:) withObject:startRecordingView1 afterDelay:0.02];
     
-    tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(disMissPopView:)];
+    UIView* startRecordingView = [self.view viewWithTag:303];
     
-    tap.delegate=self;
+    UIImageView* counterLabel = [startRecordingView viewWithTag:503];
+    
+    [[self.view viewWithTag:504] setHidden:YES];
+    
+    [counterLabel setHidden:NO];//hide time label when view appear
+    
+    cirecleTimerLAbel = [self.view viewWithTag:104];
+    
+    [cirecleTimerLAbel setHidden:YES];
+    
+    [stopNewButton setHidden:YES];
+    
+    [stopNewImageView setHidden:YES];
+    
+    [stopLabel setHidden:YES];
+    
+    circleViewTimerMinutes = 0;
+    circleViewTimerSeconds = 0;
+    dictationTimerSeconds = 0;
+    recordingPauseAndExit = YES;
+    stopped=YES;
+
+    
+}
+
+-(void)setRecordingAudioFileName
+{
+    // To get a serial of filename to be record
+    UILabel* fileNameLabel = [self.view viewWithTag:101];
+
+    NSDateFormatter* dateFormatter = [NSDateFormatter new];
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    NSString* todaysDate = [dateFormatter stringFromDate:[NSDate new]];
+    
+    NSString* storedTodaysDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"TodaysDate"];
+    
+    if ([todaysDate isEqualToString:storedTodaysDate]) // for subsequent time in a day after first
+    {
+        todaysSerialNumberCount = [[[NSUserDefaults standardUserDefaults] valueForKey:@"todaysSerialNumberCount"] longLongValue];
+        
+        todaysSerialNumberCount++;  // get todays stored SerialNumberCount and increment it by 1
+        
+    }
+    else // for first time in a day
+    {
+        [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:@"TodaysDate"]; // set todays date
+        
+        [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:@"todaysSerialNumberCount"]; // set todays serial number to 0
+        
+        NSString* countString = [[NSUserDefaults standardUserDefaults] valueForKey:@"todaysSerialNumberCount"];
+        
+        todaysSerialNumberCount = [countString longLongValue];
+        
+        todaysSerialNumberCount++;  // for first recording in a day set todaysSerialNumberCount = 1
+        
+    }
+    
+    // get todays date for filename
+    todaysDate = [todaysDate stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    
+    NSString* fileNamePrefix;
+    
+    fileNamePrefix = [[NSUserDefaults standardUserDefaults] valueForKey:@"FileNamePrefix"];
+    
+    // set recording audio filename
+    self.recordedAudioFileName = [NSString stringWithFormat:@"%@%@-%02ld",fileNamePrefix,todaysDate,todaysSerialNumberCount];
+    
+    // set filename label text
+    fileNameLabel.text = [NSString stringWithFormat:@"%@%@-%02ld",fileNamePrefix,todaysDate,todaysSerialNumberCount];
+    
+}
+
+-(void)setTodaysDateAndDepartment
+{
+    // set department label text
+    UILabel* transferredByLabel = [self.view viewWithTag:102];
+    
+    UILabel* dateLabel = [self.view viewWithTag:103];
+    
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    transferredByLabel.text = deptObj.departmentName;
+    
+    // set date label text
+    NSString* dateAndTimeString = [app getDateAndTimeString];
+    NSArray* dateAndTimeArray = [dateAndTimeString componentsSeparatedByString:@" "];
+    NSString* dateString = [dateAndTimeArray objectAtIndex:0];
+    dateLabel.text = dateString;
+    
+    // set the slected department to user defaults
+    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME_COPY];
+}
+
+-(void)setMinutesValueToPauseRecord
+{
+    // get and set minutes value after which record should pause automatically
+    NSString* dictationTimeString = [[NSUserDefaults standardUserDefaults] valueForKey:SAVE_DICTATION_WAITING_SETTING];
+    
+    NSArray* minutesAndValueArray = [dictationTimeString componentsSeparatedByString:@" "];
+    
+    if (minutesAndValueArray.count < 1)
+    {
+        return;
+    }
+    
+    minutesValue = [[minutesAndValueArray objectAtIndex:0]intValue];
+}
+
+-(void)setViewForViewDidLoad
+{
+    app = [APIManager sharedManager];
+    
+    db = [Database shareddatabase];
+    
+    popupView = [[UIView alloc]init];
+    
+    forTableViewObj = [[PopUpCustomView alloc]init];
+    
+    tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(disMissPopView:)];
+    
+    tap.delegate = self;
     
     cirecleTimerLAbel=[[UILabel alloc]init];
     
@@ -54,11 +222,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [[self.view viewWithTag:702] setHidden:YES];
     [[self.view viewWithTag:703] setHidden:YES];//edit button and image
     [[self.view viewWithTag:704] setHidden:YES];
- 
     
-    maxRecordingTimeString= [[NSUserDefaults standardUserDefaults] valueForKey:SAVE_DICTATION_WAITING_SETTING];
-
-    recordingPausedOrStoped=YES;
+    
+    maxRecordingTimeString = [[NSUserDefaults standardUserDefaults] valueForKey:SAVE_DICTATION_WAITING_SETTING];
+    
+    recordingPausedOrStoped = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(pauseRecordingFromBackGround) name:NOTIFICATION_PAUSE_RECORDING
@@ -70,162 +238,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(saveRecordin) name:NOTIFICATION_SAVE_RECORDING
                                                object:nil];
+    self.speechToTextCircleView.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    
     if (!IMPEDE_PLAYBACK)
     {
         [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryPlayAndRecord];
     }
-    
-    self.speechToTextCircleView.layer.borderColor = [UIColor darkGrayColor].CGColor;
-  //AVAudioSessionPortBuiltInMic;
 }
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [AppPreferences sharedAppPreferences].isRecordView=YES;
-    
-    if (![APIManager sharedManager].userSettingsOpened)
-    {
-        
-        //        UIView* stopView= [self.view viewWithTag:201];
-        //        [self performSelector:@selector(addView:) withObject:stopView afterDelay:0.02];
-        //
-        //        UIView* pauseView= [self.view viewWithTag:202];
-        //        [self performSelector:@selector(addView:) withObject:pauseView afterDelay:0.02];
-        
-        UIView* startRecordingView1= [self.view viewWithTag:203];
-        [self performSelector:@selector(addView:) withObject:startRecordingView1 afterDelay:0.02];
-        
-        UIView* startRecordingView= [self.view viewWithTag:303];
-        
-        UIImageView* counterLabel= [startRecordingView viewWithTag:503];
-        
-        UILabel* fileNameLabel= [self.view viewWithTag:101];
-        
-        UILabel* transferredByLabel= [self.view viewWithTag:102];
-        
-        UILabel* dateLabel= [self.view viewWithTag:103];
-        
-        cirecleTimerLAbel= [self.view viewWithTag:104];
-        
-        [cirecleTimerLAbel setHidden:YES];
-        
-        [stopNewButton setHidden:YES];
-        
-        [stopNewImageView setHidden:YES];
-        
-        [stopLabel setHidden:YES];
-        
-        
-        
-        circleViewTimerMinutes=0;
-        circleViewTimerSeconds=0;
-        dictationTimerSeconds=0;
-        recordingPauseAndExit = YES;
-        
-        //---set and show recording file name when view will appear---//
-        
-        NSDate *date = [[NSDate alloc] init];
-        
-        NSTimeInterval seconds = [date timeIntervalSinceReferenceDate];
-        
-        long milliseconds = seconds*1000;
-        
-        self.recordedAudioFileName = [NSString stringWithFormat:@"%ld", milliseconds];
-        
-        
-//        NSString* dateFileNameString=[app getDateAndTimeString];
-        
-        NSDateFormatter* dateFormatter = [NSDateFormatter new];
-        
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        
-        NSString* todaysDate = [dateFormatter stringFromDate:[NSDate new]];
-        
-        NSString* storedTodaysDate = [[NSUserDefaults standardUserDefaults] valueForKey:@"TodaysDate"];
-        
-        
-        if ([todaysDate isEqualToString:storedTodaysDate])
-        {
-            todaysSerialNumberCount = [[[NSUserDefaults standardUserDefaults] valueForKey:@"todaysSerialNumberCount"] longLongValue];
-            todaysSerialNumberCount++;
-            
-        }
-        else
-        {
-            [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:@"TodaysDate"];
-            [[NSUserDefaults standardUserDefaults] setValue:@"0" forKey:@"todaysSerialNumberCount"];
-            NSString* countString=[[NSUserDefaults standardUserDefaults] valueForKey:@"todaysSerialNumberCount"];
-            todaysSerialNumberCount = [countString longLongValue];
-            
-            todaysSerialNumberCount++;
-            
-        }
-        
-        todaysDate=[todaysDate stringByReplacingOccurrencesOfString:@"-" withString:@""];
-        
-        
-        
-        NSString* fileNamePrefix;
-        
-        fileNamePrefix=[[NSUserDefaults standardUserDefaults] valueForKey:@"FileNamePrefix"];
-        //fileNamePrefix = [[NSUserDefaults standardUserDefaults] valueForKey:@"fileNamePrefix"];
-        
-        self.recordedAudioFileName=[NSString stringWithFormat:@"%@%@-%02ld",fileNamePrefix,todaysDate,todaysSerialNumberCount];
-        
-        fileNameLabel.text=[NSString stringWithFormat:@"%@%@-%02ld",fileNamePrefix,todaysDate,todaysSerialNumberCount];
-        
-        // fileNameLabel.text=[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] valueForKey:RECORD_ABBREVIATION],self.recordedAudioFileName];
-        
-        // self.recordedAudioFileName=[NSString stringWithFormat:@"%@%@",[[NSUserDefaults standardUserDefaults] valueForKey:RECORD_ABBREVIATION],self.recordedAudioFileName];
-        //---
-        
-        
-        self.navigationItem.title=@"Record";
-        
-        
-        
-        [counterLabel setHidden:NO];//hide time label when view appear
-        
-        [[self.view viewWithTag:504] setHidden:YES];
-        
-        
-        
-        
-        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-        DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        transferredByLabel.text=deptObj.departmentName;
-        
-        NSString* dateAndTimeString= [app getDateAndTimeString];
-        NSArray* dateAndTimeArray= [dateAndTimeString componentsSeparatedByString:@" "];
-        NSString* dateString=[dateAndTimeArray objectAtIndex:0];
-        dateLabel.text=dateString;
-        
-        
-        
-        NSString* dictationTimeString= [[NSUserDefaults standardUserDefaults] valueForKey:SAVE_DICTATION_WAITING_SETTING];
-        NSArray* minutesAndValueArray= [dictationTimeString componentsSeparatedByString:@" "];
-        
-        if (minutesAndValueArray.count < 1)
-        {
-            return;
-        }
-        
-        minutesValue= [[minutesAndValueArray objectAtIndex:0]intValue];
-        if (!IMPEDE_PLAYBACK)
-        {
-            [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryRecord];
-        }
-        //recordingNew=YES;
-        stopped=YES;
-        
-        //
-        NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME_COPY];
-        
-    }
-}
-
 -(void)viewDidAppear:(BOOL)animated
 {
     long freeDiskSpaceInMB= [[APIManager sharedManager] getFreeDiskspace];
@@ -524,9 +543,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 -(void)addView:(UIView*)sender
 {
     if (sender.tag==203)//Greater width for middle circle
-    {
-       double height = self.view.frame.size.height*0.50;
-        
+    {        
         double screenHeight =  [[UIScreen mainScreen] bounds].size.height;
         
         if (screenHeight<481)
@@ -1492,7 +1509,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //    UILabel* updatedrecordingStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(recordingStatusLabel.frame.origin.x, stopNewImageView.frame.origin.y + stopNewImageView.frame.size.height + 20, recordingStatusLabel.frame.size.width, 30)];
     
     double screenHeight =  [[UIScreen mainScreen] bounds].size.height;
-
+    
     UIImageView* animatedImageView;
     if (screenHeight<481)
     {
@@ -1511,7 +1528,19 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     updatedrecordingStatusLabel.textAlignment = NSTextAlignmentCenter;
     
-    updatedrecordingStatusLabel.font = [UIFont systemFontOfSize:18];
+    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.view.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular)
+    {//for ipad
+        updatedrecordingStatusLabel.font = [UIFont systemFontOfSize:23];
+        
+        animatedImageView.frame = CGRectMake(recordingStatusLabel.frame.origin.x-10, stopNewImageView.frame.origin.y + stopNewImageView.frame.size.height + 100, recordingStatusLabel.frame.size.width+20, 60);
+
+        updatedrecordingStatusLabel.frame = CGRectMake(recordingStatusLabel.frame.origin.x, animatedImageView.frame.origin.y + animatedImageView.frame.size.height + 10, recordingStatusLabel.frame.size.width, 30);
+    }
+    else
+    {
+        updatedrecordingStatusLabel.font = [UIFont systemFontOfSize:18];
+
+    }
     
     [updatedrecordingStatusLabel setHidden:NO];
     
