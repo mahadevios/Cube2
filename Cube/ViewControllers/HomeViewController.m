@@ -66,10 +66,11 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+//    NSLog(@"navi height = %@", self.navigationController.navigationBar.bounds);
 
     [AppPreferences sharedAppPreferences].isRecordView = NO;
 
-    [UIApplication sharedApplication].idleTimerDisabled = YES;
+//    [UIApplication sharedApplication].idleTimerDisabled = YES;
 
     self.tabBarController.tabBar.userInteractionEnabled = true;
 
@@ -85,7 +86,7 @@
     [self showVRSFileCount];
 
     // check for complted docx file count
-    [self checkForCompletedDocFiles];
+//    [self checkForCompletedDocFiles];
     
     // check files tobe purge
     [self checkFilesToBePurge];
@@ -270,6 +271,10 @@
     
     NSURLSession         *  session = [NSURLSession sharedSession];
     
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
+    
     NSURLSessionDataTask *  theTask = [session dataTaskWithRequest: [NSURLRequest requestWithURL: url] completionHandler:
                                        ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
                                        {
@@ -295,8 +300,9 @@
                                                                                                    style:UIAlertActionStyleDefault
                                                                                                  handler:^(UIAlertAction * action)
                                                                            {
-                                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms://itunes.com/apps/CubeDictate"]];
+                                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.com/apps/CubeDictate"]];
                                                                                
+                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
 //                                                                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 //                                                                               formatter.dateFormat = @"MM-dd-yyyy";
 //                                                                               NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
@@ -310,8 +316,11 @@
                                                                                                    style:UIAlertActionStyleCancel
                                                                                                  handler:^(UIAlertAction * action)
                                                                            {
-                                                                               [alertController dismissViewControllerAnimated:YES completion:nil];
+                                                                              
                                                                                
+                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
+                                                                               
+                                                                                [alertController dismissViewControllerAnimated:YES completion:nil];
 //                                                                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 //                                                                               formatter.dateFormat = @"MM-dd-yyyy";
 //                                                                               NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
@@ -391,6 +400,8 @@
                             
                             [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
                             
+                            [self needsUpdate];
+
                             [self dismissViewControllerAnimated:YES completion:nil];
 
                         }]; //You can use a block here to handle a press on this button
@@ -404,6 +415,8 @@
                                               handler:^(UIAlertAction * action)
                         {
                            
+                              [self needsUpdate];
+                            
                             [alertController dismissViewControllerAnimated:YES completion:nil];
                             
                             [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];
@@ -492,7 +505,9 @@
     
     UIViewController* vc= [self.storyboard  instantiateViewControllerWithIdentifier:@"LoginViewController"];
     
-    [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
+    [self presentViewController:vc animated:true completion:nil];
+
+//    [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
 }
 
 // dismiss popview ForMoreOptions

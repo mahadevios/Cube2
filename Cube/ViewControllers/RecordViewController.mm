@@ -47,26 +47,29 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     if (![APIManager sharedManager].userSettingsOpened)
     {
-        [self setUpView];
         
-//        NSDate *date = [[NSDate alloc] init];
-//
-//        NSTimeInterval seconds = [date timeIntervalSinceReferenceDate];
-//
-//        long milliseconds = seconds*1000;
-//
-//        self.recordedAudioFileName = [NSString stringWithFormat:@"%ld", milliseconds];
+        if (isViewSetUpWhenFirstAppear == false)
+        {
+            [self setUpView];
+            
+            [self setRecordingAudioFileName];
+            
+            [self setTodaysDateAndDepartment];
+            
+            [self setMinutesValueToPauseRecord];
+            
+            self.navigationItem.title = @"Record";
+            
+            isViewSetUpWhenFirstAppear = true;
+        }
+        
+        
+
         
         //---set and show recording file name when view will appear---//
 
        
-        [self setRecordingAudioFileName];
-        
-        [self setTodaysDateAndDepartment];
-        
-        [self setMinutesValueToPauseRecord];
-        
-        self.navigationItem.title = @"Record";
+       
         
         
         if (!IMPEDE_PLAYBACK)
@@ -88,14 +91,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self performSelector:@selector(addView:) withObject:startRecordingView1 afterDelay:0.02];
     
-    UIView* startRecordingView = [self.view viewWithTag:303];
-    
-    UIImageView* counterLabel = [startRecordingView viewWithTag:503];
-    
-    [[self.view viewWithTag:504] setHidden:YES];
-    
-    [counterLabel setHidden:NO];//hide time label when view appear
-    
+//    UIView* startRecordingView = [self.view viewWithTag:303];
+//    
+//    UIImageView* counterLabel = [startRecordingView viewWithTag:503];
+//    
+//    [[self.view viewWithTag:504] setHidden:YES];
+//    
+//    [counterLabel setHidden:NO];//hide time label when view appear
+//    
     cirecleTimerLAbel = [self.view viewWithTag:104];
     
     [cirecleTimerLAbel setHidden:YES];
@@ -330,6 +333,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
+    
     [sliderTimer invalidate];
     
     [stopTimer invalidate];
@@ -716,7 +721,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     
                     startRecordingImageView.image=[UIImage imageNamed:@"ResumeNew"];
                     
-                    
+                    [UIApplication sharedApplication].idleTimerDisabled = NO;
                 }
                 else if ( isRecordingStarted==YES && paused)
                 {
@@ -785,7 +790,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     
                     startRecordingImageView.image=[UIImage imageNamed:@"ResumeNew"];
                     
-                    
+                    [UIApplication sharedApplication].idleTimerDisabled = NO;
                 }
                 else if ( isRecordingStarted==YES && paused)
                 {
@@ -837,6 +842,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             if([startRecordingView.backgroundColor isEqual:[UIColor blackColor]])
             {
+                [UIApplication sharedApplication].idleTimerDisabled = NO;
                 if ([startRecordingImageView.image isEqual:[UIImage imageNamed:@"Play"]])
                 {
                     
@@ -968,6 +974,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                 [recorder stop];
                                 
                                 [stopTimer invalidate];
+                                
+                                [UIApplication sharedApplication].idleTimerDisabled = NO;
                                 
                                 dispatch_async(dispatch_get_main_queue(), ^
                                                {
@@ -1470,10 +1478,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)startRecordingForUserSetting
 {
+    
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     
     UIView* startRecordingView= [self.view viewWithTag:303];
-        
+    
     UILabel* recordingStatusLabel= [self.view viewWithTag:99];
     
     UILabel* startLabel = [self.view viewWithTag:603];
@@ -1482,6 +1491,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     startLabel.textColor = [UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
     
+    startRecordingView.backgroundColor = [UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
+
     UIImageView* startRecordingImageView;
     
     stopped=NO;
@@ -1500,7 +1511,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self audioRecord];
     
-    startRecordingView.backgroundColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+
+//    });
     
 //    recordingStatusLabel.frame= CGRectMake(recordingStatusLabel.frame.origin.x, self.view.frame.origin.y + stopNewImageView.frame.size.height + 20, recordingStatusLabel.frame.size.width, recordingStatusLabel.frame.size.height);
     
@@ -1600,7 +1613,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     startRecordingImageView.image=[UIImage imageNamed:@"PauseNew"];
     
     
-    startRecordingImageView  = [startRecordingView viewWithTag:403];
+//    startRecordingImageView  = [startRecordingView viewWithTag:403];
     
     [startRecordingImageView setFrame:CGRectMake((startRecordingView.frame.size.width/2)-9, (startRecordingView.frame.size.height/2)-18, 18, 36)];
    
@@ -1747,8 +1760,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //    currentDuration=[[UILabel alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.15, animatedView.frame.size.height*0.1, 100, 20)];
 //    totalDuration=[[UILabel alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.15+audioRecordSlider.frame.size.width-10, animatedView.frame.size.height*0.1, 100, 20)];
     
-    
-    
     currentDuration=[[UILabel alloc]initWithFrame:CGRectMake(uploadAudioButton.frame.origin.x, animatedView.frame.size.height*0.1, 80, 20)];
     totalDuration=[[UILabel alloc]initWithFrame:CGRectMake(uploadAudioButton.frame.origin.x+uploadAudioButton.frame.size.width-80, animatedView.frame.size.height*0.1, 80, 20)];
     currentDuration.textAlignment=NSTextAlignmentLeft;
@@ -1756,6 +1767,25 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     totalDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
     currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
+    
+    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.view.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular)
+    {//for ipad
+        
+        uploadAudioButton.frame = CGRectMake(animatedView.frame.size.width*0.2, animatedView.frame.size.height*0.2, animatedView.frame.size.width*0.6, 48);
+        
+        uploadLaterButton.frame = CGRectMake(animatedView.frame.size.width*0.2, uploadAudioButton.frame.origin.y+uploadAudioButton.frame.size.height+10, uploadAudioButton.frame.size.width*0.48, 48);
+        
+        recordNewButton.frame = CGRectMake(uploadLaterButton.frame.origin.x+uploadLaterButton.frame.size.width+uploadAudioButton.frame.size.width*0.04, uploadAudioButton.frame.origin.y+uploadAudioButton.frame.size.height+10, uploadAudioButton.frame.size.width*0.48, 48);
+        
+        uploadAudioButton.titleLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightSemibold];
+        
+        uploadLaterButton.titleLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightSemibold];
+
+        recordNewButton.titleLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightSemibold];
+
+
+    }
+    
     
 //     sliderTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateSliderTime:) userInfo:nil repeats:YES];
     
@@ -1933,7 +1963,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
      //   [UIApplication sharedApplication].idleTimerDisabled = NO;
 
     }
-    [UIApplication sharedApplication].idleTimerDisabled = YES;
+//    [UIApplication sharedApplication].idleTimerDisabled = YES;
     if(![self.view viewWithTag:701].hidden && recorder.isRecording)
     {
     [[self.view viewWithTag:701] setHidden:YES];
@@ -2725,7 +2755,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     [self setStopRecordingView:sender];
 }
-- (IBAction)editAudioButtonPressed:(id)sender
+- (IBAction)editAudioButtonPressed:(UIButton*)sender
 {
     //Insert at the End: directly start recording and compose
     
@@ -2872,6 +2902,19 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                         
                     }]; //You can use a block here to handle a press on this button
     [alertController addAction:actionCancel];
+    
+    
+    [alertController setModalPresentationStyle:UIModalPresentationPopover];
+    
+    //show alert differently for ipad
+    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.view.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular)
+    {
+        UIPopoverPresentationController *popPresenter = [alertController
+                                                         popoverPresentationController];
+        popPresenter.sourceView = sender;
+        popPresenter.sourceRect = sender.bounds;
+    }
+   
     [self presentViewController:alertController animated:YES completion:nil];
 
 }

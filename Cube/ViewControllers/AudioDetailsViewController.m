@@ -527,7 +527,7 @@
    
         [player play];
       
-        [UIApplication sharedApplication].idleTimerDisabled = YES;
+//        [UIApplication sharedApplication].idleTimerDisabled = YES;
 
     }
 }
@@ -565,7 +565,7 @@
         
         [player play];
         
-        [UIApplication sharedApplication].idleTimerDisabled = YES;
+//        [UIApplication sharedApplication].idleTimerDisabled = YES;
 
     }
 

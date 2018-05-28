@@ -118,7 +118,11 @@
     APIManager* app=[APIManager sharedManager];
     if (self.listSelected==0)
     {
-        audiorecordDict= [app.transferredListArray objectAtIndex:selectedRow];
+        if (app.transferredListArray.count > 0)
+        {
+            audiorecordDict= [app.transferredListArray objectAtIndex:selectedRow];
+
+        }
         transferStatusLabel.text=[NSString stringWithFormat:@"Transferred,%@",[audiorecordDict valueForKey:@"status"]];//if selected list is Transferred then we have status=Transferred ,only fetch delete status append it to transferStatusLabel
         
         
@@ -127,7 +131,11 @@
     {
         [resendButton setHidden:YES];
         [deleteDictationButton setHidden:YES];
-        audiorecordDict= [app.deletedListArray objectAtIndex:selectedRow];
+        if (app.transferredListArray.count > 0)
+        {
+            audiorecordDict= [app.transferredListArray objectAtIndex:selectedRow];
+            
+        }
         transferStatusLabel.text=[NSString stringWithFormat:@"Deleted,%@",[audiorecordDict valueForKey:@"status"]];//if selected list is delete then we have status=deleted ,only fetch transfer status append it to transferStatusLabel
         
     }
@@ -153,8 +161,8 @@
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [UIApplication sharedApplication].idleTimerDisabled = NO
-    ;
+    //    [UIApplication sharedApplication].idleTimerDisabled = NO;
+
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
     DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     NSLog(@"%ld",deptObj1.Id);
@@ -234,7 +242,7 @@
         
         audioRecordSlider.maximumValue=player.duration;
         [player play];
-        [UIApplication sharedApplication].idleTimerDisabled = YES;
+//        [UIApplication sharedApplication].idleTimerDisabled = YES;
 
     
     }
@@ -269,7 +277,7 @@
         {
             pauseOrImageView.image=[UIImage imageNamed:@"Pause"] ;
             [player play];
-            [UIApplication sharedApplication].idleTimerDisabled = YES;
+//            [UIApplication sharedApplication].idleTimerDisabled = YES;
 
         }
     

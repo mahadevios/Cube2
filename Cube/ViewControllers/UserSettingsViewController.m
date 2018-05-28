@@ -25,9 +25,17 @@
     poUpTableView.layer.cornerRadius=2.0f;
     app = [AppPreferences sharedAppPreferences];
 //    recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:SAVE_DICTATION_WAITING_SETTING,CONFIRM_BEFORE_SAVING_SETTING,ALERT_BEFORE_RECORDING,BACK_TO_HOME_AFTER_DICTATION,RECORD_ABBREVIATION, nil];
-    recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:SAVE_DICTATION_WAITING_SETTING,CONFIRM_BEFORE_SAVING_SETTING,ALERT_BEFORE_RECORDING,BACK_TO_HOME_AFTER_DICTATION, nil];
-    storageManagementItemsArray=[[NSMutableArray alloc]initWithObjects:LOW_STORAGE_THRESHOLD,PURGE_DELETED_DATA, nil];
-    PlaybackAutoRewindByArray=[[NSMutableArray alloc]initWithObjects:CHANGE_YOUR_PASSWORD, nil];
+//    recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:SAVE_DICTATION_WAITING_SETTING,CONFIRM_BEFORE_SAVING_SETTING,ALERT_BEFORE_RECORDING,BACK_TO_HOME_AFTER_DICTATION, nil];
+    
+    recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:@"Save Dictation Waiting By",@"Confirm Before Saving",@"Alert Before Recording",@"Back To Home After Dictation", nil];
+    
+//    storageManagementItemsArray=[[NSMutableArray alloc]initWithObjects:LOW_STORAGE_THRESHOLD,PURGE_DELETED_DATA, nil];
+    
+    storageManagementItemsArray=[[NSMutableArray alloc]initWithObjects:@"Low Storage Threshold",@"Purge Data By", nil];
+
+//    PlaybackAutoRewindByArray=[[NSMutableArray alloc]initWithObjects:CHANGE_YOUR_PASSWORD, nil];
+    PlaybackAutoRewindByArray=[[NSMutableArray alloc]initWithObjects:@"Change Your PIN", nil];
+
     popUpOptionsArray=[[NSMutableArray alloc]init];
     radioButtonArray=[[NSMutableArray alloc]init];
     //uint64_t freeSpaceUnsignLong=    [self getFreeDiskspace];
@@ -150,11 +158,11 @@
         }
         if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRowAndSection"] isEqualToString:@"10"])
         {
-            sectionTitleLabel.text=@"Select low storage threshold";
+            sectionTitleLabel.text=@"Select Low Storage Threshold";
         }
         if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRowAndSection"] isEqualToString:@"11"])
         {
-            sectionTitleLabel.text=@"Set number of days";
+            sectionTitleLabel.text=@"Set Number Of Days";
         }
         if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"selectedRowAndSection"] isEqualToString:@"20"])
         {

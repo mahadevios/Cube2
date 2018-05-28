@@ -12,6 +12,8 @@
 #import "APIManager.h"
 #import "AppPreferences.h"
 #import "Constants.h"
+#import "InCompleteDictationViewController.h"
+#import "ImportedAudioViewController.h"
 
 @interface AlertViewController ()
 
@@ -22,35 +24,178 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     db=[Database shareddatabase];
+    
     app=[APIManager sharedManager];
+    
+    [self beginAppearanceTransition:true animated:true];
+    
+    self.splitViewController.delegate = self;
+    
+    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
    // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideHud) name:NOTIFICATION_FILE_IMPORTED object:nil];
     // Do any additional setup after loading the view.
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [self setUpNavigationView];
+    
+    [self setSplitVCDetailViewSelectedRow:0];
+}
+
+-(void)setUpNavigationView
+{
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-    //badgeCount= [db getCountOfTransfersOfDicatationStatus:@"RecordingPause"];
-    // [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%d",badgeCount] forKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
+    
     self.navigationItem.title=@"Alert";
+    
     app.incompleteFileTransferCount= [db getCountOfTransfersOfDicatationStatus:@"RecordingPause"];
+    
     [[Database shareddatabase] getlistOfimportedFilesAudioDetailsArray:5];
-
+    
     VRSDocFilesArray = [[Database shareddatabase] getVRSDocFiles];
-
+    
     [self.tableView reloadData];
     
     [self.tabBarController.tabBar setHidden:NO];
     
     [self showTabBadge];
-    
-//    if ([AppPreferences sharedAppPreferences].isImporting)
-//    {
-//        [self showhud];
-//    }
-    
-    
+}
+
+-(void)setSplitVCDetailViewSelectedRow:(int)selectedRow
+{
+    if (self.splitViewController.isCollapsed == false) // if not collapsed that is reguler width hnce ipad
+    {
+        UINavigationController* navVC = [[UINavigationController alloc] init];
+
+        switch (selectedRow)
+        {
+            case 0:
+                if(app.incompleteFileTransferCount == 0) // if transferred count 0 then show empty VC  else show audio details
+                {
+                    UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EmptyViewController"];
+                    
+                    navVC = [navVC initWithRootViewController:vc];
+                    
+                   
+                    
+                    NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
+                    
+                    if (subVC.count > 1)
+                    {
+                        [subVC removeObjectAtIndex:1];
+                        
+                        [subVC addObject:navVC];
+                        
+                    }
+                    else
+                    {
+                        [subVC addObject:navVC];
+                    }
+                    
+                    [self.splitViewController setViewControllers:subVC];
+                }
+                else
+                {
+                    //                [self setFirstRowSelected]; // set first row seletced by default
+                    
+                    InCompleteDictationViewController *detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"InCompleteDictationViewController"];
+                    
+                    navVC = [navVC initWithRootViewController:detailVC];
+                    
+//                    navVC.navigationItem.hidesBackButton = YES;
+                    
+                    NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
+                    
+                    if (subVC.count > 1)
+                    {
+                        [subVC removeObjectAtIndex:1];
+                        
+                        [subVC addObject:navVC];
+                        
+                    }
+                    else
+                    {
+                        [subVC addObject:navVC];
+                    }
+                    
+                    [self.splitViewController setViewControllers:subVC];
+                    //                detailVC.listSelected = 0;
+                    
+                    //                detailVC.selectedRow = 0;
+                    
+//                    [self.splitViewController showDetailViewController:navVC sender:self];
+                }
+                break;
+                
+            case 1:
+                {
+                    UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EmptyViewController"];
+                
+                    navVC = [navVC initWithRootViewController:vc];
+                    
+//                    navVC.navigationItem.hidesBackButton = YES;
+                    
+                    NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
+                    
+                    if (subVC.count > 1)
+                    {
+                        [subVC removeObjectAtIndex:1];
+                        
+                        [subVC addObject:vc];
+                        
+                    }
+                    else
+                    {
+                        [subVC addObject:navVC];
+                    }
+                    
+                    [self.splitViewController setViewControllers:subVC];
+                }
+               
+                break;
+              
+                
+            case 2:
+            {
+                ImportedAudioViewController* detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ImportedAudioViewController"];
+                
+                navVC = [navVC initWithRootViewController:detailVC];
+                
+                NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
+                
+                if (subVC.count > 1)
+                {
+                    [subVC removeObjectAtIndex:1];
+                    
+                    [subVC addObject:detailVC];
+                    
+                }
+                else
+                {
+                    [subVC addObject:detailVC];
+                }
+                
+                [self.splitViewController setViewControllers:subVC];
+            }
+                
+                break;
+            default:
+                break;
+        }
+        
+        
+        
+    }
+}
+
+#pragma mark:Split VC delegate
+
+-(BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController
+{
+    return true;
 }
 
 
@@ -186,14 +331,38 @@
     switch (indexPath.row)
     {
         case 0:
-            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"InCompleteDictationViewController"] animated:YES];
+            if (self.splitViewController.isCollapsed)
+            {
+               [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"InCompleteDictationViewController"] animated:YES];
+            }
+            else
+            {
+                [self setSplitVCDetailViewSelectedRow:0];
+            }
+            
             break;
             
         case 1:
+            if (self.splitViewController.isCollapsed)
+            {
+                
+            }
+            else
+            {
+                [self setSplitVCDetailViewSelectedRow:1];
+            }
             break;
         
         case 2:
-            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ImportedAudioViewController"] animated:YES];
+            if (self.splitViewController.isCollapsed)
+            {
+                [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ImportedAudioViewController"] animated:YES];
+            }
+            else
+            {
+                [self setSplitVCDetailViewSelectedRow:2];
+            }
+            
             break;
          
 //        case 3:

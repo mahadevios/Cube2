@@ -1044,7 +1044,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
-    [UIApplication sharedApplication].idleTimerDisabled = YES;
+//    [UIApplication sharedApplication].idleTimerDisabled = YES;
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
@@ -1234,7 +1234,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-        [UIApplication sharedApplication].idleTimerDisabled = YES;
+//        [UIApplication sharedApplication].idleTimerDisabled = YES;
         
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         
@@ -1252,7 +1252,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
         
         [request setHTTPMethod:@"POST"];
         
-        long filesizelong=[[APIManager sharedManager] getFileSize:filePath];
+        long filesizelong = [[APIManager sharedManager] getFileSize:filePath];
         
         int filesizeint=(int)filesizelong;
         

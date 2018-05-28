@@ -326,29 +326,48 @@
     }
     NSUInteger newLength = [textField.text length] + [string length] - range.length;
     
-    if (newLength==1)
-    {
-        [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.0];
-    }
+//    if (newLength==1)
+//    {
+//    [self resignResponder:textField enteredString:string]
+        [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.05];
+//    }
+//    else
+//    {
+//        [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.0];
+//    }
     return newLength <= 1;
 }
 
--(void)resignResponder:(id)sender
+-(void)resignResponder:(UITextField*)textfield
 {
-    if (sender==pinCode1TextField)
+    if (textfield==pinCode1TextField && textfield.text.length > 0)
     {
         [pinCode2TextField becomeFirstResponder];
-        
     }
-    if (sender==pinCode2TextField)
+    
+    if (textfield==pinCode2TextField && textfield.text.length > 0)
     {
         [pinCode3TextField becomeFirstResponder];
         
     }
-    if (sender==pinCode3TextField)
+    else if (textfield==pinCode2TextField && textfield.text.length == 0)
+    {
+        [pinCode1TextField becomeFirstResponder];
+    }
+    
+    if (textfield==pinCode3TextField && textfield.text.length > 0)
     {
         [pinCode4TextField becomeFirstResponder];
         
+    }
+    else if (textfield==pinCode3TextField && textfield.text.length == 0)
+    {
+        [pinCode2TextField becomeFirstResponder];
+    }
+    
+    if (textfield==pinCode4TextField && textfield.text.length == 0)
+    {
+        [pinCode3TextField becomeFirstResponder];
     }
 }
 - (void)didReceiveMemoryWarning

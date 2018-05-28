@@ -39,7 +39,27 @@
     {
         [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
 
-    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+        if (self.splitViewController.isCollapsed)
+        {
+            self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+            
+            [self.tabBarController.tabBar setHidden:YES];
+
+
+        }
+        else // for ipad
+        {
+             self.navigationItem.leftBarButtonItem = nil;
+            
+            [self.tabBarController.tabBar setHidden:NO];
+            
+            NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                       [UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1],NSForegroundColorAttributeName,[UIFont systemFontOfSize:20.0 weight:UIFontWeightBold],NSFontAttributeName, nil];
+            
+//            [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+
+            [self.navigationController.navigationBar setTitleTextAttributes:navbarTitleTextAttributes];
+        }
     
     self.navigationItem.title=@"Incomplete Dictations";
     app.inCompleteFileTransferNamesArray=[db getListOfFileTransfersOfStatus:@"RecordingPause"];
@@ -67,7 +87,6 @@
 
     }
     
-    [self.tabBarController.tabBar setHidden:YES];
 
 }
 -(void)popViewController:(id)sender
