@@ -34,6 +34,7 @@
     
     [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
 
+//    self.splitViewController.
 }
 
 

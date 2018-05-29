@@ -35,6 +35,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *transferDictationButton;
+@property (weak, nonatomic) IBOutlet UIImageView *backImageView;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *deleteDictationButton;
 - (IBAction)moreButtonClicked:(id)sender;

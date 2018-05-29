@@ -170,12 +170,12 @@
                 {
                     [subVC removeObjectAtIndex:1];
                     
-                    [subVC addObject:detailVC];
+                    [subVC addObject:navVC];
                     
                 }
                 else
                 {
-                    [subVC addObject:detailVC];
+                    [subVC addObject:navVC];
                 }
                 
                 [self.splitViewController setViewControllers:subVC];

@@ -39,7 +39,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="noB-nF-2pm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="232" y="99"/>
+            <point key="canvasLocation" x="-101" y="-684"/>
         </scene>
         <!--Pin Login-->
         <scene sceneID="tne-QT-ifu">
@@ -283,7 +283,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="853" y="99"/>
+            <point key="canvasLocation" x="562" y="34"/>
         </scene>
         <!--Select Department View Controller-->
         <scene sceneID="0eX-oP-QY6">
@@ -394,7 +394,17 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MF3-au-EuH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2583" y="863"/>
+            <point key="canvasLocation" x="1955" y="926"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="4P8-jA-dSO">
+            <objects>
+                <splitViewController id="ues-OP-gXW" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="tDu-sM-rV9"/>
+                </splitViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="z1p-FU-QVZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3281" y="82"/>
         </scene>
         <!--Main Tab Bar View Controller-->
         <scene sceneID="LuF-VZ-GHA">
@@ -407,15 +417,15 @@
                         <color key="selectedImageTintColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="uJQ-k1-0Xp" kind="relationship" relationship="viewControllers" id="uVG-Vl-noB"/>
-                        <segue destination="9tW-Si-fq6" kind="relationship" relationship="viewControllers" id="HBy-qG-EGm"/>
-                        <segue destination="UX2-Oj-hmD" kind="relationship" relationship="viewControllers" id="u6s-EJ-FqD"/>
-                        <segue destination="7wq-TI-GwR" kind="relationship" relationship="viewControllers" id="uW8-Ir-Dtn"/>
+                        <segue destination="uJQ-k1-0Xp" kind="relationship" relationship="viewControllers" id="wxH-9G-6FT"/>
+                        <segue destination="9tW-Si-fq6" kind="relationship" relationship="viewControllers" id="bf7-yy-swQ"/>
+                        <segue destination="UX2-Oj-hmD" kind="relationship" relationship="viewControllers" id="nTv-3A-9PR"/>
+                        <segue destination="7wq-TI-GwR" kind="relationship" relationship="viewControllers" id="Q1q-gt-0TK"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nuf-tv-0Mb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2213" y="111"/>
+            <point key="canvasLocation" x="2306" y="99"/>
         </scene>
         <!--Cube Dictate-->
         <scene sceneID="fsh-hh-69v">
@@ -452,7 +462,7 @@
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" tag="501" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vjr-fw-tmf">
                                         <rect key="frame" x="12" y="114" width="54" height="58.5"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="43"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="41"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="heightClass=regular-widthClass=regular">
@@ -493,7 +503,7 @@
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" tag="502" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZg-GV-Irw">
                                         <rect key="frame" x="13" y="113.5" width="31.5" height="58.5"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="43"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="41"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="heightClass=regular-widthClass=regular">
@@ -561,7 +571,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="47.329999999999998" id="Z4v-Ha-aEh"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="43"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="41"/>
                                         <color key="textColor" red="0.084668464467005045" green="0.084668464467005045" blue="0.084668464467005045" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="heightClass=regular-widthClass=regular">
@@ -602,7 +612,7 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" tag="503" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ROv-Pp-uJU">
                                         <rect key="frame" x="18" y="113.5" width="32.5" height="58.5"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="43"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="41"/>
                                         <color key="textColor" red="0.084668464467005045" green="0.064070422926866322" blue="0.043627062401701659" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="heightClass=regular-widthClass=regular">
@@ -676,7 +686,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YLf-aM-hR1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4177.1484375" y="82.137628111273784"/>
+            <point key="canvasLocation" x="4893" y="82"/>
         </scene>
         <!--Transfer List View Controller-->
         <scene sceneID="p8i-j7-KL5">
@@ -690,43 +700,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelection="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="72" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8M7-jB-Cx1">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="72" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8M7-jB-Cx1">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="72" id="Pct-Nd-567">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="72"/>
+                                        <rect key="frame" x="0.0" y="28" width="1024" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pct-Nd-567" id="B9d-Jj-W0b">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="71.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1024" height="71.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZCy-iv-KCc">
-                                                    <rect key="frame" x="10" y="10" width="360" height="16"/>
+                                                    <rect key="frame" x="10" y="10" width="614.5" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4T2-ED-iWl">
-                                                    <rect key="frame" x="10" y="29" width="360" height="15"/>
+                                                    <rect key="frame" x="10" y="29" width="614.5" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.76078431369999999" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="103" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEJ-0Y-Ghc">
-                                                    <rect key="frame" x="10" y="47" width="360" height="15"/>
+                                                    <rect key="frame" x="10" y="47" width="614.5" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                                                     <color key="textColor" red="0.76078431369999999" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="104" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ca-KE-3C9">
-                                                    <rect key="frame" x="410" y="18.5" width="180" height="0.0"/>
+                                                    <rect key="frame" x="707" y="18.5" width="307" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="105" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vYL-WR-n45">
-                                                    <rect key="frame" x="590" y="36" width="0.0" height="0.0"/>
+                                                    <rect key="frame" x="1014" y="36" width="0.0" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.98039215690000003" green="0.63529411759999999" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -793,7 +803,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yAY-KW-oDN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4982" y="83"/>
+            <point key="canvasLocation" x="5556" y="82"/>
         </scene>
         <!--Audio Details-->
         <scene sceneID="LuP-UT-Gz4">
@@ -1273,6 +1283,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="Audio Details" id="3lh-h0-iSY"/>
                     <connections>
+                        <outlet property="backButton" destination="wGN-cD-FgJ" id="df8-ud-bVZ"/>
+                        <outlet property="backImageView" destination="fwa-wB-0VD" id="0bK-fT-lWe"/>
                         <outlet property="deleteDictationButton" destination="jYH-xT-Eyf" id="s12-Ks-OcH"/>
                         <outlet property="moreButton" destination="6KJ-Bi-FlM" id="u85-3k-2vZ"/>
                         <outlet property="transferDictationButton" destination="Hdu-M9-0DC" id="bFB-gZ-QGh"/>
@@ -1280,7 +1292,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bVc-Jy-q5u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6134" y="142"/>
+            <point key="canvasLocation" x="6217" y="69"/>
         </scene>
         <!--User Settings View Controller-->
         <scene sceneID="eR6-Aa-Amd">
@@ -1607,7 +1619,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6s6-pc-XqK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1650" y="1140"/>
+            <point key="canvasLocation" x="177" y="2409"/>
         </scene>
         <!--Alert View Controller-->
         <scene sceneID="E3u-3x-1EE">
@@ -1701,7 +1713,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b1u-i8-dh8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4081" y="850"/>
+            <point key="canvasLocation" x="1955" y="2409"/>
         </scene>
         <!--Select File View Controller-->
         <scene sceneID="Gc5-Ie-QZi">
@@ -1805,7 +1817,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="toS-ZE-nQE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2513" y="1918"/>
+            <point key="canvasLocation" x="-510" y="2354"/>
         </scene>
         <!--Speech Transcription-->
         <scene sceneID="4fn-En-suE">
@@ -2051,7 +2063,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bld-x8-Tlj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3930" y="-778"/>
+            <point key="canvasLocation" x="4863" y="-759"/>
         </scene>
         <!--Doc Files View Controller-->
         <scene sceneID="bD9-W6-Qrt">
@@ -2192,7 +2204,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e1f-Ba-iWG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3341" y="1919"/>
+            <point key="canvasLocation" x="-370" y="3043"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="cJd-Uu-qZi">
@@ -2304,7 +2316,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sUQ-uE-HSi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4201" y="1560"/>
+            <point key="canvasLocation" x="4506" y="2334"/>
         </scene>
         <!--Imported Audio View Controller-->
         <scene sceneID="Dyc-S3-oKN">
@@ -2429,7 +2441,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xMh-cY-xBi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5053.6000000000004" y="1568.3658170914543"/>
+            <point key="canvasLocation" x="2637" y="3102"/>
         </scene>
         <!--In Complete Dictation View Controller-->
         <scene sceneID="TS0-Q2-wZk">
@@ -2536,7 +2548,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BRD-PB-KQt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4733" y="850"/>
+            <point key="canvasLocation" x="2637" y="2409"/>
         </scene>
         <!--Record Tab View Controller-->
         <scene sceneID="MhX-VD-cNu">
@@ -2555,7 +2567,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eCY-3S-LB5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6020" y="850"/>
+            <point key="canvasLocation" x="2895" y="1637"/>
         </scene>
         <!--Record View Controller-->
         <scene sceneID="dHU-w3-3nZ">
@@ -3087,7 +3099,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zIV-i2-5b3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6641.015625" y="860.90775988286964"/>
+            <point key="canvasLocation" x="3626" y="1637"/>
         </scene>
         <!--In Complete Record View Controller-->
         <scene sceneID="sim-Hc-ajg">
@@ -3431,7 +3443,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ksA-m9-ZCe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7260" y="849.62518740629696"/>
+            <point key="canvasLocation" x="4396" y="1625"/>
         </scene>
         <!--Registration View Controller-->
         <scene sceneID="UMp-zs-j4p">
@@ -3574,7 +3586,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NE7-d0-CAD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8650" y="863"/>
+            <point key="canvasLocation" x="562" y="-684"/>
         </scene>
         <!--Home-->
         <scene sceneID="v60-z9-jOx">
@@ -3600,7 +3612,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gnr-ZW-ISy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3240" y="83"/>
+            <point key="canvasLocation" x="4163" y="82"/>
         </scene>
         <!--Item-->
         <scene sceneID="iNC-8r-bAb">
@@ -3614,7 +3626,7 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dGi-C1-Q5g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-165" y="1155"/>
+            <point key="canvasLocation" x="177" y="926"/>
         </scene>
         <!--Empty View Controller-->
         <scene sceneID="S00-VV-4Xm">
@@ -3632,7 +3644,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AHv-rP-8da" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="705" y="1919"/>
+            <point key="canvasLocation" x="3313" y="-564"/>
         </scene>
         <!--List-->
         <scene sceneID="VeX-hf-vt1">
@@ -3656,7 +3668,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AQJ-QU-W24" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="803" y="1155"/>
+            <point key="canvasLocation" x="177" y="1637"/>
         </scene>
         <!--Transferred Or Deleted Audio Details View Controller-->
         <scene sceneID="Dty-kC-231">
@@ -4133,7 +4145,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2WB-gf-iLs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1524" y="1918"/>
+            <point key="canvasLocation" x="1029" y="1676"/>
         </scene>
         <!--Alert-->
         <scene sceneID="nAb-nh-LDn">
@@ -4157,7 +4169,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vcj-A2-KTY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3340" y="863"/>
+            <point key="canvasLocation" x="1955" y="1676"/>
         </scene>
         <!--Record-->
         <scene sceneID="faf-HR-Nqv">
@@ -4183,7 +4195,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zB8-sK-m37" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5381" y="850"/>
+            <point key="canvasLocation" x="2895" y="926"/>
         </scene>
         <!--Change Password View Controller-->
         <scene sceneID="ad4-fA-DHV">
@@ -4470,7 +4482,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1py-5P-uLg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7950" y="926"/>
+            <point key="canvasLocation" x="-101" y="34"/>
         </scene>
         <!--Pin Registration View Controller-->
         <scene sceneID="okY-X8-kTM">
@@ -4734,7 +4746,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jlp-6d-X8q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7672" y="134"/>
+            <point key="canvasLocation" x="5936" y="-735"/>
         </scene>
         <!--Edit Docx View Controller-->
         <scene sceneID="Ivi-uy-D8T">
@@ -4895,7 +4907,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xH0-bF-hp8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8592.753623188406" y="140.21739130434784"/>
+            <point key="canvasLocation" x="8019" y="177"/>
         </scene>
     </scenes>
     <resources>

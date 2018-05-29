@@ -2655,7 +2655,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [alertController addAction:actionCancel];
     
     //show alert differently for ipad
-    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.view.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular)
+//    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.view.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular)
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
         UIPopoverPresentationController *popPresenter = [alertController
                                                          popoverPresentationController];

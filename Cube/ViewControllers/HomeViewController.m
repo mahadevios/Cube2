@@ -31,6 +31,9 @@
 {
     [super viewDidLoad];
 //    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
+    
+//    [self beginAppearanceTransition:true animated:true];
+
     db = [Database shareddatabase];
 
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
@@ -67,7 +70,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 //    NSLog(@"navi height = %@", self.navigationController.navigationBar.bounds);
-
+    self.splitViewController.delegate = self;
     [AppPreferences sharedAppPreferences].isRecordView = NO;
 
 //    [UIApplication sharedApplication].idleTimerDisabled = YES;
@@ -91,9 +94,19 @@
     // check files tobe purge
     [self checkFilesToBePurge];
     
+    
+    [self setSplitViewController];
+    
     NSLog(@"%@",NSHomeDirectory());
    
     
+}
+
+#pragma mark:Split VC delegate
+
+-(BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController
+{
+    return true;
 }
 
 -(void)checkFilesToBePurge
@@ -428,6 +441,14 @@
             [self presentViewController:alertController animated:YES completion:nil];
     
         }
+        else
+        {
+            [self needsUpdate];
+        }
+    }
+    else
+    {
+        [self needsUpdate];
     }
 }
 
@@ -483,9 +504,9 @@
 
 -(void)addPopViewForMoreOptions
 {
-    NSArray* subViewArray=[NSArray arrayWithObjects:@"User Settings",@"Logout", nil];
+    NSArray* subViewArray = [NSArray arrayWithObjects:@"User Settings",@"Logout", nil];
     
-    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 84) andSubViews:subViewArray :self];
+    UIView* pop = [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 84) andSubViews:subViewArray :self];
     
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 }
@@ -539,11 +560,50 @@
 //    {
 //        vc.currentViewName=@"Transfer Failed";
 //    }
-    [self.navigationController pushViewController:vc animated:YES];
-    
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        UISplitViewController* splitVC = [UISplitViewController new];
+        
+        UINavigationController* navVC = [[UINavigationController alloc] initWithRootViewController:vc];;
+        //
+        NSArray* splitVCArray = [[NSArray alloc] initWithObjects:navVC, nil];
+
+        [splitVC setViewControllers:splitVCArray];
+        
+        [self presentViewController:splitVC animated:NO completion:nil];
+    }
+    else
+    {
+        [self.navigationController pushViewController:vc animated:true];
+    }
+   
+//    [self.navigationController pushViewController:splitVC animated:true];
     //NSLog(@"%@",self.tabBarController);
     
 }
+
+-(void)setSplitViewController
+{
+//    UISplitViewController* splitVC = [UISplitViewController new];
+//    
+//    UINavigationController* navVC = [[UINavigationController alloc] initWithRootViewController:vc];;
+//    
+//    UIViewController* emptyVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EmptyViewController"];
+//    
+//    NSArray* splitVCArray = [[NSArray alloc] initWithObjects:navVC, nil];
+//    
+//    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAutomatic];
+//    
+//    NSArray* arr = self.splitViewController.viewControllers;
+//    
+//    [self.splitViewController splitViewController:self.splitViewController collapseSecondaryViewController:emptyVC ontoPrimaryViewController:self];
+//    [splitVC setViewControllers:splitVCArray];
+//    
+//    [[UIApplication sharedApplication].keyWindow setRootViewController:splitVC];
+//    UIViewController* vc = [arr objectAtIndex:1];
+//    [self.splitViewController collapseSecondaryViewController:vc forSplitViewController:self.splitViewController];
+}
+
 
 // show completed docx view after tapped
 -(void)showCompletedDocFIlesView:(UITapGestureRecognizer*)sender

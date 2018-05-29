@@ -110,6 +110,34 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [self.tableView reloadData];
     
     [self.tabBarController.tabBar setHidden:YES];
+    
+    if (self.splitViewController.isCollapsed)
+    {
+        
+        
+        self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+        
+        [self.tabBarController.tabBar setHidden:YES];
+        
+    }
+    
+    else
+    {
+        self.navigationItem.leftBarButtonItem = nil;
+        
+        self.navigationController.navigationBar.hidden = false;
+        
+        [self.tabBarController.tabBar setHidden:NO];
+        
+        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                   [UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1],NSForegroundColorAttributeName,[UIFont systemFontOfSize:20.0 weight:UIFontWeightBold],NSFontAttributeName, nil];
+        
+        //            [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+        
+        [self.navigationController.navigationBar setTitleTextAttributes:navbarTitleTextAttributes];
+        
+    }
+   
 
     
 }
@@ -543,10 +571,27 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         AudioDetailsViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
     
         vc.selectedView=@"Imported";
-    
+        
         vc.selectedRow=indexPath.row;
-    
-        [self presentViewController:vc animated:YES completion:nil];
+        
+        
+        if (self.splitViewController.isCollapsed)
+        {
+            
+            [self presentViewController:vc animated:YES completion:nil];
+        }
+        else
+        {
+//            NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
+            
+//            [subVC addObject:vc];
+            
+//            [self.splitViewController setViewControllers:subVC];
+//            [self.splitViewController addChildViewController:vc];
+//            [self.splitViewController showDetailViewController:vc sender:self];
+            [self.navigationController pushViewController:vc animated:true];
+        }
+        
 
     }
         

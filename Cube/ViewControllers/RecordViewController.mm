@@ -1541,7 +1541,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     updatedrecordingStatusLabel.textAlignment = NSTextAlignmentCenter;
     
-    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.view.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular)
+//    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.view.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular)
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {//for ipad
         updatedrecordingStatusLabel.font = [UIFont systemFontOfSize:23];
         
@@ -1768,7 +1769,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     totalDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
     currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
     
-    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.view.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular)
+//    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.view.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular)
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {//for ipad
         
         uploadAudioButton.frame = CGRectMake(animatedView.frame.size.width*0.2, animatedView.frame.size.height*0.2, animatedView.frame.size.width*0.6, 48);
@@ -2907,7 +2909,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [alertController setModalPresentationStyle:UIModalPresentationPopover];
     
     //show alert differently for ipad
-    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.view.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular)
+//    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.view.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular)
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
         UIPopoverPresentationController *popPresenter = [alertController
                                                          popoverPresentationController];

@@ -13,7 +13,7 @@
 #import "AppPreferences.h"
 #import "Constants.h"
 
-@interface HomeViewController : UIViewController
+@interface HomeViewController : UIViewController<UISplitViewControllerDelegate>
 {
     UITapGestureRecognizer* transferredTodayViewTapRecogniser;
     UITapGestureRecognizer* awaitingViewTapRecogniser;

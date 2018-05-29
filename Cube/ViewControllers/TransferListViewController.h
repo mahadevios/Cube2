@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AudioDetailsViewController.h"
 
-@interface TransferListViewController : UIViewController<UIGestureRecognizerDelegate>
+@interface TransferListViewController : UIViewController<UIGestureRecognizerDelegate,UISplitViewControllerDelegate>
 {
 
     UIAlertController *alertController;
@@ -29,6 +30,8 @@
     NSTimer* progressTimer;
     
     BOOL suspended;
+    
+    AudioDetailsViewController* detailVC;
 }
 @property(nonatomic,strong)NSString* currentViewName;
 
