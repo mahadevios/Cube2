@@ -68,6 +68,7 @@
 #define NOTIFICATION_FILE_IMPORTED                  @"fileImportingCompleted"
 #define NOTIFICATION_UPLOAD_NEXT_FILE               @"uploadNextFile"
 #define NOTIFICATION_SEND_COMMENT_API               @"commentNotification"
+#define NOTIFICATION_FILE_UPLOAD_CLICKED            @"fileUploadClicked"
 
 //Settimg Constants
 

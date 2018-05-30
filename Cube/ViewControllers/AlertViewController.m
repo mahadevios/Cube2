@@ -43,6 +43,21 @@
     [self setUpNavigationView];
     
     [self setSplitVCDetailViewSelectedRow:0];
+    
+    [self setFirstRowSelected];
+}
+
+-(void)setFirstRowSelected
+{
+    if (self.splitViewController.isCollapsed == false) // for ipad reguler width reguler height
+    {
+        NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        
+        [self.tableView selectRowAtIndexPath:firstRowPath animated:NO scrollPosition: UITableViewScrollPositionNone];
+        
+        [self tableView:self.tableView didSelectRowAtIndexPath:firstRowPath];
+    }
+    
 }
 
 -(void)setUpNavigationView

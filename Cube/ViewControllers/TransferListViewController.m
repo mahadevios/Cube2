@@ -27,31 +27,7 @@
     
     [super viewDidLoad];
     
-    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
-        {
-            UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
-                                          initWithTarget:self action:@selector(handleLongPress:)];
-            lpgr.minimumPressDuration = 1.0; //seconds
-         
-            lpgr.delegate = self;
-         
-            [self.tableView addGestureRecognizer:lpgr];
-          
-            self.checkedIndexPath = [[NSMutableArray alloc] init];
-            
-        }
-    
-    arrayOfMarked = [[NSMutableArray alloc]init];
-    
-    progressIndexPathArray = [[NSMutableArray alloc]init];
-
-    indexPathFileNameDict = [NSMutableDictionary new];
-    
-    self.splitViewController.delegate = self;
-    
-    [self beginAppearanceTransition:true animated:true];
-
-    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+    [self addGestureRecogniser];
     
 //    [self beginAppearanceTransition:true animated:true];
 
@@ -62,9 +38,56 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(validateFileUploadResponse:) name:NOTIFICATION_FILE_UPLOAD_API
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(fileUploadClicked:) name:NOTIFICATION_FILE_UPLOAD_CLICKED
+                                               object:nil];
+    
+    [self setUpNavigationView];
+    
+    [self setAudioDetailOrEmptyViewController:0];
+    
+    [self setFirstRowSelected];
+
+}
+
+-(void)addGestureRecogniser
+{
+    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
+    {
+        UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
+                                              initWithTarget:self action:@selector(handleLongPress:)];
+        lpgr.minimumPressDuration = 1.0; //seconds
+        
+        lpgr.delegate = self;
+        
+        [self.tableView addGestureRecognizer:lpgr];
+        
+        self.checkedIndexPath = [[NSMutableArray alloc] init];
+        
+    }
+    
+    arrayOfMarked = [[NSMutableArray alloc]init];
+    
+    progressIndexPathArray = [[NSMutableArray alloc]init];
+    
+    indexPathFileNameDict = [NSMutableDictionary new];
+    
+    self.splitViewController.delegate = self;
+    
+    [self beginAppearanceTransition:true animated:true];
+    
+    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+}
+
+-(void)setUpNavigationView
+{
     self.navigationItem.title=self.currentViewName;
     
-    if ([self.currentViewName isEqualToString:@"Today's Transferred"])
+    if ([self.currentViewName isEqualToString:@"Transferred Today"])
     {
         self.navigationItem.title=@"Transferred Today";
     }
@@ -73,7 +96,7 @@
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
     self.navigationItem.rightBarButtonItem = nil;
-
+    
     APIManager* app=[APIManager sharedManager];
     
     app.awaitingFileTransferNamesArray = [[NSMutableArray alloc]init];
@@ -85,27 +108,15 @@
     [self.tableView reloadData];
     
     [self.tabBarController.tabBar setHidden:YES];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(validateFileUploadResponse:) name:NOTIFICATION_FILE_UPLOAD_API
-                                               object:nil];
-
-//    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
-//    {
-//        [self performSelector:@selector(setTimer) withObject:nil afterDelay:2.0];
-//
-//    }
+    
+    
     if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
     {
         [self setTimer];
     }
-
-    [self setAudioDetailOrEmptyViewController:0];
     
-    [self setFirstRowSelected];
-   // [[APIManager sharedManager] downloadFileUsingConnection:@"6753263"];
-
 }
+
 
 -(void)setTimer
 {
@@ -114,6 +125,10 @@
 
 }
 
+-(void)fileUploadClicked:(NSNotification*)sender
+{
+    [self.tableView reloadData];
+}
 //-(void)setTimer1
 //{
 //    
@@ -131,7 +146,7 @@
     [arrayOfMarked removeAllObjects];
     
     isMultipleFilesActivated=NO;
-    
+    self.tableView.allowsMultipleSelection = NO; // for ipad
     toolBarAdded=NO;
     
     [progressTimer invalidate];
@@ -145,47 +160,54 @@
     APIManager* app=[APIManager sharedManager];
 //    Database* db=[Database shareddatabase];
    
-    if (self.splitViewController.isCollapsed == false) // if not collapsed that is reguler width hnce ipad
+    if (self.splitViewController != nil && self.splitViewController.isCollapsed == false) // if not collapsed that is reguler width hnce ipad
     {
         
-        NSDictionary* awaitingFileTransferDict;
+//        NSDictionary* awaitingFileTransferDict;
+        
         if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
         {
-            if(app.awaitingFileTransferNamesArray.count==0) // if transferred count 0 then show empty VC  else show audio details
+//            awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:selectedIndex];
+
+            if(app.awaitingFileTransferNamesArray.count == 0) // if transferred count 0 then show empty VC  else show audio details
             {
-                
-                UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EmptyViewController"];
-                
-                NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
-                
-                if (subVC.count > 1)
-                {
-                    [subVC removeObjectAtIndex:1];
-                    
-                    [subVC addObject:vc];
-                    
-                }
-                else
-                {
-                    [subVC addObject:vc];
-                }
-                
-                [self.splitViewController setViewControllers:subVC];
+               [self addEmptyVCToSplitVC];
             }
             else
             {
 //                [self setFirstRowSelected]; // set first row seletced by default
+                if (isMultipleFilesActivated)
+                {
+                    [self addEmptyVCToSplitVC];
+                }
+                else
+                {
+                    [self addAudioDetailsVCToSplitVC:selectedIndex];
+                }
                 
-                awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:selectedIndex];
+            }
+        }
+        else
+        if ([self.currentViewName isEqualToString:@"Transferred Today"])
+        {
+//            awaitingFileTransferDict= [app.trans objectAtIndex:selectedIndex];
+            
+            if(app.todaysFileTransferNamesArray.count == 0) // if transferred count 0 then show empty VC  else show audio details
+            {
+                [self addEmptyVCToSplitVC];
+            }
+            else
+            {
+                //                [self setFirstRowSelected]; // set first row seletced by default
+//                if (isMultipleFilesActivated)
+//                {
+//                    [self addEmptyVCToSplitVC];
+//                }
+//                else
+//                {
+                    [self addAudioDetailsVCToSplitVC:selectedIndex];
+//                }
                 
-                detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
-                
-                detailVC.selectedView = self.currentViewName;
-//                detailVC.listSelected = 0;
-                
-                detailVC.selectedRow = selectedIndex;
-                
-                [self.splitViewController showDetailViewController:detailVC sender:self];
             }
         }
         
@@ -193,6 +215,44 @@
         
     
 }
+
+-(void)addEmptyVCToSplitVC
+{
+    UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EmptyViewController"];
+    
+    NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
+    
+    if (subVC.count > 1)
+    {
+        [subVC removeObjectAtIndex:1];
+        
+        [subVC addObject:vc];
+        
+    }
+    else
+    {
+        [subVC addObject:vc];
+    }
+    
+    [self.splitViewController setViewControllers:subVC];
+    
+}
+
+-(void)addAudioDetailsVCToSplitVC:(int)selectedIndex
+{
+    
+    detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
+    
+    detailVC.selectedView = self.currentViewName;
+    //                detailVC.listSelected = 0;
+    
+    detailVC.selectedRow = selectedIndex;
+    
+    [self.splitViewController showDetailViewController:detailVC sender:self];
+    
+}
+
+
 -(void)validateFileUploadResponse:(NSNotification*)obj
 {
   
@@ -205,7 +265,7 @@
     [arrayOfMarked removeAllObjects];
     
     isMultipleFilesActivated=NO;
-    
+    self.tableView.allowsMultipleSelection = NO; // for ipad
     [self hideAndShowUploadButton:NO];
     
     [self.tableView reloadData];//to update table agter getting file trnasfer response
@@ -241,6 +301,9 @@
    
         isMultipleFilesActivated = YES;
         
+        [self setAudioDetailOrEmptyViewController:0];
+//        self.tableView.allowsMultipleSelection = YES; //for ipad
+
         APIManager* app=[APIManager sharedManager];
         
         CGPoint p = [gestureRecognizer locationInView:self.tableView];
@@ -251,7 +314,6 @@
         
         UILabel* deleteStatusLabel=[cell viewWithTag:105];
     
-        self.tableView.allowsMultipleSelection = YES;
         
         if (cell.accessoryType == UITableViewCellAccessoryNone && (![deleteStatusLabel.text containsString:@"Uploading"]))
         {
@@ -275,14 +337,13 @@
 
 -(void)popViewController:(id)sender
 {
-    if (self.splitViewController.isCollapsed == false)
+    if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
     {
-        [self dismissViewControllerAnimated:false completion:nil];
+        [self.navigationController popViewControllerAnimated:YES];
     }
     else
     {
-        [self.navigationController popViewControllerAnimated:YES];
-
+        [self dismissViewControllerAnimated:false completion:nil];
     }
     [self.tabBarController.tabBar setHidden:NO];
 
@@ -300,9 +361,9 @@
 {
     Database* db=[Database shareddatabase];
     APIManager* app=[APIManager sharedManager];
-    if ([self.currentViewName isEqualToString:@"Today's Transferred"])
+    if ([self.currentViewName isEqualToString:@"Transferred Today"])
     {
-        app.todaysFileTransferNamesArray= [db getListOfFileTransfersOfStatus:@"Transferred"];
+        app.todaysFileTransferNamesArray = [db getListOfFileTransfersOfStatus:@"Transferred"];
 
         return app.todaysFileTransferNamesArray.count;
 
@@ -330,7 +391,7 @@
         awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
     }
     else
-    if ([self.currentViewName isEqualToString:@"Today's Transferred"])
+    if ([self.currentViewName isEqualToString:@"Transferred Today"])
     {
         awaitingFileTransferDict= [app.todaysFileTransferNamesArray objectAtIndex:indexPath.row];
     }
@@ -362,7 +423,7 @@
     
    
     
-    if ([self.currentViewName isEqualToString:@"Today's Transferred"])
+    if ([self.currentViewName isEqualToString:@"Transferred Today"])
     {
         dateAndTimeString=[awaitingFileTransferDict valueForKey:@"TransferDate"];
         dateAndTimeArray=nil;
@@ -427,7 +488,7 @@
             deleteStatusLabel.text= @"Uploading 0%";
         }
         else
-        deleteStatusLabel.text=[NSString stringWithFormat:@"Uploading %@",[[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]];
+        deleteStatusLabel.text = [NSString stringWithFormat:@"Uploading %@",[[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]];
 
     }
     else
@@ -441,10 +502,10 @@
     
     if ([arrayOfMarked containsObject:indexPath])
     {
-        cell.accessoryType=UITableViewCellAccessoryCheckmark;
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     else
-        cell.accessoryType=UITableViewCellAccessoryNone;
+        cell.accessoryType = UITableViewCellAccessoryNone;
  
     return cell;
 }
@@ -458,6 +519,14 @@
 
     if (isMultipleFilesActivated)
     {
+//        if (arrayOfMarked.count == 0 && self.checkedIndexPath.count == 0)
+//        {
+//           cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        }
+//        else
+//        {
+//            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+//        }
         int uploadFileCount;
         UILabel* deleteStatusLabel=[cell viewWithTag:105];
         NSDictionary* awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
@@ -473,7 +542,7 @@
                 ++uploadFileCount;
             }
         }
-        if (app.awaitingFileTransferNamesArray.count-uploadFileCount==1)
+        if ((app.awaitingFileTransferNamesArray.count - uploadFileCount == 1) || (arrayOfMarked.count == app.awaitingFileTransferNamesArray.count-uploadFileCount))
         {
             UIBarButtonItem* vc=self.navigationItem.rightBarButtonItem;
             UIToolbar* view=  vc.customView;
@@ -483,24 +552,27 @@
             
             [button setTitle:@"Deselect all"];
         }
-        if (arrayOfMarked.count == app.awaitingFileTransferNamesArray.count-uploadFileCount)
-
-        {
-            UIBarButtonItem* vc=self.navigationItem.rightBarButtonItem;
-            UIToolbar* view=  vc.customView;
-            NSArray* arr= [view items];
-            UIBarButtonItem* button= [arr objectAtIndex:4];
-            //UIButton* button=  [view viewWithTag:102];
-            
-            [button setTitle:@"Deselect all"];
-        }
+//        if (arrayOfMarked.count == app.awaitingFileTransferNamesArray.count-uploadFileCount)
+//
+//        {
+//            UIBarButtonItem* vc=self.navigationItem.rightBarButtonItem;
+//            UIToolbar* view=  vc.customView;
+//            NSArray* arr= [view items];
+//            UIBarButtonItem* button= [arr objectAtIndex:4];
+//            //UIButton* button=  [view viewWithTag:102];
+//
+//            [button setTitle:@"Deselect all"];
+//        }
 
         if (cell.accessoryType == UITableViewCellAccessoryNone && (![deleteStatusLabel.text containsString:@"Uploading"]))
         {
             
             [self.checkedIndexPath addObject:fileName];
+            
             [arrayOfMarked addObject:indexPath];
+            
             selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
+            
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
             //
             if (arrayOfMarked.count == app.awaitingFileTransferNamesArray.count)
@@ -516,14 +588,20 @@
         else if (cell.accessoryType == UITableViewCellAccessoryCheckmark)
         {
             cell.accessoryType = UITableViewCellAccessoryNone;
+            
             [self.checkedIndexPath removeObject:fileName];
+            
             [arrayOfMarked removeObject:indexPath];
+            
+            
             selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
 
-            //
             UIBarButtonItem* vc=self.navigationItem.rightBarButtonItem;
+            
             UIToolbar* view=  vc.customView;
+            
             NSArray* arr= [view items];
+            
             UIBarButtonItem* button= [arr objectAtIndex:4];
             //UIButton* button=  [view viewWithTag:102];
             [button setTitle:@"Select all"];
@@ -539,13 +617,16 @@
         {
             //Remove upload files button.
             isMultipleFilesActivated = NO;
+            
+            self.tableView.allowsMultipleSelection = NO;
+            
             [self hideAndShowUploadButton:NO];
         }
     }
 else//to disaalow single row while that row is uploading
-
     if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
-    {    UILabel* deleteStatusLabel=[cell viewWithTag:105];
+    {
+        UILabel* deleteStatusLabel=[cell viewWithTag:105];
 
         if(([deleteStatusLabel.text containsString:@"Uploading"]))
         {
@@ -567,26 +648,49 @@ else//to disaalow single row while that row is uploading
         }
         else
         {
-            if (self.splitViewController.isCollapsed == false)
-            {
-                [self setAudioDetailOrEmptyViewController:indexPath.row];
-                
-//                self.tableView.allowsMultipleSelection = NO;
-            
-            }
-            else
+//            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+
+            if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
             {
                 AudioDetailsViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
                 vc.selectedRow=indexPath.row ;
                 vc.selectedView=self.currentViewName;
                 [self.navigationController presentViewController:vc animated:YES completion:nil];
+//                self.tableView.allowsMultipleSelection = NO;
+            
+            }
+            else
+            {
+                [self setAudioDetailOrEmptyViewController:indexPath.row];
+
             }
            
          }
 
+        
+    }
+    else
+    if ([self.currentViewName isEqualToString:@"Transferred Today"])
+    {
+        if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
+        {
+            AudioDetailsViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
+            vc.selectedRow=indexPath.row ;
+            vc.selectedView=self.currentViewName;
+            [self.navigationController presentViewController:vc animated:YES completion:nil];
+            //                self.tableView.allowsMultipleSelection = NO;
+            
+        }
+        else
+        {
+            [self setAudioDetailOrEmptyViewController:indexPath.row];
+            
+        }
     }
     else
     {
+        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+
         AudioDetailsViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
         vc.selectedRow=indexPath.row ;
         vc.selectedView=self.currentViewName;
@@ -595,84 +699,117 @@ else//to disaalow single row while that row is uploading
 
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
-{
-    UITableViewCell* cell=[tableView cellForRowAtIndexPath:indexPath];
-
-    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
-    {    UILabel* deleteStatusLabel=[cell viewWithTag:105];
-        
-        if(([deleteStatusLabel.text containsString:@"Uploading"]))
-        {
-            alertController = [UIAlertController alertControllerWithTitle:@"Alert?"
-                                                                  message:@"File is in use!"
-                                                           preferredStyle:UIAlertControllerStyleAlert];
-            actionDelete = [UIAlertAction actionWithTitle:@"Ok"
-                                                    style:UIAlertActionStyleDefault
-                                                  handler:^(UIAlertAction * action)
-                            {
-                                [alertController dismissViewControllerAnimated:YES completion:nil];
-                            }]; //You can use a block here to handle a press on this button
-            [alertController addAction:actionDelete];
-            
-            
-            
-            [self presentViewController:alertController animated:YES completion:nil];
-            
-        }
-        else
-            if (isMultipleFilesActivated)
-            {
-                if (cell.accessoryType == UITableViewCellAccessoryCheckmark)
-                {
-                    cell.accessoryType = UITableViewCellAccessoryNone;
-                    NSDictionary* awaitingFileTransferDict= [[APIManager sharedManager].awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
-                    NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
-                    [arrayOfMarked removeObject:indexPath];
-                    selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
-
-                    [self.checkedIndexPath removeObject:fileName];
-
-                    //
-                    UIBarButtonItem* vc=self.navigationItem.rightBarButtonItem;
-                    UIToolbar* view=  vc.customView;
-                    NSArray* arr= [view items];
-                    UIBarButtonItem* button= [arr objectAtIndex:4];
-                    //UIButton* button=  [view viewWithTag:102];
-                    [button setTitle:@"Select all"];
-                    
-                }
-                
-                if(arrayOfMarked.count > 0)
-                {
-                    //Show upload files button
-                    [self hideAndShowUploadButton:YES];
-                }
-                else
-                {
-                    //Remove upload files button.
-                    isMultipleFilesActivated = NO;
-                    [self hideAndShowUploadButton:NO];
-                }
-
-
-            }
-        
-
-                
-    }
-   
-}
+//- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+//{
+//    UITableViewCell* cell=[tableView cellForRowAtIndexPath:indexPath];
+//
+//    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
+//    {    UILabel* deleteStatusLabel=[cell viewWithTag:105];
+//
+//        if(([deleteStatusLabel.text containsString:@"Uploading"]))
+//        {
+//            alertController = [UIAlertController alertControllerWithTitle:@"Alert?"
+//                                                                  message:@"File is in use!"
+//                                                           preferredStyle:UIAlertControllerStyleAlert];
+//            actionDelete = [UIAlertAction actionWithTitle:@"Ok"
+//                                                    style:UIAlertActionStyleDefault
+//                                                  handler:^(UIAlertAction * action)
+//                            {
+//                                [alertController dismissViewControllerAnimated:YES completion:nil];
+//                            }]; //You can use a block here to handle a press on this button
+//            [alertController addAction:actionDelete];
+//
+//
+//
+//            [self presentViewController:alertController animated:YES completion:nil];
+//
+//        }
+//        else
+//            if (isMultipleFilesActivated)
+//            {
+//                if (cell.accessoryType == UITableViewCellAccessoryCheckmark)
+//                {
+//                    cell.accessoryType = UITableViewCellAccessoryNone;
+//                    NSDictionary* awaitingFileTransferDict= [[APIManager sharedManager].awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
+//                    NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
+//                    [arrayOfMarked removeObject:indexPath];
+//                    selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
+//
+//                    [self.checkedIndexPath removeObject:fileName];
+//
+//                    //
+//                    UIBarButtonItem* vc=self.navigationItem.rightBarButtonItem;
+//                    UIToolbar* view=  vc.customView;
+//                    NSArray* arr= [view items];
+//                    UIBarButtonItem* button= [arr objectAtIndex:4];
+//                    //UIButton* button=  [view viewWithTag:102];
+//                    [button setTitle:@"Select all"];
+//
+//                }
+//
+//                if(arrayOfMarked.count > 0)
+//                {
+//                    //Show upload files button
+//                    [self hideAndShowUploadButton:YES];
+//                }
+//                else
+//                {
+//                    //Remove upload files button.
+//                    isMultipleFilesActivated = NO;
+//                    self.tableView.allowsMultipleSelection = NO;
+//
+//                    [self hideAndShowUploadButton:NO];
+//                }
+//
+//
+//            }
+//
+//
+//
+//    }
+//
+//}
 
 -(void)setFirstRowSelected
 {
-    if (self.splitViewController.isCollapsed == false) // for ipad reguler width reguler height
+    if (self.splitViewController != nil) // for ipad reguler width reguler height
     {
-        NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:0 inSection:0];
         
-        [self.tableView selectRowAtIndexPath:firstRowPath animated:NO scrollPosition: UITableViewScrollPositionNone];
         
-        [self tableView:self.tableView didSelectRowAtIndexPath:firstRowPath];
+        if ([self.currentViewName isEqualToString:@"Awaiting Transfer"] && [APIManager sharedManager].awaitingFileTransferNamesArray.count >0)
+        {
+            
+            for (int i = 0; i < [APIManager sharedManager].awaitingFileTransferNamesArray.count; i++)
+            {
+                NSDictionary* awaitingFileTransferDict = [[APIManager sharedManager].awaitingFileTransferNamesArray objectAtIndex:i];
+                
+                if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]== NULL)
+                {
+                    NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:i inSection:0];
+
+                    [self.tableView selectRowAtIndexPath:firstRowPath animated:NO scrollPosition: UITableViewScrollPositionNone];
+
+                    [self tableView:self.tableView didSelectRowAtIndexPath:firstRowPath];
+
+                    break;
+                }
+                
+//                NSLog(@"iii =%d",i);
+                
+            }
+            
+
+
+        }
+        else
+        if ([self.currentViewName isEqualToString:@"Transferred Today"] && [APIManager sharedManager].todaysFileTransferNamesArray.count >0)
+        {
+            NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            
+            [self.tableView selectRowAtIndexPath:firstRowPath animated:NO scrollPosition: UITableViewScrollPositionNone];
+            
+            [self tableView:self.tableView didSelectRowAtIndexPath:firstRowPath];
+        }
     }
     
 }
@@ -885,6 +1022,8 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
                             self.navigationItem.rightBarButtonItem = nil;
                         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
                             isMultipleFilesActivated=NO;
+                        self.tableView.allowsMultipleSelection = NO; // for ipad
+
                             toolBarAdded=NO;
                             
                         [arrayOfMarked removeAllObjects];
@@ -911,6 +1050,7 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
                                           handler:^(UIAlertAction * action)
                     {
                         isMultipleFilesActivated = NO;
+                        self.tableView.allowsMultipleSelection = NO; // for ipad
 
                         NSMutableArray* aarayOfMarkedCopy=[[NSMutableArray alloc]init];
                         for (int i=0; i<arrayOfMarked.count; i++)
@@ -950,6 +1090,8 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
                             });
                         }
                         isMultipleFilesActivated=NO;
+                        self.tableView.allowsMultipleSelection = NO; // for ipad
+
                         //////////////
                         
   
@@ -968,6 +1110,7 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
                         
                         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
                         isMultipleFilesActivated=NO;
+                        self.tableView.allowsMultipleSelection = NO; // for ipad
                         toolBarAdded=NO;
 
                         [self.checkedIndexPath removeAllObjects];
@@ -988,6 +1131,7 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
         
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
         isMultipleFilesActivated=NO;
+        self.tableView.allowsMultipleSelection = NO; // for ipad
         toolBarAdded=NO;
         
         [self.checkedIndexPath removeAllObjects];
@@ -1040,6 +1184,7 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
         self.navigationItem.rightBarButtonItem = nil;
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
         isMultipleFilesActivated=NO;
+        self.tableView.allowsMultipleSelection = NO; // for ipad
         [self.checkedIndexPath removeAllObjects];
         [arrayOfMarked removeAllObjects];
         selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];

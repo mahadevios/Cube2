@@ -38,6 +38,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self setViewForViewDidLoad];
     
+    
+    
   //AVAudioSessionPortBuiltInMic;
 }
 
@@ -243,6 +245,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                object:nil];
     self.speechToTextCircleView.layer.borderColor = [UIColor darkGrayColor].CGColor;
     
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        self.speechToTextCircleView.layer.cornerRadius = 48;
+    }
     if (!IMPEDE_PLAYBACK)
     {
         [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryPlayAndRecord];

@@ -549,7 +549,7 @@
     //app=[APIManager sharedManager];
     if (sender == transferredTodayViewTapRecogniser)
     {
-        vc.currentViewName=@"Today's Transferred";
+        vc.currentViewName=@"Transferred Today";
     }
     if (sender==awaitingViewTapRecogniser)
     {
@@ -566,6 +566,15 @@
         
         UINavigationController* navVC = [[UINavigationController alloc] initWithRootViewController:vc];;
         //
+        [navVC.navigationBar setTintColor:[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1.0]];
+        
+        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                   [UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1],NSForegroundColorAttributeName,[UIFont systemFontOfSize:20.0 weight:UIFontWeightBold],NSFontAttributeName, nil];
+        
+        //            [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+        
+        [navVC.navigationBar setTitleTextAttributes:navbarTitleTextAttributes];
+        
         NSArray* splitVCArray = [[NSArray alloc] initWithObjects:navVC, nil];
 
         [splitVC setViewControllers:splitVCArray];

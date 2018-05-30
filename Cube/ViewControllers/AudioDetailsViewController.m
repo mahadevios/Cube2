@@ -118,7 +118,7 @@
         
     }
     else
-    if ([self.selectedView isEqualToString:@"Today's Transferred"])
+    if ([self.selectedView isEqualToString:@"Transferred Today"])
     {
         [transferDictationButton setTitle:@"Resend" forState:UIControlStateNormal];
         
@@ -688,7 +688,8 @@
     {
         moreButton.userInteractionEnabled=NO;
 
-    if ([self.selectedView isEqualToString:@"Today's Transferred"])
+
+    if ([self.selectedView isEqualToString:@"Transferred Today"])
     {
         alertController = [UIAlertController alertControllerWithTitle:RESEND_MESSAGE
                                                               message:@""
@@ -697,29 +698,29 @@
                                                 style:UIAlertActionStyleDefault
                                               handler:^(UIAlertAction * action)
                         {
-                            APIManager* app=[APIManager sharedManager];
+                           
+                            APIManager* app = [APIManager sharedManager];
                             
-                            NSString* date=[app getDateAndTimeString];
+                            NSString* date = [app getDateAndTimeString];
                             
-                            NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
+                            NSString* filName = [audiorecordDict valueForKey:@"RecordItemName"];
                             
                             [transferDictationButton setHidden:YES];
                             
                             [deleteDictationButton setHidden:YES];
                             
+                            [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+                            int mobileDictationIdVal = [[Database shareddatabase] getMobileDictationIdFromFileName:filName];
                             
-                                               NSLog(@"Today's Transferred before DB");
-                           [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
-                           int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
-                                               
-                           [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
-                                               
-                            NSLog(@"Today's Transferred after DB");
-
+                            [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
                             
+//                            NSLog(@"Today's Transferred after DB");
                             
-                            
-                            
+                            if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+                            {
+                                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_CLICKED object:nil];
+                                
+                            }
                             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                 
                                 if ([AppPreferences sharedAppPreferences].isReachable)
@@ -763,6 +764,8 @@
                                             style:UIAlertActionStyleDefault
                                           handler:^(UIAlertAction * action)
                     {
+                        
+                        
                         APIManager* app = [APIManager sharedManager];
                         
                         NSString* filName = [audiorecordDict valueForKey:@"RecordItemName"];
@@ -795,7 +798,11 @@
                             [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:803] removeFromSuperview];//remove edit button
                         
 
-                       
+                        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+                        {
+                            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_CLICKED object:nil];
+                            
+                        }
                         
 
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -853,7 +860,11 @@
                                    [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
                                     
                                     
-                                    
+                                    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+                                    {
+                                        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_CLICKED object:nil];
+                                        
+                                    }
                                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                         
                                         [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
@@ -909,9 +920,12 @@
                                                        [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
                                                    }
 
-
                                
-                                
+                                if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+                                {
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_CLICKED object:nil];
+                                    
+                                }
                                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                     
                                     
