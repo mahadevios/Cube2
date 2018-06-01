@@ -8,57 +8,102 @@
 
 #import "ListViewController.h"
 #import "PopUpCustomView.h"
-#import "TransferredOrDeletedAudioDetailsViewController.h"
+
 @interface ListViewController ()
 
 @end
 
 @implementation ListViewController
+
 @synthesize segment,checkedIndexPath,longPressAdded;
+
+#pragma mark: View Delegate and Associate Methods
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-//    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
-//                                          initWithTarget:self action:@selector(handleLongPress:)];
-//    lpgr.minimumPressDuration = 1.0; //seconds
-//    lpgr.delegate = self;
- //   [self.tableView addGestureRecognizer:lpgr];
     
-    // Do any additional setup after loading the view.
+    [self setUpForMultipleFileSelection];
+    //    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    //    {
+    //        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+    //
+    //    }
     
-//    if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
-//    {
-        self.currentViewName = @"List";
-        UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
-                                              initWithTarget:self action:@selector(handleLongPress:)];
-        lpgr.minimumPressDuration = 1.0; //seconds
-        lpgr.delegate = self;
-        [self.tableView addGestureRecognizer:lpgr];
-        self.checkedIndexPath = [[NSMutableArray alloc] init];
-   // }
+    self.splitViewController.delegate = self;
     
-    arrayOfMarked=[[NSMutableArray alloc]init];
+    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+
+//    self.splitViewController.
 }
+
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [segment setSelectedSegmentIndex:0];
+ 
+    [self setNavigationBar];
+    
+    [self getTransferredAndDeletedList];
+    
+    [self setAlertBadge];
+    // self.navigationItem.rightBarButtonItem = nil;
+    //  self.navigationItem.title = @"List";
+    
+    [self.tableView reloadData];
+    
+    [self.tabBarController.tabBar setHidden:NO];
+    
+    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+    
+    [self setAudioDetailOrEmptyViewController:0];
+    
+    [self setFirstRowSelected];
+}
+
+
+
+-(void)setNavigationBar
+{
+    self.currentViewName = @"List";
+
+    self.navigationItem.title = @"List";
+    
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
     
-    self.navigationItem.title=@"List";
+    self.navigationItem.leftBarButtonItem = nil;
     
-        Database* db=[Database shareddatabase];
-        APIManager* app=[APIManager sharedManager];
+    [self.checkedIndexPath removeAllObjects];
     
-    app.transferredListArray=[db getListOfTransferredOrDeletedFiles:@"Transferred"];
-    app.deletedListArray=[db getListOfTransferredOrDeletedFiles:@"Deleted"];
+    [arrayOfMarked removeAllObjects];
+    
+    isMultipleFilesActivated = NO;
+    
+    toolBarAdded = NO;
+    
+    [segment setSelectedSegmentIndex:0];
 
-    int count= [[Database shareddatabase] getCountOfTransfersOfDicatationStatus:@"RecordingPause"];
+}
+
+-(void)getTransferredAndDeletedList
+{
+    
+    Database* db = [Database shareddatabase];
+    
+    APIManager* app = [APIManager sharedManager];
+    
+    app.transferredListArray = [db getListOfTransferredOrDeletedFiles:@"Transferred"];
+    
+    app.deletedListArray = [db getListOfTransferredOrDeletedFiles:@"Deleted"];
+}
+
+-(void)setAlertBadge
+{
+    int count = [[Database shareddatabase] getCountOfTransfersOfDicatationStatus:@"RecordingPause"];
     
     [[Database shareddatabase] getlistOfimportedFilesAudioDetailsArray:5];//get count of imported non transferred files
     
-    int importedFileCount=[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count;
+    int importedFileCount = [AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count;
     
     [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%d",count+importedFileCount] forKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
     
@@ -72,50 +117,78 @@
     }
     else
         alertViewController.tabBarItem.badgeValue = [[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
-    
-    self.navigationItem.leftBarButtonItem = nil;
-   // self.navigationItem.rightBarButtonItem = nil;
-  //  self.navigationItem.title = @"List";
-    [self.checkedIndexPath removeAllObjects];
-    
-    [arrayOfMarked removeAllObjects];
-    isMultipleFilesActivated = NO;
-    toolBarAdded = NO;
-    
-    
-    [self.tableView reloadData];
-    
-    [self.tabBarController.tabBar setHidden:NO];
-
-    
 }
 
+
+
+-(void)setFirstRowSelected
+{
+    if (self.splitViewController.isCollapsed == false) // for ipad reguler width reguler height
+    {
+        NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        
+        [self.tableView selectRowAtIndexPath:firstRowPath animated:NO scrollPosition: UITableViewScrollPositionNone];
+        
+        [self tableView:self.tableView didSelectRowAtIndexPath:firstRowPath];
+    }
+   
+}
+
+#pragma mark:Split VC delegate
+
+-(BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController
+{
+    return true;
+}
+
+#pragma mark:Multiple File Selection
+
+-(void)setUpForMultipleFileSelection
+{
+    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
+                                          initWithTarget:self action:@selector(handleLongPress:)];
+    
+    lpgr.minimumPressDuration = 1.0; //seconds
+    
+    lpgr.delegate = self;
+    
+    [self.tableView addGestureRecognizer:lpgr];
+    
+    self.checkedIndexPath = [[NSMutableArray alloc] init];
+    
+    arrayOfMarked=[[NSMutableArray alloc]init];
+    
+}
 
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
 {
     if (self.segment.selectedSegmentIndex==0)//if navigation title=@"somevalue" then only handle longpress
-
-//    if (self.navigationItem.title==self.currentViewName)//if navigation title=@"somevalue" then only handle longpress
     {
-    
         isMultipleFilesActivated = YES;
+        
         APIManager* app=[APIManager sharedManager];
+        
         CGPoint p = [gestureRecognizer locationInView:self.tableView];
+        
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+        
         UITableViewCell* cell=[self.tableView cellForRowAtIndexPath:indexPath];
-//        UILabel* deleteStatusLabel=[cell viewWithTag:105];
-        
-        
+        //        UILabel* deleteStatusLabel=[cell viewWithTag:105];
         if (cell.accessoryType == UITableViewCellAccessoryNone)
         {
             NSDictionary* awaitingFileTransferDict= [app.transferredListArray objectAtIndex:indexPath.row];
+            
             NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
             
             [self.checkedIndexPath addObject:fileName];
+            
             [arrayOfMarked addObject:indexPath];
+            
             [self hideAndShowUploadButton:YES];
+            
             //[self hideAndShowLeftBarButton:YES];
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            
             longPressAdded=YES;
         }
         
@@ -136,10 +209,9 @@
     else
     {
         toolBarAdded=NO;
-      //  self.navigationItem.title=self.currentViewName;
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-//        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+
         
     }
 }
@@ -248,77 +320,6 @@
     
     
 }
--(void)deleteMutipleFiles
-{
-    alertController = [UIAlertController alertControllerWithTitle:@"Delete?"
-                                                          message:DELETE_MESSAGE
-                                                   preferredStyle:UIAlertControllerStyleAlert];
-    
-    
-    actionDelete = [UIAlertAction actionWithTitle:@"Delete"
-                                            style:UIAlertActionStyleDestructive
-                                          handler:^(UIAlertAction * action)
-                    {
-                        
-                        for (int i=0; i<arrayOfMarked.count; i++)
-                            
-                        {
-                            Database* db=[Database shareddatabase];
-                            APIManager* app=[APIManager sharedManager];
-                            NSString* dateAndTimeString=[app getDateAndTimeString];
-                            NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
-                            
-                            NSDictionary* awaitingFileTransferDict= [app.transferredListArray objectAtIndex:indexPath.row];
-                            NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
-                            self.navigationItem.title=self.currentViewName;
-                            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];;
-                            self.navigationItem.leftBarButtonItem = nil;
-//                            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-                            toolBarAdded=NO;
-                            [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
-                            [app deleteFile:fileName];
-                            [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
-                            
-                            
-                        }
-                        [arrayOfMarked removeAllObjects];
-                        [self.tableView reloadData];
-                        
-                    }]; //You can use a block here to handle a press on this button
-    [alertController addAction:actionDelete];
-    
-    
-    actionCancel = [UIAlertAction actionWithTitle:@"Cancel"
-                                            style:UIAlertActionStyleCancel
-                                          handler:^(UIAlertAction * action)
-                    {
-                        [alertController dismissViewControllerAnimated:YES completion:nil];
-                        
-                        
-                        self.navigationItem.title=self.currentViewName;
-                        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-                        self.navigationItem.leftBarButtonItem = nil;
-
-                        isMultipleFilesActivated=NO;
-                        toolBarAdded=NO;
-                        
-                        [arrayOfMarked removeAllObjects];
-                        [self.checkedIndexPath removeAllObjects];
-                        [self.tableView reloadData];
-                        
-                    }]; //You can use a block here to handle a press on this button
-    [alertController addAction:actionCancel];
-    [self presentViewController:alertController animated:YES completion:nil];
-    
-    
-}
-
--(void)popViewController:(id)sender
-{
-    [self.tabBarController.tabBar setHidden:NO];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 -(void)selectAllFiles:(UIBarButtonItem*)sender
 {
@@ -351,15 +352,15 @@
             
         }
         
-
+        
         [self.tableView reloadData];
     }
     else
     {
         sender.title=@"Select all";
-      //  self.navigationItem.title=self.currentViewName;
+        //  self.navigationItem.title=self.currentViewName;
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
-//        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+        //        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
         isMultipleFilesActivated=NO;
         [self.checkedIndexPath removeAllObjects];
         [arrayOfMarked removeAllObjects];
@@ -376,6 +377,81 @@
     
     
 }
+
+-(void)deleteMutipleFiles
+{
+    alertController = [UIAlertController alertControllerWithTitle:@"Delete?"
+                                                          message:DELETE_MESSAGE
+                                                   preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    actionDelete = [UIAlertAction actionWithTitle:@"Delete"
+                                            style:UIAlertActionStyleDestructive
+                                          handler:^(UIAlertAction * action)
+                    {
+                        
+                        for (int i=0; i<arrayOfMarked.count; i++)
+                            
+                        {
+                            Database* db=[Database shareddatabase];
+                            APIManager* app=[APIManager sharedManager];
+                            NSString* dateAndTimeString=[app getDateAndTimeString];
+                            NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
+                            
+                            NSDictionary* awaitingFileTransferDict= [app.transferredListArray objectAtIndex:indexPath.row];
+                            NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
+                            self.navigationItem.title=self.currentViewName;
+                            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];;
+                            self.navigationItem.leftBarButtonItem = nil;
+                            //                            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+                            toolBarAdded=NO;
+                            [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
+                            [app deleteFile:fileName];
+                            [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
+                            
+                            
+                        }
+                        [arrayOfMarked removeAllObjects];
+                        [self.tableView reloadData];
+                        
+                    }]; //You can use a block here to handle a press on this button
+    [alertController addAction:actionDelete];
+    
+    
+    actionCancel = [UIAlertAction actionWithTitle:@"Cancel"
+                                            style:UIAlertActionStyleCancel
+                                          handler:^(UIAlertAction * action)
+                    {
+                        [alertController dismissViewControllerAnimated:YES completion:nil];
+                        
+                        
+                        self.navigationItem.title=self.currentViewName;
+                        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];
+                        self.navigationItem.leftBarButtonItem = nil;
+                        
+                        isMultipleFilesActivated=NO;
+                        toolBarAdded=NO;
+                        
+                        [arrayOfMarked removeAllObjects];
+                        [self.checkedIndexPath removeAllObjects];
+                        [self.tableView reloadData];
+                        
+                    }]; //You can use a block here to handle a press on this button
+    [alertController addAction:actionCancel];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+    
+}
+
+#pragma mark: Navigation Bar Methods
+
+-(void)popViewController:(id)sender
+{
+    [self.tabBarController.tabBar setHidden:NO];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 -(void)showUserSettings:(id)sender
 {
@@ -401,10 +477,16 @@
     }
     
 }
+
+#pragma mark: TableView DataSource and Delegates
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    [APIManager sharedManager].deletedListArray=[[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
-    [APIManager sharedManager].transferredListArray=[[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+    [APIManager sharedManager].deletedListArray = nil;
+    [APIManager sharedManager].transferredListArray = nil;
+    [APIManager sharedManager].deletedListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
+    [APIManager sharedManager].transferredListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+   
     return 1;
    
 }
@@ -436,6 +518,7 @@
     UILabel* transferByLabel=[cell viewWithTag:103];
     UILabel* dateLabel=[cell viewWithTag:104];
     
+    
     APIManager* app=[APIManager sharedManager];
     NSDictionary* dict;
     if (segment.selectedSegmentIndex==0)
@@ -465,7 +548,7 @@
     
     //timeLabel.text=[NSString stringWithFormat:@"%@",@"Transferred 12:18:00 PM"];
 
-    transferByLabel.text=[dict valueForKey:@"Department"];
+    transferByLabel.text = [dict valueForKey:@"Department"];
     
     if (dateAndTimeArray.count>0)
     {
@@ -498,6 +581,25 @@
     else
         cell.accessoryType=UITableViewCellAccessoryNone;
     
+    if (isShownDetailsView == false)
+    {
+        if (self.splitViewController.isCollapsed == false)
+        {
+            if (detailVC == nil)
+            {
+                detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
+            }
+            
+            detailVC.listSelected = 0;
+            
+            detailVC.selectedRow = 0;
+            
+            [self.splitViewController showDetailViewController:detailVC sender:self];
+            
+        }
+        isShownDetailsView = true;
+    }
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -509,7 +611,7 @@
     if (isMultipleFilesActivated)
     {
         int uploadFileCount;
-        UILabel* deleteStatusLabel=[cell viewWithTag:105];
+//        UILabel* deleteStatusLabel=[cell viewWithTag:105];
         NSDictionary* awaitingFileTransferDict= [app.transferredListArray objectAtIndex:indexPath.row];
         NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
         
@@ -598,11 +700,33 @@
 
     else
     {
-    TransferredOrDeletedAudioDetailsViewController* vc=[self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
-    vc.listSelected=segment.selectedSegmentIndex;
-    //NSLog(@"%ld",vc.listSelected);
-    vc.selectedRow=indexPath.row;
-    [self.navigationController presentViewController:vc animated:YES completion:nil];
+        if (self.splitViewController.isCollapsed)
+        {
+            if (detailVC == nil)
+            {
+                detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
+            }
+            detailVC.listSelected = segment.selectedSegmentIndex;
+            //NSLog(@"%ld",vc.listSelected);
+            detailVC.selectedRow = indexPath.row;
+            [self.navigationController presentViewController:detailVC animated:YES completion:nil];
+        }
+        else
+        {
+            if (detailVC == nil)
+            {
+                detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
+            }
+            
+            detailVC.selectedRow = 0;
+            
+            detailVC.listSelected = segment.selectedSegmentIndex;
+            //NSLog(@"%ld",vc.listSelected);
+            detailVC.selectedRow = indexPath.row;
+            
+            [detailVC setAudioDetails];
+        }
+   
     }
     
 }
@@ -667,6 +791,7 @@
 
 - (IBAction)segmentChanged:(UISegmentedControl*)sender
 {
+    
     if (sender.selectedSegmentIndex == 1)
     {
         self.navigationItem.leftBarButtonItem = nil;
@@ -675,15 +800,106 @@
         [self.checkedIndexPath removeAllObjects];
     
         [arrayOfMarked removeAllObjects];
+        
+        
+        
     }
-    APIManager* app=[APIManager sharedManager];
-    Database* db=[Database shareddatabase];
-   self.segment.selectedSegmentIndex= sender.selectedSegmentIndex;
+   
+    self.segment.selectedSegmentIndex= sender.selectedSegmentIndex;
     isMultipleFilesActivated = NO;
     toolBarAdded = NO;
-     app.deletedListArray=[db getListOfTransferredOrDeletedFiles:@"Deleted"];
-    app.transferredListArray=[db getListOfTransferredOrDeletedFiles:@"Transferred"];
-
+    
     [self.tableView reloadData];
+    
+    [self setAudioDetailOrEmptyViewController:sender.selectedSegmentIndex];
+
 }
+
+-(void)setAudioDetailOrEmptyViewController:(int)selectedSegmentIndex
+{
+    APIManager* app=[APIManager sharedManager];
+    Database* db=[Database shareddatabase];
+    [app.deletedListArray removeAllObjects];
+    [app.transferredListArray removeAllObjects];
+    app.deletedListArray=[db getListOfTransferredOrDeletedFiles:@"Deleted"];
+    app.transferredListArray=[db getListOfTransferredOrDeletedFiles:@"Transferred"];
+    if (self.splitViewController.isCollapsed == false) // if not collapsed that is reguler width hnce ipad
+    {
+        if (selectedSegmentIndex == 0) // if transfer segment
+        {
+            if(app.transferredListArray.count==0) // if transferred count 0 then show empty VC  else show audio details
+            {
+                UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EmptyViewController"];
+                
+                NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
+                
+                if (subVC.count > 1)
+                {
+                    [subVC removeObjectAtIndex:1];
+                    
+                    [subVC addObject:vc];
+
+                }
+                else
+                {
+                     [subVC addObject:vc];
+                }
+                
+                [self.splitViewController setViewControllers:subVC];
+            }
+            else
+            {
+                [self setFirstRowSelected]; // set first row seletced by default
+                
+                detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
+                
+                detailVC.listSelected = 0;
+                
+                detailVC.selectedRow = 0;
+                
+                [self.splitViewController showDetailViewController:detailVC sender:self];
+            }
+        }
+        else // else deleted segment
+        {
+            if(app.deletedListArray.count==0) // if delete count 0 then show empty else show audio details
+            {
+                UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EmptyViewController"];
+                
+                NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
+                
+                if (subVC.count > 1)
+                {
+                    [subVC removeObjectAtIndex:1];
+                    
+                    [subVC addObject:vc];
+                    
+                }
+                else
+                {
+                    [subVC addObject:vc];
+                }
+                
+                [self.splitViewController setViewControllers:subVC];
+                
+                
+            }
+            else
+            {
+                [self setFirstRowSelected];
+                
+                detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
+                
+                detailVC.listSelected = 0;
+                
+                detailVC.selectedRow = 0;
+                
+                [self.splitViewController showDetailViewController:detailVC sender:self];
+                
+            }
+        }
+    }
+    
+}
+
 @end

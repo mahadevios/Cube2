@@ -11,7 +11,7 @@
 #import "Database.h"
 #import "APIManager.h"
 
-@interface AlertViewController : UIViewController
+@interface AlertViewController : UIViewController<UISplitViewControllerDelegate>
 {
     Database* db;
     APIManager* app;

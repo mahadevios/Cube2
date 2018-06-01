@@ -35,8 +35,38 @@
     popupView=[[UIView alloc]init];
     forTableViewObj=[[PopUpCustomView alloc]init];
 
+    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+
+//    self.splitViewController.delegate = self;
+
+//    if (self.splitViewController.isCollapsed)
+//    {
+//        UINavigationController* navi = [self.splitViewController.viewControllers objectAtIndex:0];
+//
+//        [navi popViewControllerAnimated:true];
+//    }
+//    else
+//    {
+//        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+//
+//
+//    }
+    if (self.splitViewController == nil)
+    {
+        self.backImageView.hidden = false;
+    }
+    else
+    if(self.splitViewController.isCollapsed == false)
+    {
+        self.backImageView.hidden = true;
+    }
     // Do any additional setup after loading the view.
 }
+
+//-(BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
+//{
+//    return NO;
+//}
 -(void)pausePlayerFromBackGround
 {
     [player stop];
@@ -55,36 +85,66 @@
     resendButton.layer.cornerRadius=4.0f;
     deleteDictationButton.layer.cornerRadius=4.0f;
     
+    moreButton.userInteractionEnabled=YES;
+    
+    [self setAudioDetails];
+
+//    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+//    {
+//        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+//        
+//    }
+//    else
+//    {
+//
+//        UINavigationController* vc = [self.splitViewController.viewControllers objectAtIndex:0];
+//        
+//        [vc popViewControllerAnimated:true];
+//        
+//    }
+    
+}
+
+-(void)setAudioDetails
+{
     UILabel* filenameLabel=[self.view viewWithTag:501];
     //UILabel* dictatedByLabel=[self.view viewWithTag:502];
     UILabel* departmentLabel=[self.view viewWithTag:503];
     UILabel* dictatedOnLabel=[self.view viewWithTag:504];
     UILabel* transferStatusLabel=[self.view viewWithTag:505];
     UILabel* transferDateLabel=[self.view viewWithTag:506];
-
+    
     // UILabel* transferDateLabel=[self.view viewWithTag:506];
     APIManager* app=[APIManager sharedManager];
     if (self.listSelected==0)
     {
-      audiorecordDict= [app.transferredListArray objectAtIndex:selectedRow];
+        if (app.transferredListArray.count > 0)
+        {
+            audiorecordDict= [app.transferredListArray objectAtIndex:selectedRow];
+
+        }
         transferStatusLabel.text=[NSString stringWithFormat:@"Transferred,%@",[audiorecordDict valueForKey:@"status"]];//if selected list is Transferred then we have status=Transferred ,only fetch delete status append it to transferStatusLabel
-
-
+        
+        
     }
     if (self.listSelected==1)
     {
         [resendButton setHidden:YES];
         [deleteDictationButton setHidden:YES];
-        audiorecordDict= [app.deletedListArray objectAtIndex:selectedRow];
+        if (app.transferredListArray.count > 0)
+        {
+            audiorecordDict= [app.transferredListArray objectAtIndex:selectedRow];
+            
+        }
         transferStatusLabel.text=[NSString stringWithFormat:@"Deleted,%@",[audiorecordDict valueForKey:@"status"]];//if selected list is delete then we have status=deleted ,only fetch transfer status append it to transferStatusLabel
-
+        
     }
     
     filenameLabel.text=[audiorecordDict valueForKey:@"RecordItemName"];
     dictatedOnLabel.text=[audiorecordDict valueForKey:@"RecordCreateDate"];
     departmentLabel.text=[audiorecordDict valueForKey:@"Department"];
     transferDateLabel.text=[audiorecordDict valueForKey:@"TransferDate"];
-
+    
     //transferStatusLabel.text=[audiorecordDict valueForKey:@"TransferStatus"];
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME_COPY];
@@ -98,15 +158,11 @@
     NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
     
     [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME];
-    
-    moreButton.userInteractionEnabled=YES;
-
 }
-
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [UIApplication sharedApplication].idleTimerDisabled = NO
-    ;
+    //    [UIApplication sharedApplication].idleTimerDisabled = NO;
+
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
     DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     NSLog(@"%ld",deptObj1.Id);
@@ -186,7 +242,7 @@
         
         audioRecordSlider.maximumValue=player.duration;
         [player play];
-        [UIApplication sharedApplication].idleTimerDisabled = YES;
+//        [UIApplication sharedApplication].idleTimerDisabled = YES;
 
     
     }
@@ -221,7 +277,7 @@
         {
             pauseOrImageView.image=[UIImage imageNamed:@"Pause"] ;
             [player play];
-            [UIApplication sharedApplication].idleTimerDisabled = YES;
+//            [UIApplication sharedApplication].idleTimerDisabled = YES;
 
         }
     

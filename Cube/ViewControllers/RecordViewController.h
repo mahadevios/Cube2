@@ -76,6 +76,7 @@
     BOOL stopped;
     BOOL recordingNew;
     BOOL edited;
+    BOOL isViewSetUpWhenFirstAppear;
     UIBackgroundTaskIdentifier task;
     
     

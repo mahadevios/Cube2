@@ -21,7 +21,9 @@
 //#define  FILE_UPLOAD_API                      @"MobileFileUpload"
 //#define  PIN_CANGE_API                        @"MobilePINChange"
 
-#define  BASE_URL_PATH                        @"http://www.xanadutec.net/cubeagent_webapi/api"
+//#define  BASE_URL_PATH                        @"http://www.xanadutec.net/cubeagent_webapi/api"
+#define  BASE_URL_PATH                        @"https://www.cubescribe.com/cubeagent_webapi/api"
+
 
 //#define  BASE_URL_PATH                        @"http://192.168.3.150:8081/CubeAPI/api"
 #define  CHECK_DEVICE_REGISTRATION            @"encrdecr_MobileCheckDeviceRegistration"
@@ -66,6 +68,7 @@
 #define NOTIFICATION_FILE_IMPORTED                  @"fileImportingCompleted"
 #define NOTIFICATION_UPLOAD_NEXT_FILE               @"uploadNextFile"
 #define NOTIFICATION_SEND_COMMENT_API               @"commentNotification"
+#define NOTIFICATION_FILE_UPLOAD_CLICKED            @"fileUploadClicked"
 
 //Settimg Constants
 

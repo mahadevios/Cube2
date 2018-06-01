@@ -20,6 +20,6 @@ dependencies: \
   /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/API\ Manager/SharedSession.h \
   /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/Categories/NSData+AES256.h \
   /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/Constant/Constants.h \
-  /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/ViewControllers/PopUpCustomView.h \
   /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/ViewControllers/TransferredOrDeletedAudioDetailsViewController.h \
-  /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/AudioSessionManager/AudioSessionManager.h
+  /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/AudioSessionManager/AudioSessionManager.h \
+  /Users/admin/Documents/CubeBackUp/cube-master\ 2__16-aug/Cube/ViewControllers/PopUpCustomView.h

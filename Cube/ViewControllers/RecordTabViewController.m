@@ -41,7 +41,7 @@
         self.tabBarController.selectedIndex=0;
     }
     else
-        [self.navigationController presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
+        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
 }
 - (void)didReceiveMemoryWarning
 {

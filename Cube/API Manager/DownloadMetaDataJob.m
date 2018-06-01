@@ -677,7 +677,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 //
 -(void)downloadFile:(NSArray*)dataArray
 {
-    [UIApplication sharedApplication].idleTimerDisabled = YES;
+//    [UIApplication sharedApplication].idleTimerDisabled = YES;
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 

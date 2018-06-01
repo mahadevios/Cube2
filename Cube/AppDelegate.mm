@@ -369,7 +369,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             {
                 LoginViewController* loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
                 
-                [self.window.rootViewController presentViewController:loginViewController animated:NO completion:nil];
+//                [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:loginViewController animated:NO completion:nil];
+                
+                UIViewController *topRootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+                while (topRootViewController.presentedViewController)
+                {
+                    topRootViewController = topRootViewController.presentedViewController;
+                }
+                
+                [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
             }
             
                 
@@ -395,7 +403,18 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"] && [AppPreferences sharedAppPreferences].userObj.userPin!=NULL)
                 {
                     LoginViewController* loginViewController=[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-                    [self.window.rootViewController presentViewController:loginViewController animated:NO completion:nil];
+                    
+//                    [[UIApplication sharedApplication].keyWindow makeKeyAndVisible];
+//
+//                    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:loginViewController animated:NO completion:nil];
+//
+                    UIViewController *topRootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+                    while (topRootViewController.presentedViewController)
+                    {
+                        topRootViewController = topRootViewController.presentedViewController;
+                    }
+                    
+                    [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
                 }
             
             

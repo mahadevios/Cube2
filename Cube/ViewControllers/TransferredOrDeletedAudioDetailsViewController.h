@@ -11,7 +11,7 @@
 #import "AudioSessionManager.h"
 #import "PopUpCustomView.h"
 
-@interface TransferredOrDeletedAudioDetailsViewController : UIViewController<AVAudioPlayerDelegate>
+@interface TransferredOrDeletedAudioDetailsViewController : UIViewController<AVAudioPlayerDelegate,UISplitViewControllerDelegate>
 
 {
     NSDictionary* result;
@@ -38,5 +38,6 @@
 - (IBAction)resendButtonClckied:(id)sender;
 - (IBAction)moreButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
-
+-(void)setAudioDetails;
+@property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 @end

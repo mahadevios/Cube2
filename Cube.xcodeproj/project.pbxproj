@@ -49,6 +49,7 @@
 		844C4A731D4B393800CF3DB4 /* UserSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844C4A721D4B393800CF3DB4 /* UserSettingsViewController.m */; };
 		844C4A791D4B736700CF3DB4 /* SwitchCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 844C4A781D4B736700CF3DB4 /* SwitchCreation.m */; };
 		845A96781DDDEF9A007F460C /* NSData+AES256.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A96771DDDEF9A007F460C /* NSData+AES256.m */; };
+		846B5A5220B43EAB0012F6D9 /* EmptyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846B5A5120B43EAB0012F6D9 /* EmptyViewController.m */; };
 		846DE6861D7288420004C886 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 846DE6841D7288420004C886 /* Database.m */; };
 		846DE68A1D728B210004C886 /* AudioSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 846DE6891D728B210004C886 /* AudioSessionManager.m */; };
 		846DE68D1D728CDA0004C886 /* InCompleteRecordViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 846DE68C1D728CDA0004C886 /* InCompleteRecordViewController.mm */; };
@@ -229,6 +230,8 @@
 		844C4A781D4B736700CF3DB4 /* SwitchCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchCreation.m; sourceTree = "<group>"; };
 		845A96761DDDEF9A007F460C /* NSData+AES256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AES256.h"; sourceTree = "<group>"; };
 		845A96771DDDEF9A007F460C /* NSData+AES256.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AES256.m"; sourceTree = "<group>"; };
+		846B5A5020B43EAB0012F6D9 /* EmptyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmptyViewController.h; sourceTree = "<group>"; };
+		846B5A5120B43EAB0012F6D9 /* EmptyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmptyViewController.m; sourceTree = "<group>"; };
 		846D68741D5713F80089CA15 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		846DE6831D7288420004C886 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
 		846DE6841D7288420004C886 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
@@ -738,6 +741,8 @@
 				848B31031FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m */,
 				84F564181FCD4970006FC7AD /* SelectFileViewController.h */,
 				84F564191FCD4970006FC7AD /* SelectFileViewController.m */,
+				846B5A5020B43EAB0012F6D9 /* EmptyViewController.h */,
+				846B5A5120B43EAB0012F6D9 /* EmptyViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1006,6 +1011,7 @@
 				843B341C20452BD20080F355 /* minishared.c in Sources */,
 				84D0B52C1D81B4D70084E016 /* SBJson4StreamWriter.m in Sources */,
 				84FCCFAB1D48CEC400E3D7AE /* ListViewController.m in Sources */,
+				846B5A5220B43EAB0012F6D9 /* EmptyViewController.m in Sources */,
 				847B83FF202B0F5100D69755 /* EditDocxViewController.m in Sources */,
 				843B33E220452B630080F355 /* DDXMLNode.m in Sources */,
 				8480AAFA1D787DD500473651 /* Keychain.m in Sources */,
@@ -1155,7 +1161,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = CubeDictateAppGroup;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1183,7 +1189,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = CubeDictateAppGroupDistribution;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1305,7 +1311,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Cube/PrefixHeader.pch";
 				INFOPLIST_FILE = Cube/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				New_Setting = "";
@@ -1315,7 +1321,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "444d0195-ef0a-403b-8bdc-003202357590";
 				PROVISIONING_PROFILE_SPECIFIER = CubeDictate;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1335,7 +1341,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Cube/PrefixHeader.pch";
 				INFOPLIST_FILE = Cube/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				New_Setting = "";
@@ -1344,7 +1350,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1053c5ee-d822-4b57-a364-b7526972681b";
 				PROVISIONING_PROFILE_SPECIFIER = CubeDistribution;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

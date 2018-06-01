@@ -10,6 +10,7 @@
 #import "MBProgressHUD.h"
 #import "LoginViewController.h"
 #import "Keychain.h"
+#import "MainTabBarViewController.h"
 
 @interface ChangePasswordViewController ()
 
@@ -102,57 +103,81 @@
     }
     NSUInteger newLength = [textField.text length] + [string length] - range.length;
     
-    if (newLength==1)
-    {
+//    if (newLength==1)
+//    {
         [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.0];
-    }
+//    }
     return newLength <= 1;
 }
 
--(void)resignResponder:(id)sender
+-(void)resignResponder:(UITextField*)textfield
 {
-    if (sender ==pinCode1TextField ||sender ==pinCode2TextField ||sender ==pinCode3TextField ||sender ==pinCode4TextField )
+    if (textfield ==pinCode1TextField ||textfield ==pinCode2TextField ||textfield ==pinCode3TextField ||textfield ==pinCode4TextField )
     {
-    
-    if (sender==pinCode1TextField)
-    {
-        [pinCode2TextField becomeFirstResponder];
-        
-    }
-    if (sender==pinCode2TextField)
-    {
-        [pinCode3TextField becomeFirstResponder];
-        
-    }
-    if (sender==pinCode3TextField)
-    {
-        [pinCode4TextField becomeFirstResponder];
-        
-    }
-    }
-    
-    if (sender ==pinCode5TextField ||sender ==pinCode6TextField ||sender ==pinCode7TextField ||sender ==pinCode8TextField )
-    {
-        
-        if (sender==pinCode5TextField)
+        if (textfield==pinCode1TextField && textfield.text.length > 0)
         {
-            [pinCode6TextField becomeFirstResponder];
+            [pinCode2TextField becomeFirstResponder];
+        }
+        
+        if (textfield==pinCode2TextField && textfield.text.length > 0)
+        {
+            [pinCode3TextField becomeFirstResponder];
             
         }
-        if (sender==pinCode6TextField)
+        else if (textfield==pinCode2TextField && textfield.text.length == 0)
+        {
+            [pinCode1TextField becomeFirstResponder];
+        }
+        
+        if (textfield==pinCode3TextField && textfield.text.length > 0)
+        {
+            [pinCode4TextField becomeFirstResponder];
+            
+        }
+        else if (textfield==pinCode3TextField && textfield.text.length == 0)
+        {
+            [pinCode2TextField becomeFirstResponder];
+        }
+        
+        if (textfield==pinCode4TextField && textfield.text.length == 0)
+        {
+            [pinCode3TextField becomeFirstResponder];
+        }
+    }
+    else if (textfield ==pinCode5TextField ||textfield ==pinCode6TextField ||textfield ==pinCode7TextField ||textfield ==pinCode8TextField )
+    {
+        if (textfield==pinCode5TextField && textfield.text.length > 0)
+        {
+            [pinCode6TextField becomeFirstResponder];
+        }
+        
+        if (textfield==pinCode6TextField && textfield.text.length > 0)
         {
             [pinCode7TextField becomeFirstResponder];
             
         }
-        if (sender==pinCode7TextField)
+        else if (textfield==pinCode6TextField && textfield.text.length == 0)
+        {
+            [pinCode5TextField becomeFirstResponder];
+        }
+        
+        if (textfield==pinCode7TextField && textfield.text.length > 0)
         {
             [pinCode8TextField becomeFirstResponder];
             
         }
+        else if (textfield==pinCode7TextField && textfield.text.length == 0)
+        {
+            [pinCode6TextField becomeFirstResponder];
+        }
+        
+        if (textfield==pinCode8TextField && textfield.text.length == 0)
+        {
+            [pinCode7TextField becomeFirstResponder];
+        }
     }
-
+    
 }
-
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if (textField==pinCode8TextField)
@@ -210,8 +235,8 @@
     else
     if ([oldPin isEqualToString:newPin])
     {
-        title=@"Old and new pin code are same";
-        message=@"Please enter new pin code ";
+        title=@"Old and New PIN Code are same";
+        message=@"Please Enter New PIN Code!";
         alertController = [UIAlertController alertControllerWithTitle:title
                                                                                  message:message
                                                                           preferredStyle:UIAlertControllerStyleAlert];
@@ -229,10 +254,52 @@
         [self presentViewController:alertController animated:YES completion:nil];
     }
     else
+        if(![[AppPreferences sharedAppPreferences].userObj.userPin isEqualToString:oldPin])
+        {
+            alertController = [UIAlertController alertControllerWithTitle:@"Old PIN is Incorrect"
+                                                                  message:@""
+                                                           preferredStyle:UIAlertControllerStyleAlert];
+            actionDelete = [UIAlertAction actionWithTitle:@"Ok"
+                                                    style:UIAlertActionStyleDefault
+                                                  handler:^(UIAlertAction * action)
+                            {
+                                pinCode1TextField.text=@"";
+                                pinCode2TextField.text=@"";
+                                pinCode3TextField.text=@"";
+                                pinCode4TextField.text=@"";
+                                pinCode5TextField.text=@"";
+                                pinCode6TextField.text=@"";
+                                pinCode7TextField.text=@"";
+                                pinCode8TextField.text=@"";
+                                [pinCode1TextField becomeFirstResponder];
+                                [alertController dismissViewControllerAnimated:YES completion:nil];
+                                
+                            }]; //You can use a block here to handle a press on this button
+            [alertController addAction:actionDelete];
+            
+            
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+    else
     {
-        NSString*     macId=[Keychain getStringForKey:@"udid"];
-        [AppPreferences sharedAppPreferences].userObj = nil;
-        [[APIManager sharedManager] changePinOldPin:oldPin NewPin:newPin macID:macId];
+       
+        if ([AppPreferences sharedAppPreferences].isReachable)
+        {
+            hud.minSize = CGSizeMake(150.f, 100.f);
+            hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeIndeterminate;
+            hud.label.text = @"Updating PIN";
+            hud.detailsLabel.text = @"Please wait..";
+            
+            NSString*     macId=[Keychain getStringForKey:@"udid"];
+            [AppPreferences sharedAppPreferences].userObj = nil;
+            [[APIManager sharedManager] changePinOldPin:oldPin NewPin:newPin macID:macId];
+        }
+        else
+        {
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
     
     }
 }
@@ -262,7 +329,7 @@
     NSString* oldPin=  [responseDict valueForKey:@"oldpin"];
 
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    [hud hideAnimated:YES];
+    [hud removeFromSuperview];
     if ([responseCodeString intValue]==200 && [pinChangeSuccess intValue]==1 && [oldPin intValue]==1)
     {
         //gotResponse=true;
@@ -281,6 +348,10 @@
                                                 style:UIAlertActionStyleDefault
                                               handler:^(UIAlertAction * action)
                         {
+                            MainTabBarViewController * vc = [[UIApplication sharedApplication].keyWindow rootViewController];
+                            
+                            vc.selectedIndex = 0;
+                            
                             LoginViewController* regiController=(LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
                             [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:NO completion:nil];
                             
@@ -304,7 +375,7 @@
         if ([responseCodeString intValue]==401 && [oldPin intValue]==0)
         {
             // gotResponse=true;
-            alertController = [UIAlertController alertControllerWithTitle:@"Incorrect Old pin entered"
+            alertController = [UIAlertController alertControllerWithTitle:@"Old PIN is Incorrect"
                                                                   message:@""
                                                            preferredStyle:UIAlertControllerStyleAlert];
             actionDelete = [UIAlertAction actionWithTitle:@"Ok"
@@ -335,8 +406,8 @@
             if ([responseCodeString intValue]==401 && [pinChangeSuccess intValue]==0 && [oldPin intValue]==1)
             {
                 // gotResponse=true;
-                alertController = [UIAlertController alertControllerWithTitle:@"Unable to change pin"
-                                                                      message:@"Please try again"
+                alertController = [UIAlertController alertControllerWithTitle:@"PIN change failed"
+                                                                      message:@"Please try again!"
                                                                preferredStyle:UIAlertControllerStyleAlert];
                 actionDelete = [UIAlertAction actionWithTitle:@"OK"
                                                         style:UIAlertActionStyleDefault
