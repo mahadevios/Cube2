@@ -60,7 +60,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [AppPreferences sharedAppPreferences].isRecordView=NO;
+    [AppPreferences sharedAppPreferences].isRecordView = NO;
     
     if (![APIManager sharedManager].userSettingsOpened)
     {
@@ -241,10 +241,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
-//    if( [APIManager sharedManager].userSettingsClosed)
-//    {
-//        [APIManager sharedManager].userSettingsOpened=NO;
-//    }
+    if( [APIManager sharedManager].userSettingsClosed)
+    {
+        [APIManager sharedManager].userSettingsOpened=NO;
+    }
 //
 //    if (![APIManager sharedManager].userSettingsOpened)
 //    {

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonDelegate.h"
+#import "EmptyViewController.h"
 
-@interface SelectFileViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIDocumentInteractionControllerDelegate>
+@interface SelectFileViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIDocumentInteractionControllerDelegate, UISplitViewControllerDelegate>
 {
     NSTimer* newRequestTimer;
 
@@ -19,6 +20,6 @@
 @property(nonatomic, strong)NSMutableArray* VRSDocFilesArray;
 - (IBAction)backButtonPressed:(id)sender;
 @property(nonatomic, strong)UIAlertController* alertController;
-
+@property(nonatomic, strong)EmptyViewController* detailVC;
 
 @end

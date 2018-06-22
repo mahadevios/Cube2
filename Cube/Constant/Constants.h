@@ -37,6 +37,8 @@
 #define  FILE_DOWNLOAD_API                    @"encedecr_MobileDownloadDocFile"
 #define  SEND_DICTATION_IDS_API               @"encrdecr_MobileRequestForCompleteFiles"
 #define  SEND_COMMENT_API                     @"encdecr_MobileDocFileComment"
+#define  DOCX_FILE_UPLOAD_API                  @"encedecr_MobileUploadDocFile"
+
 
 #define  SECRET_KEY                           @"cubemob"
 #define  POST                           @"POST"

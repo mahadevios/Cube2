@@ -23,7 +23,8 @@
     NSMutableData   *responseData;
     
     NSDictionary      *requestParameter;
-    
+    NSArray           *headerParameter;
+
     float				bytesReceived;
 	long long			expectedBytes;
     float               percentComplete;
@@ -43,7 +44,7 @@
 
 @property (nonatomic,strong)  NSString              *downLoadEntityJobName;
 @property (nonatomic,strong)  NSString              *downLoadResourcePath;
-@property (nonatomic,strong)  NSString        *downloadMethodType;
+@property (nonatomic,strong)  NSString              *downloadMethodType;
 
 @property (nonatomic,strong)  NSDictionary          *requestParameter;
 @property (nonatomic,strong)  NSMutableArray          *dataArray;
@@ -60,6 +61,9 @@
 -(id) initWithdownLoadEntityJobName:(NSString *) jobName withRequestParameter:(id) localRequestParameter withResourcePath:(NSString *) resourcePath withHttpMethd:(NSString *) httpMethodParameter downloadMethodType:(NSString*)downloadMethodType;
 
 -(void)downloadFileUsingNSURLSession:(NSString*)str;
+
+-(void)uploadDocxFileAfterGettingdatabaseValues:(NSString*)fileName;
+
 -(void) startMetaDataDownLoad;
 
 

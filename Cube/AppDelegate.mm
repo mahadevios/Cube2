@@ -377,7 +377,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     topRootViewController = topRootViewController.presentedViewController;
                 }
                 
-                [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
+                if (![topRootViewController isKindOfClass: [LoginViewController class]])
+                {
+                    [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
+
+                }
             }
             
                 
@@ -414,7 +418,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                         topRootViewController = topRootViewController.presentedViewController;
                     }
                     
-                    [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
+                    if (![topRootViewController isKindOfClass: [LoginViewController class]])
+                    {
+                        [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
+
+                    }
                 }
             
             

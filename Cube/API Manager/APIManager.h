@@ -84,4 +84,14 @@
 
 -(BOOL)deleteDocxFile:(NSString*)fileName;
 
+- (NSString *)generateBoundaryString;
+
+- (NSString *)mimeTypeForPath:(NSString *)path;
+
+- (NSData *)createBodyWithBoundary:(NSString *)boundary
+                        parameters:(NSDictionary *)parameters
+                             paths:(NSArray *)paths
+                         fieldName:(NSString *)fieldName;
+
+-(void)uploadDocxFileToServer:(NSString*)docxFileName;
 @end

@@ -13,6 +13,7 @@
 #import "DocFileDetails.h"
 #import "AppPreferences.h"
 
+
 @interface SelectFileViewController ()
 
 @end
@@ -36,12 +37,72 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
     [self.tabBarController.tabBar setHidden:YES];
+    
+    
+    self.splitViewController.delegate = self;
+    
+    [self beginAppearanceTransition:true animated:true];
+    
+    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+    
     // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    if (self.splitViewController.isCollapsed == false) // if not collapsed that is reguler width hnce ipad
+    {
+        [self showDetailVCForDocxFile];
+        
+    }
+}
+-(void)showDetailVCForDocxFile
+{
+    self.detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"EmptyViewController"];
+    
+    self.detailVC.usedByVCName = @"VRSVC";
+    
+    self.detailVC.dataToShowCount = VRSDocFilesArray.count;
+    
+    if (VRSDocFilesArray.count > 0)
+    {
+        DocFileDetails* docFileDetails = [VRSDocFilesArray objectAtIndex:0];
+        
+        NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@",DOC_VRS_FILES_FOLDER_NAME,docFileDetails.docFileName]];
+        
+        NSString* newDestPath = [destpath stringByAppendingFormat:@".txt"];
+        
+        self.detailVC.docxFileToShowPath = newDestPath;
+    }
+   
+    
+    [self.splitViewController showDetailViewController:self.detailVC sender:self];
+
+    //                detailVC.listSelected = 0;
+   
+    
+}
 -(void)popViewController:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self dismissViewControllerAnimated:false completion:nil];
+    }
+    [self.tabBarController.tabBar setHidden:NO];
     
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -114,13 +175,36 @@
     
     NSString* newDestPath = [destpath stringByAppendingFormat:@".txt"];
     
+    if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
+    {
+        UIDocumentInteractionController* interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:newDestPath]];
+        
+        interactionController.delegate = self;
+        
+        
+        [interactionController presentPreviewAnimated:true];
+    }
+    else
+    {
+//        NSString* path;
+//
+//        if (indexPath.row == 0)
+//        {
+//            path = [[NSBundle mainBundle]
+//                              pathForResource:@"sample" ofType:@"docx"];
+//        }
+//        else
+//        {
+//            path = [[NSBundle mainBundle]
+//                    pathForResource:@"Docx2" ofType:@"docx"];
+//        }
+//
+//
+//        [self.detailVC showDocxFile:path];
+        
+        [self.detailVC showDocxFile:newDestPath];
+    }
     
-    UIDocumentInteractionController* interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:newDestPath]];
-    
-    interactionController.delegate = self;
-    
-    
-    [interactionController presentPreviewAnimated:true];
     
     //[interactionController presentOpenInMenuFromRect:self.view.frame inView:self.view animated:true];
     //[self dismissViewControllerAnimated:true completion:nil];

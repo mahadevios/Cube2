@@ -75,38 +75,45 @@
       "scale" : "2x"
     },
     {
-      "idiom" : "ipad",
       "size" : "29x29",
+      "idiom" : "ipad",
+      "filename" : "29x29@3x-1.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "ipad",
       "size" : "29x29",
+      "idiom" : "ipad",
+      "filename" : "58x58@3x-1.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "ipad",
       "size" : "40x40",
+      "idiom" : "ipad",
+      "filename" : "40x40@3x-1.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "ipad",
       "size" : "40x40",
+      "idiom" : "ipad",
+      "filename" : "80x80@3x.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "ipad",
       "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "76x76.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "ipad",
       "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "152x152@2x.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "ipad",
       "size" : "83.5x83.5",
+      "idiom" : "ipad",
+      "filename" : "152x152@3x copy 2.png",
       "scale" : "2x"
     },
     {
@@ -114,15 +121,6 @@
       "idiom" : "ios-marketing",
       "filename" : "1024x1024@3x.png",
       "scale" : "1x"
-    },
-    {
-      "role" : "notificationCenter",
-      "size" : "24x24",
-      "idiom" : "watch",
-      "filename" : "76x76.png",
-      "subtype" : "38mm",
-      "unassigned" : true,
-      "scale" : "2x"
     }
   ],
   "info" : {

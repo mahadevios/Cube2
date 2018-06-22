@@ -12,7 +12,7 @@
 #import "AlertViewController.h"
 #import "NSData+AES256.h"
 #import "SharedSession.h"
-
+#import "SelectFileViewController.h"
 
 //#import <iTunesLibrary/ITLibrary.h>
 
@@ -346,7 +346,12 @@
                                                            
                                     
 
-                                                           [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:alertController animated:YES completion:nil];
+                                                       dispatch_async(dispatch_get_main_queue(), ^(void) {
+                                                           
+                                                        [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:alertController animated:YES completion:nil];
+                                                           
+                                                       });
+                                                   
                                                        }
                                                    //return YES;
                                                }
@@ -624,7 +629,34 @@
 // show vrs doc file view after tapped
 -(void)showVRSDocFilesView:(UITapGestureRecognizer*)sender
 {
-    [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectFileViewController"] animated:YES];
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        SelectFileViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectFileViewController"];
+
+        UISplitViewController* splitVC = [UISplitViewController new];
+        
+        UINavigationController* navVC = [[UINavigationController alloc] initWithRootViewController:vc];;
+        //
+        [navVC.navigationBar setTintColor:[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1.0]];
+        
+        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                   [UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1],NSForegroundColorAttributeName,[UIFont systemFontOfSize:20.0 weight:UIFontWeightBold],NSFontAttributeName, nil];
+        
+        //            [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+        
+        [navVC.navigationBar setTitleTextAttributes:navbarTitleTextAttributes];
+        
+        NSArray* splitVCArray = [[NSArray alloc] initWithObjects:navVC, nil];
+        
+        [splitVC setViewControllers:splitVCArray];
+        
+        [self presentViewController:splitVC animated:NO completion:nil];
+    }
+    else
+    {
+         [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectFileViewController"] animated:YES];
+    }
+   
 
 }
 - (void)didReceiveMemoryWarning
