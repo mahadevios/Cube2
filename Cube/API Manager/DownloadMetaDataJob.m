@@ -812,6 +812,7 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
                                [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
                                NSLog(@"%@",result);
                                
+                               
                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                    
                                    if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
@@ -823,8 +824,6 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
                                        [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
                                        
                                        [[APIManager sharedManager] uploadDocxFileToServer:nextFileToBeUpload];
-                                       
-                                       
                                        
                                        NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);
                                        

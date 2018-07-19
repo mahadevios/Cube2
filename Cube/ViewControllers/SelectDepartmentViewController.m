@@ -78,7 +78,7 @@
    // [self needsUpdate];
     
     
-     NSURLSession*  session = [SharedSession getSharedSession:[APIManager sharedManager]];
+//     NSURLSession*  session = [SharedSession getSharedSession:[APIManager sharedManager]];
     
 //    [self.view endEditing:true];
     

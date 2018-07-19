@@ -24,17 +24,18 @@
     
     
     [self setUpForMultipleFileSelection];
-    //    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-    //    {
-    //        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
-    //
-    //    }
     
-    self.splitViewController.delegate = self;
-    
-    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+//    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+//    {
+    [self beginAppearanceTransition:true animated:true];
 
-//    self.splitViewController.
+        self.splitViewController.delegate = self;
+    
+        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+//    }
+   
+
+
 }
 
 
@@ -47,18 +48,20 @@
     [self getTransferredAndDeletedList];
     
     [self setAlertBadge];
-    // self.navigationItem.rightBarButtonItem = nil;
-    //  self.navigationItem.title = @"List";
+   
     
     [self.tableView reloadData];
     
     [self.tabBarController.tabBar setHidden:NO];
     
-    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
     
-    [self setAudioDetailOrEmptyViewController:0];
+        [self setAudioDetailOrEmptyViewController:0];
     
-    [self setFirstRowSelected];
+        [self setFirstRowSelected];
+    }
 }
 
 
@@ -81,7 +84,7 @@
     
     toolBarAdded = NO;
     
-    [segment setSelectedSegmentIndex:0];
+//    [segment setSelectedSegmentIndex:0];
 
 }
 
@@ -380,7 +383,7 @@
 
 -(void)deleteMutipleFiles
 {
-    alertController = [UIAlertController alertControllerWithTitle:@"Delete?"
+    alertController = [UIAlertController alertControllerWithTitle:@"Delete"
                                                           message:DELETE_MESSAGE
                                                    preferredStyle:UIAlertControllerStyleAlert];
     
@@ -702,10 +705,10 @@
     {
         if (self.splitViewController.isCollapsed)
         {
-            if (detailVC == nil)
-            {
+//            if (detailVC == nil)
+//            {
                 detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
-            }
+//            }
             detailVC.listSelected = segment.selectedSegmentIndex;
             //NSLog(@"%ld",vc.listSelected);
             detailVC.selectedRow = indexPath.row;

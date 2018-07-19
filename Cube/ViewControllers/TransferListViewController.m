@@ -404,6 +404,7 @@
     departmentNameLabel.text=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
     NSString* dateAndTimeString=[awaitingFileTransferDict valueForKey:@"RecordCreatedDate"];
     NSString* transferStatusString=[awaitingFileTransferDict valueForKey:@"TransferStatus"];
+    NSString* deleteStatusString = [awaitingFileTransferDict valueForKey:@"DeleteStatus"];
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     
     UILabel* timeLabel=[cell viewWithTag:102];
@@ -456,22 +457,30 @@
         
 
     }
-    if ([[awaitingFileTransferDict valueForKey:@"DeleteStatus"] isEqualToString:@"Delete"])
-    {
-        deleteStatusLabel.text=@"Deleted";
-    }
-    else
-        deleteStatusLabel.text=@"";
     
     if ([transferStatusString  isEqualToString: @"TransferFailed"])
     {
-//        [deleteStatusLabel setHidden:false];
+        //        [deleteStatusLabel setHidden:false];
         deleteStatusLabel.text = @"Transfer Failed";
     }
     else
+        {
+            deleteStatusLabel.text=@"";
+        }
+    
+    if ([deleteStatusString isEqualToString:@"Delete"])
     {
-        deleteStatusLabel.text=@"";
+        deleteStatusLabel.hidden = NO;
+        deleteStatusLabel.text=@"Deleted";
     }
+    else
+        if (![transferStatusString isEqualToString:@"TransferFailed"])
+        {
+            deleteStatusLabel.text=@"";
+
+        }
+    
+ 
     
     if ([[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"] && ([[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"NotTransferred"] || [[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"Resend"] || [[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"ResendFailed"]))
     {
@@ -630,8 +639,8 @@ else//to disaalow single row while that row is uploading
 
         if(([deleteStatusLabel.text containsString:@"Uploading"]))
         {
-            alertController = [UIAlertController alertControllerWithTitle:@"Alert?"
-                                                                  message:@"File is in use!"
+            alertController = [UIAlertController alertControllerWithTitle:@"Alert"
+                                                                  message:@"File is in use"
                                                            preferredStyle:UIAlertControllerStyleAlert];
             actionDelete = [UIAlertAction actionWithTitle:@"Ok"
                                                     style:UIAlertActionStyleDefault
@@ -974,8 +983,17 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
 
 -(void)deleteMutipleFiles
 {
-    alertController = [UIAlertController alertControllerWithTitle:@"Delete?"
-                                                          message:DELETE_MESSAGE
+    NSString* deleteMessage;
+    if (arrayOfMarked.count > 1)
+    {
+        deleteMessage = DELETE_MESSAGE_MULTIPLES;
+    }
+    else
+    {
+        deleteMessage = DELETE_MESSAGE;
+    }
+    alertController = [UIAlertController alertControllerWithTitle:@"Delete"
+                                                          message:deleteMessage
                                                    preferredStyle:UIAlertControllerStyleAlert];
     
     
@@ -1039,10 +1057,19 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
 
 -(void)uploadMultipleFilesToserver
 {
+    NSString* transferMessage;
+    if (arrayOfMarked.count > 1)
+    {
+        transferMessage = TRANSFER_MESSAGE_MULTIPLES;
+    }
+    else
+    {
+        transferMessage = TRANSFER_MESSAGE;
+    }
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
 
-    alertController = [UIAlertController alertControllerWithTitle:TRANSFER_MESSAGE_MULTIPLES
+    alertController = [UIAlertController alertControllerWithTitle:transferMessage
                                                           message:@""
                                                    preferredStyle:UIAlertControllerStyleAlert];
     actionDelete = [UIAlertAction actionWithTitle:@"Yes"
@@ -1164,6 +1191,8 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
             NSDictionary* awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:i];
             NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
 
+            NSLog(@"filename = %@, dic status = %@",fileName, [awaitingFileTransferDict valueForKey:@"DictationStatus"]);
+            
            if (![[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"])
             {
 

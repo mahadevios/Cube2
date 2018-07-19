@@ -1,18 +1,19 @@
 {
   "images" : [
     {
-      "orientation" : "portrait",
-      "idiom" : "iphone",
       "extent" : "full-screen",
-      "minimum-system-version" : "11.0",
+      "idiom" : "iphone",
       "subtype" : "2436h",
+      "filename" : "SplashScreen_iPhone6Plus@3x-1.png",
+      "minimum-system-version" : "11.0",
+      "orientation" : "portrait",
       "scale" : "3x"
     },
     {
       "extent" : "full-screen",
       "idiom" : "iphone",
       "subtype" : "736h",
-      "filename" : "SplashScreen_iPhone6Plus@3x.png",
+      "filename" : "SplashScreen_iPhone6Plus@3x-2.png",
       "minimum-system-version" : "8.0",
       "orientation" : "portrait",
       "scale" : "3x"
@@ -28,7 +29,25 @@
     },
     {
       "orientation" : "portrait",
+      "idiom" : "iphone",
+      "filename" : "SplashScreen_iPhone@2x-1.png",
+      "extent" : "full-screen",
+      "minimum-system-version" : "7.0",
+      "scale" : "2x"
+    },
+    {
+      "extent" : "full-screen",
+      "idiom" : "iphone",
+      "subtype" : "retina4",
+      "filename" : "SplashScreen_iPhone5@2x.png",
+      "minimum-system-version" : "7.0",
+      "orientation" : "portrait",
+      "scale" : "2x"
+    },
+    {
+      "orientation" : "portrait",
       "idiom" : "ipad",
+      "filename" : "SplashScreen_iPhone6@2x-1.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "1x"
@@ -36,27 +55,9 @@
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
+      "filename" : "SplashScreen_iPhone6Plus@3x copy.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
-      "scale" : "2x"
-    },
-    {
-      "extent" : "full-screen",
-      "idiom" : "iphone",
-      "filename" : "SplashScreen_iPhone5@2x.png",
-      "minimum-system-version" : "7.0",
-      "orientation" : "portrait",
-      "unassigned" : true,
-      "scale" : "2x"
-    },
-    {
-      "extent" : "full-screen",
-      "idiom" : "iphone",
-      "subtype" : "retina4",
-      "filename" : "SplashScreen_iPhone6Plus@3x-1.png",
-      "minimum-system-version" : "7.0",
-      "orientation" : "portrait",
-      "unassigned" : true,
       "scale" : "2x"
     },
     {
@@ -64,7 +65,6 @@
       "idiom" : "iphone",
       "filename" : "SplashScreen_iPhone.png",
       "extent" : "full-screen",
-      "unassigned" : true,
       "scale" : "1x"
     },
     {
@@ -72,16 +72,6 @@
       "idiom" : "iphone",
       "filename" : "SplashScreen_iPhone@2x.png",
       "extent" : "full-screen",
-      "unassigned" : true,
-      "scale" : "2x"
-    },
-    {
-      "extent" : "full-screen",
-      "idiom" : "iphone",
-      "subtype" : "retina4",
-      "filename" : "SplashScreen_iPhone6Plus@2x.png",
-      "orientation" : "portrait",
-      "unassigned" : true,
       "scale" : "2x"
     }
   ],

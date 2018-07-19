@@ -10,7 +10,7 @@
 #import "TableViewButton.h"
 #import "UIColor+ApplicationColors.h"
 
-@interface DocFilesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate, UIDocumentInteractionControllerDelegate, UIGestureRecognizerDelegate,UITextViewDelegate>
+@interface DocFilesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate, UIDocumentInteractionControllerDelegate, UIGestureRecognizerDelegate,UITextViewDelegate, UISplitViewControllerDelegate>
 {
     UIAlertController *alertController;
     UIAlertAction *actionDelete;

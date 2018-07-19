@@ -57,6 +57,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     //NSLog(@"%@",fileSizeInBytes);
     
+//    [[Database shareddatabase] updateAudioFileStatus:@"RecordingComplete" fileName:@"SU40720180702-02"];
     [[AppPreferences sharedAppPreferences] startReachabilityNotifier];
     [APIManager sharedManager].userSettingsOpened=NO;
     [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray = [[NSMutableArray alloc] init];

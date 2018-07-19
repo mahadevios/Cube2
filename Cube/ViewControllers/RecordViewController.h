@@ -93,6 +93,11 @@
     BOOL recordingRestrictionLimitCrossed;
     
     long totalSecondsOfAudio;
+    
+    float64_t updatedInsertionTime;
+    
+    float playerDurationWithMilliSeconds;
+
 }
 @property (nonatomic,strong)     AVAudioPlayer       *player;
 @property (nonatomic,strong)     AVAudioRecorder     *recorder;

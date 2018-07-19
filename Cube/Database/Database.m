@@ -674,7 +674,7 @@ static Database *db;
     else
         if ([status isEqualToString:@"TransferFailed"])
         {
-         query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')",status];
+         query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and DeleteStatus=(Select Id from DeleteStatus Where DeleteStatus='%@')",status, @"NoDelete"];
     
         }
     else

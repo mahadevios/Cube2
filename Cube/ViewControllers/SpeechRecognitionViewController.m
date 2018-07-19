@@ -432,6 +432,10 @@
                                                              handler:^(UIAlertAction * action)
                                        {
                                            //                                           [self.navigationController.tabBarController setSelectedIndex:0];
+                                           
+
+                                           [transcriptionStatusView removeFromSuperview];
+                                           
                                            [self dismissViewControllerAnimated:true completion:nil];
                                            
                                            //                                           [self.navigationController popViewControllerAnimated:YES];

@@ -8,6 +8,7 @@
 
 #import "EmptyViewController.h"
 #import "AppPreferences.h"
+#import "UIColor+ApplicationColors.h"
 
 @interface EmptyViewController ()
 
@@ -27,16 +28,58 @@
 {
     if ([self.usedByVCName isEqualToString:@"VRSVC"])
     {
+       
         
-        self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - self.splitViewController.primaryColumnWidth, self.view.frame.size.height)];
-
-        self.webView.delegate = self;
-
-        self.textFileContentTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - self.splitViewController.primaryColumnWidth, self.view.frame.size.height)];
-        
+        [self setnavigationView];
         
         [self setEmptyVCForDocFileView:0];
     }
+}
+
+-(void)setnavigationView
+{
+    double secondVCWidth = self.view.frame.size.width - self.splitViewController.primaryColumnWidth;
+    
+    self.navigationView = [[UIView alloc] initWithFrame:CGRectMake(0,0, secondVCWidth, 64)];
+    
+    self.navigationView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
+
+//    self.navigationView.backgroundColor = [UIColor redColor];
+
+    self.navigationTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.navigationView.center.x-50, self.navigationView.frame.size.height/2 - 5, 100, 30)];
+    
+//    [self.navigationTitleLabel sizeToFit];
+    
+    self.navigationTitleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    self.navigationTitleLabel.textColor = [UIColor appOrangeColor];
+    
+    self.navigationTitleLabel.text = @"Text File";
+    
+    self.navigationTitleLabel.font = [UIFont systemFontOfSize:20 weight:UIFontWeightBold];
+    
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, self.view.frame.origin.y + 10, secondVCWidth, self.view.frame.size.height)];
+    
+    self.webView.delegate = self;
+    
+    self.textFileContentTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, self.navigationView.frame.size.height + 10, secondVCWidth, self.view.frame.size.height)];
+    
+    self.textFileContentTextView.userInteractionEnabled = NO;
+    
+    [self.navigationView addSubview:self.navigationTitleLabel];
+    
+    [self.view addSubview:self.navigationView];
+    
+    [self.view addSubview:self.textFileContentTextView];
+    
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.navigationTitleLabel
+//                                                                          attribute:NSLayoutAttributeCenterY
+//                                                                          relatedBy:NSLayoutRelationEqual
+//                                                                             toItem:self.navigationView
+//                                                                          attribute:NSLayoutAttributeCenterY
+//                                                                         multiplier:1.0
+//                                                                           constant:0.0]];
+    
 }
 
 -(void)setEmptyVCForDocFileView:(int)index
@@ -45,6 +88,7 @@
     {
         if (self.dataToShowCount > 0)
         {
+            
             [self showDocxFile:self.docxFileToShowPath];
         }
     }
@@ -65,12 +109,12 @@
 //
 //    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:docxFileToShowPath isDirectory:NO]]];
 
-    if ([self.view viewWithTag:2000] == nil)
-    {
-        [self.view addSubview:self.textFileContentTextView];
-        
-        self.textFileContentTextView.tag = 2000;
-    }
+//    if ([self.view viewWithTag:2000] == nil)
+//    {
+//        [self.view addSubview:self.textFileContentTextView];
+//
+//        self.textFileContentTextView.tag = 2000;
+//    }
     
     NSURL* url = [NSURL fileURLWithPath:docxFileToShowPath isDirectory:NO];
     

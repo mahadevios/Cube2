@@ -32,18 +32,21 @@
     
     VRSDocFilesArray = [[Database shareddatabase] getVRSDocFiles];
 
-    self.navigationItem.title = @"VRS DOC Files";
+    self.navigationItem.title = @"VRS Text Files";
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
     [self.tabBarController.tabBar setHidden:YES];
     
     
-    self.splitViewController.delegate = self;
-    
-    [self beginAppearanceTransition:true animated:true];
-    
-    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        self.splitViewController.delegate = self;
+        
+        [self beginAppearanceTransition:true animated:true];
+        
+        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+    }
     
     // Do any additional setup after loading the view.
 }

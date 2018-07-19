@@ -103,14 +103,91 @@
     }
     NSUInteger newLength = [textField.text length] + [string length] - range.length;
     
-//    if (newLength==1)
-//    {
-        [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.0];
-//    }
+    if (newLength==1)
+    {
+//        [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.0];
+//         [self resignFirstResponder:textField];
+        [self performSelector:@selector(resignFirstResponder:) withObject:textField afterDelay:0.0];
+
+    }
+   
+    
     return newLength <= 1;
+    
+    
+   
 }
 
--(void)resignResponder:(UITextField*)textfield
+//-(void)resignResponder:(UITextField*)textfield
+//{
+//    if (textfield ==pinCode1TextField ||textfield ==pinCode2TextField ||textfield ==pinCode3TextField ||textfield ==pinCode4TextField )
+//    {
+//        if (textfield==pinCode1TextField && textfield.text.length > 0)
+//        {
+//            [pinCode2TextField becomeFirstResponder];
+//        }
+//
+//        if (textfield==pinCode2TextField && textfield.text.length > 0)
+//        {
+//            [pinCode3TextField becomeFirstResponder];
+//
+//        }
+//        else if (textfield==pinCode2TextField && textfield.text.length == 0)
+//        {
+//            [pinCode1TextField becomeFirstResponder];
+//        }
+//
+//        if (textfield==pinCode3TextField && textfield.text.length > 0)
+//        {
+//            [pinCode4TextField becomeFirstResponder];
+//
+//        }
+//        else if (textfield==pinCode3TextField && textfield.text.length == 0)
+//        {
+//            [pinCode2TextField becomeFirstResponder];
+//        }
+//
+//        if (textfield==pinCode4TextField && textfield.text.length == 0)
+//        {
+//            [pinCode3TextField becomeFirstResponder];
+//        }
+//    }
+//    else if (textfield ==pinCode5TextField ||textfield ==pinCode6TextField ||textfield ==pinCode7TextField ||textfield ==pinCode8TextField )
+//    {
+//        if (textfield==pinCode5TextField && textfield.text.length > 0)
+//        {
+//            [pinCode6TextField becomeFirstResponder];
+//        }
+//
+//        if (textfield==pinCode6TextField && textfield.text.length > 0)
+//        {
+//            [pinCode7TextField becomeFirstResponder];
+//
+//        }
+//        else if (textfield==pinCode6TextField && textfield.text.length == 0)
+//        {
+//            [pinCode5TextField becomeFirstResponder];
+//        }
+//
+//        if (textfield==pinCode7TextField && textfield.text.length > 0)
+//        {
+//            [pinCode8TextField becomeFirstResponder];
+//
+//        }
+//        else if (textfield==pinCode7TextField && textfield.text.length == 0)
+//        {
+//            [pinCode6TextField becomeFirstResponder];
+//        }
+//
+//        if (textfield==pinCode8TextField && textfield.text.length == 0)
+//        {
+//            [pinCode7TextField becomeFirstResponder];
+//        }
+//    }
+//
+//}
+
+-(void)resignFirstResponder:(UITextField*)textfield
 {
     if (textfield ==pinCode1TextField ||textfield ==pinCode2TextField ||textfield ==pinCode3TextField ||textfield ==pinCode4TextField )
     {
@@ -118,64 +195,40 @@
         {
             [pinCode2TextField becomeFirstResponder];
         }
-        
-        if (textfield==pinCode2TextField && textfield.text.length > 0)
-        {
-            [pinCode3TextField becomeFirstResponder];
-            
-        }
-        else if (textfield==pinCode2TextField && textfield.text.length == 0)
-        {
-            [pinCode1TextField becomeFirstResponder];
-        }
-        
-        if (textfield==pinCode3TextField && textfield.text.length > 0)
-        {
-            [pinCode4TextField becomeFirstResponder];
-            
-        }
-        else if (textfield==pinCode3TextField && textfield.text.length == 0)
-        {
-            [pinCode2TextField becomeFirstResponder];
-        }
-        
-        if (textfield==pinCode4TextField && textfield.text.length == 0)
-        {
-            [pinCode3TextField becomeFirstResponder];
-        }
+        else
+            if (textfield==pinCode2TextField && textfield.text.length > 0)
+            {
+                [pinCode3TextField becomeFirstResponder];
+                
+            }
+            else
+                if (textfield==pinCode3TextField && textfield.text.length > 0)
+                {
+                    [pinCode4TextField becomeFirstResponder];
+                    
+                }
     }
-    else if (textfield ==pinCode5TextField ||textfield ==pinCode6TextField ||textfield ==pinCode7TextField ||textfield ==pinCode8TextField )
-    {
-        if (textfield==pinCode5TextField && textfield.text.length > 0)
-        {
-            [pinCode6TextField becomeFirstResponder];
-        }
-        
-        if (textfield==pinCode6TextField && textfield.text.length > 0)
-        {
-            [pinCode7TextField becomeFirstResponder];
-            
-        }
-        else if (textfield==pinCode6TextField && textfield.text.length == 0)
-        {
-            [pinCode5TextField becomeFirstResponder];
-        }
-        
-        if (textfield==pinCode7TextField && textfield.text.length > 0)
-        {
-            [pinCode8TextField becomeFirstResponder];
-            
-        }
-        else if (textfield==pinCode7TextField && textfield.text.length == 0)
-        {
-            [pinCode6TextField becomeFirstResponder];
-        }
-        
-        if (textfield==pinCode8TextField && textfield.text.length == 0)
-        {
-            [pinCode7TextField becomeFirstResponder];
-        }
-    }
+     else if (textfield ==pinCode5TextField ||textfield ==pinCode6TextField ||textfield ==pinCode7TextField ||textfield ==pinCode8TextField )
+     {
+         if (textfield==pinCode5TextField && textfield.text.length > 0)
+         {
+             [pinCode6TextField becomeFirstResponder];
+         }
+         else
+             if (textfield==pinCode6TextField && textfield.text.length > 0)
+             {
+                 [pinCode7TextField becomeFirstResponder];
+                 
+             }
+             else
+                 if (textfield==pinCode7TextField && textfield.text.length > 0)
+                 {
+                     [pinCode8TextField becomeFirstResponder];
+                     
+                 }
+     }
+    
+    
     
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -215,25 +268,48 @@
       NSString* newPin=[NSString stringWithFormat:@"%@%@%@%@",pinCode5TextField.text,pinCode6TextField.text,pinCode7TextField.text,pinCode8TextField.text];
     if ([pinCode1TextField.text isEqual:@""] || [pinCode2TextField.text isEqual:@""]|| [pinCode3TextField.text isEqual:@""] || [pinCode4TextField.text isEqual:@""] || [pinCode5TextField.text isEqual:@""] || [pinCode6TextField.text isEqual:@""]|| [pinCode7TextField.text isEqual:@""] || [pinCode8TextField.text isEqual:@""])
     {
-        title=@"Incomplete pin code";
-        message=@"Please enter pin code properly";
-        alertController = [UIAlertController alertControllerWithTitle:title
-                                                              message:message
-                                                       preferredStyle:UIAlertControllerStyleAlert];
-        actionOk = [UIAlertAction actionWithTitle:@"Ok"
-                                            style:UIAlertActionStyleDefault
-                                          handler:^(UIAlertAction * action)
-                    {
-                        pinCode1TextField.text=@"";pinCode2TextField.text=@"";pinCode3TextField.text=@"";pinCode4TextField.text=@"";
-                        pinCode5TextField.text=@"";pinCode6TextField.text=@"";pinCode7TextField.text=@"";pinCode8TextField.text=@"";
-                        [pinCode1TextField becomeFirstResponder];
-                    }]; //You can use a block here to handle a press on this button
-        [alertController addAction:actionOk];
-        [self presentViewController:alertController animated:YES completion:nil];
+        if ([pinCode1TextField.text isEqual:@""] || [pinCode2TextField.text isEqual:@""]|| [pinCode3TextField.text isEqual:@""] || [pinCode4TextField.text isEqual:@""])
+        {
+            title = @"Please enter valid old PIN code";
+            message = @"";
+            alertController = [UIAlertController alertControllerWithTitle:title
+                                                                  message:message
+                                                           preferredStyle:UIAlertControllerStyleAlert];
+            actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                style:UIAlertActionStyleDefault
+                                              handler:^(UIAlertAction * action)
+                        {
+//                            pinCode1TextField.text=@"";pinCode2TextField.text=@"";pinCode3TextField.text=@"";pinCode4TextField.text=@"";
+//                            pinCode5TextField.text=@"";pinCode6TextField.text=@"";pinCode7TextField.text=@"";pinCode8TextField.text=@"";
+//                            [pinCode1TextField becomeFirstResponder];
+                        }]; //You can use a block here to handle a press on this button
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+        else
+        if ([pinCode5TextField.text isEqual:@""] || [pinCode6TextField.text isEqual:@""]|| [pinCode7TextField.text isEqual:@""] || [pinCode8TextField.text isEqual:@""])
+        {
+            title = @"Please enter valid new PIN code";
+            message = @"";
+            alertController = [UIAlertController alertControllerWithTitle:title
+                                                                  message:message
+                                                           preferredStyle:UIAlertControllerStyleAlert];
+            actionOk = [UIAlertAction actionWithTitle:@"Ok"
+                                                style:UIAlertActionStyleDefault
+                                              handler:^(UIAlertAction * action)
+                        {
+//                            pinCode1TextField.text=@"";pinCode2TextField.text=@"";pinCode3TextField.text=@"";pinCode4TextField.text=@"";
+//                            pinCode5TextField.text=@"";pinCode6TextField.text=@"";pinCode7TextField.text=@"";pinCode8TextField.text=@"";
+//                            [pinCode1TextField becomeFirstResponder];
+                        }]; //You can use a block here to handle a press on this button
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+       
 
     }
     else
-    if ([oldPin isEqualToString:newPin])
+    if ([[AppPreferences sharedAppPreferences].userObj.userPin isEqualToString:oldPin] && [oldPin isEqualToString:newPin])
     {
         title=@"Old and New PIN Code are same";
         message=@"Please Enter New PIN Code!";

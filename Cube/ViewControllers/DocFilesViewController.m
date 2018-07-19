@@ -54,6 +54,17 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        self.splitViewController.delegate = self;
+        
+        [self beginAppearanceTransition:true animated:true];
+        
+        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+    }
+}
 
 -(void)getCompletedFilesForDays:(NSString*)filterDaysNumber
 {
@@ -1090,7 +1101,7 @@
 
 -(void)deleteDocxAndUpdateStatus
 {
-    alertController = [UIAlertController alertControllerWithTitle:@"Delete?"
+    alertController = [UIAlertController alertControllerWithTitle:@"Delete"
                                                           message:DELETE_MESSAGE_DOCX
                                                    preferredStyle:UIAlertControllerStyleAlert];
     actionDelete = [UIAlertAction actionWithTitle:@"Delete"
