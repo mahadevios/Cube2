@@ -94,7 +94,7 @@
     
     long totalSecondsOfAudio;
     
-    float64_t updatedInsertionTime;
+    float updatedInsertionTime;
     
     float playerDurationWithMilliSeconds;
 

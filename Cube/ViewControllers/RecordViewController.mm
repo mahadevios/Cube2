@@ -1298,6 +1298,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         
     }
+    
+    playerDurationWithMilliSeconds = player.duration;
+
 
 }
 
@@ -3430,7 +3433,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         if (updatedInsertionTime == 0)
         {
-            float64_t sliderValue;
+            float_t sliderValue;
             
             sliderValue = playerDurationWithMilliSeconds;
             
@@ -3472,7 +3475,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         if (updatedInsertionTime == 0)
         {
-            float64_t sliderValue;
+            float_t sliderValue;
         
             sliderValue = playerDurationWithMilliSeconds;
 
@@ -3530,8 +3533,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                  atTime:totalTime
                                   error:&error];
     
-    float64_t newTime = CMTimeGetSeconds(newAsset.duration);
-    float64_t oldTime = CMTimeGetSeconds(totalTime);
+    float_t newTime = CMTimeGetSeconds(newAsset.duration);
+    float_t oldTime = CMTimeGetSeconds(totalTime);
 
 //    updatedInsertionTime = CMTimeGetSeconds(time);
     updatedInsertionTime = newTime + oldTime;
@@ -3662,7 +3665,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     NSLog(@"%@",error.localizedDescription);
 }
 
--(NSArray*)getCMTimeValueAndScaleForMilliseconds:(float64_t)milliSeconds
+-(NSArray*)getCMTimeValueAndScaleForMilliseconds:(float_t)milliSeconds
 {
     int64_t value = 0;
     
@@ -3745,7 +3748,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
 }
 
--(CMTime)getTotalCMTimeFromMilliSeconds:(float64_t)totalMilliSeconds
+-(CMTime)getTotalCMTimeFromMilliSeconds:(float_t)totalMilliSeconds
 {
     CMTime totalTime;
     
@@ -3753,7 +3756,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     CMTime timeInSeconds =   CMTimeMake(seconds, 1);
     
-    float64_t milliSeconds = fmod(totalMilliSeconds, floor(totalMilliSeconds));
+    float_t milliSeconds = fmod(totalMilliSeconds, floor(totalMilliSeconds));
     
     int64_t value = 0;
     

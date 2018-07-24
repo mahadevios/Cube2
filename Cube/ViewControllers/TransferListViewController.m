@@ -407,7 +407,11 @@
     NSString* deleteStatusString = [awaitingFileTransferDict valueForKey:@"DeleteStatus"];
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     
-    UILabel* timeLabel=[cell viewWithTag:102];
+    
+    UILabel* recordingDurationLabel=[cell viewWithTag:102];
+    
+    UILabel* timeLabel=[cell viewWithTag:106];
+
     if (dateAndTimeArray.count>1)
     timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
     
@@ -417,12 +421,22 @@
     UILabel* deleteStatusLabel=[cell viewWithTag:105];
 
     UILabel* dateLabel=[cell viewWithTag:104];
+    
+    
+
     if (dateAndTimeArray.count >0)
     {
             dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
     }
     
    
+    int audioHour= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]/(60*60);
+    int audioHourByMod= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]%(60*60);
+    
+    int audioMinutes = audioHourByMod / 60;
+    int audioSeconds = audioHourByMod % 60;
+    
+    recordingDurationLabel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];
     
     if ([self.currentViewName isEqualToString:@"Transferred Today"])
     {
@@ -1191,7 +1205,7 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
             NSDictionary* awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:i];
             NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
 
-            NSLog(@"filename = %@, dic status = %@",fileName, [awaitingFileTransferDict valueForKey:@"DictationStatus"]);
+//            NSLog(@"filename = %@, dic status = %@",fileName, [awaitingFileTransferDict valueForKey:@"DictationStatus"]);
             
            if (![[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"])
             {

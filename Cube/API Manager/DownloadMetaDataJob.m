@@ -166,6 +166,8 @@
     
     if ([encryptedResponse containsString:@"ExceptionMessage"] || [encryptedResponse containsString:@"ExceptionType"] || [encryptedResponse containsString:@"Message"] || [encryptedResponse containsString:@"StackTrace"] || encryptedResponse == nil)
     {
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         
         return;
@@ -296,10 +298,14 @@ if([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
         }
         else
         {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Can't connect to the sever, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }else
     {
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }
@@ -325,6 +331,8 @@ if ([self.downLoadEntityJobName isEqualToString:AUTHENTICATE_API])
         }
     }else
     {
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }
@@ -348,6 +356,8 @@ if ([self.downLoadEntityJobName isEqualToString:ACCEPT_PIN_API])
         }
     }else
     {
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }
@@ -370,6 +380,8 @@ if ([self.downLoadEntityJobName isEqualToString:VALIDATE_PIN_API])
         }
     }else
     {
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }
@@ -392,6 +404,8 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
         }
     }else
     {
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }
@@ -416,6 +430,8 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
             }
         }else
         {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }
@@ -438,6 +454,8 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
             }
         }else
         {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }
@@ -524,6 +542,8 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
             }
         }else
         {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }
@@ -546,7 +566,9 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
             }
         }else
         {
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }
 

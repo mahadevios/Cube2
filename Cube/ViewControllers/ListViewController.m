@@ -383,8 +383,17 @@
 
 -(void)deleteMutipleFiles
 {
+    NSString* deleteMessage;
+    if (arrayOfMarked.count > 1)
+    {
+        deleteMessage = DELETE_MESSAGE_MULTIPLES;
+    }
+    else
+    {
+        deleteMessage = DELETE_MESSAGE;
+    }
     alertController = [UIAlertController alertControllerWithTitle:@"Delete"
-                                                          message:DELETE_MESSAGE
+                                                          message:deleteMessage
                                                    preferredStyle:UIAlertControllerStyleAlert];
     
     
@@ -517,10 +526,11 @@
     
     UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     UILabel* fileNameLabel=[cell viewWithTag:101];
-    UILabel* timeLabel=[cell viewWithTag:102];
+    UILabel* durationLabel=[cell viewWithTag:102];
     UILabel* transferByLabel=[cell viewWithTag:103];
     UILabel* dateLabel=[cell viewWithTag:104];
-    
+    UILabel* timeLabel=[cell viewWithTag:106];
+
     
     APIManager* app=[APIManager sharedManager];
     NSDictionary* dict;
@@ -548,7 +558,13 @@
 
     }
 
+    int audioHour= [[dict valueForKey:@"CurrentDuration"] intValue]/(60*60);
+    int audioHourByMod= [[dict valueForKey:@"CurrentDuration"] intValue]%(60*60);
     
+    int audioMinutes = audioHourByMod / 60;
+    int audioSeconds = audioHourByMod % 60;
+    
+    durationLabel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];
     //timeLabel.text=[NSString stringWithFormat:@"%@",@"Transferred 12:18:00 PM"];
 
     transferByLabel.text = [dict valueForKey:@"Department"];

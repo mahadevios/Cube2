@@ -328,7 +328,7 @@
     
     if (newLength==1)
     {
-        [self performSelector:@selector(resignFirstResponder:) withObject:textField afterDelay:0.0];
+        [self performSelector:@selector(resignFirstResponder:) withObject:textField afterDelay:0.02];
 //    [self resignFirstResponder:textField];
 //        [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.05];
     }

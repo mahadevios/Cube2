@@ -80,7 +80,7 @@
     
     bool isViewSetUpWhenFirstAppear;
     
-    float64_t updatedInsertionTime;
+    float_t updatedInsertionTime;
     
     float playerDurationWithMilliSeconds;
 //    UIButton* uploadLaterButton;

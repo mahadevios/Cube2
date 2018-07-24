@@ -733,8 +733,14 @@
                                                     <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="106" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9K5-gu-DZr">
+                                                    <rect key="frame" x="983" y="28" width="31" height="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.76078431369999999" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="105" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vYL-WR-n45">
-                                                    <rect key="frame" x="1014" y="36" width="0.0" height="0.0"/>
+                                                    <rect key="frame" x="1014" y="54" width="0.0" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.98039215690000003" green="0.63529411759999999" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -742,6 +748,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="vYL-WR-n45" firstAttribute="trailing" secondItem="4Ca-KE-3C9" secondAttribute="trailing" id="7q9-p6-fUV"/>
+                                                <constraint firstItem="9K5-gu-DZr" firstAttribute="trailing" secondItem="4Ca-KE-3C9" secondAttribute="trailing" id="HvY-vP-eaW"/>
                                                 <constraint firstItem="vYL-WR-n45" firstAttribute="centerX" secondItem="4Ca-KE-3C9" secondAttribute="centerX" id="PsU-73-CQD"/>
                                                 <constraint firstItem="vYL-WR-n45" firstAttribute="trailing" secondItem="4Ca-KE-3C9" secondAttribute="trailing" id="dfL-1D-gMx"/>
                                                 <constraint firstItem="vYL-WR-n45" firstAttribute="top" secondItem="4Ca-KE-3C9" secondAttribute="bottom" constant="10" id="kXp-TC-pTc"/>
@@ -762,9 +769,10 @@
                                             <constraint firstAttribute="trailing" secondItem="4Ca-KE-3C9" secondAttribute="trailing" constant="10" id="IYB-FU-Njt"/>
                                             <constraint firstItem="ZCy-iv-KCc" firstAttribute="leading" secondItem="Pct-Nd-567" secondAttribute="leading" constant="10" id="J7y-h0-SOx"/>
                                             <constraint firstItem="ZCy-iv-KCc" firstAttribute="centerX" secondItem="Pct-Nd-567" secondAttribute="centerX" id="M6w-cu-SjI"/>
+                                            <constraint firstItem="9K5-gu-DZr" firstAttribute="centerY" secondItem="Pct-Nd-567" secondAttribute="centerY" id="Mi6-Pk-MtO"/>
                                             <constraint firstItem="gEJ-0Y-Ghc" firstAttribute="leading" secondItem="Pct-Nd-567" secondAttribute="leading" constant="10" id="O2s-V8-gV5"/>
                                             <constraint firstItem="4T2-ED-iWl" firstAttribute="centerY" secondItem="Pct-Nd-567" secondAttribute="centerY" id="OT0-qd-QKE"/>
-                                            <constraint firstItem="vYL-WR-n45" firstAttribute="centerY" secondItem="Pct-Nd-567" secondAttribute="centerY" id="Rqn-2P-Izf"/>
+                                            <constraint firstItem="vYL-WR-n45" firstAttribute="centerY" secondItem="Pct-Nd-567" secondAttribute="centerY" multiplier="1.5" id="Rqn-2P-Izf"/>
                                             <constraint firstItem="4T2-ED-iWl" firstAttribute="leading" secondItem="Pct-Nd-567" secondAttribute="leading" constant="10" id="doa-Or-0Mn"/>
                                             <constraint firstItem="gEJ-0Y-Ghc" firstAttribute="width" secondItem="Pct-Nd-567" secondAttribute="width" multiplier="0.6" id="eyO-bV-uXk"/>
                                             <constraint firstItem="4Ca-KE-3C9" firstAttribute="centerY" secondItem="Pct-Nd-567" secondAttribute="centerY" multiplier="0.5" id="ijl-m6-Ycz"/>
@@ -1550,7 +1558,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transferred 12:18:00 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZf-Ta-KU4">
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:03:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZf-Ta-KU4">
                                                     <rect key="frame" x="10" y="29.5" width="225" height="14.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.76078431369999999" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1568,7 +1576,16 @@
                                                     <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="106" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transferred 12:01:01" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="76j-vI-b8J">
+                                                    <rect key="frame" x="244" y="29" width="116" height="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.76078431369999999" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="76j-vI-b8J" firstAttribute="trailing" secondItem="O04-Ap-T6k" secondAttribute="trailing" id="QsS-Cb-Ek4"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <constraints>
                                             <constraint firstItem="q7B-yj-0PH" firstAttribute="leading" secondItem="5HH-x6-RJu" secondAttribute="leading" constant="10" id="3Rf-fo-ad9"/>
@@ -1578,6 +1595,7 @@
                                             <constraint firstItem="sZf-Ta-KU4" firstAttribute="centerY" secondItem="5HH-x6-RJu" secondAttribute="centerY" id="DSr-Ih-r72"/>
                                             <constraint firstItem="2P7-gN-ESr" firstAttribute="centerY" secondItem="5HH-x6-RJu" secondAttribute="centerY" multiplier="0.5" id="fq0-6Y-tNH"/>
                                             <constraint firstItem="sZf-Ta-KU4" firstAttribute="leading" secondItem="5HH-x6-RJu" secondAttribute="leading" constant="10" id="hqT-4d-7gV"/>
+                                            <constraint firstItem="76j-vI-b8J" firstAttribute="centerY" secondItem="5HH-x6-RJu" secondAttribute="centerY" id="lnx-cP-lcJ"/>
                                             <constraint firstItem="2P7-gN-ESr" firstAttribute="leading" secondItem="5HH-x6-RJu" secondAttribute="leading" constant="10" id="oIb-hs-IgR"/>
                                             <constraint firstItem="sZf-Ta-KU4" firstAttribute="width" secondItem="5HH-x6-RJu" secondAttribute="width" multiplier="0.6" id="ucN-ma-UNU"/>
                                             <constraint firstItem="O04-Ap-T6k" firstAttribute="centerY" secondItem="5HH-x6-RJu" secondAttribute="centerY" multiplier="0.5" id="v5V-q4-Rxn"/>

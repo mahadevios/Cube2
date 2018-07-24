@@ -227,8 +227,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         [self prepareAudioPlayer];
            
-           isViewSetUpWhenFirstAppear = true;
-           
+        isViewSetUpWhenFirstAppear = true;
+        
+           playerDurationWithMilliSeconds = player.duration;
        }
 
     }
@@ -2178,7 +2179,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
                            [self prepareAudioPlayer];
                            
-                           
+                           playerDurationWithMilliSeconds = player.duration;
                            int currentTime= player.duration;
                            int minutes=currentTime/60;
                            int seconds=currentTime%60;
@@ -2303,7 +2304,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         if (updatedInsertionTime == 0)
         {
-            float64_t sliderValue;
+            float_t sliderValue;
             
             sliderValue = playerDurationWithMilliSeconds;
             
@@ -2348,7 +2349,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         if (updatedInsertionTime == 0)
         {
-            float64_t sliderValue;
+            float_t sliderValue;
             
             sliderValue = playerDurationWithMilliSeconds;
             
@@ -2427,8 +2428,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         return;
     }
     
-    float64_t newTime = CMTimeGetSeconds(newAsset.duration);
-    float64_t oldTime = CMTimeGetSeconds(totalTime);
+    float_t newTime = CMTimeGetSeconds(newAsset.duration);
+    float_t oldTime = CMTimeGetSeconds(totalTime);
     
     //    updatedInsertionTime = CMTimeGetSeconds(time);
     updatedInsertionTime = newTime + oldTime;
@@ -2481,32 +2482,35 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 // keep compose file backup to backupPath
                // [[NSFileManager defaultManager] copyItemAtPath:destpath toPath:backUpPath error:&error];
                 
-                
-                [self prepareAudioPlayer];
-                
-                [db updateAudioFileName:existingAudioFileName duration:player.duration];
-                
-                if (!IMPEDE_PLAYBACK)
-                {
-                    [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryRecord];
-                }
-                
+                  dispatch_async(dispatch_get_main_queue(), ^
+                                 {
+                                     [self prepareAudioPlayer];
+                                     
+                                     [db updateAudioFileName:existingAudioFileName duration:player.duration];
+                                     
+                                     if (!IMPEDE_PLAYBACK)
+                                     {
+                                         [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryRecord];
+                                     }
+                                     
+                                     
+                                     
+                                     
+                                     if (recordingStopped)
+                                     {
+                                         
+                                         [self setCompressAudio];
+                                         
+                                         playerDurationWithMilliSeconds = player.duration;
+                                         
+                                     }
+                                     else
+                                     {
+                                         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
+                                         
+                                     }
+                                 });
                
-                
-                
-                if (recordingStopped)
-                {
-
-                    [self setCompressAudio];
-                    
-                    playerDurationWithMilliSeconds = player.duration;
-
-                }
-                else
-                {
-                    [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
-                    
-                }
                 
             }
             
@@ -2537,7 +2541,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 
 
--(NSArray*)getCMTimeValueAndScaleForMilliseconds:(float64_t)milliSeconds
+-(NSArray*)getCMTimeValueAndScaleForMilliseconds:(float_t)milliSeconds
 {
     int64_t value = 0;
     
@@ -2620,15 +2624,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
 }
 
--(CMTime)getTotalCMTimeFromMilliSeconds:(float64_t)totalMilliSeconds
+-(CMTime)getTotalCMTimeFromMilliSeconds:(float_t)totalMilliSeconds
 {
+    
     CMTime totalTime;
     
     int64_t seconds = floor(totalMilliSeconds);
     
     CMTime timeInSeconds =   CMTimeMake(seconds, 1);
     
-    float64_t milliSeconds = fmod(totalMilliSeconds, floor(totalMilliSeconds));
+    float_t milliSeconds = fmod(totalMilliSeconds, floor(totalMilliSeconds));
     
     int64_t value = 0;
     

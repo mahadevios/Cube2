@@ -49,6 +49,11 @@
     
     [self.tabBarController.tabBar setHidden:YES];
 
+    [self beginAppearanceTransition:true animated:true];
+    
+    self.splitViewController.delegate = self;
+    
+    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
    // self.navigationController.navigationBar.translucent = NO;
 
     // Do any additional setup after loading the view.
@@ -56,14 +61,14 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-    {
-        self.splitViewController.delegate = self;
-        
-        [self beginAppearanceTransition:true animated:true];
-        
-        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
-    }
+//    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+//    {
+//        self.splitViewController.delegate = self;
+//        
+//        [self beginAppearanceTransition:true animated:true];
+//        
+//        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+//    }
 }
 
 -(void)getCompletedFilesForDays:(NSString*)filterDaysNumber
@@ -134,8 +139,15 @@
 }
 -(void)popViewController:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
-    
+    if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self dismissViewControllerAnimated:false completion:nil];
+    }
+    [self.tabBarController.tabBar setHidden:NO];
 }
 -(void)validateSendIdsResponse:(NSNotification*)obj
 {
@@ -143,26 +155,23 @@
     
     NSArray* completedFilesResponseArray = [response valueForKey:@"CompletedList"];
     
+    AudioDetails* ad = [AudioDetails new];
     
-//    NSData* completedFilesResponseData = [completedFilesResponseString dataUsingEncoding:NSUTF8StringEncoding];
-//
-//    NSError* error;
-    //    NSError* error;
-
-//
+    ad.fileName = @"test";
     
-//    NSArray* completedFilesResponseArray = [NSJSONSerialization JSONObjectWithData:completedFilesResponseData options:NSJSONReadingAllowFragments error:&error];
-    
+ 
     [self.completedFilesResponseArray removeAllObjects];
 
     [self.completedFilesForTableViewArray removeAllObjects];
+
+    [self.completedFilesForTableViewArray addObject:ad];
 
     for (int i=0; i<completedFilesResponseArray.count; i++)
     {
         NSDictionary* dic = [completedFilesResponseArray objectAtIndex:i];
         
         NSString* dictationId = [dic valueForKey:@"DictationID"];
-        
+    
         [self.completedFilesResponseArray addObject:dictationId];
     }
     
