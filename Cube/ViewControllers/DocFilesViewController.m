@@ -155,16 +155,16 @@
     
     NSArray* completedFilesResponseArray = [response valueForKey:@"CompletedList"];
     
-    AudioDetails* ad = [AudioDetails new];
-    
-    ad.fileName = @"test";
+//    AudioDetails* ad = [AudioDetails new];
+//    
+//    ad.fileName = @"test";
     
  
     [self.completedFilesResponseArray removeAllObjects];
 
     [self.completedFilesForTableViewArray removeAllObjects];
 
-    [self.completedFilesForTableViewArray addObject:ad];
+//    [self.completedFilesForTableViewArray addObject:ad];
 
     for (int i=0; i<completedFilesResponseArray.count; i++)
     {

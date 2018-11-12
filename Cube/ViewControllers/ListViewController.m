@@ -571,25 +571,18 @@
     
     if (dateAndTimeArray.count>0)
     {
-//        NSDateFormatter *df = [[NSDateFormatter alloc] init];
-//        [df setDateFormat:@"MM-dd-yyyy"];
-//
-//        NSDate* date = [df dateFromString:[dateAndTimeArray objectAtIndex:0]];
-//
-//        [df setDateFormat:@"yyyy-MM-dd"];
-//        NSString *updatedDate = [df stringFromDate:date];
-//        dateLabel.text = [NSString stringWithFormat:@"%@",updatedDate];
-//
-//        if (updatedDate == nil)
-//        {
-            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSString* dateStr = [NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
+        NSDate *date = [dateFormatter dateFromString:dateStr];
+        
+        // Convert date object into desired format
+        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+        NSString *newDateString = [dateFormatter stringFromDate:date];
+        
+        dateLabel.text = newDateString;
 
-//        }
-//        else
-//        {
-//            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",updatedDate]];
-//
-//        }
+//            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
 
     }
     

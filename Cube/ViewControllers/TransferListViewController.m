@@ -423,10 +423,23 @@
     UILabel* dateLabel=[cell viewWithTag:104];
     
     
-
-    if (dateAndTimeArray.count >0)
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    
+    if (dateAndTimeArray.count>1)
     {
-            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
+        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+        
+        
+        NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
+        
+        // Convert date object into desired format
+        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+        NSString *newDateString = [dateFormatter stringFromDate:date];
+        
+        dateLabel.text=[NSString stringWithFormat:@"%@",newDateString];
+        
     }
     
    
@@ -446,27 +459,22 @@
         
         if (dateAndTimeArray.count>1)
         {
-            timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
             
-//            NSDateFormatter *df = [[NSDateFormatter alloc] init];
-//            [df setDateFormat:@"MM-dd-yyyy"];
-//
-//            NSDate* date = [df dateFromString:[dateAndTimeArray objectAtIndex:0]];
-//
-//            [df setDateFormat:@"yyyy-MM-dd"];
-//            NSString *updatedDate = [df stringFromDate:date];
-//            dateLabel.text = [NSString stringWithFormat:@"%@",updatedDate];
-//
-//            if (updatedDate == nil)
-//            {
-                dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
+                timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
                 
-//            }
-//            else
-//            {
-//                dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",updatedDate]];
-//
-//            }
+                [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                
+                NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
+                
+                // Convert date object into desired format
+                [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+                NSString *newDateString = [dateFormatter stringFromDate:date];
+                
+                dateLabel.text=[NSString stringWithFormat:@"%@",newDateString];
+
+                timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+
+
         }
         
 

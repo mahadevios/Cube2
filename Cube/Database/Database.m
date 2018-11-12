@@ -2760,6 +2760,7 @@ static Database *db;
     if (sqlite3_open(dbpath, &feedbackAndQueryTypesDB) == SQLITE_OK)
     {
         char *errMsg;
+        //may be thsi is for vrs doc files
         const char *sql_stmt = "create table if not exists DocFiles (DocFileName text primary key, AudioFileName text, UploadStatus integer, DeleteStatus integer, CreatedDate text, UploadedDate text)";
         
         if (sqlite3_exec(feedbackAndQueryTypesDB, sql_stmt, NULL, NULL, &errMsg) != SQLITE_OK)
@@ -2767,6 +2768,7 @@ static Database *db;
             NSLog(@"DocFiles created" );
         }
         
+        //this is for transcribed docx files
         const char *sql_stmt1 = "create table if not exists DownloadedDocxFiles (FileName text primary key, MobileDictationIdVal integer, DownloadStatus integer, DeleteStatus integer, ApproveStatus integer, ForApprovalStatus integer, Comment text, EditStatus integer)";
         
         if (sqlite3_exec(feedbackAndQueryTypesDB, sql_stmt1, NULL, NULL, &errMsg) != SQLITE_OK)
@@ -2926,11 +2928,11 @@ static Database *db;
 }
 
 // for VRS doc files
--(void)deleteDocFileRecordFromDatabase:(int)docFileName deleteStatus:(NSString*)deleteStatus
+-(void)deleteDocFileRecordFromDatabase:(NSString*)docFileName
 {
-    NSString *query3=[NSString stringWithFormat:@"Update DocFiles set DeleteStatus=%d Where DocFileName=%@",deleteStatus,docFileName];
+//    NSString *query3=[NSString stringWithFormat:@"Update DocFiles set DeleteStatus=%d Where DocFileName=%@",deleteStatus,docFileName];
 
-//    NSString *query3=[NSString stringWithFormat:@"Delete from DocFiles Where DocFileName='%@'",docFileName];
+    NSString *query3=[NSString stringWithFormat:@"Delete from DocFiles Where DocFileName='%@'",docFileName];
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement;

@@ -184,7 +184,19 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     NSString* dateAndTimeString = [app getDateAndTimeString];
     NSArray* dateAndTimeArray = [dateAndTimeString componentsSeparatedByString:@" "];
     NSString* dateString = [dateAndTimeArray objectAtIndex:0];
-    dateLabel.text = dateString;
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString* dateStr = [NSString stringWithFormat:@"%@",dateString];
+    NSDate *date = [dateFormatter dateFromString:dateStr];
+    
+    // Convert date object into desired format
+    [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+    NSString *newDateString = [dateFormatter stringFromDate:date];
+    
+    dateLabel.text = newDateString;
+    
+//    dateLabel.text = dateString;
     
     // set the slected department to user defaults
     NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];

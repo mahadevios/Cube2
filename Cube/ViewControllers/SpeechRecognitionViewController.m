@@ -1370,8 +1370,8 @@
         [[NSFileManager defaultManager] removeItemAtPath:docFilePath error:nil];
     }
     
-//    BOOL isWritten1 = [[self.transcriptionTextLabel.text dataUsingEncoding:NSUTF8StringEncoding] writeToFile:docFilePath atomically:true];
-    BOOL isWritten1 = [[@"Testing Text" dataUsingEncoding:NSUTF8StringEncoding] writeToFile:docFilePath atomically:true];
+    BOOL isWritten1 = [[self.transcriptionTextLabel.text dataUsingEncoding:NSUTF8StringEncoding] writeToFile:docFilePath atomically:true];
+//    BOOL isWritten1 = [[@"Testing Text" dataUsingEncoding:NSUTF8StringEncoding] writeToFile:docFilePath atomically:true];
 
     //BOOL isWritten = [self.transcriptionTextLabel.text writeToFile:docFilePath atomically:true encoding:NSUTF8StringEncoding error:&error];
     

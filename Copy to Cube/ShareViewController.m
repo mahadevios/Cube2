@@ -8,6 +8,7 @@
 //http://catthoughts.ghost.io/extensions-in-ios8-custom-views/        custom view
 #import "ShareViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "Constants.h"
 //#import "ConfigurationViewController.h"
 
 
@@ -872,7 +873,7 @@ SLComposeSheetConfigurationItem *item;
 -(NSString*)getDateAndTimeString
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"MM-dd-yyyy HH:mm:ss";
+    formatter.dateFormat = DATE_TIME_FORMAT;
     NSString* recordCreatedDateString = [formatter stringFromDate:[NSDate date]];
     return recordCreatedDateString;
 }

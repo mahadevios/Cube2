@@ -148,10 +148,31 @@
         
     }
     
+    departmentLabel.text=[audiorecordDict valueForKey:@"Department"];
+
     filenameLabel.text=[audiorecordDict valueForKey:@"RecordItemName"];
     dictatedOnLabel.text=[audiorecordDict valueForKey:@"RecordCreateDate"];
-    departmentLabel.text=[audiorecordDict valueForKey:@"Department"];
-    transferDateLabel.text=[audiorecordDict valueForKey:@"TransferDate"];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString* dateStr = [audiorecordDict valueForKey:@"RecordCreateDate"];
+    NSDate *date = [dateFormatter dateFromString:dateStr];
+    
+    // Convert date object into desired format
+    [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+    NSString *newDateString = [dateFormatter stringFromDate:date];
+    
+    dictatedOnLabel.text = newDateString;
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString* transferDateString = [audiorecordDict valueForKey:@"TransferDate"];
+    NSDate *transferDate = [dateFormatter dateFromString:transferDateString];
+    
+    // Convert date object into desired format
+    [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+    NSString *newTransferDateString = [dateFormatter stringFromDate:transferDate];
+    transferDateLabel.text = newTransferDateString;
+//    transferDateLabel.text=[audiorecordDict valueForKey:@"TransferDate"];
     
     //transferStatusLabel.text=[audiorecordDict valueForKey:@"TransferStatus"];
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
@@ -228,7 +249,18 @@
         
         UIImageView* pauseOrPlayImageView= [sliderPopUpView viewWithTag:226];
         UILabel* dateAndTimeLabel=[sliderPopUpView viewWithTag:225];
-        dateAndTimeLabel.text=[audiorecordDict valueForKey:@"RecordCreateDate"];
+//        dateAndTimeLabel.text=[audiorecordDict valueForKey:@"RecordCreateDate"];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString* dateStr = [audiorecordDict valueForKey:@"RecordCreateDate"];
+        NSDate *date = [dateFormatter dateFromString:dateStr];
+        
+        // Convert date object into desired format
+        [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+        NSString *newDateString = [dateFormatter stringFromDate:date];
+        
+        dateAndTimeLabel.text = newDateString;
         pauseOrPlayImageView.image=[UIImage imageNamed:@"Pause"];
         NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
         if (!IMPEDE_PLAYBACK)
