@@ -404,9 +404,14 @@
     departmentNameLabel.text=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
     NSString* dateAndTimeString=[awaitingFileTransferDict valueForKey:@"RecordCreatedDate"];
     NSString* transferStatusString=[awaitingFileTransferDict valueForKey:@"TransferStatus"];
+    NSString* deleteStatusString = [awaitingFileTransferDict valueForKey:@"DeleteStatus"];
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     
-    UILabel* timeLabel=[cell viewWithTag:102];
+    
+    UILabel* recordingDurationLabel=[cell viewWithTag:102];
+    
+    UILabel* timeLabel=[cell viewWithTag:106];
+
     if (dateAndTimeArray.count>1)
     timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
     
@@ -416,12 +421,35 @@
     UILabel* deleteStatusLabel=[cell viewWithTag:105];
 
     UILabel* dateLabel=[cell viewWithTag:104];
-    if (dateAndTimeArray.count >0)
+    
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    
+    if (dateAndTimeArray.count>1)
     {
-            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
+        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+        
+        
+        NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
+        
+        // Convert date object into desired format
+        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+        NSString *newDateString = [dateFormatter stringFromDate:date];
+        
+        dateLabel.text=[NSString stringWithFormat:@"%@",newDateString];
+        
     }
     
    
+    int audioHour= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]/(60*60);
+    int audioHourByMod= [[awaitingFileTransferDict valueForKey:@"CurrentDuration"] intValue]%(60*60);
+    
+    int audioMinutes = audioHourByMod / 60;
+    int audioSeconds = audioHourByMod % 60;
+    
+    recordingDurationLabel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];
     
     if ([self.currentViewName isEqualToString:@"Transferred Today"])
     {
@@ -431,47 +459,50 @@
         
         if (dateAndTimeArray.count>1)
         {
-            timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
             
-//            NSDateFormatter *df = [[NSDateFormatter alloc] init];
-//            [df setDateFormat:@"MM-dd-yyyy"];
-//
-//            NSDate* date = [df dateFromString:[dateAndTimeArray objectAtIndex:0]];
-//
-//            [df setDateFormat:@"yyyy-MM-dd"];
-//            NSString *updatedDate = [df stringFromDate:date];
-//            dateLabel.text = [NSString stringWithFormat:@"%@",updatedDate];
-//
-//            if (updatedDate == nil)
-//            {
-                dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
+                timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
                 
-//            }
-//            else
-//            {
-//                dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",updatedDate]];
-//
-//            }
+                [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                
+                NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
+                
+                // Convert date object into desired format
+                [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+                NSString *newDateString = [dateFormatter stringFromDate:date];
+                
+                dateLabel.text=[NSString stringWithFormat:@"%@",newDateString];
+
+                timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+
+
         }
         
 
     }
-    if ([[awaitingFileTransferDict valueForKey:@"DeleteStatus"] isEqualToString:@"Delete"])
-    {
-        deleteStatusLabel.text=@"Deleted";
-    }
-    else
-        deleteStatusLabel.text=@"";
     
     if ([transferStatusString  isEqualToString: @"TransferFailed"])
     {
-//        [deleteStatusLabel setHidden:false];
+        //        [deleteStatusLabel setHidden:false];
         deleteStatusLabel.text = @"Transfer Failed";
     }
     else
+        {
+            deleteStatusLabel.text=@"";
+        }
+    
+    if ([deleteStatusString isEqualToString:@"Delete"])
     {
-        deleteStatusLabel.text=@"";
+        deleteStatusLabel.hidden = NO;
+        deleteStatusLabel.text=@"Deleted";
     }
+    else
+        if (![transferStatusString isEqualToString:@"TransferFailed"])
+        {
+            deleteStatusLabel.text=@"";
+
+        }
+    
+ 
     
     if ([[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"] && ([[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"NotTransferred"] || [[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"Resend"] || [[awaitingFileTransferDict valueForKey:@"TransferStatus"] isEqualToString:@"ResendFailed"]))
     {
@@ -630,8 +661,8 @@ else//to disaalow single row while that row is uploading
 
         if(([deleteStatusLabel.text containsString:@"Uploading"]))
         {
-            alertController = [UIAlertController alertControllerWithTitle:@"Alert?"
-                                                                  message:@"File is in use!"
+            alertController = [UIAlertController alertControllerWithTitle:@"Alert"
+                                                                  message:@"File is in use"
                                                            preferredStyle:UIAlertControllerStyleAlert];
             actionDelete = [UIAlertAction actionWithTitle:@"Ok"
                                                     style:UIAlertActionStyleDefault
@@ -974,8 +1005,17 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
 
 -(void)deleteMutipleFiles
 {
-    alertController = [UIAlertController alertControllerWithTitle:@"Delete?"
-                                                          message:DELETE_MESSAGE
+    NSString* deleteMessage;
+    if (arrayOfMarked.count > 1)
+    {
+        deleteMessage = DELETE_MESSAGE_MULTIPLES;
+    }
+    else
+    {
+        deleteMessage = DELETE_MESSAGE;
+    }
+    alertController = [UIAlertController alertControllerWithTitle:@"Delete"
+                                                          message:deleteMessage
                                                    preferredStyle:UIAlertControllerStyleAlert];
     
     
@@ -1039,10 +1079,19 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
 
 -(void)uploadMultipleFilesToserver
 {
+    NSString* transferMessage;
+    if (arrayOfMarked.count > 1)
+    {
+        transferMessage = TRANSFER_MESSAGE_MULTIPLES;
+    }
+    else
+    {
+        transferMessage = TRANSFER_MESSAGE;
+    }
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
 
-    alertController = [UIAlertController alertControllerWithTitle:TRANSFER_MESSAGE_MULTIPLES
+    alertController = [UIAlertController alertControllerWithTitle:transferMessage
                                                           message:@""
                                                    preferredStyle:UIAlertControllerStyleAlert];
     actionDelete = [UIAlertAction actionWithTitle:@"Yes"
@@ -1164,6 +1213,8 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
             NSDictionary* awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:i];
             NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
 
+//            NSLog(@"filename = %@, dic status = %@",fileName, [awaitingFileTransferDict valueForKey:@"DictationStatus"]);
+            
            if (![[awaitingFileTransferDict valueForKey:@"DictationStatus"] isEqualToString:@"RecordingFileUpload"])
             {
 

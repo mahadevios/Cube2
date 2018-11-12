@@ -326,11 +326,12 @@
     }
     NSUInteger newLength = [textField.text length] + [string length] - range.length;
     
-//    if (newLength==1)
-//    {
-//    [self resignResponder:textField enteredString:string]
-        [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.05];
-//    }
+    if (newLength==1)
+    {
+        [self performSelector:@selector(resignFirstResponder:) withObject:textField afterDelay:0.02];
+//    [self resignFirstResponder:textField];
+//        [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.05];
+    }
 //    else
 //    {
 //        [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.0];
@@ -338,37 +339,60 @@
     return newLength <= 1;
 }
 
--(void)resignResponder:(UITextField*)textfield
+//-(void)resignResponder:(UITextField*)textfield
+//{
+//    if (textfield==pinCode1TextField && textfield.text.length > 0)
+//    {
+//        [pinCode2TextField becomeFirstResponder];
+//    }
+//
+//    if (textfield==pinCode2TextField && textfield.text.length > 0)
+//    {
+//        [pinCode3TextField becomeFirstResponder];
+//
+//    }
+//    else if (textfield==pinCode2TextField && textfield.text.length == 0)
+//    {
+//        [pinCode1TextField becomeFirstResponder];
+//    }
+//
+//    if (textfield==pinCode3TextField && textfield.text.length > 0)
+//    {
+//        [pinCode4TextField becomeFirstResponder];
+//
+//    }
+//    else if (textfield==pinCode3TextField && textfield.text.length == 0)
+//    {
+//        [pinCode2TextField becomeFirstResponder];
+//    }
+//
+//    if (textfield==pinCode4TextField && textfield.text.length == 0)
+//    {
+//        [pinCode3TextField becomeFirstResponder];
+//    }
+   
+//}
+
+-(void)resignFirstResponder:(UITextField*)textfield
 {
     if (textfield==pinCode1TextField && textfield.text.length > 0)
     {
         [pinCode2TextField becomeFirstResponder];
     }
+    else
+        if (textfield==pinCode2TextField && textfield.text.length > 0)
+        {
+            [pinCode3TextField becomeFirstResponder];
+            
+        }
+        else
+            if (textfield==pinCode3TextField && textfield.text.length > 0)
+            {
+                [pinCode4TextField becomeFirstResponder];
+                
+            }
     
-    if (textfield==pinCode2TextField && textfield.text.length > 0)
-    {
-        [pinCode3TextField becomeFirstResponder];
-        
-    }
-    else if (textfield==pinCode2TextField && textfield.text.length == 0)
-    {
-        [pinCode1TextField becomeFirstResponder];
-    }
     
-    if (textfield==pinCode3TextField && textfield.text.length > 0)
-    {
-        [pinCode4TextField becomeFirstResponder];
-        
-    }
-    else if (textfield==pinCode3TextField && textfield.text.length == 0)
-    {
-        [pinCode2TextField becomeFirstResponder];
-    }
-    
-    if (textfield==pinCode4TextField && textfield.text.length == 0)
-    {
-        [pinCode3TextField becomeFirstResponder];
-    }
 }
 - (void)didReceiveMemoryWarning
 {

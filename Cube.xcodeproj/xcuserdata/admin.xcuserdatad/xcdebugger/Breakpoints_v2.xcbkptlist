@@ -234,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.765833"
+            timestampString = "563717280.508849"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "488"
-            endingLineNumber = "488"
+            startingLineNumber = "577"
+            endingLineNumber = "577"
             landmarkName = "-updateDictationStatus"
             landmarkType = "7">
          </BreakpointContent>
@@ -250,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.770398"
+            timestampString = "563717280.50893"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "490"
-            endingLineNumber = "490"
+            startingLineNumber = "579"
+            endingLineNumber = "579"
             landmarkName = "-updateDictationStatus"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.444429"
+            timestampString = "554109575.790084"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2404"
-            endingLineNumber = "2404"
+            startingLineNumber = "2694"
+            endingLineNumber = "2694"
             landmarkName = "-tableView:numberOfRowsInSection:"
             landmarkType = "7">
          </BreakpointContent>
@@ -282,12 +282,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.444482"
+            timestampString = "554109575.790134"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2397"
-            endingLineNumber = "2397"
-            landmarkName = "-tableView:numberOfRowsInSection:"
+            startingLineNumber = "2687"
+            endingLineNumber = "2687"
+            landmarkName = "-numberOfSectionsInTableView:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/DownloadMetaDataJob.m"
-            timestampString = "549210205.5781389"
+            timestampString = "561471479.951349"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
             landmarkName = "-connectionDidFinishLoading:"
             landmarkType = "7">
          </BreakpointContent>
@@ -390,31 +390,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.444664"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
-            landmarkName = "-viewWillAppear:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/ListViewController.m"
-            timestampString = "549374322.81497"
+            timestampString = "563717280.509137"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "650"
-            endingLineNumber = "650"
+            startingLineNumber = "662"
+            endingLineNumber = "662"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -426,11 +410,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/ListViewController.m"
-            timestampString = "549374322.815044"
+            timestampString = "563717280.509183"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "628"
-            endingLineNumber = "628"
+            startingLineNumber = "640"
+            endingLineNumber = "640"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -442,11 +426,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/ListViewController.m"
-            timestampString = "549374322.815092"
+            timestampString = "563717280.509223"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
             landmarkName = "-handleLongPress:"
             landmarkType = "7">
          </BreakpointContent>
@@ -458,11 +442,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/ListViewController.m"
-            timestampString = "549374322.815137"
+            timestampString = "563717280.509263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
             landmarkName = "-handleLongPress:"
             landmarkType = "7">
          </BreakpointContent>
@@ -474,11 +458,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/Database/Database.m"
-            timestampString = "549297147.926301"
+            timestampString = "560692487.605871"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1725"
-            endingLineNumber = "1725"
+            startingLineNumber = "1726"
+            endingLineNumber = "1726"
             landmarkName = "-updateUploadingFileDictationStatus"
             landmarkType = "7">
          </BreakpointContent>
@@ -490,11 +474,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/AppDelegate.mm"
-            timestampString = "548948255.431635"
+            timestampString = "553778633.295275"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "589"
-            endingLineNumber = "589"
+            startingLineNumber = "598"
+            endingLineNumber = "598"
             landmarkName = "-getImportedFiles"
             landmarkType = "7">
          </BreakpointContent>
@@ -506,11 +490,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/AppDelegate.mm"
-            timestampString = "548948255.431762"
+            timestampString = "553778633.295314"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "647"
-            endingLineNumber = "647"
+            startingLineNumber = "656"
+            endingLineNumber = "656"
             landmarkName = "-convertToWav:"
             landmarkType = "7">
             <Locations>
@@ -554,11 +538,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/AppDelegate.mm"
-            timestampString = "548948255.431854"
+            timestampString = "553778633.29535"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "689"
-            endingLineNumber = "689"
+            startingLineNumber = "698"
+            endingLineNumber = "698"
             landmarkName = "-convertToWav:"
             landmarkType = "7">
          </BreakpointContent>
@@ -570,11 +554,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/AppDelegate.mm"
-            timestampString = "548948255.43195"
+            timestampString = "553778633.295386"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "599"
-            endingLineNumber = "599"
+            startingLineNumber = "608"
+            endingLineNumber = "608"
             landmarkName = "-convertToWav:"
             landmarkType = "7">
          </BreakpointContent>
@@ -586,7 +570,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/TransferListViewController.m"
-            timestampString = "549375135.7720211"
+            timestampString = "563717280.509398"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "373"
@@ -602,7 +586,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/TransferListViewController.m"
-            timestampString = "549375135.772118"
+            timestampString = "563717280.509443"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "375"
@@ -618,7 +602,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/TransferListViewController.m"
-            timestampString = "549375135.772198"
+            timestampString = "563717280.509483"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "267"
@@ -634,7 +618,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/TransferListViewController.m"
-            timestampString = "549375135.772302"
+            timestampString = "563717280.509522"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "286"
@@ -650,11 +634,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.772392"
+            timestampString = "563717280.509563"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3282"
-            endingLineNumber = "3282"
+            startingLineNumber = "3572"
+            endingLineNumber = "3572"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -666,11 +650,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.773478"
+            timestampString = "563717280.509607"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3251"
-            endingLineNumber = "3251"
+            startingLineNumber = "3483"
+            endingLineNumber = "3483"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -682,11 +666,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.77465"
+            timestampString = "563717280.509649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3152"
-            endingLineNumber = "3152"
+            startingLineNumber = "3335"
+            endingLineNumber = "3335"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -698,11 +682,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.775758"
+            timestampString = "563717280.509691"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3271"
-            endingLineNumber = "3271"
+            startingLineNumber = "3559"
+            endingLineNumber = "3559"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -714,11 +698,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.776793"
+            timestampString = "563717280.509733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2221"
-            endingLineNumber = "2221"
+            startingLineNumber = "2356"
+            endingLineNumber = "2356"
             landmarkName = "-audioRecord"
             landmarkType = "7">
          </BreakpointContent>
@@ -730,11 +714,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.777812"
+            timestampString = "563717280.509775"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3336"
-            endingLineNumber = "3336"
+            startingLineNumber = "3634"
+            endingLineNumber = "3634"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -746,11 +730,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.7788481"
+            timestampString = "563717280.509817"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "776"
-            endingLineNumber = "776"
+            startingLineNumber = "865"
+            endingLineNumber = "865"
             landmarkName = "-setStartRecordingView:"
             landmarkType = "7">
          </BreakpointContent>
@@ -762,11 +746,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.779868"
+            timestampString = "563717280.509859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2227"
-            endingLineNumber = "2227"
+            startingLineNumber = "2362"
+            endingLineNumber = "2362"
             landmarkName = "-audioRecord"
             landmarkType = "7">
          </BreakpointContent>
@@ -778,11 +762,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.78088"
+            timestampString = "563717280.5099"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "744"
-            endingLineNumber = "744"
+            startingLineNumber = "833"
+            endingLineNumber = "833"
             landmarkName = "-setStartRecordingView:"
             landmarkType = "7">
          </BreakpointContent>
@@ -794,11 +778,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.7819411"
+            timestampString = "563717280.509943"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3135"
-            endingLineNumber = "3135"
+            startingLineNumber = "3318"
+            endingLineNumber = "3318"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -810,11 +794,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.7829649"
+            timestampString = "563717280.509985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "666"
-            endingLineNumber = "666"
+            startingLineNumber = "755"
+            endingLineNumber = "755"
             landmarkName = "-setRoundedView:toDiameter:"
             landmarkType = "7">
          </BreakpointContent>
@@ -826,11 +810,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.783986"
+            timestampString = "563717280.510026"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "816"
-            endingLineNumber = "816"
+            startingLineNumber = "905"
+            endingLineNumber = "905"
             landmarkName = "-setStartRecordingView:"
             landmarkType = "7">
          </BreakpointContent>
@@ -842,11 +826,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.7850339"
+            timestampString = "563717280.5100681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3208"
-            endingLineNumber = "3208"
+            startingLineNumber = "3391"
+            endingLineNumber = "3391"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -858,11 +842,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.786108"
+            timestampString = "563717280.510108"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3217"
-            endingLineNumber = "3217"
+            startingLineNumber = "3400"
+            endingLineNumber = "3400"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -874,11 +858,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.7871619"
+            timestampString = "563717280.510148"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2244"
-            endingLineNumber = "2244"
+            startingLineNumber = "2379"
+            endingLineNumber = "2379"
             landmarkName = "-editRecord"
             landmarkType = "7">
          </BreakpointContent>
@@ -890,27 +874,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.788186"
+            timestampString = "563717280.5101891"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3034"
-            endingLineNumber = "3034"
-            landmarkName = "-deleteToEnd"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.78923"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3032"
-            endingLineNumber = "3032"
+            startingLineNumber = "3203"
+            endingLineNumber = "3203"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -922,11 +890,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.4462399"
+            timestampString = "554109575.7912771"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "444"
-            endingLineNumber = "444"
+            startingLineNumber = "479"
+            endingLineNumber = "479"
             landmarkName = "-dismissView"
             landmarkType = "7">
          </BreakpointContent>
@@ -938,11 +906,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.446283"
+            timestampString = "554109575.791321"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2193"
-            endingLineNumber = "2193"
+            startingLineNumber = "2254"
+            endingLineNumber = "2254"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -954,27 +922,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.790388"
+            timestampString = "563717280.510275"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1162"
-            endingLineNumber = "1162"
-            landmarkName = "-stopUneditedRecording"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.7914211"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2704"
-            endingLineNumber = "2704"
+            startingLineNumber = "2845"
+            endingLineNumber = "2845"
             landmarkName = "-save:"
             landmarkType = "7">
          </BreakpointContent>
@@ -986,11 +938,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.7925431"
+            timestampString = "563717280.5103199"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1122"
-            endingLineNumber = "1122"
+            startingLineNumber = "1216"
+            endingLineNumber = "1216"
             landmarkName = "-showAudioTimeDuration"
             landmarkType = "7">
          </BreakpointContent>
@@ -1002,11 +954,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.793552"
+            timestampString = "563717280.510363"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3295"
-            endingLineNumber = "3295"
+            startingLineNumber = "3587"
+            endingLineNumber = "3587"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -1018,11 +970,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.794559"
+            timestampString = "563717280.510404"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2954"
-            endingLineNumber = "2954"
+            startingLineNumber = "3099"
+            endingLineNumber = "3099"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -1034,11 +986,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.795597"
+            timestampString = "563717280.510446"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3206"
-            endingLineNumber = "3206"
+            startingLineNumber = "3389"
+            endingLineNumber = "3389"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -1050,27 +1002,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.796681"
+            timestampString = "563717280.510487"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2952"
-            endingLineNumber = "2952"
-            landmarkName = "-deleteToEnd"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.797707"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3049"
-            endingLineNumber = "3049"
+            startingLineNumber = "3097"
+            endingLineNumber = "3097"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -1082,7 +1018,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/APIManager.m"
-            timestampString = "549374151.8826849"
+            timestampString = "554108155.1414419"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "685"
@@ -1098,7 +1034,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/APIManager.m"
-            timestampString = "549374151.882735"
+            timestampString = "554108155.141505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "551"
@@ -1114,7 +1050,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/APIManager.m"
-            timestampString = "549374151.8827749"
+            timestampString = "554108155.14156"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "708"
@@ -1130,12 +1066,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/APIManager.m"
-            timestampString = "549374151.882815"
+            timestampString = "554108155.141613"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1112"
-            endingLineNumber = "1112"
-            landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:"
+            startingLineNumber = "1126"
+            endingLineNumber = "1126"
+            landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1146,11 +1082,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/AudioDetailsViewController.m"
-            timestampString = "549375135.798853"
+            timestampString = "563717280.510609"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1007"
-            endingLineNumber = "1007"
+            startingLineNumber = "1076"
+            endingLineNumber = "1076"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1162,7 +1098,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/Database/Database.m"
-            timestampString = "549297147.929462"
+            timestampString = "560692487.647687"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "115"
@@ -1178,7 +1114,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/TransferListViewController.m"
-            timestampString = "549375135.798961"
+            timestampString = "563717280.510675"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "124"
@@ -1194,11 +1130,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/AppDelegate.mm"
-            timestampString = "548948255.46267"
+            timestampString = "553778633.29786"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
             landmarkName = "-application:didFinishLaunchingWithOptions:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1210,11 +1146,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.799098"
+            timestampString = "563717280.5107369"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3050"
-            endingLineNumber = "3050"
+            startingLineNumber = "3219"
+            endingLineNumber = "3219"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -1226,11 +1162,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.800154"
+            timestampString = "563717280.510782"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3274"
-            endingLineNumber = "3274"
+            startingLineNumber = "3562"
+            endingLineNumber = "3562"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -1242,11 +1178,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/TransferListViewController.m"
-            timestampString = "549375135.801201"
+            timestampString = "563717280.510825"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "697"
-            endingLineNumber = "697"
+            startingLineNumber = "728"
+            endingLineNumber = "728"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1258,7 +1194,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/APIManager.m"
-            timestampString = "549374151.8837399"
+            timestampString = "554108155.141856"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "634"
@@ -1274,11 +1210,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/AudioDetailsViewController.m"
-            timestampString = "549375135.801332"
+            timestampString = "563717280.510887"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "-viewWillAppear:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1290,11 +1226,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.448132"
+            timestampString = "554109575.791917"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2844"
-            endingLineNumber = "2844"
+            startingLineNumber = "3164"
+            endingLineNumber = "3164"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -1306,11 +1242,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/Database/Database.m"
-            timestampString = "549297147.9306509"
+            timestampString = "560692487.648086"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2152"
-            endingLineNumber = "2152"
+            startingLineNumber = "2153"
+            endingLineNumber = "2153"
             landmarkName = "-getlistOfimportedFilesAudioDetailsArray:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1322,7 +1258,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/APIManager.m"
-            timestampString = "549374151.883876"
+            timestampString = "554108155.141997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "689"
@@ -1338,7 +1274,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/TransferListViewController.m"
-            timestampString = "549375135.8014849"
+            timestampString = "563717280.510987"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "363"
@@ -1354,7 +1290,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/TransferListViewController.m"
-            timestampString = "549375135.8015831"
+            timestampString = "563717280.511029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "146"
@@ -1370,7 +1306,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/TransferListViewController.m"
-            timestampString = "549375135.801653"
+            timestampString = "563717280.511067"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "285"
@@ -1386,7 +1322,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/APIManager.m"
-            timestampString = "549374151.885079"
+            timestampString = "554108155.1421601"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "690"
@@ -1402,11 +1338,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/APIManager.m"
-            timestampString = "549374151.885125"
+            timestampString = "554108155.1422909"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "857"
-            endingLineNumber = "857"
+            startingLineNumber = "860"
+            endingLineNumber = "860"
             landmarkName = "-URLSession:task:didCompleteWithError:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1418,7 +1354,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/APIManager.m"
-            timestampString = "549374151.885166"
+            timestampString = "554108155.142355"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "594"
@@ -1434,11 +1370,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/AppDelegate.mm"
-            timestampString = "548948255.465524"
+            timestampString = "553778633.29918"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
             landmarkName = "-uploadNextFile"
             landmarkType = "7">
             <Locations>
@@ -1514,11 +1450,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/APIManager.m"
-            timestampString = "549374151.88527"
+            timestampString = "554108155.142508"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "993"
-            endingLineNumber = "993"
+            startingLineNumber = "996"
+            endingLineNumber = "996"
             landmarkName = "-URLSession:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1530,12 +1466,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.80186"
+            timestampString = "563717280.5112391"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2756"
-            endingLineNumber = "2756"
-            landmarkName = "-didReceiveMemoryWarning"
+            startingLineNumber = "2897"
+            endingLineNumber = "2897"
+            landmarkName = "-deleteRecording:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1578,11 +1514,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/AudioDetailsViewController.m"
-            timestampString = "549375135.802924"
+            timestampString = "563717280.511324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1141"
-            endingLineNumber = "1141"
+            startingLineNumber = "1219"
+            endingLineNumber = "1219"
             landmarkName = "-showEditRecordingView"
             landmarkType = "7">
          </BreakpointContent>
@@ -1594,11 +1530,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.449198"
+            timestampString = "554109575.792268"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "-viewWillAppear:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1610,11 +1546,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.449264"
+            timestampString = "554109575.792313"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "602"
-            endingLineNumber = "602"
+            startingLineNumber = "639"
+            endingLineNumber = "639"
             landmarkName = "-updateTimer"
             landmarkType = "7">
          </BreakpointContent>
@@ -1626,11 +1562,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.449319"
+            timestampString = "554109575.792354"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2628"
-            endingLineNumber = "2628"
+            startingLineNumber = "2920"
+            endingLineNumber = "2920"
             landmarkName = "-editAudioButtonClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1642,11 +1578,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.449365"
+            timestampString = "554109575.792397"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2605"
-            endingLineNumber = "2605"
+            startingLineNumber = "2897"
+            endingLineNumber = "2897"
             landmarkName = "-editAudioButtonClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1658,11 +1594,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.44941"
+            timestampString = "554109575.792439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2584"
-            endingLineNumber = "2584"
+            startingLineNumber = "2876"
+            endingLineNumber = "2876"
             landmarkName = "-editAudioButtonClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1674,11 +1610,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.449481"
+            timestampString = "554109575.792479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2533"
-            endingLineNumber = "2533"
+            startingLineNumber = "2825"
+            endingLineNumber = "2825"
             landmarkName = "-editAudioButtonClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1690,11 +1626,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.803129"
+            timestampString = "563717280.511477"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3288"
-            endingLineNumber = "3288"
+            startingLineNumber = "3580"
+            endingLineNumber = "3580"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -1706,11 +1642,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.804159"
+            timestampString = "563717280.511521"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2857"
-            endingLineNumber = "2857"
+            startingLineNumber = "3002"
+            endingLineNumber = "3002"
             landmarkName = "-editAudioButtonPressed:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1722,11 +1658,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.805161"
+            timestampString = "563717280.5115629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "934"
-            endingLineNumber = "934"
+            startingLineNumber = "1023"
+            endingLineNumber = "1023"
             landmarkName = "-setStartRecordingView:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1738,11 +1674,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.8061759"
+            timestampString = "563717280.511604"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3286"
-            endingLineNumber = "3286"
+            startingLineNumber = "3576"
+            endingLineNumber = "3576"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -1754,11 +1690,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.807206"
+            timestampString = "563717280.511646"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3134"
-            endingLineNumber = "3134"
+            startingLineNumber = "3317"
+            endingLineNumber = "3317"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -1770,11 +1706,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.80823"
+            timestampString = "563717280.511687"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3136"
-            endingLineNumber = "3136"
+            startingLineNumber = "3319"
+            endingLineNumber = "3319"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -1786,11 +1722,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.449845"
+            timestampString = "554109575.7928309"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "601"
-            endingLineNumber = "601"
+            startingLineNumber = "638"
+            endingLineNumber = "638"
             landmarkName = "-updateTimer"
             landmarkType = "7">
          </BreakpointContent>
@@ -1802,7 +1738,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/TransferListViewController.m"
-            timestampString = "549375135.8092721"
+            timestampString = "563717280.5118051"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "389"
@@ -1818,27 +1754,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.8093489"
+            timestampString = "563717280.511847"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3267"
-            endingLineNumber = "3267"
-            landmarkName = "-composeAudio"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.810364"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1296"
-            endingLineNumber = "1296"
+            startingLineNumber = "1393"
+            endingLineNumber = "1393"
             landmarkName = "-stopEditedRecording"
             landmarkType = "7">
          </BreakpointContent>
@@ -1850,11 +1770,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.8113919"
+            timestampString = "563717280.511899"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1305"
-            endingLineNumber = "1305"
+            startingLineNumber = "1402"
+            endingLineNumber = "1402"
             landmarkName = "-stopEditedRecording"
             landmarkType = "7">
          </BreakpointContent>
@@ -1866,11 +1786,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.8124371"
+            timestampString = "563717280.511943"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2338"
-            endingLineNumber = "2338"
+            startingLineNumber = "2473"
+            endingLineNumber = "2473"
             landmarkName = "-prepareAudioPlayer"
             landmarkType = "7">
          </BreakpointContent>
@@ -1878,31 +1798,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.813449"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2973"
-            endingLineNumber = "2973"
-            landmarkName = "-deleteToEnd"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "549375135.8145159"
+            timestampString = "563717280.511984"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1903"
-            endingLineNumber = "1903"
+            startingLineNumber = "2001"
+            endingLineNumber = "2001"
             landmarkName = "-uploadAudio:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1914,11 +1818,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/DownloadMetaDataJob.m"
-            timestampString = "549210205.586458"
+            timestampString = "561471479.9530441"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "444"
-            endingLineNumber = "444"
+            startingLineNumber = "470"
+            endingLineNumber = "470"
             landmarkName = "-connectionDidFinishLoading:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1930,11 +1834,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/DocFilesViewController.m"
-            timestampString = "548577801.089819"
+            timestampString = "561471479.953198"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "681"
-            endingLineNumber = "681"
+            startingLineNumber = "699"
+            endingLineNumber = "699"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1946,11 +1850,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/SpeechRecognitionViewController.m"
-            timestampString = "547028474.431752"
+            timestampString = "551285460.948917"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1253"
-            endingLineNumber = "1253"
+            startingLineNumber = "1319"
+            endingLineNumber = "1319"
             landmarkName = "-createDocFile"
             landmarkType = "7">
          </BreakpointContent>
@@ -1962,11 +1866,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/DocFilesViewController.m"
-            timestampString = "548577801.090104"
+            timestampString = "561471479.9536361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "988"
-            endingLineNumber = "988"
+            startingLineNumber = "1006"
+            endingLineNumber = "1006"
             landmarkName = "-addPopView:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1978,11 +1882,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/Database/Database.m"
-            timestampString = "549297147.9331141"
+            timestampString = "560692487.648912"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1225"
-            endingLineNumber = "1225"
+            startingLineNumber = "1226"
+            endingLineNumber = "1226"
             landmarkName = "-getListOfTransferredOrDeletedFiles:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1994,11 +1898,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/Database/Database.m"
-            timestampString = "549297147.933762"
+            timestampString = "560692487.649169"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2671"
-            endingLineNumber = "2671"
+            startingLineNumber = "2672"
+            endingLineNumber = "2672"
             landmarkName = "-getUploadedFilesDictationIdList:filterDate:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2010,11 +1914,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/Database/Database.m"
-            timestampString = "549297147.9343801"
+            timestampString = "560692487.649425"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2496"
-            endingLineNumber = "2496"
+            startingLineNumber = "2497"
+            endingLineNumber = "2497"
             landmarkName = "-getFilesToBePurged"
             landmarkType = "7">
          </BreakpointContent>
@@ -2025,13 +1929,237 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Cube/AppDelegate.mm"
-            timestampString = "548948255.4816689"
+            filePath = "Cube/ViewControllers/RecordViewController.mm"
+            timestampString = "563717280.512161"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "412"
-            endingLineNumber = "412"
-            landmarkName = "-applicationWillEnterForeground:"
+            startingLineNumber = "3307"
+            endingLineNumber = "3307"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/RecordViewController.mm"
+            timestampString = "563717280.512206"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3154"
+            endingLineNumber = "3154"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/RecordViewController.mm"
+            timestampString = "563717280.512248"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3407"
+            endingLineNumber = "3407"
+            landmarkName = "-composeAudio"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/RecordViewController.mm"
+            timestampString = "563717280.51229"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3560"
+            endingLineNumber = "3560"
+            landmarkName = "-composeAudio"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/RecordViewController.mm"
+            timestampString = "563717280.5123301"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3656"
+            endingLineNumber = "3656"
+            landmarkName = "-composeAudio"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/RecordViewController.mm"
+            timestampString = "563717280.5123709"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3444"
+            endingLineNumber = "3444"
+            landmarkName = "-composeAudio"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/RecordViewController.mm"
+            timestampString = "563717280.512413"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3214"
+            endingLineNumber = "3214"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/AudioDetailsViewController.m"
+            timestampString = "563717280.512455"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "855"
+            endingLineNumber = "855"
+            landmarkName = "-transferDictationButtonClicked:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/AudioDetailsViewController.m"
+            timestampString = "563717280.512493"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "859"
+            endingLineNumber = "859"
+            landmarkName = "-transferDictationButtonClicked:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/ListViewController.m"
+            timestampString = "563717280.512531"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "907"
+            endingLineNumber = "907"
+            landmarkName = "-setAudioDetailOrEmptyViewController:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/TransferredOrDeletedAudioDetailsViewController.m"
+            timestampString = "563717280.5125721"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "448"
+            endingLineNumber = "448"
+            landmarkName = "-resendButtonClckied:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/LoginViewController.m"
+            timestampString = "554109575.794156"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "378"
+            endingLineNumber = "378"
+            landmarkName = "-resignFirstResponder:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/LoginViewController.m"
+            timestampString = "554109575.794198"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
+            landmarkName = "-textField:shouldChangeCharactersInRange:replacementString:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            timestampString = "554109575.794238"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1617"
+            endingLineNumber = "1617"
+            landmarkName = "-stopRecordingButtonClicked:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            timestampString = "554109575.794279"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3021"
+            endingLineNumber = "3021"
+            landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2042,12 +2170,268 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "549303510.450412"
+            timestampString = "554109575.794347"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1508"
-            endingLineNumber = "1508"
-            landmarkName = "-pauseRecording"
+            startingLineNumber = "3185"
+            endingLineNumber = "3185"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            timestampString = "554109575.794404"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2519"
+            endingLineNumber = "2519"
+            landmarkName = "-composeAudio"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            timestampString = "554109575.7944469"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2310"
+            endingLineNumber = "2310"
+            landmarkName = "-composeAudio"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            timestampString = "554109575.794488"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3037"
+            endingLineNumber = "3037"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/RecordViewController.mm"
+            timestampString = "563717280.513051"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3130"
+            endingLineNumber = "3130"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            timestampString = "554109575.794575"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3111"
+            endingLineNumber = "3111"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            timestampString = "554109575.794619"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3107"
+            endingLineNumber = "3107"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            timestampString = "554109575.79466"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3058"
+            endingLineNumber = "3058"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            timestampString = "554109575.794701"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3118"
+            endingLineNumber = "3118"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            timestampString = "554109575.794742"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3131"
+            endingLineNumber = "3131"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__45-[InCompleteRecordViewController deleteToEnd]_block_invoke.746"
+                  moduleName = "Cube"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Documents/CubeBackUp/cube-master%202__16-aug/Cube/ViewControllers/InCompleteRecordViewController.mm"
+                  timestampString = "563717282.150229"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "3131"
+                  endingLineNumber = "3131"
+                  offsetFromSymbolStart = "1427">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.752"
+                  moduleName = "Cube"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Documents/CubeBackUp/cube-master%202__16-aug/Cube/ViewControllers/InCompleteRecordViewController.mm"
+                  timestampString = "563717282.151934"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "3131"
+                  endingLineNumber = "3131"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            timestampString = "554109575.794783"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3113"
+            endingLineNumber = "3113"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__45-[InCompleteRecordViewController deleteToEnd]_block_invoke.746"
+                  moduleName = "Cube"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Documents/CubeBackUp/cube-master%202__16-aug/Cube/ViewControllers/InCompleteRecordViewController.mm"
+                  timestampString = "563717282.156363"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "3114"
+                  endingLineNumber = "3114"
+                  offsetFromSymbolStart = "1084">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.748"
+                  moduleName = "Cube"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Documents/CubeBackUp/cube-master%202__16-aug/Cube/ViewControllers/InCompleteRecordViewController.mm"
+                  timestampString = "563717282.158372"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "3114"
+                  endingLineNumber = "3114"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            timestampString = "554109575.794825"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3124"
+            endingLineNumber = "3124"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/TransferListViewController.m"
+            timestampString = "563717280.5132329"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "403"
+            endingLineNumber = "403"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2058,11 +2442,91 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/DownloadMetaDataJob.m"
-            timestampString = "549210205.587218"
+            timestampString = "561471479.954391"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "262"
-            endingLineNumber = "262"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "-connectionDidFinishLoading:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/HomeViewController.m"
+            timestampString = "554108350.1119829"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "625"
+            endingLineNumber = "625"
+            landmarkName = "-showCompletedDocFIlesView:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/DocFilesViewController.m"
+            timestampString = "561471479.954496"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "-validateSendIdsResponse:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/DocFilesViewController.m"
+            timestampString = "561471479.954742"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "-getCompletedFilesForDays:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/DocFilesViewController.m"
+            timestampString = "561471479.954962"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "-validateSendIdsResponse:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/API Manager/DownloadMetaDataJob.m"
+            timestampString = "561471823.735219"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "416"
+            endingLineNumber = "416"
             landmarkName = "-connectionDidFinishLoading:"
             landmarkType = "7">
          </BreakpointContent>

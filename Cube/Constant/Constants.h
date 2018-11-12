@@ -37,6 +37,8 @@
 #define  FILE_DOWNLOAD_API                    @"encedecr_MobileDownloadDocFile"
 #define  SEND_DICTATION_IDS_API               @"encrdecr_MobileRequestForCompleteFiles"
 #define  SEND_COMMENT_API                     @"encdecr_MobileDocFileComment"
+#define  DOCX_FILE_UPLOAD_API                  @"encedecr_MobileUploadDocFile"
+
 
 #define  SECRET_KEY                           @"cubemob"
 #define  POST                           @"POST"
@@ -81,10 +83,11 @@
 #define LOW_STORAGE_THRESHOLD                  @"Low storage threshold"
 #define PURGE_DELETED_DATA                     @"Purge data by"
 #define CHANGE_YOUR_PASSWORD                   @"Change your pin"
-#define DELETE_MESSAGE                         @"Do you want to delete this recording?"
 #define DELETE_MESSAGE_DOCX                    @"Do you want to delete this file?"
-#define TRANSFER_MESSAGE_MULTIPLES             @"Are you sure you want to transfer this recording(s)?"
+#define DELETE_MESSAGE                         @"Do you want to delete this recording?"
+#define DELETE_MESSAGE_MULTIPLES               @"Do you want to delete these recordings?"
 #define TRANSFER_MESSAGE                       @"Are you sure you want to transfer this recording?"
+#define TRANSFER_MESSAGE_MULTIPLES             @"Are you sure you want to transfer these recordings?"
 #define RESEND_MESSAGE                         @"Are you sure you want to resend this recording?"
 #define PAUSE_STOP_MESSAGE                     @"Recording is on.Please pause/stop the recording"
 #define MAXIMUM_RECORDING_LIMIT_MESSAGE        @"Recording duration length exceeded,please start new recording for further dictation"

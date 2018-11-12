@@ -77,6 +77,12 @@
     BOOL recordingRestrictionLimitCrossed;
     
     long totalSecondsOfAudio;
+    
+    bool isViewSetUpWhenFirstAppear;
+    
+    float_t updatedInsertionTime;
+    
+    float playerDurationWithMilliSeconds;
 //    UIButton* uploadLaterButton;
 //    UIButton* recordNewButton;
 //    UIView* animatedView;

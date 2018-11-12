@@ -138,25 +138,17 @@
     if (dateAndTimeArray.count>1)
     {
         
-        NSDateFormatter *df = [[NSDateFormatter alloc] init];
-        [df setDateFormat:@"yyyy-MM-dd"];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSString* dateStr = [NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
+        NSDate *date = [dateFormatter dateFromString:dateStr];
         
-        NSDate* date = [df dateFromString:[dateAndTimeArray objectAtIndex:0]];
+        // Convert date object into desired format
+        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+        NSString *newDateString = [dateFormatter stringFromDate:date];
         
-        [df setDateFormat:@"yyyy-MM-dd"];
-        NSString *updatedDate = [df stringFromDate:date];
-        dateLabel.text = [NSString stringWithFormat:@"%@",updatedDate];
-        
-        if (updatedDate == nil)
-        {
-            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
-            
-        }
-        else
-        {
-            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",updatedDate]];
-            
-        }
+        dateLabel.text = newDateString;
+
         
         UILabel* timeLabel=[cell viewWithTag:105];
         timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];

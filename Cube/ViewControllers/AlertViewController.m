@@ -49,7 +49,7 @@
 
 -(void)setFirstRowSelected
 {
-    if (self.splitViewController.isCollapsed == false) // for ipad reguler width reguler height
+    if (self.splitViewController.isCollapsed == false || self.splitViewController == nil) // for ipad reguler width reguler height
     {
         NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:0 inSection:0];
         

@@ -184,7 +184,19 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     NSString* dateAndTimeString = [app getDateAndTimeString];
     NSArray* dateAndTimeArray = [dateAndTimeString componentsSeparatedByString:@" "];
     NSString* dateString = [dateAndTimeArray objectAtIndex:0];
-    dateLabel.text = dateString;
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString* dateStr = [NSString stringWithFormat:@"%@",dateString];
+    NSDate *date = [dateFormatter dateFromString:dateStr];
+    
+    // Convert date object into desired format
+    [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+    NSString *newDateString = [dateFormatter stringFromDate:date];
+    
+    dateLabel.text = newDateString;
+    
+//    dateLabel.text = dateString;
     
     // set the slected department to user defaults
     NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
@@ -243,6 +255,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(saveRecordin) name:NOTIFICATION_SAVE_RECORDING
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(pausePlayerFromBackGround) name:NOTIFICATION_PAUSE_AUDIO_PALYER
+                                               object:nil];
+    
     self.speechToTextCircleView.layer.borderColor = [UIColor darkGrayColor].CGColor;
     
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
@@ -253,6 +270,23 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryPlayAndRecord];
     }
+}
+
+-(void)pausePlayerFromBackGround
+{
+    if (player.isPlaying)
+    {
+        UIView* startRecordingView= [self.view viewWithTag:303];
+        //
+        //        UILabel* recordingStatusLabel=[self.view viewWithTag:99];
+        //
+        UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
+        
+        startRecordingImageView.image = [UIImage imageNamed:@"Play"];
+        
+        [player pause];
+    }
+    
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -352,11 +386,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if (![APIManager sharedManager].userSettingsOpened)
     {
         
-        //        UIView* startRecordingView= [self.view viewWithTag:303];
+//                UIView* startRecordingView= [self.view viewWithTag:303];
         //
         //        UILabel* recordingStatusLabel=[self.view viewWithTag:99];
         //
-        //        UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
+//                UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
         //
         //        UIImageView* counterLabel= [startRecordingView viewWithTag:503];
         //
@@ -395,7 +429,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         //        startRecordingImageView.frame=CGRectMake((startRecordingView.frame.size.width/2)-15, (startRecordingView.frame.size.height/2)-25, 30, 50);
         //    
         //        [animatedView removeFromSuperview];
-        [player stop];
+        
+//        if (player.isPlaying)
+//        {
+//            startRecordingImageView.image=[UIImage imageNamed:@"Play"];
+//            
+//            [player pause];
+//        }
+       
         //   [UIApplication sharedApplication].idleTimerDisabled = NO;
     }
     
@@ -415,21 +456,69 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if (!stopped && !paused)
     {
         
-        recordingPausedOrStoped=YES;
-                
+//        recordingPausedOrStoped=YES;
+        
         UIImageView* animatedView= [self.view viewWithTag:1001];
         
         [animatedView stopAnimating];
         
         animatedView.image=[UIImage imageNamed:@"SoundWave-3"];
         
-        [self performSelector:@selector(pauseRecording) withObject:nil afterDelay:0.3];
-       // [self pauseRecording];
         
+        /////
+        [stopTimer invalidate];
         
+        UIView* startRecordingView = [self.view viewWithTag:303];
+        
+        UIImageView* startRecordingImageView = [startRecordingView viewWithTag:403];
+        
+        [startRecordingImageView setFrame:CGRectMake((startRecordingView.frame.size.width/2)-15, (startRecordingView.frame.size.height/2)-16, 30, 32)];
+        
+//        startRecordingImageView.image=[UIImage imageNamed:@"ResumeNew"];
+        //
+        dictationTimerSeconds=0;
+        recordingPauseAndExit=YES;
+        paused=YES;
+        [recorder pause];
         UILabel* recordOrPauseLabel = [self.view viewWithTag:603];
         
-        recordOrPauseLabel.text = @"Resume";
+        recordOrPauseLabel.text = @"Resume";        /////
+        
+        
+        if ( [startRecordingImageView.image isEqual:[UIImage imageNamed:@"PauseNew"]] &&  !recordingPausedOrStoped && edited)
+        {
+            
+            [startRecordingImageView setFrame:CGRectMake((startRecordingView.frame.size.width/2)-15, (startRecordingView.frame.size.height/2)-16, 30, 32)];
+            
+            recordingPausedOrStoped=YES;
+            
+            UIApplication*    appl = [UIApplication sharedApplication];
+            
+            task = [appl beginBackgroundTaskWithExpirationHandler:^{
+                [appl endBackgroundTask:task];
+                task = UIBackgroundTaskInvalid;
+            }];
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                [self performSelectorOnMainThread:@selector(showHud) withObject:nil waitUntilDone:NO];
+                
+                [self composeAudio];
+                
+                
+            });
+            startRecordingImageView.image=[UIImage imageNamed:@"ResumeNew"];
+            
+        }
+        else
+        {
+            recordingPausedOrStoped=YES;
+            
+            startRecordingImageView.image=[UIImage imageNamed:@"ResumeNew"];
+        }
+        
+        ////
+      
         
     
     }
@@ -544,6 +633,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 -(void)dismissView
 {
+    [player stop];
+    
     [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -849,7 +940,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             if([startRecordingView.backgroundColor isEqual:[UIColor blackColor]])
             {
                 [UIApplication sharedApplication].idleTimerDisabled = NO;
-                if ([startRecordingImageView.image isEqual:[UIImage imageNamed:@"Play"]])
+                if ([startRecordingImageView.image isEqual:[UIImage imageNamed:@"Play"]] || !player.isPlaying)
                 {
                     
                     sliderTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateSliderTime:) userInfo:nil repeats:YES];
@@ -947,6 +1038,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 -(void)setStopRecordingView:(UIButton*)sender
 {
     
+    
     if (edited && !paused)
     {
         
@@ -1016,6 +1108,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         [self stopUneditedRecording];
 
     }
+    
+
+    
+//    updatedInsertionTime = 0;
     
     
 }
@@ -1214,6 +1310,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         
     }
+    
+    playerDurationWithMilliSeconds = player.duration;
+
 
 }
 
@@ -1348,7 +1447,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             }
         
         
-        
+    playerDurationWithMilliSeconds = player.duration;
+
         
   //  }
     
@@ -1861,7 +1961,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //                        NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
 //                        [transferDictationButton setHidden:YES];
 //                        [deleteDictationButton setHidden:YES];
-                        
+                        [player stop];
                         [[self.view viewWithTag:701] setHidden:YES];//delete button and image
                         [[self.view viewWithTag:702] setHidden:YES];
                         [[self.view viewWithTag:703] setHidden:YES];//edit button and image
@@ -1914,6 +2014,20 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                userInfo:nil
                                                 repeats:YES];
 }
+
+-(void)setMilliSecnodsTimer
+{
+    stopTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
+                                                 target:self
+                                               selector:@selector(updateMilliSecondsTimer)
+                                               userInfo:nil
+                                                repeats:YES];
+}
+
+//-(void)updateMilliSecondsTimer
+//{
+//    milliSeconds = milliSeconds + 0.1;
+//}
 
 -(void)updateTimer
 {
@@ -2010,10 +2124,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)sliderValueChanged
 {
-    player.currentTime = (int)audioRecordSlider.value;
+    player.currentTime = audioRecordSlider.value;
     
+    playerDurationWithMilliSeconds = audioRecordSlider.value;
     
-    int currentTime=player.currentTime;
+    int currentTime=audioRecordSlider.value;
     int minutes = currentTime/60;
     int seconds = currentTime%60;
     
@@ -2030,6 +2145,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                    });
     
 
+    float sliderCurrentTimeDown = floorf(audioRecordSlider.value * 100) / 100;
+    
+    float playerCurrentTimeDown = floorf(player.duration * 100) / 100;
+
+    if (sliderCurrentTimeDown == playerCurrentTimeDown)
+    {
+        [player stop];
+        
+        [self audioPlayerDidFinishPlaying:player successfully:true];
+    }
 }
 -(void)sliderValueChanged:(id)sender
 {
@@ -2039,6 +2164,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 -(void)updateSliderTime:(UISlider*)sender
 {
+    playerDurationWithMilliSeconds = player.currentTime;
+    
+    NSLog(@"player current time = %f", player.currentTime);
     audioRecordSlider.value = player.currentTime;
     int currentTime=player.currentTime;
     int minutes=currentTime/60;
@@ -2087,6 +2215,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         //[self setCompressAudio];
         [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
+        
+        [sliderTimer invalidate];
+        
+        [player stop];
+        
         [self dismissViewControllerAnimated:YES completion:nil];
         
         [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -2102,6 +2235,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         UIView* animatedView=  [self.view viewWithTag:98];
 
         [animatedView removeFromSuperview];
+        
+        [sliderTimer invalidate];
+
+        [player stop];
         
         [self dismissViewControllerAnimated:YES completion:nil];
 
@@ -2119,7 +2256,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     else
     {
-      NSArray* subViewArray=[NSArray arrayWithObjects:@"Edit Department", nil];
+      NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
       editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
        // editPopUp.tag=888;
       [[[UIApplication sharedApplication] keyWindow] addSubview:editPopUp];
@@ -2134,7 +2271,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 
 
--(void)EditDepartment
+-(void)ChangeDepartment
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     CGRect frame=CGRectMake(10.0f, self.view.center.y-150, self.view.frame.size.width - 20.0f, 200.0f);
@@ -2342,6 +2479,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     player.currentTime = audioRecordSlider.value;
     
     player.delegate = self;
+    
+//    playerDurationWithMilliSeconds = player.duration;
+    
     [player prepareToPlay];
     
 }
@@ -2371,6 +2511,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     player.currentTime = audioRecordSlider.value;
     
     player.delegate = self;
+    
+//    playerDurationWithMilliSeconds = player.duration;
+
     [player prepareToPlay];
     
 }
@@ -2717,7 +2860,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 {
     
-    alertController = [UIAlertController alertControllerWithTitle:@"Delete?"
+    alertController = [UIAlertController alertControllerWithTitle:@"Delete"
                                                           message:DELETE_MESSAGE
                                                    preferredStyle:UIAlertControllerStyleAlert];
     actionDelete = [UIAlertAction actionWithTitle:@"Delete"
@@ -2762,6 +2905,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 - (IBAction)stopRecordingButtonClicked:(id)sender
 {
     [self setStopRecordingView:sender];
+    
 }
 - (IBAction)editAudioButtonPressed:(UIButton*)sender
 {
@@ -2772,6 +2916,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     //overwrite: forst delete upto end(and then store),again start recfording and compose with stored recording
     
     //delete upto end: delete upto end and store the result
+    
+    updatedInsertionTime = 0;
+    
     [self prepareAudioPlayer];
     
     alertController = [UIAlertController alertControllerWithTitle:@""
@@ -2972,17 +3119,40 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                  atTime:kCMTimeZero
                                   error:&error];
     
-    int64_t sliderValue = audioRecordSlider.value;
-    int64_t totalTrackDuration = player.duration;
-    CMTime time =   CMTimeMake(sliderValue, 1);
-    CMTime time1 =   CMTimeMake(totalTrackDuration, 1);
+    int64_t sliderValue = audioRecordSlider.value ;
+    int64_t totalTrackDuration = player.duration ;
+    
+    
+    CMTime time =   [self getTotalCMTimeFromMilliSeconds:audioRecordSlider.value];
+    
+    CMTime time1 =   [self getTotalCMTimeFromMilliSeconds:player.duration - audioRecordSlider.value];
+
+//    CMTime time1 =   CMTimeMake(totalTrackDuration, 1);
     
     CMTimeRange timeRange = CMTimeRangeMake(time, time1);
     //insertInBetween
+    
+   
     if (![editType isEqualToString:@"insertInBetween"])
     {
-        [appendedAudioTrack removeTimeRange:timeRange];
 
+        if (sliderValue == 0)
+        {
+            
+//            CMTime audioDuration = CMTimeMakeWithSeconds(0.6, 3);
+            CMTime audioDuration = CMTimeMakeWithSeconds(0.1, 1000);
+
+            CMTime audioDuration1 = CMTimeMakeWithSeconds(player.duration, 1);
+            
+            CMTimeRange timeRange = CMTimeRangeMake(audioDuration, audioDuration1);
+            [appendedAudioTrack removeTimeRange:timeRange];
+            
+        }
+        else
+        {
+            [appendedAudioTrack removeTimeRange:timeRange];
+            
+        }
     }
     
     dispatch_async(dispatch_get_main_queue(), ^
@@ -3052,13 +3222,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,recordedAudioFileName]] error:&error];
                 
                 
-                [self prepareAudioPlayer];
                 
-//                [db updateAudioFileName:recordedAudioFileName duration:player.duration];
-                if (!IMPEDE_PLAYBACK)
-                {
-                    [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryRecord];
-                }
                 
                 
                 if ([editType isEqualToString:@"overWrite"] || [editType isEqualToString:@"insertInBetween"])
@@ -3067,11 +3231,20 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     
                     dispatch_async(dispatch_get_main_queue(), ^
                                    {
-                                       //NSLog(@"Reachable");
+                                       [self prepareAudioPlayer];
+                                       
+                                       
+                                       //                [db updateAudioFileName:recordedAudioFileName duration:player.duration];
                                        if (!IMPEDE_PLAYBACK)
                                        {
                                            [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryRecord];
                                        }
+                                       
+//                                       //NSLog(@"Reachable");
+//                                       if (!IMPEDE_PLAYBACK)
+//                                       {
+//                                           [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryRecord];
+//                                       }
 
                                        int seconds = player.duration;
                                        
@@ -3107,6 +3280,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     {
                         dispatch_async(dispatch_get_main_queue(), ^{
                         
+                            [self prepareAudioPlayer];
+                            
+                            //                [db updateAudioFileName:recordedAudioFileName duration:player.duration];
+                            if (!IMPEDE_PLAYBACK)
+                            {
+                                [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryRecord];
+                            }
+                            
+                            [self audioPlayerDidFinishPlaying:player successfully:true];
+
                             [self.view setUserInteractionEnabled:YES];
 
                         });
@@ -3124,6 +3307,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         {
             [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
             
+            NSLog(@"error = %@", exportSession.error.localizedDescription);
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [self.view setUserInteractionEnabled:YES];
@@ -3238,41 +3422,146 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
         [self setCompressAudio];
+//        editType = nil;
         return;
     }
     
-    CMTime time;
-    
-    if ([editType isEqualToString:@"overWrite"] || [editType isEqualToString:@"insertInBetween"])// if overwrite then get slider time, and insert new recording at slider position
+    CMTime totalTime;
+    if ([editType isEqualToString:@"overWrite"])// if overwrite then get slider time, and insert new recording at slider position
     {
-        int64_t sliderValue = audioRecordSlider.value;
-        //int64_t totalTrackDuration = player.duration;
-        time =   CMTimeMake(sliderValue, 1);
-       // CMTime time1 =   CMTimeMake(totalTrackDuration, 1);
+       
+//        if (updatedInsertionTime == 0)
+//        {
+//            int64_t sliderValue = audioRecordSlider.value;
+//
+//            totalTime =   CMTimeMake(sliderValue, 1);
+//        }
+//        else
+//        {
+//            int64_t sliderValue = player.duration ;
+//
+//            totalTime =   CMTimeMake(sliderValue, 1);
+//        }
         
-        //CMTimeRange overWriteTimeRange = CMTimeRangeMake(time, time1);
+        if (updatedInsertionTime == 0)
+        {
+            float_t sliderValue;
+            
+            sliderValue = playerDurationWithMilliSeconds;
+            
+            NSLog(@"overwrite updatedInsertionTime = %f", playerDurationWithMilliSeconds);
+            
+            if (sliderValue <= 0)
+            {
+                totalTime = [self getTotalCMTimeFromMilliSeconds:sliderValue]; // if slider pos. <= 0 then dont subtrat
+                
+            }
+            else
+            {
+                totalTime = [self getTotalCMTimeFromMilliSeconds:sliderValue - 0.05]; // if slider pos. = 0 then dont subtrat
+                
+            }
+            
+        }
+        else
+        {
+            NSLog(@"overwrite updatedInsertionTime = %f", updatedInsertionTime);
+
+            if (updatedInsertionTime <= 0)
+            {
+                totalTime = [self getTotalCMTimeFromMilliSeconds:updatedInsertionTime];
+
+            }
+            else
+            {
+                totalTime = [self getTotalCMTimeFromMilliSeconds:updatedInsertionTime - 0.05];
+
+            }
+
+
+            
+        }
+        
+    }
+    else if ([editType isEqualToString:@"insertInBetween"])
+    {
+        if (updatedInsertionTime == 0)
+        {
+            float_t sliderValue;
+        
+            sliderValue = playerDurationWithMilliSeconds;
+
+            if (sliderValue <= 0)
+            {
+                totalTime = [self getTotalCMTimeFromMilliSeconds:sliderValue]; // if slider pos. <= 0 then dont subtrat
+
+            }
+            else
+            {
+                totalTime = [self getTotalCMTimeFromMilliSeconds:sliderValue - 0.05]; // if slider pos. = 0 then dont subtrat
+
+            }
+
+
+            
+        }
+        else
+        {
+            
+            if (updatedInsertionTime <= 0)
+            {
+                totalTime = [self getTotalCMTimeFromMilliSeconds:updatedInsertionTime];
+                
+            }
+            else
+            {
+                totalTime = [self getTotalCMTimeFromMilliSeconds:updatedInsertionTime - 0.05];
+                
+            }
+
+            
+        }
     }
     else
-        if ([editType isEqualToString:@"insert"])// if its insert then insert new recording at end of original recording
+    if ([editType isEqualToString:@"insert"])// if its insert then insert new recording at end of original recording
 
     {
-        time =   originalAsset.duration;
+        totalTime = originalAsset.duration;
+//        totalTime =   originalAsset.duration;
 
     }
+        else
+        {
+            totalTime =   originalAsset.duration;
+            
+        }
     
     
-    
+//    CMTime time1 = CMTimeMake(1, 1);
     timeRange = CMTimeRangeMake(kCMTimeZero, newAsset.duration);
     
     [appendedAudioTrack insertTimeRange:timeRange
                                 ofTrack:[newTrack objectAtIndex:0]
-                                 atTime:time
+                                 atTime:totalTime
                                   error:&error];
     
+    float_t newTime = CMTimeGetSeconds(newAsset.duration);
+    float_t oldTime = CMTimeGetSeconds(totalTime);
+
+//    updatedInsertionTime = CMTimeGetSeconds(time);
+    updatedInsertionTime = newTime + oldTime;
+    NSLog(@"new time = %f", newTime);
+    NSLog(@"old time = %f", oldTime);
+
+//    NSLog(@"insertion time = %f", updatedInsertionTime);
+
+    NSLog(@"insertion time = %f", updatedInsertionTime);
     if (error)
     {
         // do something
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
+//        editType = nil;
+
         return;
     }
     
@@ -3285,6 +3574,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         // do something
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
         
+//        editType = nil;
+
         return;
     }
     
@@ -3308,6 +3599,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         NSError* error;
         if (exportSession.status==AVAssetExportSessionStatusCompleted)
         {
+//            editType = nil;
+
             //first remove the existing file
             [[NSFileManager defaultManager] removeItemAtPath:destpath error:&error];
             [[NSFileManager defaultManager] removeItemAtPath:originalFilePath error:&error];
@@ -3323,14 +3616,18 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 //remove the temporarily stored composed file copy
                 BOOL removed =  [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error];
                 
-                [self prepareAudioPlayerForOriginalFileDuration];
+                dispatch_async(dispatch_get_main_queue(), ^
+                               {
+                                   [self prepareAudioPlayerForOriginalFileDuration];
                 
-                [db updateAudioFileName:self.recordedAudioFileName duration:player.duration];
-                
-                if (!IMPEDE_PLAYBACK)
-                {
-                    [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryRecord];
-                }
+                                   [db updateAudioFileName:self.recordedAudioFileName duration:player.duration];
+                                   
+                                   if (!IMPEDE_PLAYBACK)
+                                   {
+                                       [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryRecord];
+                                   }
+                               });
+               
                 
                 if (edited && !paused)
                 {
@@ -3356,6 +3653,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
         if (exportSession.status==AVAssetExportSessionStatusFailed)
         {
+//            editType = nil;
+
             [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
             
         }
@@ -3378,6 +3677,133 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     NSLog(@"%@",error.localizedDescription);
 }
 
+-(NSArray*)getCMTimeValueAndScaleForMilliseconds:(float_t)milliSeconds
+{
+    int64_t value = 0;
+    
+    int32_t scale = 0;
+    
+    if (milliSeconds >= 0.5)
+    {
+        if (milliSeconds >= 0.6 && milliSeconds < 0.7)
+        {//0.64
+            value = 20;
+            
+            scale = 31;
+        }
+        else
+            if (milliSeconds >= 0.7 && milliSeconds < 0.8)
+            {//0.74
+                value = 20;
+                
+                scale = 27;
+            }
+            else
+                if (milliSeconds >= 0.8 && milliSeconds < 0.9)
+                {//0.84
+                    value = 66;
+                    
+                    scale = 78;
+                }
+                else
+                    if (milliSeconds >= 0.9 && milliSeconds < 1)
+                    {//0.94
+                        value = 80;
+                        
+                        scale = 85;
+                    }
+                    else
+                    {
+                        // for 0.5 to 0.599
+                        value = 20;
+                        
+                        scale = 37;
+                    }
+        
+        
+    }
+    else
+    {
+        if (milliSeconds >= 0.1 && milliSeconds < 0.2)
+        {//0.14
+            value = 10;
+            
+            scale = 67;
+        }
+        else
+            if (milliSeconds >= 0.2 && milliSeconds < 0.3)
+            {//0.24
+                value = 10;
+                
+                scale = 41;
+            }
+            else
+                if (milliSeconds >= 0.3 && milliSeconds < 0.4)
+                {//0.34
+                    value = 10;
+                    
+                    scale = 29;
+                }
+                else
+                    if (milliSeconds >= 0.4 && milliSeconds < 0.5)
+                    {//0.44
+                        value = 20;
+                        
+                        scale = 45;
+                    }
+        
+    }
+    
+    NSArray* valueAndScaleArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%lld", value], [NSString stringWithFormat:@"%d", scale], nil];
+    
+    return valueAndScaleArray;
+    
+}
+
+-(CMTime)getTotalCMTimeFromMilliSeconds:(float_t)totalMilliSeconds
+{
+    CMTime totalTime;
+    
+    int64_t seconds = floor(totalMilliSeconds);
+    
+    CMTime timeInSeconds =   CMTimeMake(seconds, 1);
+    
+    float_t milliSeconds = fmod(totalMilliSeconds, floor(totalMilliSeconds));
+    
+    int64_t value = 0;
+    
+    int32_t scale = 0;
+    
+    NSArray* valueAndScaleArray = [self getCMTimeValueAndScaleForMilliseconds:milliSeconds];
+    
+    value = [[valueAndScaleArray objectAtIndex:0] longLongValue];
+    
+    scale = [[valueAndScaleArray objectAtIndex:1] intValue];
+    
+    //            NSLog(@"milliseconds = %f", milliSeconds);
+    //
+    //            NSLog(@"floor seconds = %lld", seconds);
+    //
+    //            NSLog(@"value = %lld", value);
+    //
+    //            NSLog(@"scale = %d", scale);
+    
+    //int64_t totalTrackDuration = player.duration;
+    
+    
+    if (value == 0)
+    {
+        totalTime = timeInSeconds;
+    }
+    else
+    {
+        CMTime timeInMilliSeconds =   CMTimeMake(value, scale);
+        
+        totalTime = CMTimeAdd(timeInSeconds, timeInMilliSeconds);
+    }
+    
+    return totalTime;
+}
 
 -(void)startNewRecordingForEdit
 {

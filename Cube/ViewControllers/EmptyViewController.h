@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EmptyViewController : UIViewController
+@interface EmptyViewController : UIViewController<UIDocumentInteractionControllerDelegate,UIWebViewDelegate>
+
+
+@property(nonatomic, strong) NSString* usedByVCName;
+@property(nonatomic, strong) NSString* docxFileToShowPath;
+@property(nonatomic) long dataToShowCount;
+@property(nonatomic, strong) UIWebView* webView;
+@property(nonatomic, strong) UITextView* textFileContentTextView;
+@property(nonatomic, strong) UIView* navigationView;
+@property(nonatomic, strong) UILabel* navigationTitleLabel;
+-(void)showDocxFile:(NSString*)docxFileToShowPath;
 
 @end

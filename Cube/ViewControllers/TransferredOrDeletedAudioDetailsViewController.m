@@ -122,8 +122,9 @@
         {
             audiorecordDict= [app.transferredListArray objectAtIndex:selectedRow];
 
+//            NSString* transferStatus = [audiorecordDict valueForKey:@"status"];
         }
-        transferStatusLabel.text=[NSString stringWithFormat:@"Transferred,%@",[audiorecordDict valueForKey:@"status"]];//if selected list is Transferred then we have status=Transferred ,only fetch delete status append it to transferStatusLabel
+        transferStatusLabel.text=[NSString stringWithFormat:@"Transferred"];//if selected list is Transferred then we have status=Transferred ,only fetch delete status append it to transferStatusLabel
         
         
     }
@@ -131,19 +132,47 @@
     {
         [resendButton setHidden:YES];
         [deleteDictationButton setHidden:YES];
-        if (app.transferredListArray.count > 0)
+        NSString* transferStatusString;
+        if (app.deletedListArray.count > 0)
         {
-            audiorecordDict= [app.transferredListArray objectAtIndex:selectedRow];
+            audiorecordDict= [app.deletedListArray objectAtIndex:selectedRow];
             
+            transferStatusString = [audiorecordDict valueForKey:@"status"];
+            
+            if ([transferStatusString isEqualToString:@"NotTransferred"])
+            {
+                transferStatusString = @"Not Transferred";
+            }
         }
-        transferStatusLabel.text=[NSString stringWithFormat:@"Deleted,%@",[audiorecordDict valueForKey:@"status"]];//if selected list is delete then we have status=deleted ,only fetch transfer status append it to transferStatusLabel
+        transferStatusLabel.text=[NSString stringWithFormat:@"Deleted, %@",transferStatusString];//if selected list is delete then we have status=deleted ,only fetch transfer status append it to transferStatusLabel
         
     }
     
+    departmentLabel.text=[audiorecordDict valueForKey:@"Department"];
+
     filenameLabel.text=[audiorecordDict valueForKey:@"RecordItemName"];
     dictatedOnLabel.text=[audiorecordDict valueForKey:@"RecordCreateDate"];
-    departmentLabel.text=[audiorecordDict valueForKey:@"Department"];
-    transferDateLabel.text=[audiorecordDict valueForKey:@"TransferDate"];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString* dateStr = [audiorecordDict valueForKey:@"RecordCreateDate"];
+    NSDate *date = [dateFormatter dateFromString:dateStr];
+    
+    // Convert date object into desired format
+    [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+    NSString *newDateString = [dateFormatter stringFromDate:date];
+    
+    dictatedOnLabel.text = newDateString;
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString* transferDateString = [audiorecordDict valueForKey:@"TransferDate"];
+    NSDate *transferDate = [dateFormatter dateFromString:transferDateString];
+    
+    // Convert date object into desired format
+    [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+    NSString *newTransferDateString = [dateFormatter stringFromDate:transferDate];
+    transferDateLabel.text = newTransferDateString;
+//    transferDateLabel.text=[audiorecordDict valueForKey:@"TransferDate"];
     
     //transferStatusLabel.text=[audiorecordDict valueForKey:@"TransferStatus"];
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
@@ -220,7 +249,18 @@
         
         UIImageView* pauseOrPlayImageView= [sliderPopUpView viewWithTag:226];
         UILabel* dateAndTimeLabel=[sliderPopUpView viewWithTag:225];
-        dateAndTimeLabel.text=[audiorecordDict valueForKey:@"RecordCreateDate"];
+//        dateAndTimeLabel.text=[audiorecordDict valueForKey:@"RecordCreateDate"];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString* dateStr = [audiorecordDict valueForKey:@"RecordCreateDate"];
+        NSDate *date = [dateFormatter dateFromString:dateStr];
+        
+        // Convert date object into desired format
+        [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+        NSString *newDateString = [dateFormatter stringFromDate:date];
+        
+        dateAndTimeLabel.text = newDateString;
         pauseOrPlayImageView.image=[UIImage imageNamed:@"Pause"];
         NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
         if (!IMPEDE_PLAYBACK)
@@ -351,7 +391,7 @@
 - (IBAction)deleteRecordinfButtonPressed:(id)sender
 {
     
-    alertController = [UIAlertController alertControllerWithTitle:@"Delete?"
+    alertController = [UIAlertController alertControllerWithTitle:@"Delete"
                                                           message:DELETE_MESSAGE
                                                    preferredStyle:UIAlertControllerStyleAlert];
     actionDelete = [UIAlertAction actionWithTitle:@"Delete"
@@ -453,12 +493,12 @@ else
 
 - (IBAction)moreButtonClicked:(id)sender
 {
-    NSArray* subViewArray=[NSArray arrayWithObjects:@"Edit Department", nil];
+    NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
     UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
     
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 }
--(void)EditDepartment
+-(void)ChangeDepartment
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     CGRect frame=CGRectMake(10.0f, self.view.center.y-150, self.view.frame.size.width - 20.0f, 200.0f);

@@ -28,7 +28,7 @@
     UITableViewCell *cell;
     NSArray* departmentNamesArray;
     UITapGestureRecognizer* tap;
-
+    BOOL isDeleteEditTransferButtonsRemovedAfterTransfer;
 }
 @property(nonatomic)long selectedRow;
 @property(nonatomic,strong)NSString* selectedView;

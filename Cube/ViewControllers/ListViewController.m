@@ -24,17 +24,18 @@
     
     
     [self setUpForMultipleFileSelection];
-    //    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-    //    {
-    //        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
-    //
-    //    }
     
-    self.splitViewController.delegate = self;
-    
-    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+//    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+//    {
+    [self beginAppearanceTransition:true animated:true];
 
-//    self.splitViewController.
+        self.splitViewController.delegate = self;
+    
+        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+//    }
+   
+
+
 }
 
 
@@ -47,18 +48,20 @@
     [self getTransferredAndDeletedList];
     
     [self setAlertBadge];
-    // self.navigationItem.rightBarButtonItem = nil;
-    //  self.navigationItem.title = @"List";
+   
     
     [self.tableView reloadData];
     
     [self.tabBarController.tabBar setHidden:NO];
     
-    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
     
-    [self setAudioDetailOrEmptyViewController:0];
+        [self setAudioDetailOrEmptyViewController:0];
     
-    [self setFirstRowSelected];
+        [self setFirstRowSelected];
+    }
 }
 
 
@@ -81,7 +84,7 @@
     
     toolBarAdded = NO;
     
-    [segment setSelectedSegmentIndex:0];
+//    [segment setSelectedSegmentIndex:0];
 
 }
 
@@ -380,8 +383,17 @@
 
 -(void)deleteMutipleFiles
 {
-    alertController = [UIAlertController alertControllerWithTitle:@"Delete?"
-                                                          message:DELETE_MESSAGE
+    NSString* deleteMessage;
+    if (arrayOfMarked.count > 1)
+    {
+        deleteMessage = DELETE_MESSAGE_MULTIPLES;
+    }
+    else
+    {
+        deleteMessage = DELETE_MESSAGE;
+    }
+    alertController = [UIAlertController alertControllerWithTitle:@"Delete"
+                                                          message:deleteMessage
                                                    preferredStyle:UIAlertControllerStyleAlert];
     
     
@@ -514,10 +526,11 @@
     
     UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     UILabel* fileNameLabel=[cell viewWithTag:101];
-    UILabel* timeLabel=[cell viewWithTag:102];
+    UILabel* durationLabel=[cell viewWithTag:102];
     UILabel* transferByLabel=[cell viewWithTag:103];
     UILabel* dateLabel=[cell viewWithTag:104];
-    
+    UILabel* timeLabel=[cell viewWithTag:106];
+
     
     APIManager* app=[APIManager sharedManager];
     NSDictionary* dict;
@@ -545,32 +558,31 @@
 
     }
 
+    int audioHour= [[dict valueForKey:@"CurrentDuration"] intValue]/(60*60);
+    int audioHourByMod= [[dict valueForKey:@"CurrentDuration"] intValue]%(60*60);
     
+    int audioMinutes = audioHourByMod / 60;
+    int audioSeconds = audioHourByMod % 60;
+    
+    durationLabel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",audioHour,audioMinutes,audioSeconds];
     //timeLabel.text=[NSString stringWithFormat:@"%@",@"Transferred 12:18:00 PM"];
 
     transferByLabel.text = [dict valueForKey:@"Department"];
     
     if (dateAndTimeArray.count>0)
     {
-//        NSDateFormatter *df = [[NSDateFormatter alloc] init];
-//        [df setDateFormat:@"MM-dd-yyyy"];
-//
-//        NSDate* date = [df dateFromString:[dateAndTimeArray objectAtIndex:0]];
-//
-//        [df setDateFormat:@"yyyy-MM-dd"];
-//        NSString *updatedDate = [df stringFromDate:date];
-//        dateLabel.text = [NSString stringWithFormat:@"%@",updatedDate];
-//
-//        if (updatedDate == nil)
-//        {
-            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSString* dateStr = [NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
+        NSDate *date = [dateFormatter dateFromString:dateStr];
+        
+        // Convert date object into desired format
+        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+        NSString *newDateString = [dateFormatter stringFromDate:date];
+        
+        dateLabel.text = newDateString;
 
-//        }
-//        else
-//        {
-//            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",updatedDate]];
-//
-//        }
+//            dateLabel.text=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]]];
 
     }
     
@@ -702,10 +714,10 @@
     {
         if (self.splitViewController.isCollapsed)
         {
-            if (detailVC == nil)
-            {
+//            if (detailVC == nil)
+//            {
                 detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
-            }
+//            }
             detailVC.listSelected = segment.selectedSegmentIndex;
             //NSLog(@"%ld",vc.listSelected);
             detailVC.selectedRow = indexPath.row;

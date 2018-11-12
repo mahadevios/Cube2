@@ -57,6 +57,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     //NSLog(@"%@",fileSizeInBytes);
     
+
     [[AppPreferences sharedAppPreferences] startReachabilityNotifier];
     [APIManager sharedManager].userSettingsOpened=NO;
     [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray = [[NSMutableArray alloc] init];
@@ -84,20 +85,20 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
     }
     
-    if (currentVersion == nil)
-    {
-        // version change first time execution code
-       
-        
-        [[Database shareddatabase] createFileNameidentifierRelationshipTable];
-
-        [[Database shareddatabase] createDocFileAndDownloadedDocxFileTable];
-        
-        [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
-    }
-    else
-        if (currentVersion != bundleVersion)
-        {
+//    if (currentVersion == nil)
+//    {
+//        // version change first time execution code
+//
+//
+//        [[Database shareddatabase] createFileNameidentifierRelationshipTable];
+//
+//        [[Database shareddatabase] createDocFileAndDownloadedDocxFileTable];
+//
+//        [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
+//    }
+//    else
+//        if (currentVersion != bundleVersion)
+//        {
             // version change first time execution code
             
             [[Database shareddatabase] createFileNameidentifierRelationshipTable];
@@ -106,7 +107,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
             
-        }
+//        }
     
     
   //  [[NSUserDefaults standardUserDefaults] setValue:timeLabel.text forKey:LOW_STORAGE_THRESHOLD];
@@ -125,7 +126,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         [[NSUserDefaults standardUserDefaults] setValue:@"15 min" forKey:SAVE_DICTATION_WAITING_SETTING];
         
     }
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:CONFIRM_BEFORE_SAVING_SETTING_ALTERED])// to set confirm before saving setting on by default, if user aletered the setting then put it on
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:CONFIRM_BEFORE_SAVING_SETTING_ALTERED])// to set confirm before saving setting on by default, if user not aletered the setting then put it on
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:CONFIRM_BEFORE_SAVING_SETTING];
     }
@@ -377,7 +378,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     topRootViewController = topRootViewController.presentedViewController;
                 }
                 
-                [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
+                if (![topRootViewController isKindOfClass: [LoginViewController class]])
+                {
+                    [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
+
+                }
             }
             
                 
@@ -414,7 +419,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                         topRootViewController = topRootViewController.presentedViewController;
                     }
                     
-                    [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
+                    if (![topRootViewController isKindOfClass: [LoginViewController class]])
+                    {
+                        [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
+
+                    }
                 }
             
             

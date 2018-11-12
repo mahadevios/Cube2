@@ -81,10 +81,14 @@
    {
     
     APIManager* app=[APIManager sharedManager];
-       
-    [transferDictationButton setHidden:NO];
-       
-    [deleteDictationButton setHidden:NO];
+    
+    if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
+    {
+        [transferDictationButton setHidden:NO];
+        
+        [deleteDictationButton setHidden:NO];
+    }
+   
        
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
        
@@ -112,7 +116,11 @@
         
         if (![[audiorecordDict valueForKey:@"TransferStatus"] isEqualToString:@"TransferFailed"])
         {
-            [self addEditDeleteAndUploadButtons];
+            if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
+            {
+                [self addEditDeleteAndUploadButtons];
+
+            }
         }
        
         
@@ -141,7 +149,11 @@
         
         [[self.view viewWithTag:507] setHidden:NO];
         
-        [self addEditDeleteAndUploadButtons];
+        if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
+        {
+            [self addEditDeleteAndUploadButtons];
+            
+        }
 
     }
        
@@ -159,14 +171,47 @@
     {
      filenameLabel.text=[audiorecordDict valueForKey:@"RecordItemName"];
     }
+    
+       NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+       [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+       NSString* dateStr = [audiorecordDict valueForKey:@"RecordCreatedDate"];
+       NSDate *date = [dateFormatter dateFromString:dateStr];
        
-    dictatedOnLabel.text=[audiorecordDict valueForKey:@"RecordCreatedDate"];
+       // Convert date object into desired format
+       [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+       NSString *newDateString = [dateFormatter stringFromDate:date];
+       
+       dictatedOnLabel.text = newDateString;
+//    dictatedOnLabel.text=[audiorecordDict valueForKey:@"RecordCreatedDate"];
        
     departmentLabel.text=[audiorecordDict valueForKey:@"Department"];
        
-    transferStatusLabel.text=[audiorecordDict valueForKey:@"TransferStatus"];
-   
-    transferDateLabel.text=[audiorecordDict valueForKey:@"TransferDate"];
+    NSString* tarnsferStatus = [audiorecordDict valueForKey:@"TransferStatus"];
+       
+    if ([tarnsferStatus isEqualToString:@"TransferFailed"])
+    {
+        transferStatusLabel.text = @"Transfer Failed";
+    }
+    else if ([tarnsferStatus isEqualToString:@"NotTransferred"])
+    {
+        transferStatusLabel.text = @"Not Transferred";
+
+    }
+    else
+    {
+        transferStatusLabel.text = tarnsferStatus;
+    }
+//    transferDateLabel.text=[audiorecordDict valueForKey:@"TransferDate"];
+     
+       [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+       
+       NSDate *transferDate = [dateFormatter dateFromString:[audiorecordDict valueForKey:@"TransferDate"]];
+       
+       // Convert date object into desired format
+       [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+       NSString *newTransferDateString = [dateFormatter stringFromDate:transferDate];
+       
+       transferDateLabel.text = newTransferDateString;
        
     if ([self.selectedView isEqualToString:@"Transfer Failed"])
     {
@@ -220,7 +265,8 @@
             [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:802] removeFromSuperview];//remove delete button
             
             [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:803] removeFromSuperview];//remove edit button
-           // [self dismissViewControllerAnimated:YES completion:nil];
+            
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
     }
     
@@ -320,6 +366,10 @@
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
     
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
+    
+//    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+//    
+//    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 
 }
 -(void)popViewController:(id)sender
@@ -336,14 +386,14 @@
 
 - (IBAction)moreButtonClicked:(id)sender
 {
-    NSArray* subViewArray=[NSArray arrayWithObjects:@"Edit Department", nil];
+    NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
     
     UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
     
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 }
 
--(void)EditDepartment
+-(void)ChangeDepartment
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     
@@ -426,7 +476,7 @@
 
 -(void)deleteRecording
 {
-    alertController = [UIAlertController alertControllerWithTitle:@"Delete?"
+    alertController = [UIAlertController alertControllerWithTitle:@"Delete"
                                                           message:DELETE_MESSAGE
                                                    preferredStyle:UIAlertControllerStyleAlert];
     actionDelete = [UIAlertAction actionWithTitle:@"Delete"
@@ -545,8 +595,19 @@
         
         UILabel* dateAndTimeLabel=[sliderPopUpView viewWithTag:225];
         
-        dateAndTimeLabel.text=[audiorecordDict valueForKey:@"RecordCreatedDate"];
+//        dateAndTimeLabel.text=[audiorecordDict valueForKey:@"RecordCreatedDate"];
        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString* dateStr = [audiorecordDict valueForKey:@"RecordCreatedDate"];
+        NSDate *date = [dateFormatter dateFromString:dateStr];
+        
+        // Convert date object into desired format
+        [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+        NSString *newDateString = [dateFormatter stringFromDate:date];
+        
+        dateAndTimeLabel.text = newDateString;
+        
         pauseOrPlayImageView.image=[UIImage imageNamed:@"Pause"];
     
         NSString* filName;
@@ -705,6 +766,8 @@
                             
                             NSString* filName = [audiorecordDict valueForKey:@"RecordItemName"];
                             
+                            isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
+                            
                             [transferDictationButton setHidden:YES];
                             
                             [deleteDictationButton setHidden:YES];
@@ -791,6 +854,9 @@
                         }
                             [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
 
+                        isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
+
+                        
                             [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:801] removeFromSuperview];//remove uploading buuton
                            
                             [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:802] removeFromSuperview];//remove delete button
@@ -852,7 +918,8 @@
                                     
                                     [deleteDictationButton setHidden:YES];
                                     
-                                    
+                                    isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
+
                                    [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
                                                        
                                    int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
@@ -908,7 +975,9 @@
                                                    [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:802] removeFromSuperview];//remove delete button
                                                    
                                                    [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:803] removeFromSuperview];//remove edit button
-                                                   
+                                
+                                                    isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
+
                                                    [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
                                                    
                                                    NSString* transferStatus=[audiorecordDict valueForKey:@"TransferStatus"];
@@ -1130,7 +1199,16 @@
     
     if (dateAndTimeArray.count>0)
     {
-        vc.existingAudioDate = [dateAndTimeArray objectAtIndex:0];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSString* dateStr = [dateAndTimeArray objectAtIndex:0];
+        NSDate *date = [dateFormatter dateFromString:dateStr];
+        
+        // Convert date object into desired format
+        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+        NSString *newDateString = [dateFormatter stringFromDate:date];
+        
+        vc.existingAudioDate = newDateString;
         
     }
     

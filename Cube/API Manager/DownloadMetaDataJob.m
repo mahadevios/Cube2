@@ -137,14 +137,15 @@
     NSLog(@"%@ Entity Job -",self.downLoadEntityJobName);
     
     
-    if ([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
-    {
+//    if ([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
+//    {
         //        AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
         //        [appDelegate hideIndefiniteProgressView];
         
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:[self shortErrorFromError:error] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-        
-    }
+//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:[self shortErrorFromError:error] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+    
+    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error Occured!" withMessage:@"Please Try Again" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+//    }
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
@@ -161,7 +162,16 @@
                                                              options:NSUTF8StringEncoding
                                                                error:&error];
     
+//    encryptedResponse = nil;
     
+    if ([encryptedResponse containsString:@"ExceptionMessage"] || [encryptedResponse containsString:@"ExceptionType"] || [encryptedResponse containsString:@"Message"] || [encryptedResponse containsString:@"StackTrace"] || encryptedResponse == nil)
+    {
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        
+        return;
+    }
     NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:encryptedResponse options:0];
     
     NSData* data=[decodedData AES256DecryptWithKey:SECRET_KEY];
@@ -288,10 +298,14 @@ if([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
         }
         else
         {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Can't connect to the sever, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }else
     {
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }
@@ -317,6 +331,8 @@ if ([self.downLoadEntityJobName isEqualToString:AUTHENTICATE_API])
         }
     }else
     {
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }
@@ -340,6 +356,8 @@ if ([self.downLoadEntityJobName isEqualToString:ACCEPT_PIN_API])
         }
     }else
     {
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }
@@ -362,6 +380,8 @@ if ([self.downLoadEntityJobName isEqualToString:VALIDATE_PIN_API])
         }
     }else
     {
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }
@@ -384,6 +404,8 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
         }
     }else
     {
+        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }
@@ -403,11 +425,13 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
             }
             else
             {
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_DICTATION_IDS_API object:response];
+//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_DICTATION_IDS_API object:response];
 //                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Message" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
             }
         }else
         {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }
@@ -430,6 +454,8 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
             }
         }else
         {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }
@@ -516,6 +542,8 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
             }
         }else
         {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }
@@ -538,7 +566,9 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
             }
         }else
         {
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }
 
@@ -547,133 +577,8 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
 
 
 
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
-{
 
 
-    if (!(data == nil))
-    {
-        NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)dataTask.taskIdentifier]];
-
-
-
-        NSError* error1;
-        NSString* encryptedString = [NSJSONSerialization JSONObjectWithData:data
-                                                                    options:NSJSONReadingAllowFragments
-                                                                      error:&error1];
-
-
-        NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:encryptedString options:0];
-        NSData* data1=[decodedData AES256DecryptWithKey:SECRET_KEY];
-        NSString* responseString=[[NSString alloc] initWithData:data1 encoding:NSUTF8StringEncoding];
-        responseString=[responseString stringByReplacingOccurrencesOfString:@"True" withString:@"1"];
-        responseString=[responseString stringByReplacingOccurrencesOfString:@"False" withString:@"0"];
-
-        NSData *responsedData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-
-        result = [NSJSONSerialization JSONObjectWithData:responsedData
-                                                 options:NSJSONReadingAllowFragments
-                                                   error:nil];
-
-        NSString* returnCode= [result valueForKey:@"code"];
-
-        if ([returnCode longLongValue]==200)
-        {
-
-
-
-
-        }
-        else
-        {
-
-
-
-            //NSLog(@"%@",fileName);
-
-
-        }
-
-
-
-
-
-
-    }
-
-}
-
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)dataTask didCompleteWithError:(NSError *)error
-{
-    //[dataTask resume];
-    NSLog(@"error code:%ld",(long)error.code);
-
-    NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)dataTask.taskIdentifier]];
-
-    if (error)
-    {
-
-
-    }
-    else
-    {
-
-    }
-
-}
-- (void)URLSession:(NSURLSession *)session
-              task:(NSURLSessionTask *)task
-   didSendBodyData:(int64_t)bytesSent
-    totalBytesSent:(int64_t)totalBytesSent
-totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
-{
-
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-
-        float progress = (double)totalBytesSent / (double)totalBytesExpectedToSend;
-        //NSLog(@"progress %f",progress);
-
-        NSString* progressPercent= [NSString stringWithFormat:@"%f",progress*100];
-
-
-
-    });
-
-
-
-}
-//
-//
-//
--(void)downloadFileUsingNSURLSession:(NSString*)str
-
-{
-
-    if ([[AppPreferences sharedAppPreferences] isReachable])
-    {
-
-        dispatch_async(dispatch_get_main_queue(), ^
-                       {
-
-                           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-
-                               [self downloadFile:dataArray];
-
-                           });
-
-                       });
-
-
-
-    }
-    else
-    {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-    }
-
-
-}
 //
 -(void)downloadFile:(NSArray*)dataArray
 {
@@ -736,6 +641,359 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     [downloadTask resume];
 
 }
+
+
+
+
+
+-(void)uploadDocxFileAfterGettingdatabaseValues:(NSString*)fileName
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        //    [UIApplication sharedApplication].idleTimerDisabled = YES;
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        
+    });
+    
+    
+    NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:
+                          [NSString stringWithFormat:@"Documents/%@/%@",DOCX_FILES_FOLDER_NAME,fileName] ];
+    
+    NSURL* url =[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, DOCX_FILE_UPLOAD_API]];
+    
+    
+    
+    NSString *boundary = [[APIManager sharedManager] generateBoundaryString];
+    
+//    NSDictionary *params = @{@"filename"     : docxFileName,
+//                             };
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    
+    [request setHTTPMethod:@"POST"];
+    
+//    long filesizelong=[[APIManager sharedManager] getFileSize:filePath];
+//    
+//    int filesizeint=(int)filesizelong;
+//    
+//    NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+    
+    
+//    if (departmentId == 0)
+//    {
+//        departmentId= [[Database shareddatabase] getDepartMentIdForFileName:docxFileName];
+//
+//    }
+    
+//    NSString* authorisation = [NSString stringWithFormat:@"%@*%d*%d*%d",macId,filesizeint,departmentID,mobileDictationIdVal];
+
+    NSString* authorisation;
+
+    for(int i=0; i<headerParameter.count;i++)
+    {
+        if (i!=headerParameter.count-1)
+        {
+            [authorisation stringByAppendingString:[NSString stringWithFormat:@"*%@",[headerParameter objectAtIndex:i]]];
+        }
+    }
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+    [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+    
+    //    NSError* error;
+    
+    
+    NSData* jsonData=[authorisation dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
+    
+    
+    
+    NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
+    
+    [request setValue:str2 forHTTPHeaderField:@"Authorization"];
+    
+    // create body
+    
+    NSData *httpBody = [[APIManager sharedManager] createBodyWithBoundary:boundary parameters:requestParameter paths:@[filePath] fieldName:fileName];
+    
+    request.HTTPBody = httpBody;
+    
+    
+    session = [SharedSession getSharedSession:self];
+    
+    //
+    [request setHTTPMethod:@"POST"];
+    
+    
+    NSURLSessionUploadTask* uploadTask = [session uploadTaskWithRequest:request fromData:nil];
+    
+    NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu", (unsigned long)uploadTask.taskIdentifier]];
+    
+    
+    dispatch_async(dispatch_get_main_queue(), ^
+                   {
+                       //NSLog(@"Reachable");
+                       
+                       [[Database shareddatabase] insertTaskIdentifier:[NSString stringWithFormat:@"%@",taskIdentifier] fileName:fileName];
+                   });
+    
+    [uploadTask resume];
+    
+}
+
+
+
+#pragma mark: NSURLSession Delgates
+
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
+{
+    
+    
+    if (!(data == nil))
+    {
+        NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)dataTask.taskIdentifier]];
+        
+        
+        
+        NSError* error1;
+        NSString* encryptedString = [NSJSONSerialization JSONObjectWithData:data
+                                                                    options:NSJSONReadingAllowFragments
+                                                                      error:&error1];
+        
+        
+        NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:encryptedString options:0];
+        NSData* data1=[decodedData AES256DecryptWithKey:SECRET_KEY];
+        NSString* responseString=[[NSString alloc] initWithData:data1 encoding:NSUTF8StringEncoding];
+        responseString=[responseString stringByReplacingOccurrencesOfString:@"True" withString:@"1"];
+        responseString=[responseString stringByReplacingOccurrencesOfString:@"False" withString:@"0"];
+        
+        NSData *responsedData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+        
+        result = [NSJSONSerialization JSONObjectWithData:responsedData
+                                                 options:NSJSONReadingAllowFragments
+                                                   error:nil];
+        
+        NSString* returnCode= [result valueForKey:@"code"];
+        
+        if ([returnCode longLongValue]==200)
+        {
+//            NSString* idvalString= [result valueForKey:@"mobiledictationidval"];
+//            NSString* date= [[APIManager sharedManager] getDateAndTimeString];
+//            Database* db=[Database shareddatabase];
+            
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            
+            dispatch_async(dispatch_get_main_queue(), ^
+                           {
+                               //NSLog(@"Reachable");
+                               NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
+                               
+                              
+                               if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+                               {
+                                   [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+                                   
+                                   NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);
+                                   
+                               }
+                               else
+                               {
+                                   [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+                               }
+                              
+                               
+                               if (fileName != nil)
+                               {
+                                   [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
+                                   
+                               }
+                               
+                               [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:fileName];
+                               
+                               [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UPLOAD_NEXT_FILE object:fileName];
+                             
+                           });
+            
+            
+        }
+        else
+        {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            
+            dispatch_async(dispatch_get_main_queue(), ^
+                           {
+                               //NSLog(@"Reachable");
+                               NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
+                               
+                               [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
+                               
+                               [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
+                               NSLog(@"%@",result);
+                               
+                               
+                               dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                   
+                                   if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+                                   {
+                                       [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+                                       
+                                       NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+                                       
+                                       [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+                                       
+                                       [[APIManager sharedManager] uploadDocxFileToServer:nextFileToBeUpload];
+                                       
+                                       NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);
+                                       
+                                   }
+                                   else
+                                   {
+                                       [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+                                   }
+                         
+                               });
+                               
+                           });
+ 
+            
+        }
+        
+        
+        
+        
+        
+        
+    }
+    
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)dataTask didCompleteWithError:(NSError *)error
+{
+    //[dataTask resume];
+    NSLog(@"error code:%ld",(long)error.code);
+    
+    NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)dataTask.taskIdentifier]];
+    
+    if (error)
+    {
+        if (error.code == -999)
+        {
+            NSLog(@"cancelled from app delegate");
+            
+            NSLog(@"%@",error.localizedDescription);
+            
+        }
+        else
+        {
+            
+            NSLog(@"%@",error);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
+                //
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    
+                    if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+                    {
+                        
+                        [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+                        
+                        NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+                        
+                        [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+                        
+                        [[APIManager sharedManager] uploadDocxFileToServer:nextFileToBeUpload];
+                        
+                        NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);
+                        
+                    }
+                    else
+                    {
+                        [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+                    }
+                    
+                 
+                });
+                
+                
+                
+            });
+          
+        }
+        
+    }
+    else
+    {
+       
+    }
+    
+}
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+   didSendBodyData:(int64_t)bytesSent
+    totalBytesSent:(int64_t)totalBytesSent
+totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
+{
+    
+   
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//
+//        float progress = (double)totalBytesSent / (double)totalBytesExpectedToSend;
+//        //NSLog(@"progress %f",progress);
+//
+//        NSString* progressPercent= [NSString stringWithFormat:@"%f",progress*100];
+//
+//        int progressPercentInInt=[progressPercent intValue];
+//
+//        progressPercent=[NSString stringWithFormat:@"%d",progressPercentInInt];
+//
+//        NSString* progressShow= [NSString stringWithFormat:@"%@%%",progressPercent];
+//
+//        NSString* taskIdentifier = [[NSString stringWithFormat:@"%@",session.configuration.identifier] stringByAppendingString:[NSString stringWithFormat:@"%lu",(unsigned long)task.taskIdentifier]];
+//
+//        NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
+//
+//        NSLog(@"%@: %@",fileName,progressPercent);
+//
+//
+//        if (([AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict.count==0))
+//        {
+//            [AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict = [NSMutableDictionary new];
+//
+//            if (!(fileName== nil))
+//            {
+//                if ([progressShow isEqual:@"100%"])
+//                {
+//                    progressShow = @"99%";
+//                }
+//                [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict setValue:progressShow forKey:fileName];
+//            }
+//
+//        }
+//        else
+//        {
+//            if (!(fileName== nil))
+//            {
+//                if ([progressShow isEqual:@"100%"])
+//                {
+//                    progressShow = @"99%";
+//                }
+//                [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict setValue:progressShow forKey:fileName];
+//            }
+//
+//        }
+//
+//
+//    });
+    
+ 
+}
+
 //
 //
 //- (void)URLSession:(NSURLSession *)session

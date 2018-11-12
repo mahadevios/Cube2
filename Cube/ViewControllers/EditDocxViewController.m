@@ -464,7 +464,7 @@
         
         NSMutableArray *runningArray = [paragraph elementsForName:@"w:r"];
         
-        BOOL textAdded = false;
+//        BOOL textAdded = false;
         for (int i =0;i<runningArray.count;i++)
         {
             DDXMLElement *runningElement = [runningArray objectAtIndex:i];
@@ -500,11 +500,11 @@
 
                 textView.text = updatedString;
                 
-                NSLog(@"TextView text = %d", textView.text);
-                
-                NSLog(@"level = %ld",str.level);
-                
-                NSLog(@"index = %ld",str.index);
+//                NSLog(@"TextView text = %d", textView.text);
+//
+//                NSLog(@"level = %ld",str.level);
+//
+//                NSLog(@"index = %ld",str.index);
 
                 CGRect frame = textView.frame;
                 
@@ -514,10 +514,10 @@
                 
                 [textViewContentHeightDict setObject: [NSString stringWithFormat:@"%f",textView.contentSize.height] forKey:[NSString stringWithFormat:@"%ld",textView.tag]];
                 
-
-                NSLog(@"element :%@",str);
-                
-                NSLog(@"textViewCount :%d",textViewCount);
+               
+//                NSLog(@"element :%@",str);
+//                
+//                NSLog(@"textViewCount :%d",textViewCount);
                 
                
             }

@@ -287,15 +287,15 @@
 {
     UIView* keyWindow = [UIApplication sharedApplication].keyWindow;
     
+   
     transcriptionStatusView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.05, -70, self.view.frame.size.width*0.8, 48)];
     
     transcriptionStatusView.tag = 3000;
     
-    transcriptionStatusView.backgroundColor = [UIColor appOrangeColor];
-    
+   
     transcriptionStatusView.layer.cornerRadius = 4.0;
     
-    transcriptionStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width*0.1, 5, transcriptionStatusView.frame.size.width*0.9, 20)];
+    transcriptionStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width*0.1, 5, transcriptionStatusView.frame.size.width*0.9, 30)];
     
     transcriptionStatusLabel.font = [UIFont systemFontOfSize:15];
     
@@ -303,17 +303,49 @@
     
     transcriptionStatusLabel.textAlignment = NSTextAlignmentCenter;
     
-    timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width/2-30, 30, 60, 15)];
-    
+//    timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusLabel.frame.origin.x, transcriptionStatusLabel.frame.origin.y+transcriptionStatusLabel.frame.size.height, transcriptionStatusLabel.frame.size.width, 50)];
+
+    timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusLabel.frame.origin.x, 30, transcriptionStatusLabel.frame.size.width, 20)];
     timerLabel.text = @"00:59";
     
     timerLabel.font = [UIFont systemFontOfSize:15];
 
     timerLabel.textAlignment = NSTextAlignmentCenter;
     
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        transcriptionStatusView.frame = CGRectMake(self.view.frame.size.width*0.05, self.view.frame.size.height + 20, self.view.frame.size.width*0.8, 60);  // set animate view at bottom+20 of the view
+        
+        timerLabel.frame = CGRectMake(transcriptionStatusLabel.frame.origin.x, 35, transcriptionStatusLabel.frame.size.width, 50);
+        
+        transcriptionStatusView.backgroundColor = [UIColor whiteColor];
+        
+        self.startPauseDocBGView.layer.cornerRadius = 4.0;
+        
+        transcriptionStatusLabel.textColor = [UIColor lightGrayColor];
+        
+        timerLabel.textColor = [UIColor darkGrayColor];
+        
+//        transcriptionStatusLabel.frame = CGRectMake(transcriptionStatusView.frame.size.width*0.1, 5, transcriptionStatusView.frame.size.width*0.9, 20);
+//
+//        timerLabel.frame = CGRectMake(transcriptionStatusView.frame.size.width/2-30, 30, 60, 15);
+        
+        transcriptionStatusLabel.font = [UIFont systemFontOfSize:21];
+
+        timerLabel.font = [UIFont systemFontOfSize:25];
+
+//        self.startPauseDocBGView.backgroundColor = [UIColor appOrangeColor];
+    }
+    else
+    {
+        transcriptionStatusView.backgroundColor = [UIColor appOrangeColor];
+        
+    }
+    
     [transcriptionStatusView addSubview:transcriptionStatusLabel];
     
     [transcriptionStatusView addSubview:timerLabel];
+    
     
     [keyWindow addSubview:transcriptionStatusView];
     
@@ -321,20 +353,54 @@
 
 -(void)startTranscriptionStatusViewAnimationToDown:(BOOL)moveDown
 {
+
     [UIView animateWithDuration:0.6 delay:0 usingSpringWithDamping:.7 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
         
         //            self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.1, self.view.frame.size.height*0.09, self.view.frame.size.width*0.8, self.view.frame.size.height*0.73);
         int moveDownDistance;
-        if (moveDown == true)
+        
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
         {
-            moveDownDistance = 15;
+            if (moveDown == true)
+            {
+                moveDownDistance = -110;
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    self.startPauseDocBGView.backgroundColor = [UIColor appOrangeColor];
+
+                });
+            }
+            else
+            {
+                moveDownDistance = 110;
+                
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                    self.transcriptionStatusView.frame = CGRectMake(self.view.frame.size.width*0.05, self.view.frame.size.height + moveDownDistance, self.view.frame.size.width*0.9, 48);
+            });
+            
         }
         else
         {
-            moveDownDistance = -60;
-
+            if (moveDown == true)
+            {
+                moveDownDistance = 15;
+            }
+            else
+            {
+                moveDownDistance = -60;
+                
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                self.transcriptionStatusView.frame = CGRectMake(self.view.frame.size.width*0.05, moveDownDistance, self.view.frame.size.width*0.9, 48);
+            });
+            
         }
-        self.transcriptionStatusView.frame = CGRectMake(self.view.frame.size.width*0.05, moveDownDistance, self.view.frame.size.width*0.9, 48);
+       
+       
         
     } completion:^(BOOL finished) {
         
@@ -366,6 +432,10 @@
                                                              handler:^(UIAlertAction * action)
                                        {
                                            //                                           [self.navigationController.tabBarController setSelectedIndex:0];
+                                           
+
+                                           [transcriptionStatusView removeFromSuperview];
+                                           
                                            [self dismissViewControllerAnimated:true completion:nil];
                                            
                                            //                                           [self.navigationController popViewControllerAnimated:YES];
@@ -1155,7 +1225,7 @@
  */
 - (IBAction)createDocFileButtonClicked:(id)sender
 {
-    if (transcriptionTextLabel.text.length < 1)
+    if (transcriptionTextLabel.text.length > 100)
     {
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"File Size" withMessage:@"File size is too small to save" withCancelText:@"Cancel" withOkText:@"Ok" withAlertTag:1000];
     }
@@ -1301,6 +1371,8 @@
     }
     
     BOOL isWritten1 = [[self.transcriptionTextLabel.text dataUsingEncoding:NSUTF8StringEncoding] writeToFile:docFilePath atomically:true];
+//    BOOL isWritten1 = [[@"Testing Text" dataUsingEncoding:NSUTF8StringEncoding] writeToFile:docFilePath atomically:true];
+
     //BOOL isWritten = [self.transcriptionTextLabel.text writeToFile:docFilePath atomically:true encoding:NSUTF8StringEncoding error:&error];
     
     return isWritten1;

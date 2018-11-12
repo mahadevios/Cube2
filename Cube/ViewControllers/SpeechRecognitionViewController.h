@@ -36,6 +36,7 @@
 //@property(nonatomic)int recNum;
 //@property(nonatomic)int numOfTrimFiles;
 - (IBAction)backButtonPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *startPauseDocBGView;
 
 - (IBAction)startLiveAudioTranscription:(id)sender;
 - (IBAction)stopLiveAudioTranscription:(id)sender;

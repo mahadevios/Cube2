@@ -72,41 +72,22 @@ static APIManager *singleton = nil;
 //    }
 //}
 
--(void)uploadNextFile
-{
-    if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
-    {
-       // [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
-        
-        NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
-        
-        [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
-        
-        [self uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
-        
-        
-        
-        NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);
-        
-    }
-    else
-    {
-       // [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
-    }
-
-}
 
 -(NSString*)getDateAndTimeString
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
     formatter.dateFormat = DATE_TIME_FORMAT;
+    
     NSString* recordCreatedDateString = [formatter stringFromDate:[NSDate date]];
+    
     return recordCreatedDateString;
 }
+
 -(uint64_t)getFileSize:(NSString*)filePath
 {
     uint64_t totalSpace = 0;
-    uint64_t totalFreeSpace = 0;
+//    uint64_t totalFreeSpace = 0;
     NSError *error = nil;
 
     NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath  error:&error];
@@ -114,6 +95,7 @@ static APIManager *singleton = nil;
     if (dictionary)
     {
         NSNumber *fileSystemSizeInBytes = [dictionary objectForKey: NSFileSize];
+        
         totalSpace = [fileSystemSizeInBytes unsignedLongLongValue];
 
     }
@@ -134,20 +116,31 @@ static APIManager *singleton = nil;
 -(uint64_t)getFreeDiskspace
 {
     uint64_t totalSpace = 0;
+    
     uint64_t totalFreeSpace = 0;
+    
     NSError *error = nil;
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
     NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfFileSystemForPath:[paths lastObject] error: &error];
     
-    if (dictionary) {
+    if (dictionary)
+    {
         NSNumber *fileSystemSizeInBytes = [dictionary objectForKey: NSFileSystemSize];
+        
         NSNumber *freeFileSystemSizeInBytes = [dictionary objectForKey:NSFileSystemFreeSize];
+        
         totalSpace = [fileSystemSizeInBytes unsignedLongLongValue];
+        
         totalFreeSpace = [freeFileSystemSizeInBytes unsignedLongLongValue];
+        
         totalFreeSpace=((totalFreeSpace/(1024ll))/1024ll);
         //        NSLog(@"Memory Capacity of %llu MiB with %llu MiB Free memory available.", ((totalSpace/1024ll)/1024ll), ((totalFreeSpace/1024ll)/1024ll));
-    } else {
-       // NSLog(@"Error Obtaining System Memory Info: Domain = %@, Code = %ld", [error domain], (long)[error code]);
+    }
+    else
+    {
+        // NSLog(@"Error Obtaining System Memory Info: Domain = %@, Code = %ld", [error domain], (long)[error code]);
     }
     
     return totalFreeSpace;
@@ -584,6 +577,8 @@ static APIManager *singleton = nil;
     
     
 }
+
+
 -(void)downloafFileUsingSession:(NSString*)mobielDictationIdVal
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
@@ -737,6 +732,9 @@ static APIManager *singleton = nil;
                                                    NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
                                                   
                                                    [[Database shareddatabase] updateAudioFileUploadedStatus:@"TransferFailed" fileName:fileName dateAndTime:@"" mobiledictationidval:0];
+                                                  
+                                                  [[Database shareddatabase] updateAudioFileStatus:@"RecordingComplete" fileName:fileName];
+
                                                   [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
 
                                                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_API object:nil];
@@ -1008,6 +1006,27 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 }
 
 
+-(void)uploadNextFile
+{
+    if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+    {
+        // [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+        
+        NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+        
+        [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+        
+        [self uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
+        
+        NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);
+        
+    }
+    else
+    {
+        // [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray removeObject:fileName];
+    }
+    
+}
 
 -(void)uploadFileToServerUsingNSURLSession:(NSString*)str
 {
@@ -1023,7 +1042,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
                            
                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                
-                               [self uploadFileAfterGettingdatabaseValues:str departmentID:departmentId transferStatus:transferStatus mobileDictationIdVal:mobileDictationIdVal];
+                               [self uploadFileAfterGettingdatabaseValues:str departmentID:departmentId transferStatus:transferStatus mobileDictationIdVal:mobileDictationIdVal isFileTypeAudio:YES];
                                
                            });
                            
@@ -1040,7 +1059,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
 }
 
--(void)uploadFileAfterGettingdatabaseValues:(NSString*)str departmentID:(int)departmentID transferStatus:(int)transferStatus mobileDictationIdVal:(int)mobileDictationIdVal
+-(void)uploadFileAfterGettingdatabaseValues:(NSString*)str departmentID:(int)departmentID transferStatus:(int)transferStatus mobileDictationIdVal:(int)mobileDictationIdVal isFileTypeAudio:(BOOL)isFileTypeAudio
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -1049,10 +1068,21 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     });
+    
     NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:
                           [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,str] ];
     
     NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, FILE_UPLOAD_API]];
+    
+    if (isFileTypeAudio == NO)
+    {
+        filePath = [NSHomeDirectory() stringByAppendingPathComponent:
+                    [NSString stringWithFormat:@"Documents/%@/%@.Docx",DOCX_FILES_FOLDER_NAME,str] ];
+        
+        url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, DOCX_FILE_UPLOAD_API]];
+        
+    }
+   
     
     NSString *boundary = [self generateBoundaryString];
     
@@ -1065,12 +1095,6 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     long filesizelong=[[APIManager sharedManager] getFileSize:filePath];
     
     int filesizeint=(int)filesizelong;
-    
-    // NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    //DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];//    if ([[[NSUserDefaults standardUserDefaults]
-    
-    
-    //NSString* macId=[Keychain getStringForKey:@"udid"];
     
     NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
     
@@ -1124,10 +1148,6 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
     NSData *httpBody = [self createBodyWithBoundary:boundary parameters:params paths:@[filePath] fieldName:str];
     
-    
-    
-
-    
     request.HTTPBody = httpBody;
     
     
@@ -1148,11 +1168,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
                        
                        [[Database shareddatabase] insertTaskIdentifier:[NSString stringWithFormat:@"%@",taskIdentifier] fileName:str];
                    });
-    
-    
-    
-    
-    
+  
     [uploadTask resume];
 
 }
@@ -1216,25 +1232,184 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 
 }
 
-//-(void)uploadFileToServer:str
-//{
-//if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<2)
-//{
-//    [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:str];
-//    [self uploadFileToServerUsingNSURLSession:str];
-//    
-//}
-//else
-//{
-//    [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:str];
-//}
-//}
+
+
+- (NSData *)createBodyWithBoundary:(NSString *)boundary
+                        parameters:(NSDictionary *)parameters
+                             paths:(NSArray *)paths
+                         fieldName:(NSString *)fieldName
+{
+    NSMutableData *httpBody = [NSMutableData data];
+    
+    // add params (all params are strings)
+    
+    [parameters enumerateKeysAndObjectsUsingBlock:^(NSString *parameterKey, NSString *parameterValue, BOOL *stop) {
+        [httpBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [httpBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", parameterKey] dataUsingEncoding:NSUTF8StringEncoding]];
+        [httpBody appendData:[[NSString stringWithFormat:@"%@\r\n", parameterValue] dataUsingEncoding:NSUTF8StringEncoding]];
+    }];
+    
+    // add image data
+    
+    for (NSString *path in paths)
+    {
+        NSString *filename  = [path lastPathComponent];
+        NSData   *data1      = [NSData dataWithContentsOfFile:path];
+        
+        NSData *data = [data1 AES256EncryptWithKey:SECRET_KEY];
+        
+        NSString *mimetype  = [self mimeTypeForPath:path];
+        
+        [httpBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [httpBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", fieldName, filename] dataUsingEncoding:NSUTF8StringEncoding]];
+        [httpBody appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n\r\n", mimetype] dataUsingEncoding:NSUTF8StringEncoding]];
+        [httpBody appendData:data];
+        [httpBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    [httpBody appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    return httpBody;
+}
+
+
+- (NSString *)mimeTypeForPath:(NSString *)path
+{
+    // get a mime type for an extension using MobileCoreServices.framework
+    
+    CFStringRef extension = (__bridge CFStringRef)[path pathExtension];
+    CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, extension, NULL);
+    assert(UTI != NULL);
+    
+    NSString *mimetype = CFBridgingRelease(UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType));
+    
+    assert(mimetype != NULL);
+    
+    CFRelease(UTI);
+    
+    return mimetype;
+}
+
+
+- (NSString *)generateBoundaryString
+{
+    return [NSString stringWithFormat:@"*%@", [[NSUUID UUID] UUIDString]];
+    //return [NSString stringWithFormat:@"*"];
+    
+}
+
+
+
+
+
+-(void)uploadDocxFileToServer:(NSString*)docxFileName
+{
+    if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<2)
+    {
+        if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count == 1)
+        {
+            NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:
+                                  [NSString stringWithFormat:@"Documents/%@/%@",DOCX_FILES_FOLDER_NAME,[[AppPreferences sharedAppPreferences].filesInUploadingQueueArray objectAtIndex:0]] ];
+            
+            long firstFileSize = [[APIManager sharedManager] getFileSize:filePath];
+            
+            if (firstFileSize>30000000)
+            {
+                [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:docxFileName];
+            }
+            
+            else
+            {
+                filePath = [NSHomeDirectory() stringByAppendingPathComponent:
+                            [NSString stringWithFormat:@"Documents/%@/%@",DOCX_FILES_FOLDER_NAME,docxFileName]];
+                
+                long secondFileSize = [[APIManager sharedManager] getFileSize:filePath];
+                
+                if (secondFileSize>30000000)
+                {
+                    [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:docxFileName];
+                }
+                
+                else
+                {
+                    [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:docxFileName];
+                    
+                    [self uploadDocxFileToServerUsingNSURLSession:docxFileName];
+                }
+            }
+        }
+        
+        else
+        {
+            [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray addObject:docxFileName];
+            
+            [self uploadDocxFileToServerUsingNSURLSession:docxFileName];
+        }
+        
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray addObject:docxFileName];
+    }
+    //[self uploadFileToServerUsingNSURLConnection:str];
+    
+}
+
+
+-(void)uploadDocxFileToServerUsingNSURLSession:(NSString*)docxFileName
+{
+    
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+        
+        dispatch_async(dispatch_get_main_queue(), ^
+                       {
+                          int departmentId= [[Database shareddatabase] getDepartMentIdForFileName:docxFileName];
+                           
+                          int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:docxFileName];
+                          
+//                           long filesizelong=[[APIManager sharedManager] getFileSize:filePath];
+//
+//                           int filesizeint=(int)filesizelong;
+                           
+//                           NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+                           
+                           NSString* downloadMethodType = @"urlConnection";
+                           
+                           NSArray * requestParamArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d",departmentId], [NSString stringWithFormat:@"%d",mobileDictationIdVal], nil];
+                           
+                           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                               
+                                DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:DOCX_FILE_UPLOAD_API withRequestParameter:requestParamArray withResourcePath:DOCX_FILE_UPLOAD_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+                               
+                               NSDictionary *params = @{@"filename"     : docxFileName,
+                                                                                     };
+                               
+                               downloadmetadatajob.requestParameter = params;
+                               
+                               [downloadmetadatajob uploadDocxFileAfterGettingdatabaseValues:docxFileName];
+                               
+                           });
+                           
+                       });
+        
+        
+        
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+    
+    
+}
+
+/*
 -(void)uploadFileToServerUsingNSURLConnection:(NSString*)str
 
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-//        [UIApplication sharedApplication].idleTimerDisabled = YES;
         
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         
@@ -1255,9 +1430,6 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
         long filesizelong = [[APIManager sharedManager] getFileSize:filePath];
         
         int filesizeint=(int)filesizelong;
-        
-        // NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-        //DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];//    if ([[[NSUserDefaults standardUserDefaults]
         
         int departmentId= [[Database shareddatabase] getDepartMentIdForFileName:str];
         
@@ -1353,16 +1525,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
                 NSString* encryptedString = [NSJSONSerialization JSONObjectWithData:data
                                                          options:NSJSONReadingAllowFragments
                                                            error:&error];
-                //NSString* returnCode= [result valueForKey:@"code"];
-        
-                //    NSDictionary *response1 = [NSJSONSerialization JSONObjectWithData:responseData
-                //                                                                 options:NSUTF8StringEncoding
-                //                                                                   error:&error];
-        
-        //
-        //        NSString *encryptedResponse = [NSJSONSerialization JSONObjectWithData:encryptedString
-        //                                                                      options:NSUTF8StringEncoding
-        //                                                                        error:&error];
+              
         
         
                 NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:encryptedString options:0];
@@ -1421,70 +1584,10 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
 }
 
-
-- (NSData *)createBodyWithBoundary:(NSString *)boundary
-                        parameters:(NSDictionary *)parameters
-                             paths:(NSArray *)paths
-                         fieldName:(NSString *)fieldName
-{
-    NSMutableData *httpBody = [NSMutableData data];
-    
-    // add params (all params are strings)
-    
-    [parameters enumerateKeysAndObjectsUsingBlock:^(NSString *parameterKey, NSString *parameterValue, BOOL *stop) {
-        [httpBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [httpBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", parameterKey] dataUsingEncoding:NSUTF8StringEncoding]];
-        [httpBody appendData:[[NSString stringWithFormat:@"%@\r\n", parameterValue] dataUsingEncoding:NSUTF8StringEncoding]];
-    }];
-    
-    // add image data
-    
-    for (NSString *path in paths)
-    {
-        NSString *filename  = [path lastPathComponent];
-        NSData   *data1      = [NSData dataWithContentsOfFile:path];
-        
-        NSData *data = [data1 AES256EncryptWithKey:SECRET_KEY];
-
-        NSString *mimetype  = [self mimeTypeForPath:path];
-        
-        [httpBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        [httpBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", fieldName, filename] dataUsingEncoding:NSUTF8StringEncoding]];
-        [httpBody appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n\r\n", mimetype] dataUsingEncoding:NSUTF8StringEncoding]];
-        [httpBody appendData:data];
-        [httpBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    }
-    
-    [httpBody appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    return httpBody;
-}
+*/
 
 
-- (NSString *)mimeTypeForPath:(NSString *)path
-{
-    // get a mime type for an extension using MobileCoreServices.framework
-    
-    CFStringRef extension = (__bridge CFStringRef)[path pathExtension];
-    CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, extension, NULL);
-    assert(UTI != NULL);
-    
-    NSString *mimetype = CFBridgingRelease(UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType));
-    
-    assert(mimetype != NULL);
-    
-    CFRelease(UTI);
-    
-    return mimetype;
-}
 
-
-- (NSString *)generateBoundaryString
-{
-    return [NSString stringWithFormat:@"*%@", [[NSUUID UUID] UUIDString]];
-    //return [NSString stringWithFormat:@"*"];
-    
-}
 
 //***********************
 //        NSURLSessionConfiguration * backgroundConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"task1"];
