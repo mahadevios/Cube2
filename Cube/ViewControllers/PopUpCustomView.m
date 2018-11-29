@@ -124,13 +124,26 @@
                 
             }
             [userSettingsButton setTitle:[subViewNamesArray objectAtIndex:i] forState:UIControlStateNormal];
-            [userSettingsButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            userSettingsButton.titleLabel.font=[UIFont systemFontOfSize:14];
+            if ([subViewNamesArray[i] isEqualToString:@"Select Locale"])
+            {
+                [userSettingsButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
+                userSettingsButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];
+
+            }
+            else
+            {
+                [userSettingsButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                userSettingsButton.titleLabel.font=[UIFont systemFontOfSize:14];
+            }
+            
             [userSettingsButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
             
             NSString* selector=[NSString stringWithFormat:@"%@",[subViewNamesArray objectAtIndex:i]];
             selector = [selector stringByReplacingOccurrencesOfString:@" " withString:@""];
             selector = [selector stringByReplacingOccurrencesOfString:@"." withString:@""];
+            selector = [selector stringByReplacingOccurrencesOfString:@"(" withString:@""];
+            selector = [selector stringByReplacingOccurrencesOfString:@")" withString:@""];
 
             [userSettingsButton addTarget:sender action:NSSelectorFromString(selector) forControlEvents:UIControlEventTouchUpInside];
             

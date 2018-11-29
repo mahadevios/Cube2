@@ -11,6 +11,8 @@
 #import "LoginViewController.h"
 #import "User.h"
 #import "Keychain.h"
+#import "TandCViewController.h"
+
 @interface PinRegistrationViewController ()
 
 @end
@@ -210,13 +212,19 @@
                     {
                         [pinCode8TextField resignFirstResponder];
 
-                       LoginViewController* regiController=(LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+//                       LoginViewController* regiController=(LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+//
+//                        [self presentViewController:regiController animated:NO completion:nil];
+
 //                        [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:NO completion:nil];
 //                        
 //                        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:regiController
 //                                           animated:NO
 //                                         completion:nil];
-                        [self presentViewController:regiController animated:NO completion:nil];
+                        
+                        TandCViewController *viewController = (TandCViewController *)[storyboard instantiateViewControllerWithIdentifier:@"TandCViewController"];
+                        //[self.window makeKeyAndVisible];
+                        [self presentViewController:viewController animated:NO completion:NULL];
 
                     }]; //You can use a block here to handle a press on this button
         [alertController addAction:actionOk];

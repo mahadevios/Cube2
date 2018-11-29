@@ -146,10 +146,32 @@
 
     [deleteButton addTarget:self action:@selector(deleteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
-    if (dateAndTimeArray.count>1)
-        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     
-    dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
+    if (dateAndTimeArray.count>1)
+    {
+        
+        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+        
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        
+        NSDate *date = [dateFormatter dateFromString:[dateAndTimeArray objectAtIndex:0]];
+        
+        // Convert date object into desired format
+        [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+        NSString *newDateString = [dateFormatter stringFromDate:date];
+        
+        dateLabel.text=[NSString stringWithFormat:@"%@",newDateString];
+        
+        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+        
+        
+    }
+//    if (dateAndTimeArray.count>1)
+//        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
+    
+//    dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
     
     departmentLabel.text = deptObj.departmentName;
     
@@ -178,14 +200,48 @@
     
     NSString* newDestPath = [destpath stringByAppendingFormat:@".txt"];
     
+//    NSURL* url = [[NSURL alloc] initFileURLWithPath:newDestPath];
+
+    
     if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
     {
         UIDocumentInteractionController* interactionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:newDestPath]];
         
+//        interactionController set
         interactionController.delegate = self;
         
         
         [interactionController presentPreviewAnimated:true];
+        
+//        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:nil];
+//        UIActivityViewController *activityController = [[UIActivityViewController alloc]initWithActivityItems: applicationActivities:nil];
+        
+
+//        activityController.excludedActivityTypes = @[
+//
+//                                                     UIActivityTypePostToFacebook,
+//                                                     UIActivityTypePostToTwitter,
+//                                                     UIActivityTypePostToWeibo,
+//                                                     UIActivityTypeMessage,
+//
+//                                                     UIActivityTypePrint,
+//                                                     UIActivityTypeCopyToPasteboard,
+//                                                     UIActivityTypeAssignToContact,
+//                                                     UIActivityTypeSaveToCameraRoll,
+//                                                     UIActivityTypeAddToReadingList,
+//                                                     UIActivityTypePostToFlickr,
+//                                                     UIActivityTypePostToVimeo,
+//                                                     UIActivityTypePostToTencentWeibo,
+//                                                     UIActivityTypeAirDrop,
+//                                                     @"com.linkedin.LinkedIn.ShareExtension",
+//                                                     @"com.apple.mobilenotes.SharingExtension",
+//                                                     @"com.apple.reminders.RemindersEditorExtension",
+//                                                     @"com.apple.mobileslideshow.StreamShareService"
+//                                                     ];
+
+
+//        [self presentViewController:activityController animated:YES completion:nil];
+        
     }
     else
     {
@@ -216,8 +272,8 @@
 
 -(void)deleteButtonClicked:(TableViewButton*)sender
 {
-    alertController = [UIAlertController alertControllerWithTitle:@"Delete Doc File?"
-                                                          message:@"Are you sure to delete this doc file?"
+    alertController = [UIAlertController alertControllerWithTitle:@"Delete Text File?"
+                                                          message:@"Are you sure you want to delete this text file?"
                                                    preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* actionCreate = [UIAlertAction actionWithTitle:@"Delete"
                                                            style:UIAlertActionStyleDestructive
@@ -298,6 +354,21 @@
 
     //});
 }
+
+//- (void)documentInteractionController:(UIDocumentInteractionController *)controller willBeginSendingToApplication:(NSString *)application {
+//    if ([self isWhatsApplication:application]) {
+//
+//        controller.UTI = @"net.whatsapp.image";
+//    }
+//}
+//
+//- (BOOL)isWhatsApplication:(NSString *)application {
+//    if ([application rangeOfString:@"whats"].location == NSNotFound) { // unfortunately, no other way...
+//        return NO;
+//    } else {
+//        return YES;
+//    }
+//}
 
 -(void)setTimer
 {

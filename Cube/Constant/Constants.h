@@ -25,7 +25,7 @@
 #define  BASE_URL_PATH                        @"https://www.cubescribe.com/cubeagent_webapi/api"
 
 
-//#define  BASE_URL_PATH                        @"http://192.168.3.150:8081/CubeAPI/api"
+//#define  BASE_URL_PATH                        @"http://192.168.3.156:8081/CubeAPI/api"
 #define  CHECK_DEVICE_REGISTRATION            @"encrdecr_MobileCheckDeviceRegistration"
 #define  AUTHENTICATE_API                     @"encrdecr_MobileAuthenticate"
 #define  ACCEPT_PIN_API                       @"encrdecr_MobileAcceptPIN"
@@ -38,6 +38,7 @@
 #define  SEND_DICTATION_IDS_API               @"encrdecr_MobileRequestForCompleteFiles"
 #define  SEND_COMMENT_API                     @"encdecr_MobileDocFileComment"
 #define  DOCX_FILE_UPLOAD_API                  @"encedecr_MobileUploadDocFile"
+#define  ACCEPY_TandC_API                  @"encedecr_MobileTermsAndConditions"
 
 
 #define  SECRET_KEY                           @"cubemob"
@@ -47,6 +48,7 @@
 #define  REQUEST_PARAMETER              @"requestParameter"
 #define  SUCCESS                        @"1000"
 #define  FAILURE                        @"1001"
+#define  VRS_LOCALE                     @"vrsLocale"
 
 
 //NSNOTIFICATION
@@ -60,6 +62,7 @@
 #define NOTIFICATION_FILE_UPLOAD_API                @"notificationForMobileFileUpload"
 #define NOTIFICATION_FILE_DOWNLOAD_API              @"notificationForMobileFileDownload"
 #define NOTIFICATION_SEND_DICTATION_IDS_API         @"notificationSendDictationIds"
+#define NOTIFICATION_ACCEPT_TANDC_API               @"notificationAcceptTandC"
 
 #define NOTIFICATION_PIN_CANGE_API                  @"notificationForMobilePINChange"
 #define NOTIFICATION_PAUSE_RECORDING                @"pauseRecording"
@@ -71,6 +74,7 @@
 #define NOTIFICATION_UPLOAD_NEXT_FILE               @"uploadNextFile"
 #define NOTIFICATION_SEND_COMMENT_API               @"commentNotification"
 #define NOTIFICATION_FILE_UPLOAD_CLICKED            @"fileUploadClicked"
+#define NOTIFICATION_STOP_VRS                       @"stopVRS"
 
 //Settimg Constants
 
@@ -107,11 +111,15 @@
 #define AUDIO_FILES_FOLDER_NAME                @"Audio files"
 #define DOCX_FILES_FOLDER_NAME                 @"Downloads"
 #define DOC_VRS_FILES_FOLDER_NAME              @"VRSDOC files"
+#define DOC_VRS_TEXT_FILES_FOLDER_NAME         @"VRSAudio files"
+
 //#define DATE_TIME_FORMAT                       @"MM-dd-yyyy HH:mm:ss"
 #define DATE_TIME_FORMAT                       @"yyyy-MM-dd HH:mm:ss"
 
 #define RESPONSE_CODE                          @"code"
 #define RESPONSE_PIN_VERIFY                    @"pinverify"
+#define RESPONSE_TC_FLAG                    @"AcceptTermFlag"
+
 
 
 #define SHARED_GROUP_IDENTIFIER                @"group.com.coreFlexSolutions.CubeDictate"

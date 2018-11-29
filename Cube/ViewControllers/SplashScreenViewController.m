@@ -14,6 +14,7 @@
 #import "PopUpCustomView.h"
 #import "NSData+AES256.h"
 #import "Keychain.h"
+#import "TandCViewController.h"
 
 @interface SplashScreenViewController ()
 
@@ -164,6 +165,8 @@
     NSDictionary* responseDict=responseDictObject.object;
     NSString* responseCodeString=  [responseDict valueForKey:RESPONSE_CODE];
     NSString* responsePinString=  [responseDict valueForKey:RESPONSE_PIN_VERIFY];
+    NSString* tAndcString=  [responseDict valueForKey:RESPONSE_TC_FLAG];
+
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [hud hideAnimated:YES];
     if ([responseCodeString intValue]==401 && [responsePinString intValue]==0)
@@ -195,7 +198,26 @@
             
         }
         else
-            if ([responseCodeString intValue]==200 && [responsePinString intValue]==1)
+            if ([responseCodeString intValue]==200 && [responsePinString intValue]==1 && [tAndcString intValue] == 0)
+            {
+                //gotResponse=true;
+                
+                TandCViewController *viewController = (TandCViewController *)[storyboard instantiateViewControllerWithIdentifier:@"TandCViewController"];
+                //[self.window makeKeyAndVisible];
+                [self presentViewController:viewController animated:NO completion:NULL];
+                
+                //                [[UIApplication sharedApplication].keyWindow.window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+                //
+                
+                
+                //                [[UIApplication sharedApplication].keyWindow.window.rootViewController presentViewController:viewController
+                //                                                             animated:NO
+                //                                                           completion:nil];
+                //
+                
+            }
+        else
+            if ([responseCodeString intValue]==200 && [responsePinString intValue]==1 && [tAndcString intValue] == 1)
             {
                 //gotResponse=true;
 

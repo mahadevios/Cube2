@@ -46,9 +46,11 @@
 		843B341E20452BD20080F355 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 843B340820452BD20080F355 /* zip.c */; };
 		843B341F20452BD20080F355 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 843B340B20452BD20080F355 /* SSZipArchive.m */; };
 		843C4E0F1E77ECF800586DE5 /* SharedSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C4E0E1E77ECF800586DE5 /* SharedSession.m */; };
+		8445EA7B21AE6A5000BD1CE6 /* TCsFinal.docx in Resources */ = {isa = PBXBuildFile; fileRef = 8445EA7A21AE6A5000BD1CE6 /* TCsFinal.docx */; };
 		844C4A731D4B393800CF3DB4 /* UserSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844C4A721D4B393800CF3DB4 /* UserSettingsViewController.m */; };
 		844C4A791D4B736700CF3DB4 /* SwitchCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 844C4A781D4B736700CF3DB4 /* SwitchCreation.m */; };
 		845A96781DDDEF9A007F460C /* NSData+AES256.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A96771DDDEF9A007F460C /* NSData+AES256.m */; };
+		846A561F219AA51400EC0B3C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846A561E219AA51400EC0B3C /* StoreKit.framework */; };
 		846B5A5220B43EAB0012F6D9 /* EmptyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846B5A5120B43EAB0012F6D9 /* EmptyViewController.m */; };
 		846DE6861D7288420004C886 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 846DE6841D7288420004C886 /* Database.m */; };
 		846DE68A1D728B210004C886 /* AudioSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 846DE6891D728B210004C886 /* AudioSessionManager.m */; };
@@ -67,7 +69,6 @@
 		847D959A1D5F150200145C32 /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 847D95971D5F150200145C32 /* APIManager.m */; };
 		847D959B1D5F150200145C32 /* DownloadMetaDataJob.m in Sources */ = {isa = PBXBuildFile; fileRef = 847D95991D5F150200145C32 /* DownloadMetaDataJob.m */; };
 		847D95B31D5F157C00145C32 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 847D959F1D5F157C00145C32 /* MBProgressHUD.m */; };
-		847D95B41D5F157C00145C32 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 847D95A21D5F157C00145C32 /* Reachability.m */; };
 		847D95CB1D5F325600145C32 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 847D95CA1D5F325600145C32 /* libsqlite3.0.tbd */; };
 		8480AAFA1D787DD500473651 /* Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480AAF91D787DD500473651 /* Keychain.m */; };
 		8488B7BA1FC6A8C7006FE0FA /* TableViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7B91FC6A8C7006FE0FA /* TableViewButton.m */; };
@@ -78,12 +79,12 @@
 		849AF4AB2029CDCC008B6566 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 849AF4AA2029CDCC008B6566 /* libxml2.tbd */; };
 		849AF60D209C49A800C67980 /* Cube_DB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 849AF60C209C49A700C67980 /* Cube_DB.sqlite */; };
 		849F02671D75328000E74723 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 849F02661D75328000E74723 /* User.m */; };
+		84A180C221AD7633004F539D /* TandCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A180C121AD7632004F539D /* TandCViewController.m */; };
 		84AB68591D536961006F962D /* InCompleteDictationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AB68581D536961006F962D /* InCompleteDictationViewController.m */; };
 		84B87BCE1D76859A002B91FB /* UIDevice+Identifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B87BCD1D76859A002B91FB /* UIDevice+Identifier.m */; };
 		84B87BD11D770D1D002B91FB /* SplashScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B87BD01D770D1D002B91FB /* SplashScreenViewController.m */; };
 		84BD03061FC2DD7C006C45A6 /* DocFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */; };
-		84BECDF7202D897500F40BA1 /* Docx2.docx in Resources */ = {isa = PBXBuildFile; fileRef = 84BECDF6202D897400F40BA1 /* Docx2.docx */; };
-		84BECDF9202DAC0A00F40BA1 /* sample.docx in Resources */ = {isa = PBXBuildFile; fileRef = 84BECDF8202DAC0900F40BA1 /* sample.docx */; };
+		84BFFB4B21ABDD8500DD8E04 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BFFB4921ABDD8500DD8E04 /* Reachability.m */; };
 		84CC5F731D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC5F721D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m */; };
 		84CC5F761D74351900D1E982 /* DepartMent.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC5F751D74351900D1E982 /* DepartMent.m */; };
 		84CC5F791D747B8200D1E982 /* PinRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC5F781D747B8200D1E982 /* PinRegistrationViewController.m */; };
@@ -224,12 +225,14 @@
 		843B340D20452BD20080F355 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
 		843C4E0D1E77ECF800586DE5 /* SharedSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedSession.h; sourceTree = "<group>"; };
 		843C4E0E1E77ECF800586DE5 /* SharedSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedSession.m; sourceTree = "<group>"; };
+		8445EA7A21AE6A5000BD1CE6 /* TCsFinal.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = TCsFinal.docx; sourceTree = "<group>"; };
 		844C4A711D4B393800CF3DB4 /* UserSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSettingsViewController.h; sourceTree = "<group>"; };
 		844C4A721D4B393800CF3DB4 /* UserSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSettingsViewController.m; sourceTree = "<group>"; };
 		844C4A771D4B736700CF3DB4 /* SwitchCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchCreation.h; sourceTree = "<group>"; };
 		844C4A781D4B736700CF3DB4 /* SwitchCreation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchCreation.m; sourceTree = "<group>"; };
 		845A96761DDDEF9A007F460C /* NSData+AES256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AES256.h"; sourceTree = "<group>"; };
 		845A96771DDDEF9A007F460C /* NSData+AES256.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AES256.m"; sourceTree = "<group>"; };
+		846A561E219AA51400EC0B3C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		846B5A5020B43EAB0012F6D9 /* EmptyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmptyViewController.h; sourceTree = "<group>"; };
 		846B5A5120B43EAB0012F6D9 /* EmptyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmptyViewController.m; sourceTree = "<group>"; };
 		846D68741D5713F80089CA15 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -268,8 +271,6 @@
 		847D95991D5F150200145C32 /* DownloadMetaDataJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadMetaDataJob.m; sourceTree = "<group>"; };
 		847D959E1D5F157C00145C32 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		847D959F1D5F157C00145C32 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		847D95A11D5F157C00145C32 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		847D95A21D5F157C00145C32 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		847D95BE1D5F292700145C32 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		847D95CA1D5F325600145C32 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		847DCBBF1DE590FD002D78BB /* Cube.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cube.entitlements; sourceTree = "<group>"; };
@@ -291,6 +292,8 @@
 		849AF60C209C49A700C67980 /* Cube_DB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cube_DB.sqlite; sourceTree = SOURCE_ROOT; };
 		849F02651D75328000E74723 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		849F02661D75328000E74723 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		84A180C021AD7632004F539D /* TandCViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TandCViewController.h; sourceTree = "<group>"; };
+		84A180C121AD7632004F539D /* TandCViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TandCViewController.m; sourceTree = "<group>"; };
 		84AB68571D536961006F962D /* InCompleteDictationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InCompleteDictationViewController.h; sourceTree = "<group>"; };
 		84AB68581D536961006F962D /* InCompleteDictationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InCompleteDictationViewController.m; sourceTree = "<group>"; };
 		84B87BCC1D76859A002B91FB /* UIDevice+Identifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Identifier.h"; sourceTree = "<group>"; };
@@ -299,8 +302,8 @@
 		84B87BD01D770D1D002B91FB /* SplashScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashScreenViewController.m; sourceTree = "<group>"; };
 		84BD03041FC2DD7C006C45A6 /* DocFilesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DocFilesViewController.h; sourceTree = "<group>"; };
 		84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DocFilesViewController.m; sourceTree = "<group>"; };
-		84BECDF6202D897400F40BA1 /* Docx2.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = Docx2.docx; sourceTree = "<group>"; };
-		84BECDF8202DAC0900F40BA1 /* sample.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.docx; sourceTree = "<group>"; };
+		84BFFB4921ABDD8500DD8E04 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Cube/Libraries/Rechability/Reachability.m; sourceTree = SOURCE_ROOT; };
+		84BFFB4A21ABDD8500DD8E04 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Cube/Libraries/Rechability/Reachability.h; sourceTree = SOURCE_ROOT; };
 		84CC5F711D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferredOrDeletedAudioDetailsViewController.h; sourceTree = "<group>"; };
 		84CC5F721D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferredOrDeletedAudioDetailsViewController.m; sourceTree = "<group>"; };
 		84CC5F741D74351900D1E982 /* DepartMent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepartMent.h; sourceTree = "<group>"; };
@@ -353,6 +356,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				846A561F219AA51400EC0B3C /* StoreKit.framework in Frameworks */,
 				8400457C1EC1F1520001369A /* AudioToolbox.framework in Frameworks */,
 				849AF4AB2029CDCC008B6566 /* libxml2.tbd in Frameworks */,
 				8400457B1EC1F1470001369A /* AVFoundation.framework in Frameworks */,
@@ -552,6 +556,7 @@
 		847222401D47368A00C00F20 /* Cube */ = {
 			isa = PBXGroup;
 			children = (
+				8445EA7A21AE6A5000BD1CE6 /* TCsFinal.docx */,
 				847DCBBF1DE590FD002D78BB /* Cube.entitlements */,
 				845A96751DDDEF9A007F460C /* Categories */,
 				846DE6871D728B210004C886 /* AudioSessionManager */,
@@ -565,8 +570,6 @@
 				84B87BCD1D76859A002B91FB /* UIDevice+Identifier.m */,
 				847222441D47368A00C00F20 /* AppDelegate.h */,
 				847222451D47368A00C00F20 /* AppDelegate.mm */,
-				84BECDF8202DAC0900F40BA1 /* sample.docx */,
-				84BECDF6202D897400F40BA1 /* Docx2.docx */,
 				8472224A1D47368A00C00F20 /* Main.storyboard */,
 				8472224D1D47368A00C00F20 /* Assets.xcassets */,
 				8472224F1D47368A00C00F20 /* LaunchScreen.storyboard */,
@@ -630,8 +633,8 @@
 		847D95A01D5F157C00145C32 /* Rechability */ = {
 			isa = PBXGroup;
 			children = (
-				847D95A11D5F157C00145C32 /* Reachability.h */,
-				847D95A21D5F157C00145C32 /* Reachability.m */,
+				84BFFB4A21ABDD8500DD8E04 /* Reachability.h */,
+				84BFFB4921ABDD8500DD8E04 /* Reachability.m */,
 			);
 			path = Rechability;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 		84EACD9A1E03FA64002C43BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				846A561E219AA51400EC0B3C /* StoreKit.framework */,
 				849AF4AA2029CDCC008B6566 /* libxml2.tbd */,
 				848B31051FC7ECF700CE3AC8 /* Speech.framework */,
 				840045761EC1EB0A0001369A /* AudioToolbox.framework */,
@@ -743,6 +747,8 @@
 				84F564191FCD4970006FC7AD /* SelectFileViewController.m */,
 				846B5A5020B43EAB0012F6D9 /* EmptyViewController.h */,
 				846B5A5120B43EAB0012F6D9 /* EmptyViewController.m */,
+				84A180C021AD7632004F539D /* TandCViewController.h */,
+				84A180C121AD7632004F539D /* TandCViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -948,13 +954,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84BECDF7202D897500F40BA1 /* Docx2.docx in Resources */,
 				847222511D47368A00C00F20 /* LaunchScreen.storyboard in Resources */,
 				849AF60D209C49A800C67980 /* Cube_DB.sqlite in Resources */,
 				8472224E1D47368A00C00F20 /* Assets.xcassets in Resources */,
-				84BECDF9202DAC0A00F40BA1 /* sample.docx in Resources */,
 				8472224C1D47368A00C00F20 /* Main.storyboard in Resources */,
 				843B340E20452BD20080F355 /* Info.plist in Resources */,
+				8445EA7B21AE6A5000BD1CE6 /* TCsFinal.docx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -989,6 +994,7 @@
 			files = (
 				843B341B20452BD20080F355 /* ioapi_mem.c in Sources */,
 				84AB68591D536961006F962D /* InCompleteDictationViewController.m in Sources */,
+				84BFFB4B21ABDD8500DD8E04 /* Reachability.m in Sources */,
 				843B341F20452BD20080F355 /* SSZipArchive.m in Sources */,
 				845A96781DDDEF9A007F460C /* NSData+AES256.m in Sources */,
 				8488B7BA1FC6A8C7006FE0FA /* TableViewButton.m in Sources */,
@@ -1046,7 +1052,6 @@
 				847D95B31D5F157C00145C32 /* MBProgressHUD.m in Sources */,
 				844C4A791D4B736700CF3DB4 /* SwitchCreation.m in Sources */,
 				843B341620452BD20080F355 /* pwd2key.c in Sources */,
-				847D95B41D5F157C00145C32 /* Reachability.m in Sources */,
 				847222431D47368A00C00F20 /* main.m in Sources */,
 				84FCCFAE1D48CED300E3D7AE /* AlertViewController.m in Sources */,
 				849094AF1FE92B6500B00C0B /* DocFileDetails.m in Sources */,
@@ -1060,6 +1065,7 @@
 				843600F81D5C7198002A9395 /* ChangePasswordViewController.m in Sources */,
 				8430D3E01D4A32AB005FCA33 /* AudioDetailsViewController.m in Sources */,
 				8427DC591E12633A0071C038 /* ImportedAudioViewController.mm in Sources */,
+				84A180C221AD7633004F539D /* TandCViewController.m in Sources */,
 				849A20791E080F000004DDD2 /* BrowseMusicViewController.mm in Sources */,
 				84D0B52D1D81B4D70084E016 /* SBJson4StreamWriterState.m in Sources */,
 				84CC5F761D74351900D1E982 /* DepartMent.m in Sources */,

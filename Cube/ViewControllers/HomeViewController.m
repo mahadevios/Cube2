@@ -13,11 +13,12 @@
 #import "NSData+AES256.h"
 #import "SharedSession.h"
 #import "SelectFileViewController.h"
+#import <StoreKit/SKStoreProductViewController.h>
 
 //#import <iTunesLibrary/ITLibrary.h>
 
 
-@interface HomeViewController ()
+@interface HomeViewController ()<SKStoreProductViewControllerDelegate>
 
 @end
 
@@ -280,7 +281,7 @@
     
     NSString* appID = infoDictionary[@"CFBundleIdentifier"];
     
-    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/lookup?bundleId=%@", appID]];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/lookup?bundleId=%@", appID]];
     
     NSURLSession         *  session = [NSURLSession sharedSession];
     
@@ -298,6 +299,8 @@
                                                
                                                NSString* appStoreVersion = lookup[@"results"][0][@"version"];
                                               
+                                               NSInteger kAppITunesItemIdentifier = [lookup[@"results"][0][@"trackId"] integerValue];
+
                                                NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
 //                                                       if ([appStoreVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending)
                                                if (appStoreVersion != currentVersion)
@@ -313,14 +316,11 @@
                                                                                                    style:UIAlertActionStyleDefault
                                                                                                  handler:^(UIAlertAction * action)
                                                                            {
-                                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.com/apps/CubeDictate"]];
+                                                                               [self openStoreProductViewControllerWithITunesItemIdentifier:kAppITunesItemIdentifier];
+//                                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.com/apps/CubeDictate"]];
                                                                                
                                                                                [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
-//                                                                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//                                                                               formatter.dateFormat = @"MM-dd-yyyy";
-//                                                                               NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
 //
-//                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
                                                                            }]; //You can use a block here to handle a press on this button
                                                            [alertController addAction:actionDelete];
                                                            
@@ -334,13 +334,7 @@
                                                                                [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
                                                                                
                                                                                 [alertController dismissViewControllerAnimated:YES completion:nil];
-//                                                                               NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//                                                                               formatter.dateFormat = @"MM-dd-yyyy";
-//                                                                               NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
 //
-//                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
-
-                                                                               
                                                                            }]; //You can use a block here to handle a press on this button
                                                            [alertController addAction:actionCancel];
                                                            
@@ -364,6 +358,31 @@
 }
 
 
+- (void)openStoreProductViewControllerWithITunesItemIdentifier:(NSInteger)iTunesItemIdentifier {
+    SKStoreProductViewController *storeViewController = [[SKStoreProductViewController alloc] init];
+    
+    storeViewController.delegate = self;
+    
+    NSNumber *identifier = [NSNumber numberWithInteger:iTunesItemIdentifier];
+    
+    NSDictionary *parameters = @{ SKStoreProductParameterITunesItemIdentifier:identifier };
+    UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    [storeViewController loadProductWithParameters:parameters
+                                   completionBlock:^(BOOL result, NSError *error) {
+                                       if (result)
+                                           [viewController presentViewController:storeViewController
+                                                                        animated:YES
+                                                                      completion:nil];
+                                       else NSLog(@"SKStoreProductViewController: %@", error);
+                                   }];
+    
+}
+
+#pragma mark - SKStoreProductViewControllerDelegate
+
+- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
+    [viewController dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 - (void)deleteDictation
@@ -550,8 +569,8 @@
 // show awaiting or todays view after tapped
 -(void)showList:(UITapGestureRecognizer*)sender
 {
+   
     TransferListViewController* vc=[self.storyboard instantiateViewControllerWithIdentifier:@"TransferListViewController"];
-    //app=[APIManager sharedManager];
     if (sender == transferredTodayViewTapRecogniser)
     {
         vc.currentViewName=@"Transferred Today";
@@ -576,7 +595,6 @@
         NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                    [UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1],NSForegroundColorAttributeName,[UIFont systemFontOfSize:20.0 weight:UIFontWeightBold],NSFontAttributeName, nil];
         
-        //            [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
         
         [navVC.navigationBar setTitleTextAttributes:navbarTitleTextAttributes];
         
@@ -590,9 +608,7 @@
     {
         [self.navigationController pushViewController:vc animated:true];
     }
-   
-//    [self.navigationController pushViewController:splitVC animated:true];
-    //NSLog(@"%@",self.tabBarController);
+ 
     
 }
 
