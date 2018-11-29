@@ -49,57 +49,162 @@ static AppPreferences *singleton = nil;
 /*================================================================================================================================================*/
 
 
+//-(void) startReachabilityNotifier
+//{
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(reachabilityChanged:)
+//                                                 name:kReachabilityChangedNotification
+//                                               object:nil];
+//
+//    Reachability * reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+//
+//    reach.reachableBlock = ^(Reachability * reachability)
+//    {
+//        dispatch_async(dispatch_get_main_queue(), ^
+//                       {
+//                           //NSLog(@"Reachable");
+//                           isReachable = YES;
+//                       });
+//    };
+//
+//    reach.unreachableBlock = ^(Reachability * reachability)
+//    {
+//        dispatch_async(dispatch_get_main_queue(), ^
+//                       {
+//                           //NSLog(@"Not Reachable");
+//                           isReachable = NO;
+//
+//                       });
+//    };
+//
+//    [reach startNotifier];
+//}
+//
+///*================================================================================================================================================*/
+//
+//-(void)reachabilityChanged:(NSNotification*)note
+//{
+//    Reachability * reach = [note object];
+//
+//    if([reach isReachable])
+//    {
+//        //NSLog(@"Reachable");
+//        isReachable = YES;
+//    }
+//    else
+//    {
+//        //NSLog(@"Not Reachable");
+//        isReachable = NO;
+//
+//        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showNoInternetMessage) userInfo:nil repeats:NO];
+//    }
+//}
+
+
 -(void) startReachabilityNotifier
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reachabilityChanged:)
-                                                 name:kReachabilityChangedNotification
-                                               object:nil];
+    //    self.summaryLabel.hidden = YES;
     
-    Reachability * reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    /*
+     Observe the kNetworkReachabilityChangedNotification. When that notification is posted, the method reachabilityChanged will be called.
+     */
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     
-    reach.reachableBlock = ^(Reachability * reachability)
-    {
-        dispatch_async(dispatch_get_main_queue(), ^
-                       {
-                           //NSLog(@"Reachable");
-                           isReachable = YES;
-                       });
-    };
+    //Change the host name here to change the server you want to monitor.
+    NSString *remoteHostName = @"www.apple.com";
+    NSString *remoteHostLabelFormatString = NSLocalizedString(@"Remote Host: %@", @"Remote host label format string");
+    //    self.remoteHostLabel.text = [NSString stringWithFormat:remoteHostLabelFormatString, remoteHostName];
     
-    reach.unreachableBlock = ^(Reachability * reachability)
-    {
-        dispatch_async(dispatch_get_main_queue(), ^
-                       {
-                           //NSLog(@"Not Reachable");
-                           isReachable = NO;
-                           
-                       });
-    };
+    self.hostReachability = [Reachability reachabilityWithHostName:remoteHostName];
+    [self.hostReachability startNotifier];
+    [self updateInterfaceWithReachability:self.hostReachability];
     
-    [reach startNotifier];
+    self.internetReachability = [Reachability reachabilityForInternetConnection];
+    [self.internetReachability startNotifier];
+    [self updateInterfaceWithReachability:self.internetReachability];
 }
 
 /*================================================================================================================================================*/
 
--(void)reachabilityChanged:(NSNotification*)note
+- (void) reachabilityChanged:(NSNotification *)note
 {
-    Reachability * reach = [note object];
-    
-    if([reach isReachable])
-    {
-        //NSLog(@"Reachable");
-        isReachable = YES;
-    }
-    else
-    {
-        //NSLog(@"Not Reachable");
-        isReachable = NO;
-        
-        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showNoInternetMessage) userInfo:nil repeats:NO];
-    }
+    Reachability* curReach = [note object];
+    NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
+    [self updateInterfaceWithReachability:curReach];
 }
 
+
+- (void)updateInterfaceWithReachability:(Reachability *)reachability
+{
+    if (reachability == self.hostReachability)
+    {
+        [self configureTextFieldreachability:reachability];
+        NetworkStatus netStatus = [reachability currentReachabilityStatus];
+        BOOL connectionRequired = [reachability connectionRequired];
+        
+        //        self.summaryLabel.hidden = (netStatus != ReachableViaWWAN);
+        NSString* baseLabelText = @"";
+        
+        if (connectionRequired)
+        {
+            baseLabelText = NSLocalizedString(@"Cellular data network is available.\nInternet traffic will be routed through it after a connection is established.", @"Reachability text if a connection is required");
+        }
+        else
+        {
+            baseLabelText = NSLocalizedString(@"Cellular data network is active.\nInternet traffic will be routed through it.", @"Reachability text if a connection is not required");
+        }
+        //        self.summaryLabel.text = baseLabelText;
+    }
+    
+    if (reachability == self.internetReachability)
+    {
+        [self configureTextFieldreachability:reachability];
+    }
+    
+}
+
+
+- (void)configureTextFieldreachability:(Reachability *)reachability
+{
+    NetworkStatus netStatus = [reachability currentReachabilityStatus];
+    BOOL connectionRequired = [reachability connectionRequired];
+    NSString* statusString = @"";
+    
+    switch (netStatus)
+    {
+        case NotReachable:        {
+            statusString = NSLocalizedString(@"Access Not Available", @"Text field text for access is not available");
+            //            imageView.image = [UIImage imageNamed:@"stop-32.png"] ;
+            /*
+             Minor interface detail- connectionRequired may return YES even when the host is unreachable. We cover that up here...
+             */
+            self.isReachable = NO;
+            connectionRequired = NO;
+            break;
+        }
+            
+        case ReachableViaWWAN:        {
+            statusString = NSLocalizedString(@"Reachable WWAN", @"");
+            //            imageView.image = [UIImage imageNamed:@"WWAN5.png"];
+            self.isReachable = YES;
+            break;
+        }
+        case ReachableViaWiFi:        {
+            statusString= NSLocalizedString(@"Reachable WiFi", @"");
+            //            imageView.image = [UIImage imageNamed:@"Airport.png"];
+            self.isReachable = YES;
+            
+            break;
+        }
+    }
+    
+    if (connectionRequired)
+    {
+        NSString *connectionRequiredFormatString = NSLocalizedString(@"%@, Connection Required", @"Concatenation of status string with connection requirement");
+        statusString= [NSString stringWithFormat:connectionRequiredFormatString, statusString];
+    }
+    //    textField.text= statusString;
+}
 -(void) showNoInternetMessage
 {
 //    if (![self isReachable])

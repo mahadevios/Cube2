@@ -14,6 +14,7 @@
 #import "AppPreferences.h"
 #import "Constants.h"
 #import "DocFileDetails.h"
+#import "PopUpCustomView.h"
 
 @interface SpeechRecognitionViewController ()
 
@@ -39,8 +40,28 @@
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:&error];
 
     audioEngine = [[AVAudioEngine alloc] init];
- 
-    speechRecognizer = [[SFSpeechRecognizer alloc] initWithLocale:[NSLocale localeWithLocaleIdentifier:@"en-US"]];
+    
+    NSString* vrsLocale = [[NSUserDefaults standardUserDefaults] objectForKey:VRS_LOCALE];
+
+    if (vrsLocale == nil)
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@"en-GB" forKey:VRS_LOCALE];
+        
+        self.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en-GB"];
+        
+        self.localeLabel.text = @"en-GB";
+
+    }
+    else
+    {
+        self.locale = [[NSLocale alloc] initWithLocaleIdentifier:vrsLocale];
+
+        self.localeLabel.text = vrsLocale;
+
+    }
+    
+    
+    speechRecognizer = [[SFSpeechRecognizer alloc] initWithLocale:self.locale];
     
     request = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
     
@@ -52,7 +73,9 @@
                                                                                             [NSNumber numberWithInt:1], AVNumberOfChannelsKey,
                                                                                             [NSNumber numberWithInt:128000], AVEncoderBitRateKey,
                                                                                              nil];
+    
     NSURL* url = [self urlForFile:@"top1.wav"];
+    
     audioFileName = [[AVAudioFile alloc] initForWriting:url settings:audioCompressionSettings error:nil];
 
     // Do any additional setup after loading the view.
@@ -79,7 +102,7 @@
 //        }
 //    }];
  
-    self.navigationItem.title = @"Speech Transcription";
+    self.navigationItem.title = @"Speech Transcription(Beta)";
     
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
@@ -87,7 +110,12 @@
 
     self.navigationItem.hidesBackButton = true;
 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(stopVRSFromBackGround) name:NOTIFICATION_PAUSE_RECORDING
+                                               object:nil];
     
+    [self disableStopAndDocOption];
+
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -95,13 +123,20 @@
     
     self.timerSeconds = 59;
     
-    [self disableStopAndDocOption];
     
     self.tabBarController.tabBar.hidden = true;
     
      self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
 }
 
+-(void)stopVRSFromBackGround
+{
+    if (isTranscripting == true)
+    {
+        [self stopLiveAudioTranscription:nil];
+
+    }
+}
 -(void)disableStopAndDocOption
 {
     docFileLabel.alpha = 0.5;
@@ -264,18 +299,24 @@
     
     [self.previousTranscriptedArray addObject:@""];
     
-    [self hideRightBarButton:true];
+//    [self hideRightBarButton:true];
 
 }
 
 -(void)hideRightBarButton:(BOOL)hide
 {
+    
     if (hide == true)
     {
+//        [self.selectLocaleButton setEnabled:false];
+        
         self.navigationItem.rightBarButtonItem = nil;
     }
     else
     {
+//        [self.selectLocaleButton setEnabled:true];
+
+        
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"TransReset"] style:UIBarButtonItemStylePlain target:self action:@selector(resetTranscription)];
 
     }
@@ -412,12 +453,12 @@
 {
     if (isTranscripting)
     {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Transcripting.." withMessage:@"Please stop the transcription" withCancelText:@"Ok" withOkText:@"" withAlertTag:1000];
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Transcripting.." withMessage:@"Please stop the transcription" withCancelText:@"Ok" withOkText:nil withAlertTag:1000];
     }
     else if (transcriptionTextLabel.text.length>0)
     {
         alertController = [UIAlertController alertControllerWithTitle:@"Transcription not saved!"
-                                                              message:@"Save transcription as doc file?"
+                                                              message:@"Save transcription as text file?"
                                                        preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* actionCreate = [UIAlertAction actionWithTitle:@"Save"
                                                                style:UIAlertActionStyleDefault
@@ -470,6 +511,8 @@
         if ([[AppPreferences sharedAppPreferences] isReachable])
         {
             //self.stopTranscriptionButton.hidden = false;
+            [UIApplication sharedApplication].idleTimerDisabled = YES;
+
             isTranscripting = true;
             
             [newRequestTimer invalidate];
@@ -492,6 +535,9 @@
             
             transcriptionStatusLabel.text = @"Go ahead, I'm listening";
             
+            [self.backButton setUserInteractionEnabled:NO];
+            
+            [self.selectLocaleButton setUserInteractionEnabled:NO];
             
         }
         else
@@ -529,10 +575,11 @@
 
 - (IBAction)stopLiveAudioTranscription:(id)sender
 {
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
 
     [self subStopLiveAudioTranscription];
     
-    [self hideRightBarButton:false];
+//    [self hideRightBarButton:false];
     
     timerSeconds = 59;
     
@@ -572,6 +619,10 @@
     [self startTranscriptionStatusViewAnimationToDown:false];   //remove animation
     
     audioFileName = nil; // to save the recorded file
+    
+    [self.backButton setUserInteractionEnabled:YES];
+    
+    [self.selectLocaleButton setUserInteractionEnabled:YES];
 
 }
 
@@ -618,6 +669,8 @@
         [self setTimer];
         //[self demoTimer];
         
+        speechRecognizer = [[SFSpeechRecognizer alloc] initWithLocale:self.locale];
+
         recognitionTask = [speechRecognizer recognitionTaskWithRequest:self.request delegate:self];
 
     });
@@ -778,6 +831,9 @@
         
         [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
 
+        [self.backButton setUserInteractionEnabled:YES];
+        
+        [self.selectLocaleButton setUserInteractionEnabled:YES];
     }
    
     
@@ -963,7 +1019,7 @@
                            
                            transcriptionStatusLabel.text = @"Press Resume to continue";
                            
-                           [self hideRightBarButton:false];
+//                           [self hideRightBarButton:false];
                          
                            audioFileName = nil; // to save the recorded file
                            //isStartedNewRequest = true;
@@ -1156,7 +1212,6 @@
                        
                        self.urlRequest = [[SFSpeechURLRecognitionRequest alloc] initWithURL:url];
                        
-                       NSLocale* locale = [speechRecognizer locale];
                        
                        [speechRecognizer recognitionTaskWithRequest:self.urlRequest delegate:self];
                        
@@ -1225,14 +1280,14 @@
  */
 - (IBAction)createDocFileButtonClicked:(id)sender
 {
-    if (transcriptionTextLabel.text.length > 100)
+    if (transcriptionTextLabel.text.length < 1)
     {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"File Size" withMessage:@"File size is too small to save" withCancelText:@"Cancel" withOkText:@"Ok" withAlertTag:1000];
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"" withMessage:@"Transcription text is empty" withCancelText:@"Cancel" withOkText:@"Ok" withAlertTag:1000];
     }
     else
     {
-        alertController = [UIAlertController alertControllerWithTitle:@"Create Doc File?"
-                                                              message:@"Are you sure to create doc file of below text?"
+        alertController = [UIAlertController alertControllerWithTitle:@"Create Text File?"
+                                                              message:@"Are you sure you want to create a text file of below text?"
                                                        preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* actionCreate = [UIAlertAction actionWithTitle:@"Create"
                                             style:UIAlertActionStyleDefault
@@ -1270,7 +1325,7 @@
                        
                        if (isWritten == true)
                        {
-                           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Doc File Created" withMessage:@"Doc file created successfully, check doc files in alert tab" withCancelText:@"Ok" withOkText:nil withAlertTag:1000];
+                           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Text File Created" withMessage:@"Text file created successfully." withCancelText:@"Ok" withOkText:nil withAlertTag:1000];
                            
                            [self resetTranscription];
                        }
@@ -1355,7 +1410,6 @@
     if (![[NSFileManager defaultManager] fileExistsAtPath:folderPath])
         
         [[NSFileManager defaultManager] createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
-    
     
     
 //    NSString* homeDirectoryFileName = [sharedAudioFilePathString lastPathComponent];//store on same name as shared file name
@@ -1467,5 +1521,161 @@
 //
 //}
 
+- (IBAction)selectLocaleButtonClicked:(UIButton*)sender
+{
+    NSArray* subViewArray;
+    
+    double popViewHeight;
+    double popViewWidth = 160;
+
+//    double popViewWidth = 160;
+    
+    
+//    subViewArray=[NSArray arrayWithObjects:@"Last 5 Days",@"Last 10 Days",@"Last 15 Days",@"No Filter", nil];
+
+    subViewArray=[NSArray arrayWithObjects:@"Select Locale",@"English (Great Britain)",@"English (USA)",@"English (India)",@"English (Australia)", nil];
+
+//    popViewHeight = 168; // 41 for each including top and bottom space
+    popViewHeight = 205; // 41 for each including top and bottom space
+
+    
+    double navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    double popUpViewXPosition = self.view.frame.size.width - popViewWidth;
+    double popUpViewYPosition = navigationBarHeight + 20;
+    
+    UIView* overlayView = [[PopUpCustomView alloc]initWithFrame:CGRectMake(popUpViewXPosition, popUpViewYPosition, popViewWidth, popViewHeight) andSubViews:subViewArray :self];
+    
+    UIView* popUpView = [overlayView viewWithTag:561];
+    
+    //    popUpView.frame = CGRectMake(popUpViewXPosition, popUpViewYPosition, popViewWidth, popViewHeight);
+    
+    popUpView.frame = CGRectMake(popUpViewXPosition+(popViewWidth/2), popUpViewYPosition, 0, 0);
+    
+    [[[UIApplication sharedApplication] keyWindow] addSubview:overlayView];
+    
+    [UIView animateWithDuration:0.2 delay:0 usingSpringWithDamping:.9 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
+        
+        
+        popUpView.frame = CGRectMake(popUpViewXPosition, popUpViewYPosition, popViewWidth, popViewHeight);
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+//    if (speechRecognizer != nil)
+//    {
+//        NSString* title = [sender titleForState:UIControlStateSelected];
+//
+//        NSLocale* locale;
+//
+//        //NSLocale, en-AU, en-US, en-IN, en-GB
+//        [NSLocale localeWithLocaleIdentifier:@"en-US"]
+//    }
+}
+
+-(void)dismissPopView:(id)sender
+{
+    
+    [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    
+}
+
+-(void)EnglishGreatBritain
+{
+    self.localeLabel.text = @"en-GB";
+
+    [[NSUserDefaults standardUserDefaults] setObject:self.localeLabel.text forKey:VRS_LOCALE];
+
+    self.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en-GB"];
+
+    UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+    if ([popUpView isKindOfClass:[UIView class]])
+    {
+        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    }
+    
+//    [self setRightBarButtonItem:@"Last 5 Days"];
+//
+//    [self getCompletedFilesForDays:@"5"];
+    
+}
+
+-(void)EnglishUSA
+{
+    self.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en-US"];
+
+    self.localeLabel.text = @"en-US";
+
+    [[NSUserDefaults standardUserDefaults] setObject:self.localeLabel.text forKey:VRS_LOCALE];
+
+    UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+    if ([popUpView isKindOfClass:[UIView class]])
+    {
+        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    }
+
+    //    [self setRightBarButtonItem:@"Last 5 Days"];
+    //
+    //    [self getCompletedFilesForDays:@"5"];
+    
+}
+
+-(void)EnglishIndia
+{
+    self.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en-IN"];
+
+    self.localeLabel.text = @"en-IN";
+
+    [[NSUserDefaults standardUserDefaults] setObject:self.localeLabel.text forKey:VRS_LOCALE];
+
+    UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+    if ([popUpView isKindOfClass:[UIView class]])
+    {
+        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    }
+    
+
+    
+    //    [self setRightBarButtonItem:@"Last 5 Days"];
+    //
+    //    [self getCompletedFilesForDays:@"5"];
+    
+}
+
+-(void)EnglishAustralia
+{
+    self.localeLabel.text = @"en-AU";
+    
+    self.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en-AU"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:self.localeLabel.text forKey:VRS_LOCALE];
+
+    UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+    if ([popUpView isKindOfClass:[UIView class]])
+    {
+        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    }
+    
+   
+    //    [self setRightBarButtonItem:@"Last 5 Days"];
+    //
+    //    [self getCompletedFilesForDays:@"5"];
+    
+}
+
+-(void)SelectLocale
+{
+    
+    UIView* popUpView= [[[UIApplication sharedApplication] keyWindow] viewWithTag:111];
+    if ([popUpView isKindOfClass:[UIView class]])
+    {
+        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
+    }
+    
+    //    [self setRightBarButtonItem:@"Last 5 Days"];
+    //
+    //    [self getCompletedFilesForDays:@"5"];
+    
+}
 @end
 

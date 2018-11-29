@@ -94,4 +94,6 @@
                          fieldName:(NSString *)fieldName;
 
 -(void)uploadDocxFileToServer:(NSString*)docxFileName;
+
+-(void) acceptTandC:(NSString*) macID dateAndTIme:(NSString*)dateAndTIme acceptFlag:(NSString*)acceptFlag;
 @end

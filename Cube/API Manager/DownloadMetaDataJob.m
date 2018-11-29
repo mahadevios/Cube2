@@ -385,6 +385,30 @@ if ([self.downLoadEntityJobName isEqualToString:VALIDATE_PIN_API])
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }
+    
+    if ([self.downLoadEntityJobName isEqualToString:ACCEPY_TandC_API])
+    {
+        
+        if (response != nil)
+        {
+            
+            if ([[response objectForKey:@"code"]intValue]==1)
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ACCEPT_TANDC_API object:response];
+                
+                
+            }
+            else
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ACCEPT_TANDC_API object:response];
+                }
+        }else
+        {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+            
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
+    }
 //
 //
 if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])

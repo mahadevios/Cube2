@@ -103,22 +103,63 @@
     }
     NSUInteger newLength = [textField.text length] + [string length] - range.length;
     
-    if (newLength==1)
-    {
-//        [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.0];
-//         [self resignFirstResponder:textField];
-        [self performSelector:@selector(resignFirstResponder:) withObject:textField afterDelay:0.0];
-
-    }
-   
-    
+    //    if (newLength==1)
+    //    {
+    //        [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.0];
+    //    }
+    //    else
+    //    {
+    [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.0];
+    //    }
     return newLength <= 1;
-    
-    
-   
 }
 
-//-(void)resignResponder:(UITextField*)textfield
+-(void)resignResponder:(id)sender
+{
+    if (sender ==pinCode1TextField ||sender ==pinCode2TextField ||sender ==pinCode3TextField ||sender ==pinCode4TextField )
+    {
+
+    if (sender==pinCode1TextField)
+    {
+        [pinCode2TextField becomeFirstResponder];
+
+    }
+    if (sender==pinCode2TextField)
+    {
+        [pinCode3TextField becomeFirstResponder];
+
+    }
+    if (sender==pinCode3TextField)
+    {
+        [pinCode4TextField becomeFirstResponder];
+
+    }
+    }
+
+    if (sender ==pinCode5TextField ||sender ==pinCode6TextField ||sender ==pinCode7TextField ||sender ==pinCode8TextField )
+    {
+
+        if (sender==pinCode5TextField)
+        {
+            [pinCode6TextField becomeFirstResponder];
+
+        }
+        if (sender==pinCode6TextField)
+        {
+            [pinCode7TextField becomeFirstResponder];
+
+        }
+        if (sender==pinCode7TextField)
+        {
+            [pinCode8TextField becomeFirstResponder];
+
+        }
+    }
+
+}
+
+
+//-(void)resignFirstResponder:(UITextField*)textfield
 //{
 //    if (textfield ==pinCode1TextField ||textfield ==pinCode2TextField ||textfield ==pinCode3TextField ||textfield ==pinCode4TextField )
 //    {
@@ -126,111 +167,42 @@
 //        {
 //            [pinCode2TextField becomeFirstResponder];
 //        }
+//        else
+//            if (textfield==pinCode2TextField && textfield.text.length > 0)
+//            {
+//                [pinCode3TextField becomeFirstResponder];
 //
-//        if (textfield==pinCode2TextField && textfield.text.length > 0)
-//        {
-//            [pinCode3TextField becomeFirstResponder];
+//            }
+//            else
+//                if (textfield==pinCode3TextField && textfield.text.length > 0)
+//                {
+//                    [pinCode4TextField becomeFirstResponder];
 //
-//        }
-//        else if (textfield==pinCode2TextField && textfield.text.length == 0)
-//        {
-//            [pinCode1TextField becomeFirstResponder];
-//        }
-//
-//        if (textfield==pinCode3TextField && textfield.text.length > 0)
-//        {
-//            [pinCode4TextField becomeFirstResponder];
-//
-//        }
-//        else if (textfield==pinCode3TextField && textfield.text.length == 0)
-//        {
-//            [pinCode2TextField becomeFirstResponder];
-//        }
-//
-//        if (textfield==pinCode4TextField && textfield.text.length == 0)
-//        {
-//            [pinCode3TextField becomeFirstResponder];
-//        }
+//                }
 //    }
-//    else if (textfield ==pinCode5TextField ||textfield ==pinCode6TextField ||textfield ==pinCode7TextField ||textfield ==pinCode8TextField )
-//    {
-//        if (textfield==pinCode5TextField && textfield.text.length > 0)
-//        {
-//            [pinCode6TextField becomeFirstResponder];
-//        }
+//     else if (textfield ==pinCode5TextField ||textfield ==pinCode6TextField ||textfield ==pinCode7TextField ||textfield ==pinCode8TextField )
+//     {
+//         if (textfield==pinCode5TextField && textfield.text.length > 0)
+//         {
+//             [pinCode6TextField becomeFirstResponder];
+//         }
+//         else
+//             if (textfield==pinCode6TextField && textfield.text.length > 0)
+//             {
+//                 [pinCode7TextField becomeFirstResponder];
 //
-//        if (textfield==pinCode6TextField && textfield.text.length > 0)
-//        {
-//            [pinCode7TextField becomeFirstResponder];
+//             }
+//             else
+//                 if (textfield==pinCode7TextField && textfield.text.length > 0)
+//                 {
+//                     [pinCode8TextField becomeFirstResponder];
 //
-//        }
-//        else if (textfield==pinCode6TextField && textfield.text.length == 0)
-//        {
-//            [pinCode5TextField becomeFirstResponder];
-//        }
+//                 }
+//     }
 //
-//        if (textfield==pinCode7TextField && textfield.text.length > 0)
-//        {
-//            [pinCode8TextField becomeFirstResponder];
 //
-//        }
-//        else if (textfield==pinCode7TextField && textfield.text.length == 0)
-//        {
-//            [pinCode6TextField becomeFirstResponder];
-//        }
-//
-//        if (textfield==pinCode8TextField && textfield.text.length == 0)
-//        {
-//            [pinCode7TextField becomeFirstResponder];
-//        }
-//    }
 //
 //}
-
--(void)resignFirstResponder:(UITextField*)textfield
-{
-    if (textfield ==pinCode1TextField ||textfield ==pinCode2TextField ||textfield ==pinCode3TextField ||textfield ==pinCode4TextField )
-    {
-        if (textfield==pinCode1TextField && textfield.text.length > 0)
-        {
-            [pinCode2TextField becomeFirstResponder];
-        }
-        else
-            if (textfield==pinCode2TextField && textfield.text.length > 0)
-            {
-                [pinCode3TextField becomeFirstResponder];
-                
-            }
-            else
-                if (textfield==pinCode3TextField && textfield.text.length > 0)
-                {
-                    [pinCode4TextField becomeFirstResponder];
-                    
-                }
-    }
-     else if (textfield ==pinCode5TextField ||textfield ==pinCode6TextField ||textfield ==pinCode7TextField ||textfield ==pinCode8TextField )
-     {
-         if (textfield==pinCode5TextField && textfield.text.length > 0)
-         {
-             [pinCode6TextField becomeFirstResponder];
-         }
-         else
-             if (textfield==pinCode6TextField && textfield.text.length > 0)
-             {
-                 [pinCode7TextField becomeFirstResponder];
-                 
-             }
-             else
-                 if (textfield==pinCode7TextField && textfield.text.length > 0)
-                 {
-                     [pinCode8TextField becomeFirstResponder];
-                     
-                 }
-     }
-    
-    
-    
-}
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if (textField==pinCode8TextField)

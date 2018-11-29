@@ -402,9 +402,8 @@
 
 - (IBAction)submitButtonCilcked:(id)sender
 {
-//    if ([AppPreferences sharedAppPreferences].isReachable)
-//    {
-   
+
+//  [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TandCViewController"] animated:NO completion:nil];
     NSString* title;
     NSString* message;
     UIAlertController *alertController;
@@ -425,12 +424,12 @@
                     }]; //You can use a block here to handle a press on this button
         [alertController addAction:actionOk];
         [self presentViewController:alertController animated:YES completion:nil];
-        
+
     }
     else
     {
         NSString* pin=[NSString stringWithFormat:@"%@%@%@%@",pinCode1TextField.text,pinCode2TextField.text,pinCode3TextField.text,pinCode4TextField.text];
-        
+
         if([AppPreferences sharedAppPreferences].userObj != nil)
         {
             if([[AppPreferences sharedAppPreferences].userObj.userPin isEqualToString:pin])
@@ -461,7 +460,7 @@
                 return;
             }
         }
-        
+
         else
         {
                if ([AppPreferences sharedAppPreferences].isReachable)
@@ -473,14 +472,14 @@
                     hud.label.text = @"Validating PIN";
                     hud.detailsLabel.text = @"Please wait";
                     NSString*     macId=[Keychain getStringForKey:@"udid"];
-                    
+
                     [[NSUserDefaults standardUserDefaults] setValue:macId forKey:@"MacId"];
 
                     [pinCode4TextField resignFirstResponder];
                     //        [pinCode1TextField resignFirstResponder];
-        
-        
-        
+
+
+
                     [[APIManager sharedManager] validatePinMacID:macId Pin:pin];
                     //[[APIManager sharedManager] authenticateUserMacID:@"68:FB:7E:9E:7D:51" password:@"d" username:@"SAN"];
                 }
@@ -489,14 +488,9 @@
                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
                }
         }
-        
+
     }
-//    }
-//    else
-//    {
-//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-//    }
-    
+
   
 }
 

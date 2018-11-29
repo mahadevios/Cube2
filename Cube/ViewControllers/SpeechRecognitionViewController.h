@@ -57,4 +57,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *stopLabel;
 @property (weak, nonatomic) IBOutlet UILabel *docFileLabel;
 
+- (IBAction)selectLocaleButtonClicked:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *localeLabel;
+
+@property(nonatomic, strong)NSLocale* locale;
+@property (weak, nonatomic) IBOutlet UIButton *selectLocaleButton;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+
 @end

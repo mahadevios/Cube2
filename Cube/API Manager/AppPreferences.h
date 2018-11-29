@@ -47,6 +47,10 @@
 //@property(nonatomic,strong)NSURLSessionUploadTask *uploadTask;
 +(AppPreferences *) sharedAppPreferences;
 
+@property (nonatomic) Reachability *hostReachability;
+@property (nonatomic) Reachability *internetReachability;
+
+
 -(void) showAlertViewWithTitle:(NSString *) title withMessage:(NSString *) message withCancelText:(NSString *) cancelText withOkText:(NSString *) okText withAlertTag:(int) tag;
 -(void) showNoInternetMessage;
 -(void) showHudWithTitle:(NSString*)title detailText:(NSString*)detailText;
