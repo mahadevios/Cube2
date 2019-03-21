@@ -998,7 +998,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     
         NSString* fileName = [[Database shareddatabase] getfileNameFromTaskIdentifier:taskIdentifier];
 
-        NSLog(@"%@: %@",fileName,progressPercent);
+//        NSLog(@"%@: %@",fileName,progressPercent);
         
         
         if (([AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict.count==0))

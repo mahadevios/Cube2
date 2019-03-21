@@ -325,11 +325,10 @@
         UILabel* dateAndTimeLabel=[[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width*0.05, self.frame.size.height*0.3, self.frame.size.width*0.9, 20)];
         //audioRecordSlider.maximumValue=player.duration;
         dateAndTimeLabel.text=@"No internet connection,please try again";
-        [dateAndTimeLabel setFont:[UIFont systemFontOfSize:12]];
+        [dateAndTimeLabel setFont:[UIFont systemFontOfSize:13]];
         dateAndTimeLabel.textColor=[UIColor whiteColor];
         dateAndTimeLabel.tag=224;
-        
-        
+        dateAndTimeLabel.textAlignment = NSTextAlignmentCenter;
         
         
         UIButton* playAndPauseButton=[[UIButton alloc]initWithFrame:CGRectMake((self.frame.size.width/2) - 30, self.frame.size.height*0.5, 60, 40)];

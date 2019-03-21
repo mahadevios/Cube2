@@ -1,5 +1,6 @@
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/ioapi_mem.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/InCompleteDictationViewController.o
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/Reachability.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/SSZipArchive.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/NSData+AES256.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/TableViewButton.o
@@ -56,7 +57,6 @@
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/MBProgressHUD.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/SwitchCreation.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/pwd2key.o
-/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/Reachability.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/main.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/AlertViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/DocFileDetails.o
@@ -70,6 +70,7 @@
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/ChangePasswordViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/AudioDetailsViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/ImportedAudioViewController.o
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/TandCViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/BrowseMusicViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/SBJson4StreamWriterState.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphonesimulator/Cube.build/Objects-normal/x86_64/DepartMent.o

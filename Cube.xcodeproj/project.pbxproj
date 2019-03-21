@@ -46,7 +46,6 @@
 		843B341E20452BD20080F355 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 843B340820452BD20080F355 /* zip.c */; };
 		843B341F20452BD20080F355 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 843B340B20452BD20080F355 /* SSZipArchive.m */; };
 		843C4E0F1E77ECF800586DE5 /* SharedSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 843C4E0E1E77ECF800586DE5 /* SharedSession.m */; };
-		8445EA7B21AE6A5000BD1CE6 /* TCsFinal.docx in Resources */ = {isa = PBXBuildFile; fileRef = 8445EA7A21AE6A5000BD1CE6 /* TCsFinal.docx */; };
 		844C4A731D4B393800CF3DB4 /* UserSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 844C4A721D4B393800CF3DB4 /* UserSettingsViewController.m */; };
 		844C4A791D4B736700CF3DB4 /* SwitchCreation.m in Sources */ = {isa = PBXBuildFile; fileRef = 844C4A781D4B736700CF3DB4 /* SwitchCreation.m */; };
 		845A96781DDDEF9A007F460C /* NSData+AES256.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A96771DDDEF9A007F460C /* NSData+AES256.m */; };
@@ -83,6 +82,7 @@
 		84AB68591D536961006F962D /* InCompleteDictationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AB68581D536961006F962D /* InCompleteDictationViewController.m */; };
 		84B87BCE1D76859A002B91FB /* UIDevice+Identifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B87BCD1D76859A002B91FB /* UIDevice+Identifier.m */; };
 		84B87BD11D770D1D002B91FB /* SplashScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B87BD01D770D1D002B91FB /* SplashScreenViewController.m */; };
+		84BA563321B00A6200765A65 /* TCsFinal.docx in Resources */ = {isa = PBXBuildFile; fileRef = 84BA563221B00A6200765A65 /* TCsFinal.docx */; };
 		84BD03061FC2DD7C006C45A6 /* DocFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */; };
 		84BFFB4B21ABDD8500DD8E04 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BFFB4921ABDD8500DD8E04 /* Reachability.m */; };
 		84CC5F731D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC5F721D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m */; };
@@ -225,7 +225,6 @@
 		843B340D20452BD20080F355 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
 		843C4E0D1E77ECF800586DE5 /* SharedSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedSession.h; sourceTree = "<group>"; };
 		843C4E0E1E77ECF800586DE5 /* SharedSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedSession.m; sourceTree = "<group>"; };
-		8445EA7A21AE6A5000BD1CE6 /* TCsFinal.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = TCsFinal.docx; sourceTree = "<group>"; };
 		844C4A711D4B393800CF3DB4 /* UserSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSettingsViewController.h; sourceTree = "<group>"; };
 		844C4A721D4B393800CF3DB4 /* UserSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSettingsViewController.m; sourceTree = "<group>"; };
 		844C4A771D4B736700CF3DB4 /* SwitchCreation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchCreation.h; sourceTree = "<group>"; };
@@ -300,6 +299,7 @@
 		84B87BCD1D76859A002B91FB /* UIDevice+Identifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Identifier.m"; sourceTree = "<group>"; };
 		84B87BCF1D770D1D002B91FB /* SplashScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashScreenViewController.h; sourceTree = "<group>"; };
 		84B87BD01D770D1D002B91FB /* SplashScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashScreenViewController.m; sourceTree = "<group>"; };
+		84BA563221B00A6200765A65 /* TCsFinal.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = TCsFinal.docx; path = Cube/TCsFinal.docx; sourceTree = "<group>"; };
 		84BD03041FC2DD7C006C45A6 /* DocFilesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DocFilesViewController.h; sourceTree = "<group>"; };
 		84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DocFilesViewController.m; sourceTree = "<group>"; };
 		84BFFB4921ABDD8500DD8E04 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Cube/Libraries/Rechability/Reachability.m; sourceTree = SOURCE_ROOT; };
@@ -533,6 +533,7 @@
 			isa = PBXGroup;
 			children = (
 				847D95CA1D5F325600145C32 /* libsqlite3.0.tbd */,
+				84BA563221B00A6200765A65 /* TCsFinal.docx */,
 				847222401D47368A00C00F20 /* Cube */,
 				8472225A1D47368A00C00F20 /* CubeTests */,
 				847222651D47368A00C00F20 /* CubeUITests */,
@@ -556,7 +557,6 @@
 		847222401D47368A00C00F20 /* Cube */ = {
 			isa = PBXGroup;
 			children = (
-				8445EA7A21AE6A5000BD1CE6 /* TCsFinal.docx */,
 				847DCBBF1DE590FD002D78BB /* Cube.entitlements */,
 				845A96751DDDEF9A007F460C /* Categories */,
 				846DE6871D728B210004C886 /* AudioSessionManager */,
@@ -959,7 +959,7 @@
 				8472224E1D47368A00C00F20 /* Assets.xcassets in Resources */,
 				8472224C1D47368A00C00F20 /* Main.storyboard in Resources */,
 				843B340E20452BD20080F355 /* Info.plist in Resources */,
-				8445EA7B21AE6A5000BD1CE6 /* TCsFinal.docx in Resources */,
+				84BA563321B00A6200765A65 /* TCsFinal.docx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1167,7 +1167,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = CubeDictateAppGroup;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1195,7 +1195,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = CubeDictateAppGroupDistribution;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

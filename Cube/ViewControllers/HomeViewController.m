@@ -118,6 +118,7 @@
     
     NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
     
+
     //for first time to check files to be purge are available or not
     if ([[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DATA_DATE]== NULL)
     {
@@ -302,6 +303,7 @@
                                                NSInteger kAppITunesItemIdentifier = [lookup[@"results"][0][@"trackId"] integerValue];
 
                                                NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+                                              
 //                                                       if ([appStoreVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending)
                                                if (appStoreVersion != currentVersion)
 

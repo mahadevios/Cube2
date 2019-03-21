@@ -1,5 +1,8 @@
 //http://www.appcoda.com/customize-navigation-status-bar-ios-7/
 
+// PKI
+
+
 //pixel to point conversion: http://endmemo.com/sconvert/pixelpoint.php
 
 //provisioning profile ***: http://sharpmobilecode.com/making-sense-of-ios-provisioning/
