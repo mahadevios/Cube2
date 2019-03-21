@@ -11,9 +11,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TandCViewController : UIViewController<UIWebViewDelegate>
+@interface TandCViewController : UIViewController<UIWebViewDelegate,UIScrollViewDelegate, UITextViewDelegate>
 {
     bool checkBoxSelected ;
+    BOOL isScrollViewLoadedOnce;
+
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *insideView;
@@ -27,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *tcSubmitButton;
 - (IBAction)tcSubmitButtonClicked:(id)sender;
 @property (weak, nonatomic) MBProgressHUD *hud;
+@property (weak, nonatomic) IBOutlet UITextView *privacyPolicyLinkTextVIew;
 
 @end
 

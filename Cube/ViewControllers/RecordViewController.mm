@@ -1973,12 +1973,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                             
                             [app uploadFileToServer:self.recordedAudioFileName jobName:FILE_UPLOAD_API];
                             [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
-                            sender.userInteractionEnabled=NO;
-                            deleteButton.userInteractionEnabled=NO;
-                            recordingNew=NO;
+                            dispatch_async(dispatch_get_main_queue(), ^
+                                                                  {
+                                                                      sender.userInteractionEnabled=NO;
+                                                                      deleteButton.userInteractionEnabled=NO;
+                                                                      recordingNew=NO;
+                                                                     
+                                                                      [self dismissViewControllerAnimated:YES completion:nil];
+                                                                  });
                             
-                            
-                            [self dismissViewControllerAnimated:YES completion:nil];
+                          
 
                             
                         });

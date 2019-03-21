@@ -32,9 +32,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(deviceRegistrationResponseCheck:) name:NOTIFICATION_CHECK_DEVICE_REGISTRATION
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(addAlertView) name:NOTIFICATION_INTERNET_MESSAGE
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(addAlertView) name:NOTIFICATION_INTERNET_MESSAGE
+//                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(removeAlertView) name:kReachabilityChangedNotification
                                                object:nil];
@@ -76,21 +76,21 @@
     //macId=[NSString stringWithFormat:@"%@1234",macId];
     if ([AppPreferences sharedAppPreferences].isReachable)
     {
-    if (!APIcalled)
-    {
-
-        [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
-        APIcalled=true;
-    }
+        if (!APIcalled)
+        {
+            
+            [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
+            APIcalled=true;
+        }
     }
     else
     {
-        UIView* view=[[[UIApplication sharedApplication] keyWindow] viewWithTag:222];
-        UIView* popupView= [view viewWithTag:223];
-        UIButton* retryButton= [popupView viewWithTag:225];
-        [retryButton setEnabled:YES];
-        
-        [retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        UIView* view=[[[UIApplication sharedApplication] keyWindow] viewWithTag:222];
+//        UIView* popupView= [view viewWithTag:223];
+//        UIButton* retryButton= [popupView viewWithTag:225];
+//        [retryButton setEnabled:YES];
+        [self addAlertView];
+//        [retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
     }
 }
@@ -110,16 +110,20 @@
     //[[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     
     UIView* view=[[[UIApplication sharedApplication] keyWindow] viewWithTag:222];
-   UIView* popupView= [view viewWithTag:223];
-   UIButton* retryButton= [popupView viewWithTag:225];
-    [retryButton setEnabled:YES];
-
-    [retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+   
     
     if (view==NULL)
     {
         UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.10, self.view.center.y-50,self.view.frame.size.width*0.80, 100) senderForInternetMessage:self];
         [[[UIApplication sharedApplication] keyWindow] addSubview:internetMessageView];
+    }
+    else
+    {
+        UIView* popupView= [view viewWithTag:223];
+        UIButton* retryButton= [popupView viewWithTag:225];
+        [retryButton setEnabled:YES];
+        
+        [retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
     
 

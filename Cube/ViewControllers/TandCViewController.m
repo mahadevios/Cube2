@@ -10,6 +10,7 @@
 #import "APIManager.h"
 #import "Constants.h"
 #import "LoginViewController.h"
+#import "Keychain.h"
 
 @interface TandCViewController ()
 
@@ -30,7 +31,24 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(validateTandCResponse:) name:NOTIFICATION_ACCEPT_TANDC_API
                                                object:nil];
+    
+    NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:@"By agreeing to use our service you agree to our privacy policy"];
+    
+    [str addAttribute: NSLinkAttributeName value: @"http://xanadutec.com.au/privacy-policy.html" range: NSMakeRange(48, 14)];
+    
+    self.privacyPolicyLinkTextVIew.scrollEnabled = NO;
+    self.privacyPolicyLinkTextVIew.editable = NO;
+    self.privacyPolicyLinkTextVIew.textContainer.lineFragmentPadding = 0;
+    self.privacyPolicyLinkTextVIew.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.privacyPolicyLinkTextVIew.delegate = self;
+    self.privacyPolicyLinkTextVIew.attributedText = str;
+    self.privacyPolicyLinkTextVIew.font = [UIFont systemFontOfSize:14];
     // Do any additional setup after loading the view.
+}
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange
+{
+    return YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -72,18 +90,23 @@
     NSString *filePath=[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"TCsFinal.docx"];
 
     [self.webView setDelegate:self];
+    self.webView.scrollView.delegate = self;
     NSURL *url = [NSURL fileURLWithPath:filePath];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView scalesPageToFit];
     [self.webView loadRequest:request];
-
+    self.webView.scrollView.alwaysBounceVertical = false;
+    self.webView.scrollView.alwaysBounceHorizontal = false;
+    self.webView.scrollView.bounces = false;
+    self.webView.hidden = true;
 //    [self.webView sizeToFit];
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
 //    [self zoomToFit];
 //    [webView scalesPageToFit];
-    [hud hideAnimated:true];
+    
+    
     [webView.scrollView setContentSize: CGSizeMake(webView.frame.size.width, webView.scrollView.contentSize.height)];
 
     float scale = 20000/webView.scrollView.frame.size.width;
@@ -94,8 +117,32 @@
 
     NSString* javascript = [NSString stringWithFormat:@"window.scrollBy(0, %ld);", (long)height];
     [webView stringByEvaluatingJavaScriptFromString:javascript];
+    
+    if (!isScrollViewLoadedOnce)
+    {
+        [hud removeFromSuperview];
+//        [hud hideAnimated:true];
+        NSString* javascript = [NSString stringWithFormat:@"window.scrollBy(67, %ld);", (long)height];
+        [webView stringByEvaluatingJavaScriptFromString:javascript];
+        isScrollViewLoadedOnce = true;
+    }
+    else
+    {
+        self.webView.hidden = false;
+    }
+    
+    
+//    [webView.scrollView setContentOffset:CGPointMake(100, webView.scrollView.contentSize.height)];
+
+   
 }
 
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.x < 67)
+        scrollView.contentOffset = CGPointMake(67, scrollView.contentOffset.y);
+}
 - (void)zoomToFit
 {
     if ([self.webView respondsToSelector:@selector(scrollView)])
@@ -167,12 +214,14 @@
     {
         if ([AppPreferences sharedAppPreferences].isReachable)
         {
-            NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+            NSString*     macId=[Keychain getStringForKey:@"udid"];
+
+//            NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
 
             NSString* dateAndTime = [[APIManager sharedManager] getDateAndTimeString];
             
             hud.minSize = CGSizeMake(150.f, 100.f);
-            hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
             hud.mode = MBProgressHUDModeIndeterminate;
             hud.label.text = @"Submitting Response";
             hud.detailsLabel.text = @"Please wait";
@@ -181,7 +230,7 @@
         }
         else
         {
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
         
     }

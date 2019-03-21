@@ -1853,11 +1853,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                             
                             [app uploadFileToServer:self.existingAudioFileName jobName:FILE_UPLOAD_API];
                             
-                            sender.userInteractionEnabled=NO;
+                            dispatch_async(dispatch_get_main_queue(), ^
+                                                                  {
+                                                                      sender.userInteractionEnabled=NO;
+                                                                      
+                                                                      deleteButton.userInteractionEnabled=NO;
+                                                                      
+                                                                      [self dismissViewControllerAnimated:YES completion:nil];
+                                                                  });
                             
-                            deleteButton.userInteractionEnabled=NO;
-                            
-                            [self dismissViewControllerAnimated:YES completion:nil];
                             
                         });
                         

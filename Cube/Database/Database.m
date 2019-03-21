@@ -53,6 +53,9 @@ static Database *db;
     for (int i=0; i<deptArray.count; i++)
     {
         DepartMent* deptObj= [deptArray objectAtIndex:i];
+        
+//        NSString *query3=[NSString stringWithFormat:@"INSERT INTO DepartMentList values(\"%ld\",\"%@\") Where UserId = %@",deptObj.Id,deptObj.departmentName];
+
         NSString *query3=[NSString stringWithFormat:@"INSERT INTO DepartMentList values(\"%ld\",\"%@\")",deptObj.Id,deptObj.departmentName];
         
         Database *db=[Database shareddatabase];
@@ -107,6 +110,8 @@ static Database *db;
 
 -(void)insertTaskIdentifier:(NSString*)taskIdentifier fileName:(NSString*)fileName
 {
+//    NSString *query3=[NSString stringWithFormat:@"INSERT OR REPLACE INTO TaskIdentifier values(\"%@\",\"%@\") Where UserId = %d",taskIdentifier,fileName];
+
         NSString *query3=[NSString stringWithFormat:@"INSERT OR REPLACE INTO TaskIdentifier values(\"%@\",\"%@\")",taskIdentifier,fileName];
     //NSString *query3=[NSString stringWithFormat:@"Delete from TaskIdentifier Where TASKID like '%%%@%%'",@"Xanadutec"];
 
@@ -169,6 +174,8 @@ static Database *db;
     NSString* companyId;
     sqlite3* feedbackAndQueryTypesDB;
     //NSMutableArray* departmentNameArray=[[NSMutableArray alloc]init];;
+//    NSString *query3=[NSString stringWithFormat:@"Select FILENAME from TaskIdentifier Where TASKID='%@' and UserId = %d",taskIdentifier];
+
     NSString *query3=[NSString stringWithFormat:@"Select FILENAME from TaskIdentifier Where TASKID='%@'",taskIdentifier];
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
@@ -219,7 +226,8 @@ static Database *db;
 
 -(void)deleteIdentifierFromDatabase:(NSString*)identifier
 {
-    
+//    NSString *query3=[NSString stringWithFormat:@"Delete from TaskIdentifier Where TASKID='%@' and UserId=%d",identifier];
+
     NSString *query3=[NSString stringWithFormat:@"Delete from TaskIdentifier Where TASKID='%@'",identifier];
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
@@ -304,7 +312,9 @@ static Database *db;
     sqlite3_stmt *statement;
     NSString* companyId;
     sqlite3* feedbackAndQueryTypesDB;
-    NSMutableArray* departmentNameArray=[[NSMutableArray alloc]init];;
+    NSMutableArray* departmentNameArray=[[NSMutableArray alloc]init];
+//    NSString *query3=[NSString stringWithFormat:@"Select DepartMentName from DepartMentList Where UserId=%d"];
+
     NSString *query3=[NSString stringWithFormat:@"Select DepartMentName from DepartMentList"];
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
@@ -362,6 +372,8 @@ static Database *db;
     NSString* companyId;
     sqlite3* feedbackAndQueryTypesDB;
     //NSMutableArray* departmentNameArray=[[NSMutableArray alloc]init];;
+//    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName from CubeData Where mobileDictationIdVal=%d and UserId=%d",[mobileDictationIdVal intValue]];
+
     NSString *query3=[NSString stringWithFormat:@"Select RecordItemName from CubeData Where mobileDictationIdVal=%d",[mobileDictationIdVal intValue]];
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
@@ -416,6 +428,8 @@ static Database *db;
     sqlite3_stmt *statement;
     sqlite3* feedbackAndQueryTypesDB;
     DepartMent* obj=[[DepartMent alloc]init];
+
+//    NSString *query3=[NSString stringWithFormat:@"Select * from DepartMentList Where DepartMentName='%@' and UserId=%d",name];
 
     NSString *query3=[NSString stringWithFormat:@"Select * from DepartMentList Where DepartMentName='%@'",name];
 
@@ -475,11 +489,13 @@ static Database *db;
     NSString *query3;
     if ([status isEqualToString:@"RecordingComplete"])
     {
+//        query3=[NSString stringWithFormat:@"Select Count(RecordItemName) from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') or DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') and (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@')) and UserId = %d",status,@"RecordingFileUpload",@"NotTransferred",@"Resend",@"ResendFailed"];
+        
         query3=[NSString stringWithFormat:@"Select Count(RecordItemName) from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') or DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') and (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') or TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@'))",status,@"RecordingFileUpload",@"NotTransferred",@"Resend",@"ResendFailed"];
     }
     else
     query3=[NSString stringWithFormat:@"Select Count(RecordItemName) from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@')",status];
-    
+//    query3=[NSString stringWithFormat:@"Select Count(RecordItemName) from CubeData Where DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') and UserId = %d",status];
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
         if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query3 UTF8String], -1, &statement, NULL) == SQLITE_OK)// 2. Prepare the query
@@ -536,7 +552,8 @@ static Database *db;
     NSArray* dateAndTimeArray=[dateAndTimeString componentsSeparatedByString:@" "];
     
     dateAndTimeString=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
-    NSString *query3=[NSString stringWithFormat:@"Select Count(RecordItemName) from CubeData Where TransferStatus=(Select Id from TransferStatus Where TransferStatus='Transferred') and TransferDate LIKE '%@%%'",dateAndTimeString];
+//    NSString *query3=[NSString stringWithFormat:@"Select Count(RecordItemName) from CubeData Where TransferStatus=(Select Id from TransferStatus Where TransferStatus='Transferred') and TransferDate LIKE '%@%%' and UserId = %d",dateAndTimeString];
+ NSString *query3=[NSString stringWithFormat:@"Select Count(RecordItemName) from CubeData Where TransferStatus=(Select Id from TransferStatus Where TransferStatus='Transferred') and TransferDate LIKE '%@%%'",dateAndTimeString];
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
@@ -594,7 +611,7 @@ static Database *db;
     sqlite3* feedbackAndQueryTypesDB;
     int count;
     NSString *query3=[NSString stringWithFormat:@"Select Count(RecordItemName) from CubeData Where TransferStatus=(Select Id from TransferStatus Where TransferStatus='TransferFailed')"];
-    
+//    NSString *query3=[NSString stringWithFormat:@"Select Count(RecordItemName) from CubeData Where TransferStatus=(Select Id from TransferStatus Where TransferStatus='TransferFailed') and UserId=%d"];
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
         if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query3 UTF8String], -1, &statement, NULL) == SQLITE_OK)// 2. Prepare the query
@@ -661,6 +678,7 @@ static Database *db;
     if ([status isEqualToString:@"Transferred"])
     {
                query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and TransferDate LIKE '%@%%') order by TransferDate desc",status,dateAndTimeString];
+//         query3=[NSString stringWithFormat:@"Select RecordItemName,RecordCreateDate,Department,TransferStatus,CurrentDuration,TransferDate,DeleteStatus,DictationStatus from CubeData Where (TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@') and TransferDate LIKE '%@%%') order by TransferDate desc",status,dateAndTimeString];
 
     }
     else
@@ -725,7 +743,8 @@ static Database *db;
 
                 
                 
-                
+//                NSString *query5=[NSString stringWithFormat:@"Select TransferStatus from TransferStatus Where Id='%@' and UserId=%d",TransferStatus];
+
                 NSString *query5=[NSString stringWithFormat:@"Select TransferStatus from TransferStatus Where Id='%@'",TransferStatus];
                 
                 if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query5 UTF8String], -1, &statement2, NULL) == SQLITE_OK)// 2. Prepare the query
@@ -748,7 +767,8 @@ static Database *db;
 //                    NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
                 {}
                 
-                
+//                NSString *query6=[NSString stringWithFormat:@"Select DeleteStatus from DeleteStatus Where Id='%@' and UserId = %d",deleteStatus];
+
                 NSString *query6=[NSString stringWithFormat:@"Select DeleteStatus from DeleteStatus Where Id='%@'",deleteStatus];
                 
                 if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query6 UTF8String], -1, &statement3, NULL) == SQLITE_OK)// 2. Prepare the query
@@ -772,8 +792,9 @@ static Database *db;
                 {}
                
                 
+//                NSString *query7=[NSString stringWithFormat:@"Select RecordingStatus from DictationStatus Where Id='%@' and UserId=%d",dictationStatus];
                 NSString *query7=[NSString stringWithFormat:@"Select RecordingStatus from DictationStatus Where Id='%@'",dictationStatus];
-                
+
                 if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query7 UTF8String], -1, &statement4, NULL) == SQLITE_OK)// 2. Prepare the query
                 {
                     while (sqlite3_step(statement4) == SQLITE_ROW)
@@ -864,8 +885,9 @@ static Database *db;
     sqlite3_stmt *statement;
     sqlite3* feedbackAndQueryTypesDB;
     NSString* departmentId;
+//    NSString *query3=[NSString stringWithFormat:@"Select Id from DepartMentList Where DepartMentName='%@' and UserId=%d",departmentName];
     NSString *query3=[NSString stringWithFormat:@"Select Id from DepartMentList Where DepartMentName='%@'",departmentName];
-    
+
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
         if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query3 UTF8String], -1, &statement, NULL) == SQLITE_OK)// 2. Prepare the query
@@ -920,7 +942,8 @@ static Database *db;
     NSString* departmentId;
     NSMutableArray* departmentArray=[NSMutableArray new];
     NSString *query3=[NSString stringWithFormat:@"Select Id from DepartMentList"];
-    
+//    NSString *query3=[NSString stringWithFormat:@"Select Id from DepartMentList Where UserId=%d"];
+
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
         if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query3 UTF8String], -1, &statement, NULL) == SQLITE_OK)// 2. Prepare the query
@@ -979,8 +1002,9 @@ static Database *db;
     sqlite3_stmt *statement;
     sqlite3* feedbackAndQueryTypesDB;
     int departmentId;
+//    NSString *query3=[NSString stringWithFormat:@"Select Department from CubeData Where RecordItemName='%@' and UserId=%d",fileName];
     NSString *query3=[NSString stringWithFormat:@"Select Department from CubeData Where RecordItemName='%@'",fileName];
-    
+
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
         if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query3 UTF8String], -1, &statement, NULL) == SQLITE_OK)// 2. Prepare the query
@@ -1083,6 +1107,7 @@ static Database *db;
 {
     
     NSString *query3=[NSString stringWithFormat:@"Update CubeData set DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') Where RecordItemName='%@'",status,existingAudioFileName];
+//     NSString *query3=[NSString stringWithFormat:@"Update CubeData set DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') Where RecordItemName='%@' and UserId=%d",status,existingAudioFileName];
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement;
@@ -1136,6 +1161,8 @@ static Database *db;
 {
     
     NSString *query3=[NSString stringWithFormat:@"Update CubeData set CurrentDuration=%f Where RecordItemName='%@'",duration,existingAudioFileName];
+//    NSString *query3=[NSString stringWithFormat:@"Update CubeData set CurrentDuration=%f Where RecordItemName='%@' and UserId=%d",duration,existingAudioFileName];
+
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement;

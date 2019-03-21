@@ -793,7 +793,11 @@
                                 
                                 [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
                                 
-                                [[self.view viewWithTag:507] setHidden:YES];
+                                dispatch_async(dispatch_get_main_queue(), ^
+                                                                      {
+                                                                          [[self.view viewWithTag:507] setHidden:YES];
+
+                                                                      });
                                 
                             });
                             
