@@ -304,12 +304,27 @@
 }
 
 
-- (UIView*)initWithFrame:(CGRect)frame senderForInternetMessage :(id)sender
+- (UIView*)initWithFrame:(CGRect)frame offlineFrame:(CGRect)offlineFrame senderForInternetMessage :(id)sender
 {
     self = [super initWithFrame:frame];
-    self.backgroundColor=[UIColor darkGrayColor];
-    overlay= [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    overlay=[[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.backgroundColor=[UIColor redColor];
+    overlay= [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]]; // black ovelrayview
+    
+//    UIView* offlineView = [[UIView alloc] initWithFrame:offlineFrame]; // black ovelrayview
+//
+//    offlineView.backgroundColor = [UIColor redColor];
+//
+//    UIButton* goOfflineButton = [[UIButton alloc]initWithFrame:CGRectMake((offlineView.frame.size.width/2) - 30, offlineView.frame.size.height*0.25, 60, 40)];
+//
+//    [goOfflineButton setFont:[UIFont systemFontOfSize:13]];
+//
+//    [goOfflineButton setTitle:@"Go Offline" forState:UIControlStateNormal];
+//
+//    [goOfflineButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+//
+//    [goOfflineButton addTarget:sender action:@selector(goOfflineButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//
+//    [offlineView addSubview:goOfflineButton];
     
     overlay.tag=222;
     
@@ -321,26 +336,41 @@
         // initilize all your UIView components
         self.tag=223;
         
-        
-        UILabel* dateAndTimeLabel=[[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width*0.05, self.frame.size.height*0.3, self.frame.size.width*0.9, 20)];
+        UILabel* dateAndTimeLabel=[[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width*0.05, self.frame.size.height*0.2, self.frame.size.width*0.9, 20)];
         //audioRecordSlider.maximumValue=player.duration;
-        dateAndTimeLabel.text=@"No internet connection,please try again";
-        [dateAndTimeLabel setFont:[UIFont systemFontOfSize:13]];
+        dateAndTimeLabel.text=@"No Internet Connection";
+        [dateAndTimeLabel setFont:[UIFont systemFontOfSize:15]];
         dateAndTimeLabel.textColor=[UIColor whiteColor];
         dateAndTimeLabel.tag=224;
         dateAndTimeLabel.textAlignment = NSTextAlignmentCenter;
         
         
-        UIButton* playAndPauseButton=[[UIButton alloc]initWithFrame:CGRectMake((self.frame.size.width/2) - 30, self.frame.size.height*0.5, 60, 40)];
+        UIButton* playAndPauseButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.25 - 30, self.frame.size.height*0.5, 60, 30)];
+        
         playAndPauseButton.tag=225;
         [playAndPauseButton setTitle:@"Retry" forState:UIControlStateNormal];
         [playAndPauseButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+        [playAndPauseButton setBackgroundColor:[UIColor whiteColor]];
+        [playAndPauseButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        playAndPauseButton.layer.cornerRadius = 4.0;
         [playAndPauseButton addTarget:sender action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIButton* goOfflineButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.75 - 50, self.frame.size.height*0.5, 100, 30)];
+//        [goOfflineButton setFont:[UIFont systemFontOfSize:13]];
+        [goOfflineButton setTitle:@"Go Offline" forState:UIControlStateNormal];
+        [goOfflineButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+        [goOfflineButton setBackgroundColor:[UIColor whiteColor]];
+        [goOfflineButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        goOfflineButton.layer.cornerRadius = 4.0;
+        [goOfflineButton addTarget:sender action:@selector(goOfflineButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
         [self addSubview:dateAndTimeLabel];
         [self addSubview:playAndPauseButton];
+        [self addSubview:goOfflineButton];
         
     }
     [overlay addSubview:self];
+//    [overlay addSubview:offlineView];
     return overlay;
 }
 - (UIView*)initWithFrame:(CGRect)frame

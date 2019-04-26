@@ -27,7 +27,9 @@
 @property(nonatomic,strong) NSString* bsackUpAudioFileName;
 
 @property (nonatomic,assign)    BOOL                        recordNew;
-@property (nonatomic,assign)    BOOL                        recordingNew;
+@property (nonatomic,assign)    BOOL                        recordingNew;  // may not used anywhere
+@property (nonatomic,assign)    BOOL                        recordNewOffline;
+
 @property (nonatomic)    int                                selectedTabBarIndex;
 @property (nonatomic,assign)    BOOL                        isRecordView;
 @property (nonatomic,assign)    BOOL                        fileUploading;

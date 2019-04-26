@@ -29,21 +29,21 @@
     
     //    [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(deviceRegistrationResponseCheck:) name:NOTIFICATION_CHECK_DEVICE_REGISTRATION
-                                               object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(addAlertView) name:NOTIFICATION_INTERNET_MESSAGE
-//                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(removeAlertView) name:kReachabilityChangedNotification
-                                               object:nil];
+   
 
     
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(deviceRegistrationResponseCheck:) name:NOTIFICATION_CHECK_DEVICE_REGISTRATION
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(removeAlertView) name:kReachabilityChangedNotification
+                                               object:nil];
+    
     NSString*  macId = @"";
     macId = [Keychain getStringForKey:@"udid"];
     
@@ -66,7 +66,21 @@
     //[self checkDeviceRegistration];
 //    NSLog(@"Registering for push notifications...");
 //    [[UIApplication sharedApplication] registerForRemoteNotifications];
-    [self performSelector:@selector(checkDeviceRegistration) withObject:nil afterDelay:0.0];
+    
+    if ([AppPreferences sharedAppPreferences].recordNewOffline == YES)
+    {
+        //        [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
+        
+        [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];
+        
+        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
+    }
+    else
+    {
+        [self performSelector:@selector(checkDeviceRegistration) withObject:nil afterDelay:0.0];
+
+    }
+    
 
 
 }
@@ -114,7 +128,10 @@
     
     if (view==NULL)
     {
-        UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.10, self.view.center.y-50,self.view.frame.size.width*0.80, 100) senderForInternetMessage:self];
+//        UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.10, self.view.center.y-50,self.view.frame.size.width*0.80, 100) offlineFrame:CGRectMake(0, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];
+        
+  UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(0, self.view.center.y+100,self.view.frame.size.width, 80) offlineFrame:CGRectMake(0, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];
+        
         [[[UIApplication sharedApplication] keyWindow] addSubview:internetMessageView];
     }
     else
@@ -123,10 +140,12 @@
         UIButton* retryButton= [popupView viewWithTag:225];
         [retryButton setEnabled:YES];
         
-        [retryButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [retryButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     }
+   
+   
+        
     
-
 }
 -(void)refresh:(UIButton*)sender
 {
@@ -140,9 +159,17 @@
     //[[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
     
 }
+
+-(void)goOfflineButtonClicked:(UIButton*)sender
+{
+    [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];
+    
+     [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:NO completion:nil];
+}
+
 -(void)removeAlertView
 {
-    if ([AppPreferences sharedAppPreferences].isReachable)
+    if ([AppPreferences sharedAppPreferences].isReachable && (self.isViewLoaded && self.view.window))
     {
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];//to remove no internet message
         NSString*     macId=[Keychain getStringForKey:@"udid"];
