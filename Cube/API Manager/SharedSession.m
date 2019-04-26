@@ -23,6 +23,8 @@ static NSURLSession * sharedSession =nil;
         
         NSURLSessionConfiguration * backgroundConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"Xanadutec"];
 
+//        backgroundConfig.sessionSendsLaunchEvents = false;
+        
         sharedSession = [NSURLSession sessionWithConfiguration:backgroundConfig delegate:sender delegateQueue:[NSOperationQueue mainQueue]];
         
         return sharedSession;

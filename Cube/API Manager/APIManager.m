@@ -188,7 +188,6 @@ static APIManager *singleton = nil;
     {
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];//to remove no internet message
         
-        
         NSError* error;
         NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macid", nil];
 
@@ -1042,6 +1041,23 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 
 }
 
+//update the UI
+- (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session
+{
+    NSLog(@"Background URL session %@ finished events.\n", session);
+    
+    if (session.configuration.identifier)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+            
+            appDelegate.backgroundSessionCompletionHandler();
+        });
+       
+        // Call the handler we stored in -application:handleEventsForBackgroundURLSession:
+        // [self callCompletionHandlerForSession:session.configuration.identifier];
+    }
+}
 
 -(void)uploadNextFile
 {

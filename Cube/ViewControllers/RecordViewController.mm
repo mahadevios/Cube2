@@ -1937,7 +1937,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
 
-//    [AppPreferences sharedAppPreferences].recordNew=YES;
+    [AppPreferences sharedAppPreferences].recordNewOffline = YES;
+    
     [self dismissViewControllerAnimated:NO completion:nil];
     //[self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:NO completion:nil];
     
@@ -2220,6 +2221,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         //[self setCompressAudio];
         [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
         
+        [AppPreferences sharedAppPreferences].recordNewOffline = NO;
+        
         [sliderTimer invalidate];
         
         [player stop];
@@ -2233,6 +2236,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     else
     {
         [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+        [AppPreferences sharedAppPreferences].recordNewOffline = NO;
 
         [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
         

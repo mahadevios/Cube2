@@ -85,32 +85,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
     }
     
-//    if (currentVersion == nil)
-//    {
-//        // version change first time execution code
-//
-//
-//        [[Database shareddatabase] createFileNameidentifierRelationshipTable];
-//
-//        [[Database shareddatabase] createDocFileAndDownloadedDocxFileTable];
-//
-//        [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
-//    }
-//    else
-//        if (currentVersion != bundleVersion)
-//        {
-            // version change first time execution code
-            
-            [[Database shareddatabase] createFileNameidentifierRelationshipTable];
 
-            [[Database shareddatabase] createDocFileAndDownloadedDocxFileTable];
+    [[Database shareddatabase] createFileNameidentifierRelationshipTable];
+
+    [[Database shareddatabase] createDocFileAndDownloadedDocxFileTable];
             
-            [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
-            
-//        }
-    
-    
-  //  [[NSUserDefaults standardUserDefaults] setValue:timeLabel.text forKey:LOW_STORAGE_THRESHOLD];
+    [[NSUserDefaults standardUserDefaults] setValue:bundleVersion forKey:CURRENT_VESRION];
+
     if ([[NSUserDefaults standardUserDefaults] valueForKey:LOW_STORAGE_THRESHOLD]== NULL)
     {
           [[NSUserDefaults standardUserDefaults] setValue:@"512 MB" forKey:LOW_STORAGE_THRESHOLD];
@@ -154,7 +135,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         // our default category -- we change this for conversion and playback appropriately
         [sessionInstance setCategory:AVAudioSessionCategoryAudioProcessing error:&error];
         XThrowIfError(error.code, "couldn't set audio category");
-        
+        //
         // add interruption handler
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handleInterruption:)
@@ -507,18 +488,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     NSLog(@"IDENTOFIER:   %@",identifier);
 }
 
-//update the UI
-- (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session
-{
-    NSLog(@"Background URL session %@ finished events.\n", session);
-    
-    if (session.configuration.identifier)
-    {
-        self.backgroundSessionCompletionHandler();
-        // Call the handler we stored in -application:handleEventsForBackgroundURLSession:
-        // [self callCompletionHandlerForSession:session.configuration.identifier];
-    }
-}
+
+
 - (id)initWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     self = [super init];
@@ -537,6 +508,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     _completionHandler(UIBackgroundFetchResultNewData);
 }
+
+
 
 
 -(void)getImportedFiles

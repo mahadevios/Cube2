@@ -18,6 +18,6 @@
 - (UIView*)initWithFrame:(CGRect)frame  sender:(id)sender;
 -(UITableView*)tableView:(id)sender frame:(CGRect)frame;
 - (UIView*)initWithFrame:(CGRect)frame senderNameForSlider :(id)sender player:(AVAudioPlayer*)player;
-- (UIView*)initWithFrame:(CGRect)frame senderForInternetMessage :(id)sender;
+- (UIView*)initWithFrame:(CGRect)frame offlineFrame:(CGRect)offlineFrame senderForInternetMessage :(id)sender;
 
 @end
