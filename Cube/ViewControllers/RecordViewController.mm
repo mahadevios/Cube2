@@ -635,6 +635,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     [player stop];
     
+    [AppPreferences sharedAppPreferences].recordNewOffline = NO;
+    
     [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
     
     [self dismissViewControllerAnimated:YES completion:nil];

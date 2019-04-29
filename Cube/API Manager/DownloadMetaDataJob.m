@@ -158,20 +158,24 @@
 //                                                                   error:&error];
     
     
-    NSString *encryptedResponse = [NSJSONSerialization JSONObjectWithData:responseData
+    NSString* encryptedResponse = [NSJSONSerialization JSONObjectWithData:responseData
                                                              options:NSUTF8StringEncoding
                                                                error:&error];
     
 //    encryptedResponse = nil;
-    
-    if ([encryptedResponse containsString:@"ExceptionMessage"] || [encryptedResponse containsString:@"ExceptionType"] || [encryptedResponse containsString:@"Message"] || [encryptedResponse containsString:@"StackTrace"] || encryptedResponse == nil)
+    id encryptedResponseDict = encryptedResponse;
+    if ([encryptedResponseDict isKindOfClass:[NSDictionary class]])
     {
-        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
-
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured" withMessage:@"Unexpected response from server, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-        
-        return;
+        if ([encryptedResponseDict objectForKey:@"ExceptionMessage"] || [encryptedResponseDict objectForKey:@"ExceptionType"] || [encryptedResponseDict objectForKey:@"Message"] || [encryptedResponseDict objectForKey:@"StackTrace"] || encryptedResponseDict == nil)
+        {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+            
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured!" withMessage:[NSString stringWithFormat:@"%@, please try again",[encryptedResponseDict objectForKey:@"ExceptionMessage"]] withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            
+            return;
+        }
     }
+    
     NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:encryptedResponse options:0];
     
     NSData* data=[decodedData AES256DecryptWithKey:SECRET_KEY];
