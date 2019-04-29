@@ -195,11 +195,8 @@ static APIManager *singleton = nil;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
                                                            options:0 // Pass 0 if you don't care about the readability of the generated string
                                                              error:&error];
-        
 
         NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
-
-       
         
         NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
 
