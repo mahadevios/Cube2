@@ -1947,66 +1947,73 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)uploadAudio:(UIButton*)sender
 {
-    
-    if ([[AppPreferences sharedAppPreferences] isReachable])
+   if([AppPreferences sharedAppPreferences].userObj != nil)
     {
-    alertController = [UIAlertController alertControllerWithTitle:TRANSFER_MESSAGE
-                                                          message:@""
-                                                   preferredStyle:UIAlertControllerStyleAlert];
-    actionDelete = [UIAlertAction actionWithTitle:@"Yes"
-                                            style:UIAlertActionStyleDefault
-                                          handler:^(UIAlertAction * action)
-                    {
-                        
-//                        NSDictionary* audiorecordDict= [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRow];
-//                        NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
-//                        [transferDictationButton setHidden:YES];
-//                        [deleteDictationButton setHidden:YES];
-                        [player stop];
-                        [[self.view viewWithTag:701] setHidden:YES];//delete button and image
-                        [[self.view viewWithTag:702] setHidden:YES];
-                        [[self.view viewWithTag:703] setHidden:YES];//edit button and image
-                        [[self.view viewWithTag:704] setHidden:YES];
-                        [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:self.recordedAudioFileName];
-
-                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                            
-                            
-                            [app uploadFileToServer:self.recordedAudioFileName jobName:FILE_UPLOAD_API];
-                            [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
-                            dispatch_async(dispatch_get_main_queue(), ^
-                                                                  {
-                                                                      sender.userInteractionEnabled=NO;
-                                                                      deleteButton.userInteractionEnabled=NO;
-                                                                      recordingNew=NO;
-                                                                     
-                                                                      [self dismissViewControllerAnimated:YES completion:nil];
-                                                                  });
-                            
-                          
-
-                            
-                        });
-                        
-                    }]; //You can use a block here to handle a press on this button
-    [alertController addAction:actionDelete];
-    
-    
-    actionCancel = [UIAlertAction actionWithTitle:@"No"
-                                            style:UIAlertActionStyleCancel
-                                          handler:^(UIAlertAction * action)
-                    {
-                        [alertController dismissViewControllerAnimated:YES completion:nil];
-                        
-                    }]; //You can use a block here to handle a press on this button
-    [alertController addAction:actionCancel];
-    [self presentViewController:alertController animated:YES completion:nil];
-
+        if ([[AppPreferences sharedAppPreferences] isReachable])
+        {
+            alertController = [UIAlertController alertControllerWithTitle:TRANSFER_MESSAGE
+                                                                  message:@""
+                                                           preferredStyle:UIAlertControllerStyleAlert];
+            actionDelete = [UIAlertAction actionWithTitle:@"Yes"
+                                                    style:UIAlertActionStyleDefault
+                                                  handler:^(UIAlertAction * action)
+                            {
+                                
+                                //                        NSDictionary* audiorecordDict= [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRow];
+                                //                        NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
+                                //                        [transferDictationButton setHidden:YES];
+                                //                        [deleteDictationButton setHidden:YES];
+                                [player stop];
+                                [[self.view viewWithTag:701] setHidden:YES];//delete button and image
+                                [[self.view viewWithTag:702] setHidden:YES];
+                                [[self.view viewWithTag:703] setHidden:YES];//edit button and image
+                                [[self.view viewWithTag:704] setHidden:YES];
+                                [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:self.recordedAudioFileName];
+                                
+                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                    
+                                    
+                                    [app uploadFileToServer:self.recordedAudioFileName jobName:FILE_UPLOAD_API];
+                                    [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
+                                    dispatch_async(dispatch_get_main_queue(), ^
+                                                   {
+                                                       sender.userInteractionEnabled=NO;
+                                                       deleteButton.userInteractionEnabled=NO;
+                                                       recordingNew=NO;
+                                                       
+                                                       [self dismissViewControllerAnimated:YES completion:nil];
+                                                   });
+                                    
+                                    
+                                    
+                                    
+                                });
+                                
+                            }]; //You can use a block here to handle a press on this button
+            [alertController addAction:actionDelete];
+            
+            
+            actionCancel = [UIAlertAction actionWithTitle:@"No"
+                                                    style:UIAlertActionStyleCancel
+                                                  handler:^(UIAlertAction * action)
+                            {
+                                [alertController dismissViewControllerAnimated:YES completion:nil];
+                                
+                            }]; //You can use a block here to handle a press on this button
+            [alertController addAction:actionCancel];
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+        }
+        else
+        {
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
     }
     else
     {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Login Required!" withMessage:@"Please login to upload the recording." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
+    
 }
 
 #pragma mark: Timer methods
@@ -2259,9 +2266,20 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     if ([[self.view viewWithTag:98] isDescendantOfView:self.view])
     {
-        NSArray* subViewArray=[NSArray arrayWithObjects:@"User Settings", nil];
-        editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
-        [[[UIApplication sharedApplication] keyWindow] addSubview:editPopUp];
+        if ([AppPreferences sharedAppPreferences].userObj != nil)
+        {
+            NSArray* subViewArray=[NSArray arrayWithObjects:@"User Settings", nil];
+            editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
+            [[[UIApplication sharedApplication] keyWindow] addSubview:editPopUp];
+        }
+        else
+        {
+            NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
+            editPopUp=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
+            // editPopUp.tag=888;
+            [[[UIApplication sharedApplication] keyWindow] addSubview:editPopUp];
+        }
+       
     }
     else
     {
@@ -3945,8 +3963,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 - (IBAction)speechToTextButtonClicked:(id)sender
 {
-    SpeechRecognitionViewController* spvc = [self.storyboard instantiateViewControllerWithIdentifier:@"SpeechRecognitionViewController"];
-    
-    [self presentViewController:spvc animated:true completion:nil];
+    if([AppPreferences sharedAppPreferences].userObj != nil)
+    {
+        SpeechRecognitionViewController* spvc = [self.storyboard instantiateViewControllerWithIdentifier:@"SpeechRecognitionViewController"];
+        
+        [self presentViewController:spvc animated:true completion:nil];
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Login Required!" withMessage:@"Please login to use Speech to Text feature." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        
+    }
 }
 @end

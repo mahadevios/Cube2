@@ -113,6 +113,10 @@
 #define DOC_VRS_FILES_FOLDER_NAME              @"VRSDOC files"
 #define DOC_VRS_TEXT_FILES_FOLDER_NAME         @"VRSAudio files"
 
+#define USER_PIN         @"userPIN"
+#define USER_ID         @"userId"
+#define USER_PASS         @"userPassword"
+
 //#define DATE_TIME_FORMAT                       @"MM-dd-yyyy HH:mm:ss"
 #define DATE_TIME_FORMAT                       @"yyyy-MM-dd HH:mm:ss"
 
