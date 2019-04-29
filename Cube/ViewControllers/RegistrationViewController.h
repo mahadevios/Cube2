@@ -10,6 +10,10 @@
 #import "MBProgressHUD.h"
 
 @interface RegistrationViewController : UIViewController<UITextFieldDelegate>
+{
+    NSString* trimmedIdTextField;
+    NSString* trimmedPasswordTextfield;
+}
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 - (IBAction)backButton:(id)sender;

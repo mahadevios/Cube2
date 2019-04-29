@@ -7,6 +7,7 @@
 //
 
 #import "PopUpCustomView.h"
+#import "Constants.h"
 
 @implementation PopUpCustomView
 
@@ -307,7 +308,13 @@
 - (UIView*)initWithFrame:(CGRect)frame offlineFrame:(CGRect)offlineFrame senderForInternetMessage :(id)sender
 {
     self = [super initWithFrame:frame];
-    self.backgroundColor=[UIColor redColor];
+//    self.backgroundColor=[UIColor redColor];
+//    self.backgroundColor = [UIColor colorWithRed:47/255.0 green:79/255.0 blue:79/255.0 alpha:1];
+//    self.backgroundColor = [UIColor colorWithRed:242/255.0 green:64/255.0 blue:52/255.0 alpha:1];
+        self.backgroundColor = [UIColor colorWithRed:238/255.0 green:62/255.0 blue:51/255.0 alpha:1];
+
+
+    self.layer.cornerRadius = 10.0;
     overlay= [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]]; // black ovelrayview
     
 //    UIView* offlineView = [[UIView alloc] initWithFrame:offlineFrame]; // black ovelrayview
@@ -330,44 +337,74 @@
     
     overlay.backgroundColor=[[UIColor blackColor] colorWithAlphaComponent:0.4];
     
+    NSString* alertCount=[[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE]; // we dont have, is user logged in first time or not, so we are using in_tr_co_ba user default value to check it. if that value found not nil means user have visited the home tab hence he was logged in
+    
+    
+
     if (self)
     {
         // Initialization code
         // initilize all your UIView components
         self.tag=223;
         
-        UILabel* dateAndTimeLabel=[[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width*0.05, self.frame.size.height*0.2, self.frame.size.width*0.9, 20)];
+//        UILabel* dateAndTimeLabel=[[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width*0.05, self.frame.size.height*0.2, self.frame.size.width*0.9, 20)];
+        
+              UILabel* noInternetConnectionLabel=[[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width*0.05, self.frame.size.height*0.15, self.frame.size.width*0.9, 20)];
         //audioRecordSlider.maximumValue=player.duration;
-        dateAndTimeLabel.text=@"No Internet Connection";
-        [dateAndTimeLabel setFont:[UIFont systemFontOfSize:15]];
-        dateAndTimeLabel.textColor=[UIColor whiteColor];
-        dateAndTimeLabel.tag=224;
-        dateAndTimeLabel.textAlignment = NSTextAlignmentCenter;
+        noInternetConnectionLabel.text=@"No Internet Connection";
+        [noInternetConnectionLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+        noInternetConnectionLabel.textColor=[UIColor whiteColor];
+        noInternetConnectionLabel.tag=224;
+        noInternetConnectionLabel.textAlignment = NSTextAlignmentCenter;
         
+//
+//        UIButton* playAndPauseButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.25 - 30, self.frame.size.height*0.5, 60, 30)];
         
-        UIButton* playAndPauseButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.25 - 30, self.frame.size.height*0.5, 60, 30)];
+//                UIButton* playAndPauseButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.25 - 30, self.frame.size.height*0.5, 60, 30)];
         
-        playAndPauseButton.tag=225;
-        [playAndPauseButton setTitle:@"Retry" forState:UIControlStateNormal];
-        [playAndPauseButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
-        [playAndPauseButton setBackgroundColor:[UIColor whiteColor]];
-        [playAndPauseButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        playAndPauseButton.layer.cornerRadius = 4.0;
-        [playAndPauseButton addTarget:sender action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIButton* goOfflineButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.75 - 50, self.frame.size.height*0.5, 100, 30)];
-//        [goOfflineButton setFont:[UIFont systemFontOfSize:13]];
-        [goOfflineButton setTitle:@"Go Offline" forState:UIControlStateNormal];
-        [goOfflineButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
-        [goOfflineButton setBackgroundColor:[UIColor whiteColor]];
-        [goOfflineButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        goOfflineButton.layer.cornerRadius = 4.0;
-        [goOfflineButton addTarget:sender action:@selector(goOfflineButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self addSubview:dateAndTimeLabel];
-        [self addSubview:playAndPauseButton];
-        [self addSubview:goOfflineButton];
-        
+        if(alertCount == nil)
+        {
+            UIButton* retryButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.50 - 50, self.frame.size.height*0.5, 100, 40)];
+            
+            retryButton.tag=225;
+            [retryButton setTitle:@"Retry" forState:UIControlStateNormal];
+            [retryButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+            [retryButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
+            [retryButton setBackgroundColor:[UIColor whiteColor]];
+            [retryButton setTitleColor:[UIColor colorWithRed:17/255.0 green:146/255.0 blue:(CGFloat)78/255.0 alpha:1] forState:UIControlStateNormal];
+            retryButton.layer.cornerRadius = 5.0;
+            [retryButton addTarget:sender action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:noInternetConnectionLabel];
+            [self addSubview:retryButton];
+        }
+        else{
+            UIButton* retryButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.30 - 50, self.frame.size.height*0.5, 100, 40)];
+            
+            retryButton.tag=225;
+            [retryButton setTitle:@"Retry" forState:UIControlStateNormal];
+            [retryButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+            [retryButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
+            [retryButton setBackgroundColor:[UIColor whiteColor]];
+            [retryButton setTitleColor:[UIColor colorWithRed:17/255.0 green:146/255.0 blue:(CGFloat)78/255.0 alpha:1] forState:UIControlStateNormal];
+            retryButton.layer.cornerRadius = 5.0;
+            [retryButton addTarget:sender action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
+            
+            //        UIButton* goOfflineButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.75 - 50, self.frame.size.height*0.5, 100, 30)];
+            
+            UIButton* goOfflineButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.70 - 60, self.frame.size.height*0.5, 120, 40)];
+            //        [goOfflineButton setFont:[UIFont systemFontOfSize:13]];
+            [goOfflineButton setTitle:@"Go Offline" forState:UIControlStateNormal];
+            [goOfflineButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+            [goOfflineButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
+            [goOfflineButton setBackgroundColor:[UIColor whiteColor]];
+            [goOfflineButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            goOfflineButton.layer.cornerRadius = 5.0;
+            [goOfflineButton addTarget:sender action:@selector(goOfflineButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [self addSubview:noInternetConnectionLabel];
+            [self addSubview:retryButton];
+            [self addSubview:goOfflineButton];
+        }
     }
     [overlay addSubview:self];
 //    [overlay addSubview:offlineView];

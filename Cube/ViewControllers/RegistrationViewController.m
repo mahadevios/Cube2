@@ -65,6 +65,10 @@
 
     if ([responseCodeString intValue]==200)
     {
+        [[NSUserDefaults standardUserDefaults] setValue:trimmedIdTextField forKey:USER_ID];
+
+        [[NSUserDefaults standardUserDefaults] setValue:trimmedPasswordTextfield forKey:USER_PASS];
+
         PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
         //NSLog(@"%@",[UIApplication sharedApplication].keyWindow.rootViewController);
 //        [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:NO completion:nil];
@@ -134,9 +138,20 @@
         hud.label.text = @"Validating...";
         hud.detailsLabel.text = @"Please wait";
         NSString*  macId=[Keychain getStringForKey:@"udid"];
-
-
-        [[APIManager sharedManager] authenticateUserMacID:macId password:passwordTextfield.text username:IDTextField.text];
+        // code to trim the leading and trailing spaces in id and password of user
+        NSLog(@"untrimmed id is -%@- and untrimmed password is -%@-",IDTextField.text, passwordTextfield.text);
+        trimmedIdTextField = [IDTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
+        //remove only the leading and trailing spaces from the password
+         trimmedPasswordTextfield = [passwordTextfield.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
+        //remove all the spaces from password
+//        NSArray* password = [passwordTextfield.text componentsSeparatedByCharactersInSet :[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//        NSString* trimmedPasswordTextfield = [password componentsJoinedByString:@""];
+        
+//        NSLog(@"trimmed id is -%@- and trimmed password is -%@-",trimmedIdTextField, trimmedPasswordTextfield);
+        
+        [[APIManager sharedManager] authenticateUserMacID:macId password:trimmedPasswordTextfield username:trimmedIdTextField];
     }
 }
 - (IBAction)cancelButtonClicked:(id)sender

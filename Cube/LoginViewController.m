@@ -228,7 +228,8 @@
         
         [AppPreferences sharedAppPreferences].userObj.userPin = pin;
         
-        
+        [[NSUserDefaults standardUserDefaults] setValue:pin forKey:USER_PIN];
+
         
         NSArray* departmentArray=  [responseDict valueForKey:@"DepartmentList"];
         

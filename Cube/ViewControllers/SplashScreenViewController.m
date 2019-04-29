@@ -130,7 +130,9 @@
     {
 //        UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.10, self.view.center.y-50,self.view.frame.size.width*0.80, 100) offlineFrame:CGRectMake(0, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];
         
-  UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(0, self.view.center.y+100,self.view.frame.size.width, 80) offlineFrame:CGRectMake(0, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];
+//  UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(0, self.view.center.y+100,self.view.frame.size.width, 80) offlineFrame:CGRectMake(0, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];
+        
+          UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(20, self.view.center.y+50,self.view.frame.size.width-40, 120) offlineFrame:CGRectMake(20, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];
         
         [[[UIApplication sharedApplication] keyWindow] addSubview:internetMessageView];
     }
@@ -140,7 +142,8 @@
         UIButton* retryButton= [popupView viewWithTag:225];
         [retryButton setEnabled:YES];
         
-        [retryButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+       [retryButton setTitleColor:[UIColor colorWithRed:17/255.0 green:146/255.0 blue:(CGFloat)78/255.0 alpha:1] forState:UIControlStateNormal];
+        
     }
    
    
