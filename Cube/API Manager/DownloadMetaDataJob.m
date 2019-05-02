@@ -137,15 +137,19 @@
     NSLog(@"%@ Entity Job -",self.downLoadEntityJobName);
     
     
-//    if ([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
-//    {
-        //        AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-        //        [appDelegate hideIndefiniteProgressView];
+    if ([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
+    {
         
-//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:[self shortErrorFromError:error] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-    
-    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured, please try again" withMessage:error.localizedDescription withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-//    }
+
+        NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"-1001",RESPONSE_CODE,error.localizedDescription,RESPONSE_MESSAGE, nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];
+
+    }
+    else
+    {
+         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured!" withMessage:[NSString stringWithFormat:@"%@",error.localizedDescription] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+    }
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection

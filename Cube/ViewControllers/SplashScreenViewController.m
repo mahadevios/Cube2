@@ -203,6 +203,32 @@
 
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [hud hideAnimated:YES];
+    if ([responseCodeString intValue] == -1001)
+    {
+                NSString* title;
+                NSString* message;
+                UIAlertController *alertController;
+                UIAlertAction *actionOk;
+                NSString* responseMessageString=  [responseDict valueForKey:RESPONSE_MESSAGE];
+
+                    title=@"Error occured!";
+                    message = [NSString stringWithFormat:@"%@",responseMessageString];
+                    alertController = [UIAlertController alertControllerWithTitle:title
+                                                                          message:message
+                                                                   preferredStyle:UIAlertControllerStyleAlert];
+                    actionOk = [UIAlertAction actionWithTitle:@"Retry"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * action)
+                                {
+                                    APIcalled = NO;
+                                    
+                                    [self checkDeviceRegistration];
+                                }]; //You can use a block here to handle a press on this button
+                    [alertController addAction:actionOk];
+                    [self presentViewController:alertController animated:YES completion:nil];
+        
+    }
+    else
     if ([responseCodeString intValue]==401 && [responsePinString intValue]==0)
     {
         //gotResponse=true;
