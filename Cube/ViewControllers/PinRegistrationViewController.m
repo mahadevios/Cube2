@@ -171,6 +171,11 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [hud hideAnimated:YES];
 
+    if ([responseCodeString intValue]==2001 ||  [responseCodeString intValue] == -1001)
+    {
+        // received unexpected response, just hide hud
+    }
+    else
     if ([responseCodeString intValue]==401 && [responsePinString intValue]==0)
     {
         

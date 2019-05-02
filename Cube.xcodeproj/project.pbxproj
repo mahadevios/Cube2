@@ -695,6 +695,12 @@
 		84FCCF9A1D48B68B00E3D7AE /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				84B87BCF1D770D1D002B91FB /* SplashScreenViewController.h */,
+				84B87BD01D770D1D002B91FB /* SplashScreenViewController.m */,
+				8429BDD41D5DD839004CED76 /* RegistrationViewController.h */,
+				8429BDD51D5DD839004CED76 /* RegistrationViewController.m */,
+				84CC5F771D747B8200D1E982 /* PinRegistrationViewController.h */,
+				84CC5F781D747B8200D1E982 /* PinRegistrationViewController.m */,
 				847222471D47368A00C00F20 /* LoginViewController.h */,
 				847222481D47368A00C00F20 /* LoginViewController.m */,
 				84FCCFA01D48B75A00E3D7AE /* SelectDepartmentViewController.h */,
@@ -727,14 +733,8 @@
 				847B83FE202B0F5100D69755 /* EditDocxViewController.m */,
 				842D535A1D55EA0300ECCDE7 /* PopUpCustomView.h */,
 				842D535B1D55EA0300ECCDE7 /* PopUpCustomView.m */,
-				8429BDD41D5DD839004CED76 /* RegistrationViewController.h */,
-				8429BDD51D5DD839004CED76 /* RegistrationViewController.m */,
 				84CC5F711D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.h */,
 				84CC5F721D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m */,
-				84CC5F771D747B8200D1E982 /* PinRegistrationViewController.h */,
-				84CC5F781D747B8200D1E982 /* PinRegistrationViewController.m */,
-				84B87BCF1D770D1D002B91FB /* SplashScreenViewController.h */,
-				84B87BD01D770D1D002B91FB /* SplashScreenViewController.m */,
 				849A20771E080F000004DDD2 /* BrowseMusicViewController.h */,
 				849A20781E080F000004DDD2 /* BrowseMusicViewController.mm */,
 				8427DC571E12633A0071C038 /* ImportedAudioViewController.h */,
