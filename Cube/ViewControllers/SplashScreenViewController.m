@@ -229,6 +229,11 @@
         
     }
     else
+        if ([responseCodeString intValue]==2001)
+        {
+            [hud hideAnimated:YES];
+        }
+    else
     if ([responseCodeString intValue]==401 && [responsePinString intValue]==0)
     {
         //gotResponse=true;

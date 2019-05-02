@@ -54,6 +54,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 
+    NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+    
     //self.navigationItem.title=@"Pin Login";
     //[self.navigationController.navigationBar setTitleTextAttributes:
     //@{NSForegroundColorAttributeName:[UIColor orangeColor]}];
@@ -202,6 +204,12 @@
     
     NSString* responsePinString=  [responseDict valueForKey:@"pinvalidflag"];
     
+    if ([responseCodeString intValue] == 2001 || [responseCodeString intValue] == -1001)
+    {
+        // received unexpected response, just remove the hud
+        [hud hideAnimated:YES];
+    }
+    else
     if ([responseCodeString intValue]==401 && [responsePinString intValue]==0)
     {
         [hud hideAnimated:YES];

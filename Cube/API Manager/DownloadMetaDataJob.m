@@ -147,8 +147,40 @@
 
     }
     else
+    if ([self.downLoadEntityJobName isEqualToString:AUTHENTICATE_API])
+
     {
+        NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"-1001",RESPONSE_CODE,error.localizedDescription,RESPONSE_MESSAGE, nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AUTHENTICATE_API object:response]; // to hide hud
+        
          [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured!" withMessage:[NSString stringWithFormat:@"%@",error.localizedDescription] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+    }
+    else
+        if ([self.downLoadEntityJobName isEqualToString:ACCEPT_PIN_API])
+            
+        {
+            
+            NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"-1001",RESPONSE_CODE,error.localizedDescription,RESPONSE_MESSAGE, nil];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ACCEPT_PIN_API object:response]; // to hide hud
+            
+             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured!" withMessage:[NSString stringWithFormat:@"%@",error.localizedDescription] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+        }
+        else
+            if ([self.downLoadEntityJobName isEqualToString:VALIDATE_PIN_API])
+                
+            {
+                
+                NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"-1001",RESPONSE_CODE,error.localizedDescription,RESPONSE_MESSAGE, nil];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_VALIDATE_PIN_API object:response]; // to hide hud
+                
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured!" withMessage:[NSString stringWithFormat:@"%@",error.localizedDescription] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+            }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured!" withMessage:[NSString stringWithFormat:@"%@",error.localizedDescription] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
     }
 }
 
@@ -306,14 +338,23 @@ if([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
         }
         else
         {
-            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+            
+            NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE,@"2002",RESPONSE_PIN_VERIFY, nil];
 
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];// to remove the hud
+
+//            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+        
             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Could not connect to the sever, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }else
     {
-        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+//        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
 
+        NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE,@"2002",RESPONSE_PIN_VERIFY, nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];  // to remove the hud
+        
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }
@@ -339,8 +380,12 @@ if ([self.downLoadEntityJobName isEqualToString:AUTHENTICATE_API])
         }
     }else
     {
-        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+//        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
 
+        NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE, nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_AUTHENTICATE_API object:response];
+        
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }
@@ -360,11 +405,20 @@ if ([self.downLoadEntityJobName isEqualToString:ACCEPT_PIN_API])
         }
         else
         {
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE, nil];
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ACCEPT_PIN_API object:response];
+
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
-    }else
+    }
+    else
     {
-        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+//        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+
+        NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE, nil];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ACCEPT_PIN_API object:response];
 
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
@@ -386,10 +440,21 @@ if ([self.downLoadEntityJobName isEqualToString:VALIDATE_PIN_API])
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_VALIDATE_PIN_API object:response];
         }
+        else
+        {
+            NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE, nil];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_VALIDATE_PIN_API object:response];
+            
+             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
     }else
     {
-        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
-
+//        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+        NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE, nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_VALIDATE_PIN_API object:response];
+        
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 }

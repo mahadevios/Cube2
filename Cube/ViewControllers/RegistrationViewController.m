@@ -63,6 +63,12 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [hud hideAnimated:YES];
 
+    if ([responseCodeString intValue]==-1001 || [responseCodeString intValue]==2001)
+    {
+        // error occured
+        
+    }
+    else
     if ([responseCodeString intValue]==200)
     {
         [[NSUserDefaults standardUserDefaults] setValue:trimmedIdTextField forKey:USER_ID];
@@ -80,6 +86,7 @@
         //[self dismissViewControllerAnimated:NO completion:nil];
         
     }
+    else
     if ([responseCodeString intValue]==401)
     {
         //[self dismissViewControllerAnimated:NO completion:nil];
@@ -145,11 +152,6 @@
         //remove only the leading and trailing spaces from the password
          trimmedPasswordTextfield = [passwordTextfield.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
-        //remove all the spaces from password
-//        NSArray* password = [passwordTextfield.text componentsSeparatedByCharactersInSet :[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//        NSString* trimmedPasswordTextfield = [password componentsJoinedByString:@""];
-        
-//        NSLog(@"trimmed id is -%@- and trimmed password is -%@-",trimmedIdTextField, trimmedPasswordTextfield);
         
         [[APIManager sharedManager] authenticateUserMacID:macId password:trimmedPasswordTextfield username:trimmedIdTextField];
     }

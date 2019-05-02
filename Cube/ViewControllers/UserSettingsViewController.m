@@ -20,28 +20,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //    if ([[self.view viewWithTag:112] respondsToSelector:@selector(edgesForExtendedLayout)])
-    //        self.edgesForExtendedLayout = UIRectEdgeNone;
+   
     poUpTableView.layer.cornerRadius=2.0f;
     app = [AppPreferences sharedAppPreferences];
-//    recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:SAVE_DICTATION_WAITING_SETTING,CONFIRM_BEFORE_SAVING_SETTING,ALERT_BEFORE_RECORDING,BACK_TO_HOME_AFTER_DICTATION,RECORD_ABBREVIATION, nil];
-//    recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:SAVE_DICTATION_WAITING_SETTING,CONFIRM_BEFORE_SAVING_SETTING,ALERT_BEFORE_RECORDING,BACK_TO_HOME_AFTER_DICTATION, nil];
-    
+
     recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:@"Save Dictation Waiting By",@"Confirm Before Saving",@"Alert Before Recording",@"Back To Home After Dictation", nil];
-    
-//    storageManagementItemsArray=[[NSMutableArray alloc]initWithObjects:LOW_STORAGE_THRESHOLD,PURGE_DELETED_DATA, nil];
     
     storageManagementItemsArray=[[NSMutableArray alloc]initWithObjects:@"Low Storage Threshold",@"Purge Data By", nil];
 
-//    PlaybackAutoRewindByArray=[[NSMutableArray alloc]initWithObjects:CHANGE_YOUR_PASSWORD, nil];
     PlaybackAutoRewindByArray=[[NSMutableArray alloc]initWithObjects:@"Change Your PIN", nil];
 
     popUpOptionsArray=[[NSMutableArray alloc]init];
     radioButtonArray=[[NSMutableArray alloc]init];
-    //uint64_t freeSpaceUnsignLong=    [self getFreeDiskspace];
-    //long freeMemory=(freeSpaceUnsignLong/1024ll)/1024ll;
-   // NSLog(@"Free Memory=%ld MB",freeMemory);
-    
+   
     
 }
 
@@ -347,6 +338,7 @@
                 [radioButtonArray replaceObjectAtIndex:indexPath.row withObject:button];
             }
             
+            
             [cell1 addSubview:[radioButtonArray objectAtIndex:indexPath.row]];
             
             
@@ -456,9 +448,30 @@
                 if (indexPath.row==1)
                 {
                     popUpOptionsArray=nil;
-                    popUpOptionsArray=[[NSMutableArray alloc]initWithObjects:@"Do not purge",@"15 days",@"20 days",@"30 days", nil];
+                    popUpOptionsArray=[[NSMutableArray alloc]initWithObjects:@"Do not purge",@"15 days",@"30 days",@"90 days", nil];
                     [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld%ld",indexPath.section,indexPath.row] forKey:@"selectedRowAndSection"];
+                    
+                    // we have removed 20 days option from settings, since if user had selected 20 days option and it has been stored in defaults. tableview will not show the 20 days. hence we are setting default
+                    
+                    bool isDayStore = false;
+                    for (int i = 0; i < popUpOptionsArray.count; i++)
+                    {
+                       NSString* selectedDays = [[NSUserDefaults standardUserDefaults] valueForKey:PURGE_DELETED_DATA];
+                       NSString* daysOption = [popUpOptionsArray objectAtIndex:i];
+                        if (selectedDays == daysOption)
+                        {
+                            isDayStore = true;
+                        }
+
+                    }
+                    
+                    if (!isDayStore)
+                    {
+                        [[NSUserDefaults standardUserDefaults] setValue:@"15 days" forKey:PURGE_DELETED_DATA];
+
+                    }
                     [self.poUpTableView reloadData];
+                    
                 }
             }
             
