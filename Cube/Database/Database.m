@@ -2497,31 +2497,20 @@ static Database *db;
     {
         daysString = [daysArray objectAtIndex:0];
     }
-  //  NSDate *purgeDataDate = [[NSDate date] dateByAddingTimeInterval:-[daysString intValue]*24*60*60];
     
     NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
     dayComponent.day = -[daysString intValue];
     
     NSCalendar *theCalendar = [NSCalendar currentCalendar];
-//    NSDate *nextDate = [theCalendar dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
     NSDate *nextDate = [theCalendar dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
 
     NSLog(@"nextDate: %@ ...", nextDate);
-   // NSDate *purgeDataDate = [[NSDate date] dateByAddingTimeInterval:-5*24*60*60];
 
-    
-//    formatter.dateFormat = @"MM-dd-yyyy";
-    
     formatter.dateFormat = @"yyyy-MM-dd";
 
     NSString* newDate = [formatter stringFromDate:nextDate];
-    
-    
-//    NSString* newDate1 = [formatter stringFromDate:nextDate];
 
-//    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate from CubeData Where TransferStatus = 1 and DeleteStatus = 0 and (TransferDate < '%@' or TransferDate < '%@')",newDate,newDate1];
-
-     NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate from CubeData Where TransferStatus = 1 and DeleteStatus = 0 and TransferDate < '%@'",newDate];
+    NSString *query3=[NSString stringWithFormat:@"Select RecordItemName,TransferDate from CubeData Where TransferStatus = 1 and DeleteStatus = 0 and TransferDate < '%@'",newDate];
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {

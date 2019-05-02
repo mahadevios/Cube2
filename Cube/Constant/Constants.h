@@ -123,6 +123,7 @@
 #define RESPONSE_CODE                          @"code"
 #define RESPONSE_PIN_VERIFY                    @"pinverify"
 #define RESPONSE_TC_FLAG                    @"AcceptTermFlag"
+#define RESPONSE_MESSAGE                          @"responseMessage"
 
 
 

@@ -2853,12 +2853,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     //    //deptObj.Id=indexPath.row;
     //    deptObj.departmentName=departmentLabel.text;
     //    NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
-    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
-    NSLog(@"%ld",deptObj.Id);
+//    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+//    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
+//    NSLog(@"%ld",deptObj.Id);
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
-    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    NSLog(@"%ld",deptObj1.Id);
+//    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+//    NSLog(@"%ld",deptObj1.Id);
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
     [popupView removeFromSuperview];
 }
@@ -2872,6 +2872,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
     UILabel* transferredByLabel= [self.view viewWithTag:102];
     transferredByLabel.text=deptObj.departmentName;
+
+    [[Database shareddatabase] updateDepartment:deptObj.Id fileName:self.recordedAudioFileName];
 
     [popupView removeFromSuperview];
 }
@@ -2901,6 +2903,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                         [db updateAudioFileStatus:@"RecordingDelete" fileName:recordedAudioFileName dateAndTime:dateAndTimeString];
 
                         BOOL deleted= [app deleteFile:recordedAudioFileName];
+                        
+                        [AppPreferences sharedAppPreferences].recordNewOffline = NO;
+
                         if (deleted)
                         {
                             [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];//for recordtabarControlr ref to dismiss current view
@@ -3311,7 +3316,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                         
                             [self prepareAudioPlayer];
                             
-                            //                [db updateAudioFileName:recordedAudioFileName duration:player.duration];
+                            [db updateAudioFileName:recordedAudioFileName duration:player.duration];
+                            
                             if (!IMPEDE_PLAYBACK)
                             {
                                 [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryRecord];
