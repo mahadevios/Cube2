@@ -63,7 +63,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [hud hideAnimated:YES];
 
-    if ([responseCodeString intValue]==-1001 || [responseCodeString intValue]==2001)
+    if ([responseCodeString intValue]==-1001 || [responseCodeString intValue]==2001) // net loss and unexpected response, alert has been shown in downloadmetadata
     {
         // error occured
         
@@ -72,27 +72,24 @@
     if ([responseCodeString intValue]==200)
     {
         [[NSUserDefaults standardUserDefaults] setValue:trimmedIdTextField forKey:USER_ID];
-
         [[NSUserDefaults standardUserDefaults] setValue:trimmedPasswordTextfield forKey:USER_PASS];
 
         PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
-        //NSLog(@"%@",[UIApplication sharedApplication].keyWindow.rootViewController);
-//        [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:NO completion:nil];
-//        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:regiController
-//                           animated:NO
-//                         completion:nil];
-        [passwordTextfield resignFirstResponder];
-        [self presentViewController:regiController animated:NO completion:nil];
-        //[self dismissViewControllerAnimated:NO completion:nil];
         
+        [passwordTextfield resignFirstResponder];
+        
+        [self presentViewController:regiController animated:NO completion:nil];
+       
     }
     else
     if ([responseCodeString intValue]==401)
     {
-        //[self dismissViewControllerAnimated:NO completion:nil];
+        
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Authentication failed!" withMessage:@"Account id or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        
         IDTextField.text=nil;
         passwordTextfield.text=nil;
+        
     }
 
 
