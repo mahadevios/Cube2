@@ -185,7 +185,7 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Opening File" detailText:@"Please wait.."];
+        [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Opening File.." detailText:@"Please wait"];
         [self setTimer];
 
 

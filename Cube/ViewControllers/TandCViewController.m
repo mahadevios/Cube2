@@ -25,7 +25,7 @@
     hud.minSize = CGSizeMake(150.f, 100.f);
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
-    hud.label.text = @"Loading Data";
+    hud.label.text = @"Loading Data...";
     hud.detailsLabel.text = @"Please wait";
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -223,7 +223,7 @@
             hud.minSize = CGSizeMake(150.f, 100.f);
             hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
             hud.mode = MBProgressHUDModeIndeterminate;
-            hud.label.text = @"Submitting Response";
+            hud.label.text = @"Submitting Response...";
             hud.detailsLabel.text = @"Please wait";
             
             [[APIManager sharedManager] acceptTandC:macId dateAndTIme:dateAndTime acceptFlag:@"1"];

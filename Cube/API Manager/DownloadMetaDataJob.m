@@ -659,7 +659,7 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
                 
             }else
             {
-                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Pin changed failed, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"PIN changed failed, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
             }
         }else
         {

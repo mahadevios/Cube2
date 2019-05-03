@@ -769,7 +769,7 @@
 
 -(void)speechRecognitionTaskFinishedReadingAudio:(SFSpeechRecognitionTask *)task
 {
-    [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Transcripting" detailText:@"Please wait.."];
+    [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Transcribing.." detailText:@"Please wait"];
     
     NSLog(@"2");
 }

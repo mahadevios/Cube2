@@ -1520,7 +1520,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     hud.mode = MBProgressHUDModeIndeterminate;
     
-    hud.label.text = @"Saving audio..";
+    hud.label.text = @"Saving audio...";
     
     hud.detailsLabel.text = @"Please wait";
     

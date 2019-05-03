@@ -98,7 +98,7 @@
     //uploadedFilesDictationIdString = [uploadedFilesDictationIdString stringByAppendingString:@",6987636"];
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-        [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Loading Files" detailText:@"Please wait.."];
+        [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Loading Files..." detailText:@"Please wait"];
         
         [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
     }

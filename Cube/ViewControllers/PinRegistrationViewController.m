@@ -130,19 +130,27 @@
         }
         else
         {
-        hud.minSize = CGSizeMake(150.f, 100.f);
-        hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            if ([AppPreferences sharedAppPreferences].isReachable)
+            {
+                hud.minSize = CGSizeMake(150.f, 100.f);
+                hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                
+                NSString*     macId=[Keychain getStringForKey:@"udid"];
+                
+                [pinCode8TextField resignFirstResponder];
+                [[APIManager sharedManager] acceptPinMacID:macId Pin:pin];
+            }
+            else
+            {
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            }
         
-        NSString*     macId=[Keychain getStringForKey:@"udid"];
-
-        [pinCode8TextField resignFirstResponder];
-        [[APIManager sharedManager] acceptPinMacID:macId Pin:pin];
         }
     }
     else
     {
         
-        title=@"Pin confirmation failed";
+        title=@"PIN confirmation failed";
         message=@"Please cofirm PIN ";
         alertController = [UIAlertController alertControllerWithTitle:title
                                                               message:message
@@ -180,7 +188,7 @@
     {
         
        
-        title=@"Pin registration failed";
+        title=@"PIN registration failed";
         message=@"Please try again ";
         alertController = [UIAlertController alertControllerWithTitle:title
                                                               message:message

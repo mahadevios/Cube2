@@ -459,7 +459,7 @@
             }
             else
             {
-                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Incorrect pin entered" withMessage:@"Please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Incorrect PIN entered" withMessage:@"Please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
                 
                 pinCode1TextField.text=@"";pinCode2TextField.text=@"";pinCode3TextField.text=@"";pinCode4TextField.text=@"";
                 
@@ -477,7 +477,7 @@
                 hud.minSize = CGSizeMake(150.f, 100.f);
                 hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                 hud.mode = MBProgressHUDModeIndeterminate;
-                hud.label.text = @"Validating PIN";
+                hud.label.text = @"Validating PIN...";
                 hud.detailsLabel.text = @"Please wait";
                 NSString*     macId=[Keychain getStringForKey:@"udid"];
                 

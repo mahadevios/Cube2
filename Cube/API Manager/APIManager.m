@@ -597,7 +597,7 @@ static APIManager *singleton = nil;
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
         
-        [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Submitting" detailText:@"Please wait.."];
+        [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Submitting..." detailText:@"Please wait"];
         
         DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:SEND_COMMENT_API withRequestParameter:array withResourcePath:SEND_COMMENT_API withHttpMethd:POST downloadMethodType:@""];
         

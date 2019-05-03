@@ -337,8 +337,8 @@
             hud.minSize = CGSizeMake(150.f, 100.f);
             hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.mode = MBProgressHUDModeIndeterminate;
-            hud.label.text = @"Updating PIN";
-            hud.detailsLabel.text = @"Please wait..";
+            hud.label.text = @"Updating PIN...";
+            hud.detailsLabel.text = @"Please wait";
             
             NSString*     macId=[Keychain getStringForKey:@"udid"];
             [AppPreferences sharedAppPreferences].userObj = nil;
@@ -389,8 +389,8 @@
 //                                                   completion:nil];
         //[self dismissViewControllerAnimated:NO completion:nil];
         
-        alertController = [UIAlertController alertControllerWithTitle:@"Pin code changed successfully"
-                                                              message:@"Please login with new pin code"
+        alertController = [UIAlertController alertControllerWithTitle:@"PIN code changed successfully"
+                                                              message:@"Please login with new PIN code"
                                                        preferredStyle:UIAlertControllerStyleAlert];
         actionDelete = [UIAlertAction actionWithTitle:@"Ok"
                                                 style:UIAlertActionStyleDefault
@@ -423,7 +423,7 @@
         if ([responseCodeString intValue]==401 && [oldPin intValue]==0)
         {
             // gotResponse=true;
-            alertController = [UIAlertController alertControllerWithTitle:@"Old PIN is Incorrect"
+            alertController = [UIAlertController alertControllerWithTitle:@"Old PIN is incorrect"
                                                                   message:@""
                                                            preferredStyle:UIAlertControllerStyleAlert];
             actionDelete = [UIAlertAction actionWithTitle:@"Ok"
