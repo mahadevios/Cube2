@@ -215,10 +215,9 @@
         [hud hideAnimated:YES];
         
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Incorrect PIN entered" withMessage:@"Please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-        pinCode1TextField.text=@"";
-        pinCode2TextField.text=@"";
-        pinCode3TextField.text=@"";
-        pinCode4TextField.text=@"";
+        
+        pinCode1TextField.text=@"";pinCode2TextField.text=@"";pinCode3TextField.text=@"";pinCode4TextField.text=@"";
+       
         [pinCode1TextField becomeFirstResponder];
     }
     
@@ -259,10 +258,8 @@
         Database *db=[Database shareddatabase];
         
         [db insertDepartMentData:deptForDatabaseArray];
-        
-        
+       
         //get user firstname,lastname and userId for file prefix
-        
         NSString* fileNamePrefix = [responseDict valueForKey:@"FileNamePrefix"];
         
         [[NSUserDefaults standardUserDefaults] setValue:fileNamePrefix forKey:@"FileNamePrefix"];
@@ -414,8 +411,8 @@
 
 - (IBAction)submitButtonCilcked:(id)sender
 {
-
-//  [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TandCViewController"] animated:NO completion:nil];
+    
+    //  [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TandCViewController"] animated:NO completion:nil];
     NSString* title;
     NSString* message;
     UIAlertController *alertController;
@@ -436,12 +433,12 @@
                     }]; //You can use a block here to handle a press on this button
         [alertController addAction:actionOk];
         [self presentViewController:alertController animated:YES completion:nil];
-
+        
     }
     else
     {
         NSString* pin=[NSString stringWithFormat:@"%@%@%@%@",pinCode1TextField.text,pinCode2TextField.text,pinCode3TextField.text,pinCode4TextField.text];
-
+        
         if([AppPreferences sharedAppPreferences].userObj != nil)
         {
             if([[AppPreferences sharedAppPreferences].userObj.userPin isEqualToString:pin])
@@ -453,67 +450,62 @@
                 }
                 else
                 {
-                    [pinCode1TextField resignFirstResponder];
-                    [pinCode4TextField resignFirstResponder];
-
+                    [pinCode1TextField resignFirstResponder];[pinCode4TextField resignFirstResponder];
+                    
                     [self dismissViewControllerAnimated:NO completion:nil];
                 }
-
+                
                 return;
             }
             else
             {
                 [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Incorrect pin entered" withMessage:@"Please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-                pinCode1TextField.text=@"";
-                pinCode2TextField.text=@"";
-                pinCode3TextField.text=@"";
-                pinCode4TextField.text=@"";
+                
+                pinCode1TextField.text=@"";pinCode2TextField.text=@"";pinCode3TextField.text=@"";pinCode4TextField.text=@"";
+                
                 [pinCode1TextField becomeFirstResponder];
+                
                 return;
             }
         }
-
+        
         else
         {
-               if ([AppPreferences sharedAppPreferences].isReachable)
-                {
-                    //hud.label.text = NSLocalizedString(@"Please wait...", @"Validating credentials");
-                    hud.minSize = CGSizeMake(150.f, 100.f);
-                    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                    hud.mode = MBProgressHUDModeIndeterminate;
-                    hud.label.text = @"Validating PIN";
-                    hud.detailsLabel.text = @"Please wait";
-                    NSString*     macId=[Keychain getStringForKey:@"udid"];
-
-                    [[NSUserDefaults standardUserDefaults] setValue:macId forKey:@"MacId"];
-
-                    [pinCode4TextField resignFirstResponder];
-                    //        [pinCode1TextField resignFirstResponder];
-
-
-
-                    [[APIManager sharedManager] validatePinMacID:macId Pin:pin];
-                    //[[APIManager sharedManager] authenticateUserMacID:@"68:FB:7E:9E:7D:51" password:@"d" username:@"SAN"];
-                }
-               else
-               {
-                   [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-               }
+            if ([AppPreferences sharedAppPreferences].isReachable)
+            {
+                
+                hud.minSize = CGSizeMake(150.f, 100.f);
+                hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                hud.mode = MBProgressHUDModeIndeterminate;
+                hud.label.text = @"Validating PIN";
+                hud.detailsLabel.text = @"Please wait";
+                NSString*     macId=[Keychain getStringForKey:@"udid"];
+                
+                [[NSUserDefaults standardUserDefaults] setValue:macId forKey:@"MacId"];
+                
+                [pinCode4TextField resignFirstResponder];
+                
+                [[APIManager sharedManager] validatePinMacID:macId Pin:pin];
+                
+            }
+            else
+            {
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            }
         }
-
+        
     }
-
-  
+    
+    
 }
 
 
 - (IBAction)cancelButtonClicked:(id)sender
 {
-    pinCode1TextField.text=@"";
-    pinCode2TextField.text=@"";
-    pinCode3TextField.text=@"";
-    pinCode4TextField.text=@"";
+    pinCode1TextField.text=@"";pinCode2TextField.text=@"";pinCode3TextField.text=@"";pinCode4TextField.text=@"";
+    
     [pinCode1TextField becomeFirstResponder];
+    
     [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Hit home button to exit" withMessage:@"" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
 }
 @end

@@ -202,122 +202,93 @@
     NSString* tAndcString=  [responseDict valueForKey:RESPONSE_TC_FLAG];
 
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
     [hud hideAnimated:YES];
-    if ([responseCodeString intValue] == -1001)
+    
+    if ([responseCodeString intValue] == -1001) // for internet loss in between
     {
-                NSString* title;
-                NSString* message;
-                UIAlertController *alertController;
-                UIAlertAction *actionOk;
-                NSString* responseMessageString=  [responseDict valueForKey:RESPONSE_MESSAGE];
-
-                    title=@"Error occured!";
-                    message = [NSString stringWithFormat:@"%@",responseMessageString];
-                    alertController = [UIAlertController alertControllerWithTitle:title
-                                                                          message:message
-                                                                   preferredStyle:UIAlertControllerStyleAlert];
-                    actionOk = [UIAlertAction actionWithTitle:@"Retry"
-                                                        style:UIAlertActionStyleDefault
-                                                      handler:^(UIAlertAction * action)
-                                {
-                                    APIcalled = NO;
-                                    
-                                    [self checkDeviceRegistration];
-                                }]; //You can use a block here to handle a press on this button
-                    [alertController addAction:actionOk];
-                    [self presentViewController:alertController animated:YES completion:nil];
+      
+        NSString* responseMessageString=  [responseDict valueForKey:RESPONSE_MESSAGE];
+        
+        NSString* title = @"Error occured!";
+        NSString* message = [NSString stringWithFormat:@"%@",responseMessageString];
+        
+        UIAlertController* alertController = [UIAlertController alertControllerWithTitle:title
+                                                              message:message
+                                                       preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Retry"
+                                            style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction * action)
+                    {
+                        APIcalled = NO;
+                        
+                        [self checkDeviceRegistration];
+                    }]; //You can use a block here to handle a press on this button
+        
+        [alertController addAction:actionOk];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
         
     }
     else
-        if ([responseCodeString intValue]==2001)
+        if ([responseCodeString intValue]==2001) // for unexpected response
         {
             [hud hideAnimated:YES];
         }
-    else
-    if ([responseCodeString intValue]==401 && [responsePinString intValue]==0)
-    {
-        //gotResponse=true;
-        
-        RegistrationViewController* regiController=(RegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"RegistrationViewController"];
-        [self presentViewController:regiController animated:NO completion:NULL];
-//        [[UIApplication sharedApplication].keyWindow.window.rootViewController presentViewController:regiController
-//                                                     animated:NO
-//                                                   completion:nil];
-        
-//        [[UIApplication sharedApplication].keyWindow.window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
-
-        
-    }
-    else
-        if ([responseCodeString intValue]==200 && [responsePinString intValue]==0)
-        {
-            // gotResponse=true;
-//            [[UIApplication sharedApplication].keyWindow.window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
-            
-            PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
-            [self presentViewController:regiController animated:NO completion:NULL];
-
-//            [[UIApplication sharedApplication].keyWindow.window.rootViewController presentViewController:regiController
-//                                                         animated:NO
-//                                                       completion:nil];
-            
-        }
         else
-            if ([responseCodeString intValue]==200 && [responsePinString intValue]==1 && [tAndcString intValue] == 0)
+            if ([responseCodeString intValue]==401 && [responsePinString intValue]==0)
             {
-                //gotResponse=true;
                 
-                TandCViewController *viewController = (TandCViewController *)[storyboard instantiateViewControllerWithIdentifier:@"TandCViewController"];
-                //[self.window makeKeyAndVisible];
-                [self presentViewController:viewController animated:NO completion:NULL];
+                RegistrationViewController* regiController=(RegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"RegistrationViewController"];
                 
-                //                [[UIApplication sharedApplication].keyWindow.window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
-                //
-                
-                
-                //                [[UIApplication sharedApplication].keyWindow.window.rootViewController presentViewController:viewController
-                //                                                             animated:NO
-                //                                                           completion:nil];
-                //
-                
-            }
-        else
-            if ([responseCodeString intValue]==200 && [responsePinString intValue]==1 && [tAndcString intValue] == 1)
-            {
-                //gotResponse=true;
-
-                LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-                //[self.window makeKeyAndVisible];
-                [self presentViewController:viewController animated:NO completion:NULL];
-
-//                [[UIApplication sharedApplication].keyWindow.window.rootViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
-//                
-                
-                
-//                [[UIApplication sharedApplication].keyWindow.window.rootViewController presentViewController:viewController
-//                                                             animated:NO
-//                                                           completion:nil];
-//                
+                [self presentViewController:regiController animated:NO completion:NULL];
                 
             }
             else
-            {
-                if ([[AppPreferences sharedAppPreferences] isReachable])
-                {
-                    //NSArray *params = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"macid=%@",macID],nilID
-                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Something went wrong!" withMessage:@"Please try again" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-                   
-                }
-                else
+                if ([responseCodeString intValue]==200 && [responsePinString intValue]==0)
                 {
                     
-                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+                    PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
+                    
+                    [self presentViewController:regiController animated:NO completion:NULL];
+                    
                 }
-
-                
-            }
-    
-    
+                else
+                    if ([responseCodeString intValue]==200 && [responsePinString intValue]==1 && [tAndcString intValue] == 0)
+                    {
+                        
+                        TandCViewController *viewController = (TandCViewController *)[storyboard instantiateViewControllerWithIdentifier:@"TandCViewController"];
+                        
+                        [self presentViewController:viewController animated:NO completion:NULL];
+                        
+                    }
+                    else
+                        if ([responseCodeString intValue]==200 && [responsePinString intValue]==1 && [tAndcString intValue] == 1)
+                        {
+                            
+                            LoginViewController *viewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                            
+                            [self presentViewController:viewController animated:NO completion:NULL];
+                            
+                        }
+                        else
+                        {
+                            
+                            if ([[AppPreferences sharedAppPreferences] isReachable])
+                            {
+                                
+                                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Something went wrong!" withMessage:@"Please try again" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                                
+                            }
+                            else
+                            {
+                                
+                                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+                                
+                            }
+                            
+                        }
     
 }
 
@@ -333,13 +304,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

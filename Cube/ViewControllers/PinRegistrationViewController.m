@@ -171,7 +171,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [hud hideAnimated:YES];
 
-    if ([responseCodeString intValue]==2001 ||  [responseCodeString intValue] == -1001)
+    if ([responseCodeString intValue]==2001 ||  [responseCodeString intValue] == -1001)// net loss and unexpected response, alert has been shown in downloadmetadata
     {
         // received unexpected response, just hide hud
     }
@@ -207,7 +207,7 @@
     {
         
         title=@"Note:";
-        message=@"Pin code is registered successfully. To login you have to re-enter registered pin code and submit it.";
+        message=@"PIN code is registered successfully. To login you have to re-enter registered PIN code and submit it.";
         alertController = [UIAlertController alertControllerWithTitle:title
                                                               message:message
                                                        preferredStyle:UIAlertControllerStyleAlert];
