@@ -2313,7 +2313,7 @@ static Database *db;
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement;
     sqlite3* feedbackAndQueryTypesDB;
-    NSString* departmentId,*recordItemName;
+    NSString *recordItemName;
     NSMutableArray* recordItemNameArray=[NSMutableArray new];
     
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
@@ -2422,53 +2422,53 @@ static Database *db;
 {
 
     NSString *query3=[NSString stringWithFormat:@"INSERT INTO DictationStatus values(\"%d\",\"%@\")",5,dictationStatus];
-            
-            Database *db=[Database shareddatabase];
-            NSString *dbPath=[db getDatabasePath];
-            sqlite3_stmt *statement;
-            sqlite3* feedbackAndQueryTypesDB;
-            
-            
-            const char * queryi3=[query3 UTF8String];
-            if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
-            {
-                sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
-                if(sqlite3_step(statement)==SQLITE_DONE)
-                {
-                    // NSLog(@"report data inserted");
-                    // NSLog(@"%@",NSHomeDirectory());
-                    sqlite3_reset(statement);
-                }
-                else
-                {
-                    // NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
-                }
-            }
-            else
-            {
-                //NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
-            }
-            
-            if (sqlite3_finalize(statement) == SQLITE_OK)
-            {
-                //NSLog(@"statement is finalized");
-            }
-            else
-            {
-             
-            }
-                // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
-                
-                
-                if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
-                {
-                    //NSLog(@"db is closed");
-                }
-                else
-                {
-                    //NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
-                }
-            
+    
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement;
+    sqlite3* feedbackAndQueryTypesDB;
+    
+    
+    const char * queryi3=[query3 UTF8String];
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
+    {
+        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            // NSLog(@"report data inserted");
+            // NSLog(@"%@",NSHomeDirectory());
+            sqlite3_reset(statement);
+        }
+        else
+        {
+            // NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    else
+    {
+        //NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+    {
+        
+    }
+    // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        //NSLog(@"db is closed");
+    }
+    else
+    {
+        //NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
 }
 
 

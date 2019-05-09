@@ -21,6 +21,7 @@
 @property(nonatomic, strong)SFSpeechRecognizer* speechRecognizer;
 @property(nonatomic, strong)SFSpeechAudioBufferRecognitionRequest* request;
 @property(nonatomic, strong)SFSpeechURLRecognitionRequest* urlRequest;
+@property (weak, nonatomic) IBOutlet UITextView *transcriptionTextView;
 
 @property(nonatomic, strong)SFSpeechRecognitionTask* recognitionTask;
 @property(nonatomic, strong)AVCaptureSession* capture;

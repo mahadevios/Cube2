@@ -1187,7 +1187,7 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
         [arrayOfMarked removeAllObjects];
         [self.tableView reloadData];
 
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 
     
