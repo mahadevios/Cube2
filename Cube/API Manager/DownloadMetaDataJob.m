@@ -113,7 +113,6 @@
     
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
     statusCode = (int)[httpResponse statusCode];
-    ////NSLog(@"Status code: %d",statusCode);
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
@@ -287,28 +286,7 @@ if([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
 //                                                                                  error:&error];
         
         NSLog(@"%@",error);
-//        const unsigned char *ptr = [data bytes];
-//        
-//        for(int i=0; i<[data length]; ++i) {
-//            unsigned char c = *ptr++;
-//            NSLog(@"char=%c hex=%x", c, c);
-//        }
-//
-//        NSArray* arrayOfStrings = [strr componentsSeparatedByString:@","];
-//
-//        
-//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arrayOfStrings options:NSJSONWritingPrettyPrinted error:&error];
-//        NSDictionary* jsonResponse = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-//
-//        NSString* sdf=[strr stringByReplacingOccurrencesOfString:@"," withString:@";"];
-//        
-//        NSData* dataone=[sdf dataUsingEncoding:NSUTF8StringEncoding];
-//        
-//       
-//
-//        id json = [NSJSONSerialization JSONObjectWithData:dataone options:NSJSONReadingAllowFragments error:nil];
 
-       // NSString* sttt=[jsonResponse valueForKey:@"code"];
         NSString* code=[response objectForKey:RESPONSE_CODE];
         NSString* pinVerify=[response objectForKey:RESPONSE_PIN_VERIFY];
 
@@ -598,13 +576,6 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
                 
                 NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:byteCodeString options:0];
                 
-                //NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                
-                //NSString *documentsDirectory = [paths objectAtIndex:0];
-                
-                //NSString *appFile = [documentsDirectory stringByAppendingPathComponent:@"MyFile4.doc"];
-                
-                //bool isWritten = [decodedData writeToFile:appFile atomically:YES];
                 
                 NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",fileName]];
                 
@@ -659,7 +630,7 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
                 
             }else
             {
-                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Pin changed failed, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"PIN changed failed, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
             }
         }else
         {
@@ -692,48 +663,20 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
 
     [request setHTTPMethod:@"POST"];
 
-
-    
     NSError* error;
-
-
-    // NSString* authorisation=[NSString stringWithFormat:@"%@*%d*%ld*%d*%d",macId,filesizeint,deptObj.Id,1,0];
 
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 
-    //    NSError* error;
-
-
-
-    // create body
-
     NSData *requestData = [NSJSONSerialization dataWithJSONObject:dataArray options:kNilOptions error:&error];
-    
-    
-    
+  
     [request setHTTPBody:requestData];
-
-
-
-
+    
     session = [SharedSession getSharedSession:[APIManager sharedManager]];
 
-    //
     [request setHTTPMethod:@"POST"];
 
-
     NSURLSessionDownloadTask* downloadTask = [session downloadTaskWithRequest:request];
-
-    dispatch_async(dispatch_get_main_queue(), ^
-                   {
-                       //NSLog(@"Reachable");
-
-                   });
-
-
-
-
 
     [downloadTask resume];
 
@@ -746,8 +689,6 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
 -(void)uploadDocxFileAfterGettingdatabaseValues:(NSString*)fileName
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        
-        //    [UIApplication sharedApplication].idleTimerDisabled = YES;
         
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
         
@@ -769,21 +710,6 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     
     [request setHTTPMethod:@"POST"];
-    
-//    long filesizelong=[[APIManager sharedManager] getFileSize:filePath];
-//    
-//    int filesizeint=(int)filesizelong;
-//    
-//    NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
-    
-    
-//    if (departmentId == 0)
-//    {
-//        departmentId= [[Database shareddatabase] getDepartMentIdForFileName:docxFileName];
-//
-//    }
-    
-//    NSString* authorisation = [NSString stringWithFormat:@"%@*%d*%d*%d",macId,filesizeint,departmentID,mobileDictationIdVal];
 
     NSString* authorisation;
 
@@ -796,11 +722,9 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
     }
     
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+    
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    
-    //    NSError* error;
-    
-    
+   
     NSData* jsonData=[authorisation dataUsingEncoding:NSUTF8StringEncoding];
     
     
@@ -832,7 +756,7 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
     
     dispatch_async(dispatch_get_main_queue(), ^
                    {
-                       //NSLog(@"Reachable");
+                     
                        
                        [[Database shareddatabase] insertTaskIdentifier:[NSString stringWithFormat:@"%@",taskIdentifier] fileName:fileName];
                    });
@@ -929,8 +853,6 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
                                [[Database shareddatabase] deleteIdentifierFromDatabase:taskIdentifier];
                                
                                [[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict removeObjectForKey:fileName];
-                               NSLog(@"%@",result);
-                               
                                
                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                    
@@ -943,9 +865,7 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
                                        [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
                                        
                                        [[APIManager sharedManager] uploadDocxFileToServer:nextFileToBeUpload];
-                                       
-                                       NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);
-                                       
+                                      
                                    }
                                    else
                                    {
@@ -956,14 +876,8 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
                                
                            });
  
-            
         }
-        
-        
-        
-        
-        
-        
+
     }
     
 }

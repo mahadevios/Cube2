@@ -10,8 +10,15 @@
 #import <AVFoundation/AVFoundation.h>
 #import "AudioSessionManager.h"
 #import "PopUpCustomView.h"
+//#import "ListViewController.h"
+//#import "MyClass.h"
+@class TransferredOrDeletedAudioDetailsViewController;             //define class, so protocol can see MyClass
+@protocol MyClassDelegate <NSObject>   //define delegate protocol
 
-@interface TransferredOrDeletedAudioDetailsViewController : UIViewController<AVAudioPlayerDelegate,UISplitViewControllerDelegate>
+- (void) myClassDelegateMethod: (TransferredOrDeletedAudioDetailsViewController *) sender;  //define delegate method to be implemented within another class
+@end //end protocol
+
+@interface TransferredOrDeletedAudioDetailsViewController : UIViewController<AVAudioPlayerDelegate,UISplitViewControllerDelegate,MyClassDelegate>
 
 {
     NSDictionary* result;
@@ -28,6 +35,7 @@
     NSArray* departmentNamesArray;
     UITapGestureRecognizer* tap;
 }
+
 @property(nonatomic)long listSelected;
 @property(nonatomic)long selectedRow;
 - (IBAction)backButtonPressed:(id)sender;
@@ -40,4 +48,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 -(void)setAudioDetails;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
+
+@property (nonatomic, weak) id <MyClassDelegate> delegate; //define MyClassDelegate as delegate
+
 @end

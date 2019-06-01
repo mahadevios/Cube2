@@ -25,7 +25,7 @@
     hud.minSize = CGSizeMake(150.f, 100.f);
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
-    hud.label.text = @"Loading Data";
+    hud.label.text = @"Loading Data...";
     hud.detailsLabel.text = @"Please wait";
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -109,7 +109,17 @@
     
     [webView.scrollView setContentSize: CGSizeMake(webView.frame.size.width, webView.scrollView.contentSize.height)];
 
-    float scale = 20000/webView.scrollView.frame.size.width;
+    float scale;
+    
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+       scale = 70000/webView.scrollView.frame.size.width;
+    }
+    else
+    {
+       scale = 20000/webView.scrollView.frame.size.width;
+    }
+  
     NSString *jsString = [[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '%f%%'", scale];
     [webView stringByEvaluatingJavaScriptFromString:jsString];
     
@@ -223,7 +233,7 @@
             hud.minSize = CGSizeMake(150.f, 100.f);
             hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
             hud.mode = MBProgressHUDModeIndeterminate;
-            hud.label.text = @"Submitting Response";
+            hud.label.text = @"Submitting Response...";
             hud.detailsLabel.text = @"Please wait";
             
             [[APIManager sharedManager] acceptTandC:macId dateAndTIme:dateAndTime acceptFlag:@"1"];

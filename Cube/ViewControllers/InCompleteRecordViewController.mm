@@ -134,6 +134,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
         UILabel* transferredByLabel= [self.view viewWithTag:102];
         
+          
         transferredByLabel.text = existingAudioDepartmentName;
     
         UILabel* dateLabel= [self.view viewWithTag:103];
@@ -455,7 +456,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     hud.mode = MBProgressHUDModeIndeterminate;
     
-    hud.label.text = @"Saving audio..";
+    hud.label.text = @"Saving audio...";
     
     hud.detailsLabel.text = @"Please wait";
     
@@ -670,7 +671,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         hud.mode = MBProgressHUDModeIndeterminate;
         
-        hud.label.text = @"Saving audio..";
+        hud.label.text = @"Saving audio...";
         
         hud.detailsLabel.text = @"Please wait";
         
@@ -979,7 +980,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 
                 hud.mode = MBProgressHUDModeIndeterminate;
                 
-                hud.label.text = @"Saving audio..";
+                hud.label.text = @"Saving audio...";
                 
                 hud.detailsLabel.text = @"Please wait";
                 
@@ -1131,7 +1132,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         hud.mode = MBProgressHUDModeIndeterminate;
         
-        hud.label.text = @"Saving audio..";
+        hud.label.text = @"Saving audio...";
         
         hud.detailsLabel.text = @"Please wait";
         
@@ -1180,7 +1181,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                            
                             hud.mode = MBProgressHUDModeIndeterminate;
                            
-                            hud.label.text = @"Saving audio..";
+                            hud.label.text = @"Saving audio...";
                            
                             hud.detailsLabel.text = @"Please wait";
                             
@@ -1305,44 +1306,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     recordingStopped=YES;
     
-//    if (!recordingPauseAndExit)
-//    {
-//        [self performSelector:@selector(composeAudio) withObject:nil afterDelay:0.0];
-//        
-//        // [self prepareAudioPlayer];
-//    }
-//    else
-//    {
-    //[self setCompressAudio];
-        //[self performSelector:@selector(setCompressAudio) withObject:nil afterDelay:0.0];
-        
-  //  }
-    
-   // [self updateAudioRecordToDatabase:@"RecordingComplete"];
+
     [self performSelector:@selector(addAnimatedView) withObject:nil afterDelay:0.0];
-//    dispatch_async(dispatch_get_main_queue(), ^
-//    {
-//        [self prepareAudioPlayer];
-    
-        
-//        int currentTime= player.duration;
-//        int minutes=currentTime/60;
-//        int seconds=currentTime%60;
-//        totalDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
-//        currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];
-//        audioRecordSlider.value= player.duration;
-//        currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
-    
-   // });
-    
-    //    [self addAnimatedView];
-    
-    
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION])
-//    {
-//        [self dismissViewControllerAnimated:YES completion:nil];
-//    }
-    
+
 
 
 }
@@ -1507,21 +1473,24 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
     recordingStopped=YES;
     
+    [self updateAudioRecordToDatabase:@"RecordingComplete"];
+
     if (!recordingPauseAndExit)
     {
-        [self performSelector:@selector(composeAudio) withObject:nil afterDelay:0.0];
+//        [self performSelector:@selector(composeAudio) withObject:nil afterDelay:0.0];
 
+        [self composeAudio];
        // [self prepareAudioPlayer];
     }
     else
     {
         playerDurationWithMilliSeconds = player.duration;
 
-        [self performSelector:@selector(setCompressAudio) withObject:nil afterDelay:0.0];
+        [self setCompressAudio];
+//        [self performSelector:@selector(setCompressAudio) withObject:nil afterDelay:0.0];
 
     }
     
-    [self updateAudioRecordToDatabase:@"RecordingComplete"];
     
 //    if (edited)
 //    {
@@ -1536,14 +1505,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     //[self prepareAudioPlayer];
 
 //    [self addAnimatedView];
-    
-    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION])
-    {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-
-
+  
 }
 
 
@@ -1883,7 +1845,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     else
     {
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
 
 }
@@ -2507,6 +2469,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                          
                                          playerDurationWithMilliSeconds = player.duration;
                                          
+                                         NSLog(@"duration = %f", player.duration);
+                                         
+                                          [db updateAudioFileName:existingAudioFileName duration:player.duration];
+                                         
+                                         if ([[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION])
+                                         {
+                                             [self dismissViewControllerAnimated:YES completion:nil];
+                                         }
+
                                      }
                                      else
                                      {
@@ -3195,11 +3166,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 
             });
             [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
-            //                if (recordingStopped)
-            //                {
-            //                    [self setCompressAudio];
-            //                    //[self composeAudio];
-            //                }
+           
         }
         switch (exportSession.status)
         {

@@ -349,7 +349,7 @@
         
 //        UILabel* dateAndTimeLabel=[[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width*0.05, self.frame.size.height*0.2, self.frame.size.width*0.9, 20)];
         
-              UILabel* noInternetConnectionLabel=[[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width*0.05, self.frame.size.height*0.15, self.frame.size.width*0.9, 20)];
+        UILabel* noInternetConnectionLabel=[[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width*0.05, self.frame.size.height*0.15, self.frame.size.width*0.9, 20)];
         //audioRecordSlider.maximumValue=player.duration;
         noInternetConnectionLabel.text=@"No Internet Connection";
         [noInternetConnectionLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
@@ -378,8 +378,14 @@
             [self addSubview:retryButton];
         }
         else{
-            UIButton* retryButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.30 - 50, self.frame.size.height*0.5, 100, 40)];
             
+            UIButton* retryButton;
+            
+            
+                retryButton = [[UIButton alloc]initWithFrame:CGRectMake(self.frame.size.width*0.30 - 50, self.frame.size.height*0.5, 100, 40)];
+            
+
+        
             retryButton.tag=225;
             [retryButton setTitle:@"Retry" forState:UIControlStateNormal];
             [retryButton.titleLabel setTextAlignment:NSTextAlignmentCenter];

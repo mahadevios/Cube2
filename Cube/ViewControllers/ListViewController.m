@@ -9,6 +9,7 @@
 #import "ListViewController.h"
 #import "PopUpCustomView.h"
 
+
 @interface ListViewController ()
 
 @end
@@ -33,8 +34,8 @@
     
         [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
 //    }
-   
-
+     
+    detailVC.delegate = self;
 
 }
 
@@ -494,10 +495,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    [APIManager sharedManager].deletedListArray = nil;
-    [APIManager sharedManager].transferredListArray = nil;
-    [APIManager sharedManager].deletedListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
-    [APIManager sharedManager].transferredListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+    
    
     return 1;
    
@@ -508,13 +506,15 @@
 {
     if (segment.selectedSegmentIndex==0)
     {
-        APIManager* app=[APIManager sharedManager];
-        return app.transferredListArray.count;
+        [APIManager sharedManager].transferredListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+
+        return [APIManager sharedManager].transferredListArray.count;
     }
     if (segment.selectedSegmentIndex==1)
     {
-        APIManager* app=[APIManager sharedManager];
-        return app.deletedListArray.count;
+        [APIManager sharedManager].deletedListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
+
+        return [APIManager sharedManager].deletedListArray.count;
     }
     else
     return 0;
@@ -600,6 +600,8 @@
             if (detailVC == nil)
             {
                 detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
+                
+                detailVC.delegate = self;
             }
             
             detailVC.listSelected = 0;
@@ -620,6 +622,7 @@
     UITableViewCell* cell=[tableView cellForRowAtIndexPath:indexPath];
     APIManager* app=[APIManager sharedManager];
 
+    
     if (isMultipleFilesActivated)
     {
         int uploadFileCount;
@@ -717,6 +720,8 @@
 //            if (detailVC == nil)
 //            {
                 detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
+            
+            detailVC.delegate = self;
 //            }
             detailVC.listSelected = segment.selectedSegmentIndex;
             //NSLog(@"%ld",vc.listSelected);
@@ -728,6 +733,8 @@
             if (detailVC == nil)
             {
                 detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
+                
+                detailVC.delegate = self;
             }
             
             detailVC.selectedRow = 0;
@@ -865,6 +872,8 @@
                 
                 detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
                 
+                detailVC.delegate = self;
+                
                 detailVC.listSelected = 0;
                 
                 detailVC.selectedRow = 0;
@@ -902,7 +911,9 @@
                 
                 detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
                 
-                detailVC.listSelected = 0;
+                detailVC.delegate = self;
+                
+                detailVC.listSelected = 1;
                 
                 detailVC.selectedRow = 0;
                 
@@ -913,5 +924,14 @@
     }
     
 }
+
+- (void)myClassDelegateMethod:(TransferredOrDeletedAudioDetailsViewController *)sender
+{
+    [self.tableView reloadData];
+    
+    [self setFirstRowSelected];
+}
+
+
 
 @end

@@ -1159,7 +1159,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Copy to Cube/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate.CopytoCube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1167,7 +1167,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = CubeDictateAppGroup;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1187,7 +1187,7 @@
 					"$(PROJECT_DIR)/Copy\\ to\\ Cube",
 				);
 				INFOPLIST_FILE = "Copy to Cube/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate.CopytoCube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1195,7 +1195,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = CubeDictateAppGroupDistribution;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

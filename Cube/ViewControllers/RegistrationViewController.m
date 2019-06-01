@@ -136,21 +136,29 @@
     }
     else
     {
-        hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.minSize = CGSizeMake(150.f, 100.f);
-
-        hud.label.text = @"Validating...";
-        hud.detailsLabel.text = @"Please wait";
-        NSString*  macId=[Keychain getStringForKey:@"udid"];
-        // code to trim the leading and trailing spaces in id and password of user
-        NSLog(@"untrimmed id is -%@- and untrimmed password is -%@-",IDTextField.text, passwordTextfield.text);
-        trimmedIdTextField = [IDTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if ([AppPreferences sharedAppPreferences].isReachable)
+        {
+            hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.minSize = CGSizeMake(150.f, 100.f);
+            
+            hud.label.text = @"Validating...";
+            hud.detailsLabel.text = @"Please wait";
+            NSString*  macId=[Keychain getStringForKey:@"udid"];
+            // code to trim the leading and trailing spaces in id and password of user
+            NSLog(@"untrimmed id is -%@- and untrimmed password is -%@-",IDTextField.text, passwordTextfield.text);
+            trimmedIdTextField = [IDTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            
+            //remove only the leading and trailing spaces from the password
+            trimmedPasswordTextfield = [passwordTextfield.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            
+            
+            [[APIManager sharedManager] authenticateUserMacID:macId password:trimmedPasswordTextfield username:trimmedIdTextField];
+        }
+        else
+        {
+           [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
         
-        //remove only the leading and trailing spaces from the password
-         trimmedPasswordTextfield = [passwordTextfield.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        
-        
-        [[APIManager sharedManager] authenticateUserMacID:macId password:trimmedPasswordTextfield username:trimmedIdTextField];
     }
 }
 - (IBAction)cancelButtonClicked:(id)sender

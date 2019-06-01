@@ -30,7 +30,10 @@
 
 - (void)viewDidLoad
 {
+  
+    
     [super viewDidLoad];
+    
 //    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
     
 //    [self beginAppearanceTransition:true animated:true];
@@ -71,6 +74,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 //    NSLog(@"navi height = %@", self.navigationController.navigationBar.bounds);
+   
     self.splitViewController.delegate = self;
     [AppPreferences sharedAppPreferences].isRecordView = NO;
 
@@ -304,24 +308,28 @@
                                                NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
                                               
 //                                                       if ([appStoreVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending)
-                                               if (appStoreVersion != currentVersion)
+                                               if (![appStoreVersion isEqualToString:currentVersion])
 
                                                {
+                                                   
+
+                                                       dispatch_async(dispatch_get_main_queue(), ^(void) {
+                                                           
                                                            NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
                                                            //
                                                            alertController = [UIAlertController alertControllerWithTitle:@"Update available for Cube dictate"
                                                                                                                  message:nil
                                                                                                           preferredStyle:UIAlertControllerStyleAlert];
-                                                   
+                                                           
                                                            actionDelete = [UIAlertAction actionWithTitle:@"Update"
                                                                                                    style:UIAlertActionStyleDefault
                                                                                                  handler:^(UIAlertAction * action)
                                                                            {
                                                                                [self openStoreProductViewControllerWithITunesItemIdentifier:kAppITunesItemIdentifier];
-//                                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.com/apps/CubeDictate"]];
+                                                                               //                                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.com/apps/CubeDictate"]];
                                                                                
                                                                                [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
-//
+                                                                               //
                                                                            }]; //You can use a block here to handle a press on this button
                                                            [alertController addAction:actionDelete];
                                                            
@@ -330,18 +338,15 @@
                                                                                                    style:UIAlertActionStyleCancel
                                                                                                  handler:^(UIAlertAction * action)
                                                                            {
-                                                                              
+                                                                               
                                                                                
                                                                                [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
                                                                                
-                                                                                [alertController dismissViewControllerAnimated:YES completion:nil];
-//
+                                                                               [alertController dismissViewControllerAnimated:YES completion:nil];
+                                                                               //
                                                                            }]; //You can use a block here to handle a press on this button
                                                            [alertController addAction:actionCancel];
                                                            
-                                    
-
-                                                       dispatch_async(dispatch_get_main_queue(), ^(void) {
                                                            
                                                         [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:alertController animated:YES completion:nil];
                                                            
@@ -417,9 +422,9 @@
                             
                             hud.mode = MBProgressHUDModeIndeterminate;
                             
-                            hud.label.text = @"Deleting";
+                            hud.label.text = @"Deleting...";
                             
-                            hud.detailsLabel.text = @"Please wait..";
+                            hud.detailsLabel.text = @"Please wait";
                             
                             for (int i=0; i< filesToBePurgedArray.count; i++)
                             {

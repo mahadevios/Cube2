@@ -60,6 +60,8 @@
     {
         self.backImageView.hidden = true;
     }
+    
+    
     // Do any additional setup after loading the view.
 }
 
@@ -125,7 +127,8 @@
 //            NSString* transferStatus = [audiorecordDict valueForKey:@"status"];
         }
         transferStatusLabel.text=[NSString stringWithFormat:@"Transferred"];//if selected list is Transferred then we have status=Transferred ,only fetch delete status append it to transferStatusLabel
-        
+        [resendButton setHidden:NO];
+        [deleteDictationButton setHidden:NO];
         
     }
     if (self.listSelected==1)
@@ -148,8 +151,12 @@
         
     }
     
-    departmentLabel.text=[audiorecordDict valueForKey:@"Department"];
-
+    NSString* departmentName = [audiorecordDict valueForKey:@"Department"];
+    
+    departmentLabel.text=departmentName;
+    
+    [audiorecordDict setValue:departmentName forKey:@"DepartmentCopy"];
+    
     filenameLabel.text=[audiorecordDict valueForKey:@"RecordItemName"];
     dictatedOnLabel.text=[audiorecordDict valueForKey:@"RecordCreateDate"];
     
@@ -175,27 +182,27 @@
 //    transferDateLabel.text=[audiorecordDict valueForKey:@"TransferDate"];
     
     //transferStatusLabel.text=[audiorecordDict valueForKey:@"TransferStatus"];
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME_COPY];
-    
-    DepartMent *deptObj = [[DepartMent alloc]init];
-    long deptId= [[[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentLabel.text] longLongValue];
-    
-    deptObj.Id=deptId;
-    //deptObj.Id=indexPath.row;
-    deptObj.departmentName=departmentLabel.text;
-    NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME];
+//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME_COPY];
+//    
+//    DepartMent *deptObj = [[DepartMent alloc]init];
+//    long deptId= [[[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentLabel.text] longLongValue];
+//    
+//    deptObj.Id=deptId;
+//    //deptObj.Id=indexPath.row;
+//    deptObj.departmentName=departmentLabel.text;
+//    NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
+//    
+//    [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     //    [UIApplication sharedApplication].idleTimerDisabled = NO;
 
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
-    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    NSLog(@"%ld",deptObj1.Id);
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
+//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
+//    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+//    NSLog(@"%ld",deptObj1.Id);
+//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
 
 }
 - (IBAction)backButtonPressed:(id)sender
@@ -406,10 +413,19 @@
                         [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
 
                         BOOL delete= [app deleteFile:fileName];
-                        if (delete)
+                        
+                        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
                         {
-                            [self dismissViewControllerAnimated:YES completion:nil];
+                            [self.delegate myClassDelegateMethod:nil];
                         }
+                        else
+                        {
+                            if (delete)
+                            {
+                                [self dismissViewControllerAnimated:YES completion:nil];
+                            }
+                        }
+                        
                         
                     }]; //You can use a block here to handle a press on this button
     [alertController addAction:actionDelete];
@@ -457,6 +473,8 @@
                                        
                                        //});
                         
+                        [self.delegate myClassDelegateMethod:nil];
+
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                             
                             
@@ -485,7 +503,7 @@
 }
 else
 {
-    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
 }
 
 
@@ -498,6 +516,7 @@ else
     
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 }
+
 -(void)ChangeDepartment
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
@@ -535,42 +554,38 @@ else
 }
 -(void)cancel:(id)sender
 {
-    //    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    //    long deptId= [[[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentLabel.text] longLongValue];
-    //
-    //    deptObj.Id=deptId;
-    //    //deptObj.Id=indexPath.row;
-    //    deptObj.departmentName=departmentLabel.text;
-    //    NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
-    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
-    NSLog(@"%ld",deptObj.Id);
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
-    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    NSLog(@"%ld",deptObj1.Id);
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
+    
+    NSString* departmentName = [audiorecordDict valueForKey:@"DepartmentCopy"];
+    
+    [audiorecordDict setValue:departmentName forKey:@"Department"];
+    
     [popupView removeFromSuperview];
 }
 
 -(void)save:(id)sender
 {
+   
+    NSString* departmentName = [audiorecordDict valueForKey:@"Department"];
     
-    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    //[[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME_COPY];
-    
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
     UILabel* transferredByLabel= [self.view viewWithTag:503];
-    transferredByLabel.text=deptObj.departmentName;
-    UILabel* filenameLabel=[self.view viewWithTag:501];
-    [[Database shareddatabase] updateDepartment:deptObj.Id fileName:filenameLabel.text];
     
-//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
-//    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-//    NSLog(@"%ld",deptObj1.Id);
-//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
+    transferredByLabel.text = departmentName;
+    
+    UILabel* filenameLabel=[self.view viewWithTag:501];
+    
+    NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentName];
+    
+    [[Database shareddatabase] updateDepartment:[departmentId longLongValue] fileName:filenameLabel.text];
+    
+    [audiorecordDict setValue:departmentName forKey:@"DepartmentCopy"];
+
+    [self.delegate myClassDelegateMethod:nil];
     
     [popupView removeFromSuperview];
+    
 }
+
+
 #pragma mark:TableView Datasource and Delegates
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -604,17 +619,15 @@ else
     departmentLabel.tag=indexPath.row+200;
     radioButton.tag=indexPath.row+100;
     
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSString* departmentName = [audiorecordDict valueForKey:@"Department"];
     
-    if ([deptObj.departmentName isEqualToString:departmentLabel.text])
+    if ([departmentName isEqualToString:departmentLabel.text])
     {
-        
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
-        
     }
     else
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButtonClear"] forState:UIControlStateNormal];
+    
     [cell addSubview:radioButton];
     [cell addSubview:departmentLabel];
     
@@ -622,27 +635,25 @@ else
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
     cell=[tableView cellForRowAtIndexPath:indexPath];
+    
     UILabel* departmentNameLanel= [cell viewWithTag:indexPath.row+200];
+    
     UIButton* radioButton=[cell viewWithTag:indexPath.row+100];
-    //NSLog(@"%ld",indexPath.row);
-    // NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+    
     DepartMent *deptObj = [[DepartMent alloc]init];
+    
     long deptId= [[[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text] longLongValue];
     
     deptObj.Id=deptId;
-    //deptObj.Id=indexPath.row;
+    
     deptObj.departmentName=departmentNameLanel.text;
-    NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
     
-    [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME];
+    [audiorecordDict setValue:departmentNameLanel.text forKey:@"Department"];
     
-    
-    //  [[NSUserDefaults standardUserDefaults] setValue:departmentNameLanel.text forKey:SELECTED_DEPARTMENT_NAME];
     [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
+    
     [tableView reloadData];
-    //[self performSelector:@selector(hideTableView) withObject:nil afterDelay:0.2];
     
 }
 

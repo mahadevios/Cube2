@@ -30,9 +30,11 @@
     //    [[APIManager sharedManager] checkDeviceRegistrationMacID:macId];
     
    
-
+   
     
 }
+
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -132,7 +134,16 @@
         
 //  UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(0, self.view.center.y+100,self.view.frame.size.width, 80) offlineFrame:CGRectMake(0, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];
         
-          UIView* internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(20, self.view.center.y+50,self.view.frame.size.width-40, 120) offlineFrame:CGRectMake(20, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];
+        UIView* internetMessageView;
+        
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+        {
+            internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.24, self.view.center.y+50,self.view.frame.size.width*0.52, 120) offlineFrame:CGRectMake(20, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];        }
+        else
+        {
+           internetMessageView=   [[PopUpCustomView alloc]initWithFrame:CGRectMake(20, self.view.center.y+50,self.view.frame.size.width-40, 120) offlineFrame:CGRectMake(20, self.view.center.y+150,self.view.frame.size.width, 50) senderForInternetMessage:self];
+        }
+        
         
         [[[UIApplication sharedApplication] keyWindow] addSubview:internetMessageView];
     }
@@ -284,7 +295,7 @@
                             else
                             {
                                 
-                                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your inernet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+                                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
                                 
                             }
                             

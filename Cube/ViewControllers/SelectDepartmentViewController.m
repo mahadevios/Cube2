@@ -61,13 +61,20 @@
     
     UITableViewCell* cell=[tableview cellForRowAtIndexPath:indexPath];
     UILabel* departmentNameLabel= [cell viewWithTag:101];
-    //MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
-    // LoginViewController* vc=[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    // [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"] animated:YES completion:nil];
-    //[vc dismissViewControllerAnimated:YES completion:nil];
-    DepartMent* deptObj= [[Database shareddatabase] getDepartMentFromDepartmentName:departmentNameLabel.text];
+  
+   
+    
+    DepartMent* deptObj = [[DepartMent alloc] init];
+    deptObj= [[Database shareddatabase] getDepartMentFromDepartmentName:departmentNameLabel.text];
+    
+//    NSData *dataa = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+   
+    
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLoadedFirstTime"];
     
     MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
