@@ -109,7 +109,17 @@
     
     [webView.scrollView setContentSize: CGSizeMake(webView.frame.size.width, webView.scrollView.contentSize.height)];
 
-    float scale = 20000/webView.scrollView.frame.size.width;
+    float scale;
+    
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+       scale = 70000/webView.scrollView.frame.size.width;
+    }
+    else
+    {
+       scale = 20000/webView.scrollView.frame.size.width;
+    }
+  
     NSString *jsString = [[NSString alloc] initWithFormat:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '%f%%'", scale];
     [webView stringByEvaluatingJavaScriptFromString:jsString];
     

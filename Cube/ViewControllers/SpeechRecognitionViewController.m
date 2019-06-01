@@ -33,6 +33,7 @@
     
     [self.previousTranscriptedArray addObject:@""];
     
+    
     NSError* error;
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:&error];
@@ -91,6 +92,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+
     [self addTranscriptionStatusAnimationView];
     
     self.timerSeconds = 59;
@@ -98,8 +100,14 @@
     self.transcriptionTextView.translatesAutoresizingMaskIntoConstraints = true;
     [self.transcriptionTextView sizeToFit];
     self.transcriptionTextView.scrollEnabled = false;
-    self.transcriptionTextView.text = @"";
     
+    if (!isViewAppearedFirstTime)
+    {
+        self.transcriptionTextView.text = @"";
+
+        isViewAppearedFirstTime = true;
+    }
+
     self.tabBarController.tabBar.hidden = true;
     
      self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
@@ -168,6 +176,8 @@
 {
     if (enable == true)
     {
+        self.transcriptionTextView.userInteractionEnabled = false;
+        
         [stopTranscriptionButton setEnabled:true];
         
         transStopImageView.alpha = 1.0;
@@ -176,6 +186,8 @@
     }
     else
     {
+        self.transcriptionTextView.userInteractionEnabled = true;
+
         [stopTranscriptionButton setEnabled:false];
         
         transStopImageView.alpha = 0.5;
@@ -446,6 +458,7 @@
         if ([[AppPreferences sharedAppPreferences] isReachable])
         {
             //self.stopTranscriptionButton.hidden = false;
+            
             [UIApplication sharedApplication].idleTimerDisabled = YES;
 
             [self.transcriptionTextView resignFirstResponder];
@@ -708,11 +721,11 @@
     
     [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
     
-//    [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject: self.transcriptionTextLabel.text];
     [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject: self.transcriptionTextView.text];
 
     [self disableStartAndDocOption:false];
     
+    isTrancriptFirstTimeFirstWord = false;
    // [[NSNotificationCenter defaultCenter] postNotificationName:@"sample" object:nil];//to pause and remove audio player
 
 }
@@ -745,19 +758,48 @@
                            
                            if (isStartedNewRequest == true) // if resume
                            { // if it is a start of a new request(resume) then get the existing text and allocate that text to label
-                               NSString* text = [self.previousTranscriptedArray objectAtIndex:0];
+                               if (!isTrancriptFirstTimeFirstWord)
+                               {
+                                   firstTimeManuallyEnteredText = self.transcriptionTextView.text;
+
+                                   self.transcriptionTextView.text = [firstTimeManuallyEnteredText stringByAppendingString:[NSString stringWithFormat:@" %@",transcription.formattedString]];
+                                   
+                                   isTrancriptFirstTimeFirstWord = true;
+                                   
+                                   [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:self.transcriptionTextView.text];
+
+                               }
+                               else
+                               {
+                                   NSString* text = [self.previousTranscriptedArray objectAtIndex:0];
+                                   
+                                   self.transcriptionTextView.text = [text stringByAppendingString:[NSString stringWithFormat:@" %@",transcription.formattedString]];
+                               }
+                              
                                
-//                               self.transcriptionTextLabel.text = [text stringByAppendingString:[NSString stringWithFormat:@" %@",transcription.formattedString]];
-                                self.transcriptionTextView.text = [text stringByAppendingString:[NSString stringWithFormat:@" %@",transcription.formattedString]];
                                
                            }
                            else
                            { // for first time when clicked on start and not on resume
-                               [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:transcription.formattedString];
                                
-//                               self.transcriptionTextLabel.text = [self.previousTranscriptedArray objectAtIndex:0];
+                               if (!isTrancriptFirstTimeFirstWord)
+                               {
+                                   firstTimeManuallyEnteredText = self.transcriptionTextView.text;
                                
-                               self.transcriptionTextView.text = [self.previousTranscriptedArray objectAtIndex:0];
+                                  [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:transcription.formattedString];
+                                   
+                                   self.transcriptionTextView.text =  [NSString stringWithFormat:@"%@ %@", firstTimeManuallyEnteredText, [self.previousTranscriptedArray objectAtIndex:0]];
+                                   
+                                   isTrancriptFirstTimeFirstWord = true;
+                               }
+                               else
+                               {
+                                   [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:transcription.formattedString];
+
+                                   self.transcriptionTextView.text =  [NSString stringWithFormat:@"%@ %@", firstTimeManuallyEnteredText, [self.previousTranscriptedArray objectAtIndex:0]];
+                               }
+                            
+                               
                                
                            }
                            

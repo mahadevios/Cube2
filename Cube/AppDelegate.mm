@@ -42,20 +42,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    
-//    NSError* error;
-//    
-//    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Downloads/%@",@"SU40720171201-01"]];
-//    
-//    NSString* newDestPath = [destpath stringByAppendingPathExtension:@"doc"];
-//    
-//    BOOL removed = [[NSFileManager defaultManager] removeItemAtPath:newDestPath error:&error];
-    //NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.coreFlexSolutions.CubeDictate"];
-
-    //NSString* fileSizeInBytes = [sharedDefaults objectForKey:@"output1"];
-    
-    //NSLog(@"%@",fileSizeInBytes);
     
 
     [[AppPreferences sharedAppPreferences] startReachabilityNotifier];
@@ -63,8 +49,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray = [[NSMutableArray alloc] init];
     [AppPreferences sharedAppPreferences].filesInUploadingQueueArray = [[NSMutableArray alloc] init];
 
-
-    
     [self checkAndCopyDatabase];
     
     NSString* currentVersion = [[NSUserDefaults standardUserDefaults] valueForKey:CURRENT_VESRION];
@@ -85,7 +69,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
     }
     
-
     [[Database shareddatabase] createFileNameidentifierRelationshipTable];
 
     [[Database shareddatabase] createDocFileAndDownloadedDocxFileTable];
@@ -97,11 +80,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
           [[NSUserDefaults standardUserDefaults] setValue:@"512 MB" forKey:LOW_STORAGE_THRESHOLD];
 
     }
-//    if ([[NSUserDefaults standardUserDefaults] valueForKey:RECORD_ABBREVIATION]== NULL)
-//    {
-//        [[NSUserDefaults standardUserDefaults] setValue:@"MOB-" forKey:RECORD_ABBREVIATION];
-//        
-//    }
+
     if ([[NSUserDefaults standardUserDefaults] valueForKey:SAVE_DICTATION_WAITING_SETTING]== NULL)
     {
         [[NSUserDefaults standardUserDefaults] setValue:@"15 min" forKey:SAVE_DICTATION_WAITING_SETTING];
@@ -181,64 +160,51 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)uploadNextFile
 {
-//    dispatch_async(dispatch_get_main_queue(), ^
-//                   {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
-            if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>0)
+        {
+          
+            if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<1 && [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>1)
             {
-    
-    
-                if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count<1 && [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count>1)
-                {
-//                    for (int i=0; i<2; i++)
-//                    {
-                        NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
-                        
-                        [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
-                        
-                        [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
-                    
-                    NSString* nextFileToBeUpload1 = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
-                    
-                    [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
-                    
-                    [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload1 jobName:FILE_UPLOAD_API];
-
-                    //}
-                    
-                }
-                else
-                {
-                    NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
-                    
-                    [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
-                    
-                    [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
-                }
-    
-    
-                NSLog(@"%ld",[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count);
-    
+                
+                NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+                
+                [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+                
+                [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
+                
+                NSString* nextFileToBeUpload1 = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+                
+                [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+                
+                [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload1 jobName:FILE_UPLOAD_API];
+                
+               
             }
             else
             {
+                NSString* nextFileToBeUpload = [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray objectAtIndex:0];
+                
+                [[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray removeObjectAtIndex:0];
+                
+                [[APIManager sharedManager] uploadFileToServer:nextFileToBeUpload jobName:FILE_UPLOAD_API];
             }
             
             
-            
-        });
-                  // });
+        }
+        else
+        {
+        }
+  
+    });
 }
 
--(void)uploadLate
-{
- 
-}
+
 - (void) checkAndCopyDatabase
 {
     NSString *destpath=[NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Cube_DB.sqlite"];
-   // NSString *sourcepath=[[NSBundle mainBundle]pathForResource:@"Cube_DB" ofType:@"sqlite"];
+  
     NSString *sourcepath=[[NSBundle mainBundle]pathForResource:@"Cube_DB" ofType:@"sqlite"];
     NSLog(@"%@",NSHomeDirectory());
     if(![[NSFileManager defaultManager] fileExistsAtPath:destpath])

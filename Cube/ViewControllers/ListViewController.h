@@ -12,8 +12,8 @@
 #import "AppPreferences.h"
 #import "Constants.h"
 #import "TransferredOrDeletedAudioDetailsViewController.h"
-@interface ListViewController : UIViewController<UIGestureRecognizerDelegate,UISplitViewControllerDelegate>
 
+@interface ListViewController : UIViewController<UIGestureRecognizerDelegate,UISplitViewControllerDelegate>
 {
     UIAlertController *alertController;
     UIAlertAction *actionDelete;
@@ -34,5 +34,8 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segment;
 @property(nonatomic)BOOL longPressAdded;
 @property(nonatomic, strong)NSString* currentViewName;
+
+
+
 
 @end

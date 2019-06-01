@@ -15,7 +15,10 @@
     NSTimer* newRequestTimer;
     NSTimer* demoTimer;
     BOOL isTranscripting;
-    
+    BOOL isTrancriptFirstTimeFirstWord;
+    BOOL isViewAppearedFirstTime;
+
+    NSString* firstTimeManuallyEnteredText;
 }
 @property(nonatomic, strong)AVAudioEngine* audioEngine;
 @property(nonatomic, strong)SFSpeechRecognizer* speechRecognizer;

@@ -158,25 +158,62 @@
 -(void)setAudioDetailOrEmptyViewController:(int)selectedIndex
 {
     APIManager* app=[APIManager sharedManager];
-//    Database* db=[Database shareddatabase];
-   
+    
+    
+    
     if (self.splitViewController != nil && self.splitViewController.isCollapsed == false) // if not collapsed that is reguler width hnce ipad
     {
         
-//        NSDictionary* awaitingFileTransferDict;
         
         if ([self.currentViewName isEqualToString:@"Awaiting Transfer"])
         {
-//            awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:selectedIndex];
-
+            
             if(app.awaitingFileTransferNamesArray.count == 0) // if transferred count 0 then show empty VC  else show audio details
             {
-               [self addEmptyVCToSplitVC];
+                [self addEmptyVCToSplitVC];
             }
             else
             {
-//                [self setFirstRowSelected]; // set first row seletced by default
                 if (isMultipleFilesActivated)
+                {
+                    [self addEmptyVCToSplitVC];
+                }
+                else
+                {
+                    BOOL isWithoutUploadingFileAvailable = false;
+                    
+                    for (int i = 0; i < [APIManager sharedManager].awaitingFileTransferNamesArray.count; i++)
+                    {
+                        NSDictionary* awaitingFileTransferDict = [[APIManager sharedManager].awaitingFileTransferNamesArray objectAtIndex:i];
+                        
+                        if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]== NULL)
+                        {
+                            
+                            isWithoutUploadingFileAvailable = true;
+                            
+                            break;
+                        }
+                        
+                    }
+                    
+                    if (isWithoutUploadingFileAvailable)
+                    {
+                         [self addAudioDetailsVCToSplitVC:selectedIndex];
+                    }
+                    else
+                    {
+                        [self addEmptyVCToSplitVC];
+                    }
+                   
+                }
+                
+            }
+        }
+        else
+            if ([self.currentViewName isEqualToString:@"Transferred Today"])
+            {
+                
+                if(app.todaysFileTransferNamesArray.count == 0) // if transferred count 0 then show empty VC  else show audio details
                 {
                     [self addEmptyVCToSplitVC];
                 }
@@ -184,35 +221,10 @@
                 {
                     [self addAudioDetailsVCToSplitVC:selectedIndex];
                 }
-                
             }
-        }
-        else
-        if ([self.currentViewName isEqualToString:@"Transferred Today"])
-        {
-//            awaitingFileTransferDict= [app.trans objectAtIndex:selectedIndex];
-            
-            if(app.todaysFileTransferNamesArray.count == 0) // if transferred count 0 then show empty VC  else show audio details
-            {
-                [self addEmptyVCToSplitVC];
-            }
-            else
-            {
-                //                [self setFirstRowSelected]; // set first row seletced by default
-//                if (isMultipleFilesActivated)
-//                {
-//                    [self addEmptyVCToSplitVC];
-//                }
-//                else
-//                {
-                    [self addAudioDetailsVCToSplitVC:selectedIndex];
-//                }
-                
-            }
-        }
         
     }
-        
+    
     
 }
 
@@ -242,6 +254,8 @@
 {
     
     detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
+    
+    detailVC.delegate = self;
     
     detailVC.selectedView = self.currentViewName;
     //                detailVC.listSelected = 0;
@@ -806,7 +820,6 @@ else//to disaalow single row while that row is uploading
     if (self.splitViewController != nil) // for ipad reguler width reguler height
     {
         
-        
         if ([self.currentViewName isEqualToString:@"Awaiting Transfer"] && [APIManager sharedManager].awaitingFileTransferNamesArray.count >0)
         {
             
@@ -817,30 +830,28 @@ else//to disaalow single row while that row is uploading
                 if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]== NULL)
                 {
                     NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:i inSection:0];
-
+                    
                     [self.tableView selectRowAtIndexPath:firstRowPath animated:NO scrollPosition: UITableViewScrollPositionNone];
-
+                    
                     [self tableView:self.tableView didSelectRowAtIndexPath:firstRowPath];
-
+                    
                     break;
                 }
                 
-//                NSLog(@"iii =%d",i);
-                
             }
             
-
-
+            
+            
         }
         else
-        if ([self.currentViewName isEqualToString:@"Transferred Today"] && [APIManager sharedManager].todaysFileTransferNamesArray.count >0)
-        {
-            NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            
-            [self.tableView selectRowAtIndexPath:firstRowPath animated:NO scrollPosition: UITableViewScrollPositionNone];
-            
-            [self tableView:self.tableView didSelectRowAtIndexPath:firstRowPath];
-        }
+            if ([self.currentViewName isEqualToString:@"Transferred Today"] && [APIManager sharedManager].todaysFileTransferNamesArray.count >0)
+            {
+                NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                
+                [self.tableView selectRowAtIndexPath:firstRowPath animated:NO scrollPosition: UITableViewScrollPositionNone];
+                
+                [self tableView:self.tableView didSelectRowAtIndexPath:firstRowPath];
+            }
     }
     
 }
@@ -918,7 +929,7 @@ else//to disaalow single row while that row is uploading
     [buttons addObject:bi];
 
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    bi.width = 12.0f;
+    bi.width = 9.0f;
     [buttons addObject:bi];
     
     bi = [[UIBarButtonItem alloc]initWithTitle:@"Select all" style:UIBarButtonItemStylePlain target:self action:@selector(selectAllFiles:)];
@@ -1249,6 +1260,13 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
     
 
 }
+
+- (void)myClassDelegateMethod:(AudioDetailsViewController *)sender
+{
+    [self.tableView reloadData];
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

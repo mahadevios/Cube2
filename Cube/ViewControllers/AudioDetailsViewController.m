@@ -132,6 +132,32 @@
         
         audiorecordDict= [app.todaysFileTransferNamesArray objectAtIndex:self.selectedRow];
         
+        NSString* tarnsferStatus = [audiorecordDict valueForKey:@"TransferStatus"];
+
+        if ([[audiorecordDict valueForKey:@"DeleteStatus"] isEqualToString:@"Delete"])//to check wether transferred file is deleted
+        {
+            NSString* transferStatusString;
+            
+            if ([tarnsferStatus isEqualToString:@"TransferFailed"])
+            {
+                transferStatusString = @"Transfer Failed";
+            }
+            else if ([tarnsferStatus isEqualToString:@"NotTransferred"])
+            {
+                transferStatusString = @"Not Transferred";
+                
+            }
+            else
+            {
+                transferStatusString = tarnsferStatus;
+            }
+            
+            transferStatusLabel.text=[NSString stringWithFormat:@"%@, Deleted",transferStatusString];
+            
+            [transferDictationButton setHidden:YES];
+            
+            [deleteDictationButton setHidden:YES];
+        }
     }
     else
     if ([self.selectedView isEqualToString:@"Transfer Failed"])
@@ -184,8 +210,12 @@
        dictatedOnLabel.text = newDateString;
 //    dictatedOnLabel.text=[audiorecordDict valueForKey:@"RecordCreatedDate"];
        
-    departmentLabel.text=[audiorecordDict valueForKey:@"Department"];
+       NSString* departmentName = [audiorecordDict valueForKey:@"Department"];
        
+    departmentLabel.text=departmentName;
+    
+    [audiorecordDict setValue:departmentName forKey:@"DepartmentCopy"];
+
     NSString* tarnsferStatus = [audiorecordDict valueForKey:@"TransferStatus"];
        
     if ([tarnsferStatus isEqualToString:@"TransferFailed"])
@@ -218,30 +248,23 @@
         transferDateLabel.text=@"";
     }
        
-    if ([[audiorecordDict valueForKey:@"DeleteStatus"] isEqualToString:@"Delete"])//to check wether transferred file is deleted
-    {
-        transferStatusLabel.text=[NSString stringWithFormat:@"%@,Deleted",[audiorecordDict valueForKey:@"TransferStatus"]];
-        
-        [transferDictationButton setHidden:YES];
-        
-        [deleteDictationButton setHidden:YES];
-    }
+    
 
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
        
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME_COPY];
 
-    DepartMent *deptObj = [[DepartMent alloc]init];
-       
-    long deptId= [[[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentLabel.text] longLongValue];
-    
-    deptObj.Id=deptId;
-       
-    deptObj.departmentName=departmentLabel.text;
-       
-    NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME];
+//    DepartMent *deptObj = [[DepartMent alloc]init];
+//
+//    long deptId= [[[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentLabel.text] longLongValue];
+//
+//    deptObj.Id=deptId;
+//
+//    deptObj.departmentName=departmentLabel.text;
+//
+//    NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
+//
+//    [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME];
        
     moreButton.userInteractionEnabled=YES;
        
@@ -252,7 +275,15 @@
         {
             [AppPreferences sharedAppPreferences].recordNew = false;
             
-            [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
+            if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+            {
+                [self.splitViewController presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
+            }
+            else
+            {
+                [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
+            }
+            
             
             [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
         }
@@ -277,7 +308,10 @@
 {
     if (([[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:801] == nil))
     {
-        UIButton* uploadRecordButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width*0.095, transferDictationButton.frame.origin.y, self.view.frame.size.width*0.83, transferDictationButton.frame.size.height)];
+        UIButton* uploadRecordButton;
+        
+      
+            uploadRecordButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width*0.095, transferDictationButton.frame.origin.y, self.view.frame.size.width*0.83, transferDictationButton.frame.size.height)];
         
         uploadRecordButton.tag = 801;
         
@@ -338,7 +372,7 @@
         if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
         {//for ipad
             
-            uploadRecordButton.frame = CGRectMake((self.view.frame.size.width-viewWidth)*0.1, transferDictationButton.frame.origin.y, (self.view.frame.size.width-viewWidth)*0.8, transferDictationButton.frame.size.height);
+            uploadRecordButton.frame = CGRectMake((self.view.frame.size.width-viewWidth)*0.1, transferDictationButton.frame.origin.y+20, (self.view.frame.size.width-viewWidth)*0.8, transferDictationButton.frame.size.height);
             
             deleteRecordButton.frame = CGRectMake((self.view.frame.size.width-viewWidth)*0.1, uploadRecordButton.frame.origin.y+uploadRecordButton.frame.size.height+10, uploadRecordButton.frame.size.width*0.48, transferDictationButton.frame.size.height);
             
@@ -536,10 +570,15 @@
                             
                             [sharedDefaults synchronize];
                         }
+                        
+                     
+                        
                         if (delete)
                         {
                             [self dismissViewControllerAnimated:YES completion:nil];
                         }
+                        
+                        [self.delegate myClassDelegateMethod:nil];
                         
                     }]; //You can use a block here to handle a press on this button
     [alertController addAction:actionDelete];
@@ -792,6 +831,8 @@
                                 }
                                 
                                 [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
+                                
+                                [self.delegate myClassDelegateMethod:nil];
                                 
                                 dispatch_async(dispatch_get_main_queue(), ^
                                                                       {
@@ -1085,15 +1126,11 @@
     
     radioButton.tag=indexPath.row+100;
     
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+    NSString* departmentName = [audiorecordDict valueForKey:@"Department"];
     
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    
-    if ([deptObj.departmentName isEqualToString:departmentLabel.text])
+    if ([departmentName isEqualToString:departmentLabel.text])
     {
-        
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
-        
     }
     else
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButtonClear"] forState:UIControlStateNormal];
@@ -1107,6 +1144,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+   
     cell=[tableView cellForRowAtIndexPath:indexPath];
     
     UILabel* departmentNameLanel= [cell viewWithTag:indexPath.row+200];
@@ -1120,27 +1158,30 @@
     deptObj.Id=deptId;
 
     deptObj.departmentName=departmentNameLanel.text;
-    
-    NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME];
+ 
+    [audiorecordDict setValue:departmentNameLanel.text forKey:@"Department"];
     
     [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
     
     [tableView reloadData];
     
 }
+
 -(void)cancel:(id)sender
 {
-    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+////    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+////
+////    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
+//
+//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
+//
+////    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+//
+//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
     
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
+    NSString* departmentName = [audiorecordDict valueForKey:@"DepartmentCopy"];
     
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
-    
-    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
+    [audiorecordDict setValue:departmentName forKey:@"Department"];
     
     [popupView removeFromSuperview];
 }
@@ -1148,18 +1189,32 @@
 -(void)save:(id)sender
 {
     
-    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+//    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+//
+//    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
     
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
-    
+    NSString* departmentName = [audiorecordDict valueForKey:@"Department"];
+
     UILabel* transferredByLabel= [self.view viewWithTag:503];
     
-    transferredByLabel.text=deptObj.departmentName;
+    transferredByLabel.text = departmentName;
     
     UILabel* filenameLabel=[self.view viewWithTag:501];
     
-    [[Database shareddatabase] updateDepartment:deptObj.Id fileName:filenameLabel.text];
+    NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentName];
+    
+    [[Database shareddatabase] updateDepartment:[departmentId longLongValue] fileName:filenameLabel.text];
 
+    [audiorecordDict setValue:departmentName forKey:@"DepartmentCopy"];
+    
+    // set generic object back to orginal dept
+//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
+//
+//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
+//
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self.delegate myClassDelegateMethod:nil];
+    
     [popupView removeFromSuperview];
     
 }

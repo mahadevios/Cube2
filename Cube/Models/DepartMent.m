@@ -13,7 +13,7 @@
 
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
-    [aCoder encodeObject:[ NSString stringWithFormat:@"%ld",self.Id] forKey:@"Id"];
+    [aCoder encodeObject:[NSString stringWithFormat:@"%ld",self.Id] forKey:@"Id"];
         [aCoder encodeObject:self.departmentName forKey:@"departmentName"];
     
 }
@@ -22,8 +22,8 @@
 {
     if(self = [super init])
     {
-        //self=[aDecoder decodeObjectForKey:@"userObject"];
-        self.Id = [[aDecoder decodeObjectForKey:@"Id"]longLongValue];
+//        self=[aDecoder decodeObjectForKey:@"Selected Department"];
+        self.Id = [[aDecoder decodeObjectForKey:@"Id"]intValue];
         self.departmentName=[aDecoder decodeObjectForKey:@"departmentName"];
         
         
@@ -31,4 +31,10 @@
     return self;
 
     }
+
+//- (void)decodeWithCoder:(NSCoder *)aCoder{
+//    [aCoder encodeObject:[ NSString stringWithFormat:@"%d",self.Id] forKey:@"Id"];
+//    [aCoder encodeObject:self.departmentName forKey:@"departmentName"];
+//
+//}
 @end

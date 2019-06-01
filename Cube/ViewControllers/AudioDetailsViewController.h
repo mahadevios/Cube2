@@ -10,6 +10,13 @@
 #import <AVFoundation/AVFoundation.h>
 #import "AudioSessionManager.h"
 #import "PopUpCustomView.h"
+
+@class AudioDetailsViewController;             //define class, so protocol can see MyClass
+@protocol MyClassDelegate <NSObject>   //define delegate protocol
+
+- (void) myClassDelegateMethod: (AudioDetailsViewController *) sender;  //define delegate method to be implemented within another class
+@end //end protocol
+
 @interface AudioDetailsViewController : UIViewController<AVAudioPlayerDelegate,UIGestureRecognizerDelegate>
 {
     NSDictionary* result;
@@ -39,6 +46,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *deleteDictationButton;
+
+@property (nonatomic, weak) id <MyClassDelegate> delegate; //define MyClassDelegate as delegate
+
 - (IBAction)moreButtonClicked:(id)sender;
 
 

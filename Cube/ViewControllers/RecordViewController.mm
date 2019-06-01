@@ -176,10 +176,19 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UILabel* dateLabel = [self.view viewWithTag:103];
     
+//    DepartMent* deptObj2= [[Database shareddatabase] getDepartMentFromDepartmentName:@"Sanjay  Ubale"];
+//    NSData *data2 = [NSKeyedArchiver archivedDataWithRootObject:deptObj2];
+//    [[NSUserDefaults standardUserDefaults] setObject:data2 forKey:SELECTED_DEPARTMENT_NAME];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//    
+//
+    NSError* error;
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    DepartMent* deptObj = [[DepartMent alloc] init];
+    deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     transferredByLabel.text = deptObj.departmentName;
-    
+   
+   
     // set date label text
     NSString* dateAndTimeString = [app getDateAndTimeString];
     NSArray* dateAndTimeArray = [dateAndTimeString componentsSeparatedByString:@" "];
@@ -202,6 +211,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
     
     [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME_COPY];
+
+
 }
 
 -(void)setMinutesValueToPauseRecord
@@ -3973,9 +3984,19 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     if([AppPreferences sharedAppPreferences].userObj != nil)
     {
-        SpeechRecognitionViewController* spvc = [self.storyboard instantiateViewControllerWithIdentifier:@"SpeechRecognitionViewController"];
+        NSString *currentiOSVersion = [[UIDevice currentDevice] systemVersion];
+        float ver_float = [currentiOSVersion floatValue];
+        if (ver_float < 10.0)
+        {
+              [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Higher iOS version required!" withMessage:@"Please update your device OS to iOS 10.0 or above to use Speech to Text feature." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
+        else
+        {
+            SpeechRecognitionViewController* spvc = [self.storyboard instantiateViewControllerWithIdentifier:@"SpeechRecognitionViewController"];
+            
+            [self presentViewController:spvc animated:true completion:nil];
+        }
         
-        [self presentViewController:spvc animated:true completion:nil];
     }
     else
     {

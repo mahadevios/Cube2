@@ -90,11 +90,9 @@
             case 0:
                 if(app.incompleteFileTransferCount == 0) // if transferred count 0 then show empty VC  else show audio details
                 {
-                    UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EmptyViewController"];
+                    InCompleteDictationViewController *detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"InCompleteDictationViewController"];
                     
-                    navVC = [navVC initWithRootViewController:vc];
-                    
-                   
+                    navVC = [navVC initWithRootViewController:detailVC];
                     
                     NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
                     
@@ -111,17 +109,15 @@
                     }
                     
                     [self.splitViewController setViewControllers:subVC];
+                    
                 }
                 else
                 {
-                    //                [self setFirstRowSelected]; // set first row seletced by default
                     
                     InCompleteDictationViewController *detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"InCompleteDictationViewController"];
                     
                     navVC = [navVC initWithRootViewController:detailVC];
                     
-//                    navVC.navigationItem.hidesBackButton = YES;
-                    
                     NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
                     
                     if (subVC.count > 1)
@@ -137,11 +133,7 @@
                     }
                     
                     [self.splitViewController setViewControllers:subVC];
-                    //                detailVC.listSelected = 0;
-                    
-                    //                detailVC.selectedRow = 0;
-                    
-//                    [self.splitViewController showDetailViewController:navVC sender:self];
+                   
                 }
                 break;
                 

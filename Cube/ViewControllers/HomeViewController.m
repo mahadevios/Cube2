@@ -30,7 +30,10 @@
 
 - (void)viewDidLoad
 {
+  
+    
     [super viewDidLoad];
+    
 //    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
     
 //    [self beginAppearanceTransition:true animated:true];
@@ -71,7 +74,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 //    NSLog(@"navi height = %@", self.navigationController.navigationBar.bounds);
-    
+   
     self.splitViewController.delegate = self;
     [AppPreferences sharedAppPreferences].isRecordView = NO;
 
@@ -305,7 +308,7 @@
                                                NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
                                               
 //                                                       if ([appStoreVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending)
-                                               if (appStoreVersion != currentVersion)
+                                               if (![appStoreVersion isEqualToString:currentVersion])
 
                                                {
                                                    
