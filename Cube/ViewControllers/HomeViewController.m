@@ -102,6 +102,7 @@
     
     [self setSplitViewController];
     
+//    [self deleteDictation];
     NSLog(@"%@",NSHomeDirectory());
    
     
@@ -145,10 +146,11 @@
     NSString* uploadedFilesDictationIdString = [uploadedFilesDictationIdArray componentsJoinedByString:@","];
     
     // send dictation ids to server to get list of completed doc
-    [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
     
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
+        [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
+
         [self showActivityIndicator];
     }
     else
@@ -312,47 +314,52 @@
 
                                                {
                                                    
-
-                                                       dispatch_async(dispatch_get_main_queue(), ^(void) {
-                                                           
-                                                           NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
-                                                           //
-                                                           alertController = [UIAlertController alertControllerWithTitle:@"Update available for Cube dictate"
-                                                                                                                 message:nil
-                                                                                                          preferredStyle:UIAlertControllerStyleAlert];
-                                                           
-                                                           actionDelete = [UIAlertAction actionWithTitle:@"Update"
-                                                                                                   style:UIAlertActionStyleDefault
-                                                                                                 handler:^(UIAlertAction * action)
-                                                                           {
-                                                                               [self openStoreProductViewControllerWithITunesItemIdentifier:kAppITunesItemIdentifier];
-                                                                               //                                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.com/apps/CubeDictate"]];
-                                                                               
-                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
-                                                                               //
-                                                                           }]; //You can use a block here to handle a press on this button
-                                                           [alertController addAction:actionDelete];
-                                                           
-                                                           
-                                                           actionCancel = [UIAlertAction actionWithTitle:@"Later"
-                                                                                                   style:UIAlertActionStyleCancel
-                                                                                                 handler:^(UIAlertAction * action)
-                                                                           {
-                                                                               
-                                                                               
-                                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
-                                                                               
-                                                                               [alertController dismissViewControllerAnimated:YES completion:nil];
-                                                                               //
-                                                                           }]; //You can use a block here to handle a press on this button
-                                                           [alertController addAction:actionCancel];
-                                                           
-                                                           
-                                                        [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:alertController animated:YES completion:nil];
-                                                           
-                                                       });
                                                    
-                                                       }
+                                                   dispatch_async(dispatch_get_main_queue(), ^(void) {
+                                                       
+                                                       NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
+                                                       //
+                                                       alertController = [UIAlertController alertControllerWithTitle:@"Update available for Cube dictate"
+                                                                                                             message:nil
+                                                                                                      preferredStyle:UIAlertControllerStyleAlert];
+                                                       
+                                                       actionDelete = [UIAlertAction actionWithTitle:@"Update"
+                                                                                               style:UIAlertActionStyleDefault
+                                                                                             handler:^(UIAlertAction * action)
+                                                                       {
+                                                                           [self openStoreProductViewControllerWithITunesItemIdentifier:kAppITunesItemIdentifier];
+                                                                           //                                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.com/apps/CubeDictate"]];
+                                                                           
+                                                                           [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
+                                                                           //
+                                                                       }]; //You can use a block here to handle a press on this button
+                                                       [alertController addAction:actionDelete];
+                                                       
+                                                       
+                                                       actionCancel = [UIAlertAction actionWithTitle:@"Later"
+                                                                                               style:UIAlertActionStyleCancel
+                                                                                             handler:^(UIAlertAction * action)
+                                                                       {
+                                                                           
+                                                                           
+                                                                           [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
+                                                                           
+                                                                           [alertController dismissViewControllerAnimated:YES completion:nil];
+                                                                           //
+                                                                       }]; //You can use a block here to handle a press on this button
+                                                       [alertController addAction:actionCancel];
+                                                       
+                                                       
+                                                       [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:alertController animated:YES completion:nil];
+                                                       
+                                                   });
+                                                   
+                                               }
+                                               else
+                                               {
+                                                   [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];
+
+                                               }
                                                    //return YES;
                                                }
                                            
@@ -407,7 +414,7 @@
         
         NSString* todaysDate = [formatter stringFromDate:[NSDate date]];
     
-        if (filesToBePurgedArray.count>0)
+        if (filesToBePurgedArray.count > 0)
         {
             alertController = [UIAlertController alertControllerWithTitle:@"Purge Old Dictations?"
                                                               message:nil
@@ -435,7 +442,7 @@
                                 
                                 [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
                                 
-                                BOOL delete= [[APIManager sharedManager] deleteFile:fileName];
+                                [[APIManager sharedManager] deleteFile:fileName];
                                 
                             }
                             
@@ -443,7 +450,11 @@
                             
                             [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
                             
-                            [self needsUpdate];
+                            if ([AppPreferences sharedAppPreferences].isReachable)
+                            {
+                                [self needsUpdate];
+                            }
+                            
 
                             [self dismissViewControllerAnimated:YES completion:nil];
 
@@ -458,7 +469,10 @@
                                               handler:^(UIAlertAction * action)
                         {
                            
-                              [self needsUpdate];
+                            if ([AppPreferences sharedAppPreferences].isReachable)
+                            {
+                                [self needsUpdate];
+                            }
                             
                             [alertController dismissViewControllerAnimated:YES completion:nil];
                             
@@ -473,12 +487,18 @@
         }
         else
         {
-            [self needsUpdate];
+            if ([AppPreferences sharedAppPreferences].isReachable)
+            {
+                [self needsUpdate];
+            }
         }
     }
     else
     {
-        [self needsUpdate];
+        if ([AppPreferences sharedAppPreferences].isReachable)
+        {
+            [self needsUpdate];
+        }
     }
 }
 

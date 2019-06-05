@@ -119,5 +119,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *stopLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *animatedImageView;
 @property(nonatomic) BOOL isOpenedFromAudioDetails;
+@property(nonatomic) long selectedRowOfAwaitingList;
+
 - (IBAction)editAudioButtonClicked:(id)sender;
 @end

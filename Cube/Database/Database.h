@@ -17,6 +17,9 @@
 
 +(Database *)shareddatabase;
 
+
+@property(nonatomic, strong) NSString* isVRSTableAltered;
+
 -(NSString *)getDatabasePath;
 
 
@@ -120,5 +123,7 @@
 -(void)updateDeleteStatusOfDocx:(int)deleteStatus dictationId:(NSString*)fileName;
 
 -(void)updateDateFormat;
+
+-(void)AlterVRSTextFilesTableForDepartmentName;
 
 @end

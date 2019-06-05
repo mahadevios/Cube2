@@ -1052,6 +1052,64 @@ static Database *db;
 
 
 }
+
+-(int)checkIfColumnExistInTableName:(NSString*)tableName columnName:(NSString*)columnName
+{
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement;
+    sqlite3* feedbackAndQueryTypesDB;
+    int departmentId;
+    //    NSString *query3=[NSString stringWithFormat:@"Select Department from CubeData Where RecordItemName='%@' and UserId=%d",fileName];
+    NSString *query3=[NSString stringWithFormat:@"PRAGMA table_info(%@)",tableName];
+    
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
+    {
+        if (sqlite3_prepare_v2(feedbackAndQueryTypesDB, [query3 UTF8String], -1, &statement, NULL) == SQLITE_OK)// 2. Prepare the query
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                
+                // [app.feedOrQueryDetailMessageArray addObject:[NSString stringWithUTF8String:message]];
+                                departmentId=[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)];
+//                departmentId=sqlite3_column_int(statement, 0);
+                
+                
+            }
+        }
+        else
+        {
+            NSLog(@"Can't preapre query due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    else
+    {
+        NSLog(@"can't open db due error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+        // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    {
+    }
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        // NSLog(@"db is closed");
+    }
+    else
+    {
+        //NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    
+    return departmentId;
+    
+    
+}
 -(void)insertRecordingData:(NSDictionary*)dict;
 {
     
@@ -1103,7 +1161,7 @@ static Database *db;
 }
 
 
--(void)updateAudioFileName:(NSString*)existingAudioFileName dictationStatus:(NSString*)status;
+-(void)updateAudioFileName:(NSString*)existingAudioFileName dictationStatus:(NSString*)status
 {
     
     NSString *query3=[NSString stringWithFormat:@"Update CubeData set DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') Where RecordItemName='%@'",status,existingAudioFileName];
@@ -1155,6 +1213,62 @@ static Database *db;
                 
 
 
+}
+
+-(void)AlterVRSTextFilesTableForDepartmentName
+{
+    
+    NSString *query3=[NSString stringWithFormat:@"ALTER TABLE DocFiles ADD COLUMN DepartmentName TEXT"];
+    //     NSString *query3=[NSString stringWithFormat:@"Update CubeData set DictationStatus=(Select Id from DictationStatus Where RecordingStatus='%@') Where RecordItemName='%@' and UserId=%d",status,existingAudioFileName];
+    
+    Database *db=[Database shareddatabase];
+    NSString *dbPath=[db getDatabasePath];
+    sqlite3_stmt *statement;
+    sqlite3* feedbackAndQueryTypesDB;
+    
+    
+    const char * queryi3=[query3 UTF8String];
+    if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB)==SQLITE_OK)
+    {
+        sqlite3_prepare_v2(feedbackAndQueryTypesDB, queryi3, -1, &statement, NULL);
+        if(sqlite3_step(statement)==SQLITE_DONE)
+        {
+            // NSLog(@"report data inserted");
+            //NSLog(@"%@",NSHomeDirectory());
+            self.isVRSTableAltered = @"Yes";
+            sqlite3_reset(statement);
+        }
+        else
+        {
+            NSLog(@"%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+        }
+    }
+    
+    else
+    {
+        //NSLog(@"errormsg=%s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    if (sqlite3_finalize(statement) == SQLITE_OK)
+    {
+        //NSLog(@"statement is finalized");
+    }
+    else
+        // NSLog(@"Can't finalize due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    {
+    }
+    
+    if (sqlite3_close(feedbackAndQueryTypesDB) == SQLITE_OK)
+    {
+        //NSLog(@"db is closed");
+    }
+    else
+    {
+        // NSLog(@"Db is not closed due to error = %s",sqlite3_errmsg(feedbackAndQueryTypesDB));
+    }
+    
+    
+    
 }
 
 -(void)updateAudioFileName:(NSString*)existingAudioFileName duration:(float)duration;
@@ -1486,7 +1600,7 @@ static Database *db;
 {
     
 //    NSString *query3=[NSString stringWithFormat:@"Update CubeData set TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@'),TransferDate='%@',mobiledictationidval=%ld Where RecordItemName='%@'",status,dateAndTimeString,idval,fileName];
-     NSString *query3=[NSString stringWithFormat:@"Update CubeData set TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@'),mobiledictationidval=%ld Where RecordItemName='%@'",status,idval,fileName];
+     NSString *query3=[NSString stringWithFormat:@"Update CubeData set TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@'),mobiledictationidval=%ld, TransferDate='%@' Where RecordItemName='%@'",status,idval,dateAndTimeString,fileName];
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement;
@@ -2613,9 +2727,7 @@ static Database *db;
     dayComponent.day = -[filterDate intValue];
     
     NSCalendar *theCalendar = [NSCalendar currentCalendar];
-    //    NSDate *nextDate = [theCalendar dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
-    NSDate *nextDate = [theCalendar dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
-    
+    //    NSDate *nextDate = [theCalendar dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];    
     df.dateFormat = @"yyyy-MM-dd";
     
 //    NSString* newDate = [df stringFromDate:nextDate];
@@ -2632,7 +2744,7 @@ static Database *db;
 
 //    NSString *query4=[NSString stringWithFormat:@"UPDATE CubeData SET TransferDate = DATE(STR_TO_DATE(date_field, '%yyyy/%mm/%dd')) WHERE DATE(STR_TO_DATE(date_field, '%m/%d/%Y')) <> '0000-00-00'"];
    
-    NSString* recordItemName;
+//    NSString* recordItemName;
     
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
     {
@@ -2806,7 +2918,7 @@ static Database *db;
 -(void)addDocFileInDB:(DocFileDetails*)docFileDetails
 {
     
-    NSString *query3=[NSString stringWithFormat:@"INSERT INTO DocFiles values(\"%@\",\"%@\",\"%d\",\"%d\",\"%@\",\"%@\")",docFileDetails.docFileName,docFileDetails.docFileName,docFileDetails.uploadStatus,docFileDetails.deleteStatus,docFileDetails.uploadDate,docFileDetails.createdDate];
+    NSString *query3=[NSString stringWithFormat:@"INSERT INTO DocFiles values(\"%@\",\"%@\",\"%d\",\"%d\",\"%@\",\"%@\",\"%@\")",docFileDetails.docFileName,docFileDetails.docFileName,docFileDetails.uploadStatus,docFileDetails.deleteStatus,docFileDetails.uploadDate,docFileDetails.createdDate,docFileDetails.departmentName];
     
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
@@ -2864,7 +2976,7 @@ static Database *db;
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement;
     sqlite3* feedbackAndQueryTypesDB;
-    int mobiledictationidval;
+//    int mobiledictationidval;
     NSString *query3=[NSString stringWithFormat:@"Select * from DocFiles order by UploadedDate desc"];
     NSMutableArray* VRSDocFilesArray = [NSMutableArray new];
     if (sqlite3_open([dbPath UTF8String], &feedbackAndQueryTypesDB) == SQLITE_OK)// 1. Open The DataBase.
@@ -2881,10 +2993,20 @@ static Database *db;
                 docFileDetails.audioFileName = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)];
                 docFileDetails.uploadDate = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 4)];
                 docFileDetails.createdDate = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 5)];
+                
+                if ((const char*)sqlite3_column_text(statement, 6) == nil)
+                {
+                    docFileDetails.departmentName = @"";
+
+                }
+                else
+                {
+                    docFileDetails.departmentName = [NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 6)];
+
+                }
 
                 docFileDetails.uploadStatus = sqlite3_column_int(statement, 2);
                 docFileDetails.deleteStatus = sqlite3_column_int(statement, 3);
-
                 [VRSDocFilesArray addObject:docFileDetails];
             }
         }

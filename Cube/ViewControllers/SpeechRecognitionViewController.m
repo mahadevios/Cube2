@@ -27,6 +27,7 @@
 {
     [super viewDidLoad];
     
+
     self.transcriptionTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
 
     self.previousTranscriptedArray = [NSMutableArray new]; // store one minute text to append next request
@@ -111,6 +112,8 @@
     self.tabBarController.tabBar.hidden = true;
     
      self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+    
+    self.transcriptionTextView.delegate = self;
 }
 
 -(void)stopVRSFromBackGround
@@ -726,6 +729,7 @@
     [self disableStartAndDocOption:false];
     
     isTrancriptFirstTimeFirstWord = false;
+    
    // [[NSNotificationCenter defaultCenter] postNotificationName:@"sample" object:nil];//to pause and remove audio player
 
 }
@@ -756,32 +760,44 @@
         dispatch_async(dispatch_get_main_queue(), ^
                        {
                            
-                           if (isStartedNewRequest == true) // if resume
-                           { // if it is a start of a new request(resume) then get the existing text and allocate that text to label
-                               if (!isTrancriptFirstTimeFirstWord)
-                               {
-                                   firstTimeManuallyEnteredText = self.transcriptionTextView.text;
-
-                                   self.transcriptionTextView.text = [firstTimeManuallyEnteredText stringByAppendingString:[NSString stringWithFormat:@" %@",transcription.formattedString]];
-                                   
-                                   isTrancriptFirstTimeFirstWord = true;
-                                   
-                                   [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:self.transcriptionTextView.text];
-
-                               }
-                               else
-                               {
-                                   NSString* text = [self.previousTranscriptedArray objectAtIndex:0];
-                                   
-                                   self.transcriptionTextView.text = [text stringByAppendingString:[NSString stringWithFormat:@" %@",transcription.formattedString]];
-                               }
-                              
-                               
-                               
-                           }
-                           else
-                           { // for first time when clicked on start and not on resume
-                               
+//                           if (isStartedNewRequest == true) // if resume
+//                           { // if it is a start of a new request(resume) then get the existing text and allocate that text to label
+//                               if (!isTrancriptFirstTimeFirstWord)
+//                               {
+//                                   isTrancriptFirstTimeFirstWord = true;
+//
+//                                   firstTimeManuallyEnteredText = self.transcriptionTextView.text;
+//
+//                                   NSLog(@"1");
+//                                   NSLog(@"1 firstTimeManuallyEnteredText = %@", firstTimeManuallyEnteredText);
+//                                   NSLog(@"1 transcription.formattedString = %@", transcription.formattedString);
+//
+//                                   self.transcriptionTextView.text = [firstTimeManuallyEnteredText stringByAppendingString:[NSString stringWithFormat:@" %@",transcription.formattedString]];
+//
+//                                   NSLog(@"1 addition = transcription.formattedString = %@", self.transcriptionTextView.text);
+//
+//                                   [self.previousTranscriptedArray replaceObjectAtIndex:0 withObject:self.transcriptionTextView.text];
+//
+//                               }
+//                               else
+//                               {
+//                                   NSString* text = [self.previousTranscriptedArray objectAtIndex:0];
+//
+//                                   NSLog(@"2");
+//                                   NSLog(@"2 text = %@", text);
+//                                   NSLog(@"2 transcription.formattedString = %@", transcription.formattedString);
+//
+//                                   self.transcriptionTextView.text = [text stringByAppendingString:[NSString stringWithFormat:@" %@",transcription.formattedString]];
+//
+//                                   NSLog(@"2 addition = transcription.formattedString = %@", self.transcriptionTextView.text);
+//
+//                               }
+//
+//
+//                           }
+//                           else
+//                           { // for first time when clicked on start and not on resume
+                           
                                if (!isTrancriptFirstTimeFirstWord)
                                {
                                    firstTimeManuallyEnteredText = self.transcriptionTextView.text;
@@ -801,7 +817,7 @@
                             
                                
                                
-                           }
+//                           }
                            
                            NSLog(@"text = %@", [self.previousTranscriptedArray objectAtIndex:0]);
                            
@@ -811,13 +827,16 @@
                            
 //                           CGSize customizeExpectedLabelSize = expectedLabelSize;
                            expectedLabelSize.height = expectedLabelSize.height + 70;
-                           
+                           expectedLabelSize.width = self.view.frame.size.width * 0.95;
+
                            self.scrollVIew.contentSize = expectedLabelSize;
                            
                            self.transcriptionTextView.contentSize = expectedLabelSize;
                            
                            CGRect frame = self.transcriptionTextView.frame;
                            frame.size.height = self.transcriptionTextView.contentSize.height;
+                           frame.size.width = self.view.frame.size.width * 0.95;
+
                            self.transcriptionTextView.frame = frame;
 
                        });
@@ -885,51 +904,64 @@
 
 -(void)updateTime:(id) sender
 {
-    if (timerSeconds == -10)
+    if ([AppPreferences sharedAppPreferences].isReachable)
     {
-        isTranscripting = false;
+        if (timerSeconds == -10)
+        {
+            isTranscripting = false;
+            
+            [recognitionTask cancel];
+            
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^
+                       {
+                           
+                           
+                           if (timerSeconds == 0)
+                           {
+                               
+                               [recognitionTask isFinishing];
+                               
+                               [self subStopLiveAudioTranscription];
+                               
+                               [recognitionTask finish];
+                               
+                               [startTranscriptionButton setTitle:@"Resume" forState:UIControlStateNormal];
+                               
+                               transRecordImageView.image = [UIImage imageNamed:@"TransResume"];
+                               
+                               startLabel.text = @"Resume";
+                               
+                               transcriptionStatusLabel.text = @"Press Resume to continue";
+                               
+                               audioFileName = nil; // to save the recorded file
+                               
+                           }
+                           else
+                           {
+                               
+                               --timerSeconds;
+                               
+                               timerLabel.text = [NSString stringWithFormat:@"00:%02d",timerSeconds];
+                           }
+                           
+                       });
         
-        [recognitionTask cancel];
-        
-        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
     }
-    dispatch_async(dispatch_get_main_queue(), ^
-                   {
-                      
-                       
-                       if (timerSeconds == 0)
-                       {
-                          
-                           BOOL isFinishing = [recognitionTask isFinishing];
-
-                           [self subStopLiveAudioTranscription];
-                           
-                           [recognitionTask finish];
-
-                           [startTranscriptionButton setTitle:@"Resume" forState:UIControlStateNormal];
-                           
-                           transRecordImageView.image = [UIImage imageNamed:@"TransResume"];
-                           
-                           startLabel.text = @"Resume";
-                           
-                           transcriptionStatusLabel.text = @"Press Resume to continue";
-                           
-                           audioFileName = nil; // to save the recorded file
-
-                       }
-                       else
-                       {
-                           
-                           --timerSeconds;
-                           
-                           timerLabel.text = [NSString stringWithFormat:@"00:%02d",timerSeconds];
-                       }
-                       
-                   });
-    
+    else
+    {
+        [newRequestTimer invalidate];
+        
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:NO_INTERNET_TITLE_MESSAGE withMessage:NO_INTERNET_DETAIL_MESSAGE withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        
+        [self stopLiveAudioTranscription:nil];
+    }
+   
    
     
 }
+
 
 - (void)startCapture
 {
@@ -1040,7 +1072,7 @@
                     }]; //You can use a block here to handle a press on this button
         
         UIAlertAction* actionCancel = [UIAlertAction actionWithTitle:@"Cancel"
-                                                               style:UIAlertActionStyleDefault
+                                                               style:UIAlertActionStyleCancel
                                                              handler:^(UIAlertAction * action)
                                        {
                                            
@@ -1134,6 +1166,13 @@
         docFileDetails.createdDate = [[APIManager sharedManager] getDateAndTimeString];
         
         docFileDetails.uploadDate = @"";
+        
+        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+        DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        
+        docFileDetails.departmentName = deptObj.departmentName;
+        
+       
         
         [[Database shareddatabase] addDocFileInDB:docFileDetails];
     }
@@ -1463,5 +1502,32 @@
 //
 //
 //}
+
+-(void)textViewDidChange:(UITextView *)textView
+{
+    if (!isTranscripting)
+    {
+        CGSize maximumLabelSize = CGSizeMake(96, FLT_MAX);
+        
+        CGSize expectedLabelSize = [self.transcriptionTextView.text sizeWithFont:[UIFont systemFontOfSize:10] constrainedToSize:maximumLabelSize lineBreakMode:UILineBreakModeWordWrap];
+        
+        //                           CGSize customizeExpectedLabelSize = expectedLabelSize;
+        expectedLabelSize.height = expectedLabelSize.height + 70;
+        expectedLabelSize.width = self.view.frame.size.width * 0.95;
+
+        self.scrollVIew.contentSize = expectedLabelSize;
+        
+        self.transcriptionTextView.contentSize = expectedLabelSize;
+        
+        CGRect frame = self.transcriptionTextView.frame;
+        
+        frame.size.height = self.transcriptionTextView.contentSize.height;
+        frame.size.width = self.view.frame.size.width * 0.95;
+
+        self.transcriptionTextView.frame = frame;
+    }
+   
+}
+
 @end
 

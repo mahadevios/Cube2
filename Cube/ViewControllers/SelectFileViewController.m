@@ -172,8 +172,12 @@
 //        timeLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:1]];
     
 //    dateLabel.text=[NSString stringWithFormat:@"%@",[dateAndTimeArray objectAtIndex:0]];
-    
-    departmentLabel.text = deptObj.departmentName;
+    if (docFileDetails.departmentName == nil || [docFileDetails.departmentName  isEqual: @""])
+    {
+        docFileDetails.departmentName = deptObj.departmentName;
+    }
+    else
+    departmentLabel.text = docFileDetails.departmentName;
     
     fileNameLabel.text = docFileDetails.docFileName;
     

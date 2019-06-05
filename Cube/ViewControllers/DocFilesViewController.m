@@ -226,14 +226,7 @@
 }
 
 -(void)validateCommentResponse:(NSNotification*)notification
-{
-    NSDictionary* dict = notification.object;
-    
-    NSString* code = [dict valueForKey:@"code"];
-    
-    NSString* dictationID = [dict valueForKey:@"DictationID"];
-
-    
+{    
     [self removeCommentView];
 
 }
@@ -752,7 +745,7 @@
     NSString* newDestPath = [destpath stringByAppendingPathExtension:@"doc"];
     
     NSError* error;
-    NSString* content = [NSString stringWithContentsOfFile:newDestPath encoding:NSMacOSRomanStringEncoding error:&error];
+    [NSString stringWithContentsOfFile:newDestPath encoding:NSMacOSRomanStringEncoding error:&error];
 //    UILabel* inCompleteDictationLabel=[cell viewWithTag:101];
 //    UILabel* noDictationLabel=[cell viewWithTag:102];
     
@@ -1167,7 +1160,7 @@
 
 -(void)deleteDocxFromStorage:(NSString*)fileName
 {
-    BOOL deleted = [[APIManager sharedManager] deleteDocxFile:[NSString stringWithFormat:@"%@",fileName]];
+    [[APIManager sharedManager] deleteDocxFile:[NSString stringWithFormat:@"%@",fileName]];
 
     
 }
