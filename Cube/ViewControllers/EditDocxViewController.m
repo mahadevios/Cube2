@@ -281,7 +281,7 @@
 
     NSString* destDocxPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.docx",zipDocxFileName]];
 
-    BOOL copied = [[NSFileManager defaultManager] copyItemAtPath:sourcePath toPath:destDocxPath error:nil];
+    [[NSFileManager defaultManager] copyItemAtPath:sourcePath toPath:destDocxPath error:nil];
     NSLog(@"");
 }
 
@@ -735,8 +735,6 @@
     int textViewIndex = [[elementIndexDict objectForKey:[NSString stringWithFormat:@"%ld",(long)textView.tag]] intValue];
     
     NSString* path = [XPathForTextViewDict objectForKey:[NSString stringWithFormat:@"%ld",(long)textView.tag]];
-    
-    NSError* error;
     
     path = [path stringByReplacingOccurrencesOfString:@"/" withString:@"/w:"];
     

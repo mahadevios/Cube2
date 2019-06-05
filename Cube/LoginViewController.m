@@ -327,82 +327,114 @@
 
 
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    // Prevent crashing undo bug – see note below.
-    if(range.length + range.location > textField.text.length)
-    {
-        return NO;
-    }
-    NSUInteger newLength = [textField.text length] + [string length] - range.length;
-    
-    if (newLength==1)
-    {
-        [self performSelector:@selector(resignFirstResponder:) withObject:textField afterDelay:0.02];
-//    [self resignFirstResponder:textField];
-//        [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.05];
-    }
-//    else
+//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+//    // Prevent crashing undo bug – see note below.
+//    if(range.length + range.location > textField.text.length)
 //    {
-//        [self performSelector:@selector(resignResponder:) withObject:textField afterDelay:0.0];
+//        return NO;
 //    }
-    return newLength <= 1;
-}
-
-//-(void)resignResponder:(UITextField*)textfield
+//    NSUInteger newLength = [textField.text length] + [string length] - range.length;
+//
+//    if (newLength==1)
+//    {
+//        [self performSelector:@selector(resignFirstResponder:) withObject:textField afterDelay:0.02];
+//
+//    }
+//
+//    return newLength <= 1;
+//}
+//
+//-(void)resignFirstResponder:(UITextField*)textfield
 //{
 //    if (textfield==pinCode1TextField && textfield.text.length > 0)
 //    {
 //        [pinCode2TextField becomeFirstResponder];
 //    }
+//    else
+//        if (textfield==pinCode2TextField && textfield.text.length > 0)
+//        {
+//            [pinCode3TextField becomeFirstResponder];
 //
-//    if (textfield==pinCode2TextField && textfield.text.length > 0)
-//    {
-//        [pinCode3TextField becomeFirstResponder];
+//        }
+//        else
+//            if (textfield==pinCode3TextField && textfield.text.length > 0)
+//            {
+//                [pinCode4TextField becomeFirstResponder];
 //
-//    }
-//    else if (textfield==pinCode2TextField && textfield.text.length == 0)
-//    {
-//        [pinCode1TextField becomeFirstResponder];
-//    }
+//            }
 //
-//    if (textfield==pinCode3TextField && textfield.text.length > 0)
-//    {
-//        [pinCode4TextField becomeFirstResponder];
 //
-//    }
-//    else if (textfield==pinCode3TextField && textfield.text.length == 0)
-//    {
-//        [pinCode2TextField becomeFirstResponder];
-//    }
-//
-//    if (textfield==pinCode4TextField && textfield.text.length == 0)
-//    {
-//        [pinCode3TextField becomeFirstResponder];
-//    }
-   
 //}
 
--(void)resignFirstResponder:(UITextField*)textfield
+-(BOOL)textFieldShouldReturn:(UITextField*)textField;
 {
-    if (textfield==pinCode1TextField && textfield.text.length > 0)
+    if (textField == pinCode1TextField)
     {
         [pinCode2TextField becomeFirstResponder];
     }
-    else
-        if (textfield==pinCode2TextField && textfield.text.length > 0)
-        {
-            [pinCode3TextField becomeFirstResponder];
-            
-        }
-        else
-            if (textfield==pinCode3TextField && textfield.text.length > 0)
-            {
-                [pinCode4TextField becomeFirstResponder];
-                
-            }
+    else if (textField == pinCode2TextField)
+    {
+        [pinCode3TextField becomeFirstResponder];
+    }
+    else if (textField == pinCode3TextField)
+    {
+        [pinCode4TextField becomeFirstResponder];
+    }
     
-    
+    return NO;
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    // This allows numeric text only, but also backspace for deletes
+    if (string.length > 0 && ![[NSScanner scannerWithString:string] scanInt:NULL])
+        return NO;
+    
+    NSUInteger oldLength = [textField.text length];
+    NSUInteger replacementLength = [string length];
+    NSUInteger rangeLength = range.length;
+    
+    NSUInteger newLength = oldLength - rangeLength + replacementLength;
+    
+    // This 'tabs' to next field when entering digits
+    if (newLength == 1) {
+        if (textField == pinCode1TextField)
+        {
+            [self performSelector:@selector(setNextResponder:) withObject:pinCode2TextField afterDelay:0.05];
+        }
+        else if (textField == pinCode2TextField)
+        {
+            [self performSelector:@selector(setNextResponder:) withObject:pinCode3TextField afterDelay:0.05];
+        }
+        else if (textField == pinCode3TextField)
+        {
+            [self performSelector:@selector(setNextResponder:) withObject:pinCode4TextField afterDelay:0.05];
+        }
+    }
+    //this goes to previous field as you backspace through them, so you don't have to tap into them individually
+    else if (oldLength > 0 && newLength == 0) {
+        if (textField == pinCode4TextField)
+        {
+            [self performSelector:@selector(setNextResponder:) withObject:pinCode3TextField afterDelay:0.05];
+        }
+        else if (textField == pinCode3TextField)
+        {
+            [self performSelector:@selector(setNextResponder:) withObject:pinCode2TextField afterDelay:0.05];
+        }
+        else if (textField == pinCode2TextField)
+        {
+            [self performSelector:@selector(setNextResponder:) withObject:pinCode1TextField afterDelay:0.05];
+        }
+    }
+    
+    return newLength <= 1;
+}
+
+- (void)setNextResponder:(UITextField *)nextResponder
+{
+    [nextResponder becomeFirstResponder];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

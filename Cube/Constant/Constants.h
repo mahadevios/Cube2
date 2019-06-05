@@ -98,6 +98,9 @@
 #define PAUSE_STOP_MESSAGE                     @"Recording is on.Please pause/stop the recording"
 #define MAXIMUM_RECORDING_LIMIT_MESSAGE        @"Recording duration length exceeded,please start new recording for further dictation"
 #define RECORDING_SAVED_MESSAGE                @"Recording duration length exceeded,your recording has been saved in awaiting transfer,please start new recording for further dictation"
+
+#define NO_INTERNET_TITLE_MESSAGE               @"No internet connection!"
+#define NO_INTERNET_DETAIL_MESSAGE              @"Please check your internet connection and try again."
 #define CURRENT_VESRION                        @"currentVersion"
 #define IS_DATE_FORMAT_UPDATED                 @"dateFormatUpdated"
 

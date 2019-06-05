@@ -18,6 +18,8 @@
 
 @property(nonatomic, strong) NSString* uploadDate;
 @property(nonatomic, strong) NSString* createdDate;
+@property(nonatomic, strong) NSString* departmentName;
+
 @property(nonatomic) int deleteStatus;
 
 @end

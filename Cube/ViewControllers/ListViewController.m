@@ -170,6 +170,8 @@
     {
         isMultipleFilesActivated = YES;
         
+        [self addEmptyVCToSplitVC];
+        
         APIManager* app=[APIManager sharedManager];
         
         CGPoint p = [gestureRecognizer locationInView:self.tableView];
@@ -417,6 +419,7 @@
                             self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserSettings:)];;
                             self.navigationItem.leftBarButtonItem = nil;
                             //                            self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+                            isMultipleFilesActivated=NO;
                             toolBarAdded=NO;
                             [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
                             [app deleteFile:fileName];
@@ -426,6 +429,7 @@
                         }
                         [arrayOfMarked removeAllObjects];
                         [self.tableView reloadData];
+//                        [self addEmptyVCToSplitVC];
                         
                     }]; //You can use a block here to handle a press on this button
     [alertController addAction:actionDelete];
@@ -710,12 +714,19 @@
             self.navigationItem.title = @"List";
             isMultipleFilesActivated = NO;
             [self hideAndShowUploadButton:NO];
+
+            if (self.splitViewController.isCollapsed == false) // for ipad reguler width reguler height
+            {
+                [self setAudioDetailOrEmptyViewController:indexPath.row];
+            }
+           
+
         }
     }
 
     else
     {
-        if (self.splitViewController.isCollapsed)
+        if (self.splitViewController.isCollapsed) // not an ipad
         {
 //            if (detailVC == nil)
 //            {
@@ -737,13 +748,16 @@
                 detailVC.delegate = self;
             }
             
-            detailVC.selectedRow = 0;
+//            detailVC.selectedRow = 0;
             
             detailVC.listSelected = segment.selectedSegmentIndex;
             //NSLog(@"%ld",vc.listSelected);
             detailVC.selectedRow = indexPath.row;
             
             [detailVC setAudioDetails];
+            
+            [self.splitViewController showDetailViewController:detailVC sender:self];
+
         }
    
     }
@@ -820,8 +834,6 @@
     
         [arrayOfMarked removeAllObjects];
         
-        
-        
     }
    
     self.segment.selectedSegmentIndex= sender.selectedSegmentIndex;
@@ -830,11 +842,26 @@
     
     [self.tableView reloadData];
     
-    [self setAudioDetailOrEmptyViewController:sender.selectedSegmentIndex];
+    [self setAudioDetailOrEmptyViewController:0];
 
+    if (sender.selectedSegmentIndex == 1)
+    {
+        if ([APIManager sharedManager].deletedListArray.count > 0)
+        {
+            [self setFirstRowSelected];
+        }
+    }
+    else
+    {
+        if ([APIManager sharedManager].transferredListArray.count > 0)
+        {
+            [self setFirstRowSelected];
+        }
+    }
+    
 }
 
--(void)setAudioDetailOrEmptyViewController:(int)selectedSegmentIndex
+-(void)setAudioDetailOrEmptyViewController:(int)selectedRowIndex
 {
     APIManager* app=[APIManager sharedManager];
     Database* db=[Database shareddatabase];
@@ -844,31 +871,15 @@
     app.transferredListArray=[db getListOfTransferredOrDeletedFiles:@"Transferred"];
     if (self.splitViewController.isCollapsed == false) // if not collapsed that is reguler width hnce ipad
     {
-        if (selectedSegmentIndex == 0) // if transfer segment
+        if (self.segment.selectedSegmentIndex == 0) // if transfer segment
         {
             if(app.transferredListArray.count==0) // if transferred count 0 then show empty VC  else show audio details
             {
-                UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EmptyViewController"];
-                
-                NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
-                
-                if (subVC.count > 1)
-                {
-                    [subVC removeObjectAtIndex:1];
-                    
-                    [subVC addObject:vc];
-
-                }
-                else
-                {
-                     [subVC addObject:vc];
-                }
-                
-                [self.splitViewController setViewControllers:subVC];
+                [self addEmptyVCToSplitVC];
             }
             else
             {
-                [self setFirstRowSelected]; // set first row seletced by default
+//                [self setFirstRowSelected]; // set first row seletced by default
                 
                 detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
                 
@@ -876,7 +887,7 @@
                 
                 detailVC.listSelected = 0;
                 
-                detailVC.selectedRow = 0;
+                detailVC.selectedRow = selectedRowIndex;
                 
                 [self.splitViewController showDetailViewController:detailVC sender:self];
             }
@@ -885,29 +896,12 @@
         {
             if(app.deletedListArray.count==0) // if delete count 0 then show empty else show audio details
             {
-                UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EmptyViewController"];
-                
-                NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
-                
-                if (subVC.count > 1)
-                {
-                    [subVC removeObjectAtIndex:1];
-                    
-                    [subVC addObject:vc];
-                    
-                }
-                else
-                {
-                    [subVC addObject:vc];
-                }
-                
-                [self.splitViewController setViewControllers:subVC];
                 
                 
             }
             else
             {
-                [self setFirstRowSelected];
+                
                 
                 detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferredOrDeletedAudioDetailsViewController"];
                 
@@ -915,13 +909,36 @@
                 
                 detailVC.listSelected = 1;
                 
-                detailVC.selectedRow = 0;
+                detailVC.selectedRow = selectedRowIndex;
                 
                 [self.splitViewController showDetailViewController:detailVC sender:self];
                 
             }
         }
     }
+    
+}
+
+-(void)addEmptyVCToSplitVC
+{
+    
+    UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EmptyViewController"];
+    
+    NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
+    
+    if (subVC.count > 1)
+    {
+        [subVC removeObjectAtIndex:1];
+        
+        [subVC addObject:vc];
+        
+    }
+    else
+    {
+        [subVC addObject:vc];
+    }
+    
+    [self.splitViewController setViewControllers:subVC];
     
 }
 

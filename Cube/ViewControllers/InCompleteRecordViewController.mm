@@ -202,6 +202,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
         NSString* dictationTimeString= [[NSUserDefaults standardUserDefaults] valueForKey:SAVE_DICTATION_WAITING_SETTING];
         
+        dictationTimeString = @"2 Minutes";
+
         NSArray* minutesAndValueArray= [dictationTimeString componentsSeparatedByString:@" "];
        
         if (minutesAndValueArray.count < 1)
@@ -651,7 +653,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         return;
     }
-    if (dictationTimerSeconds==60*minutesValue)
+    if (dictationTimerSeconds==(60*minutesValue-1))
     {
         recordingPausedOrStoped=YES;
         
@@ -1511,6 +1513,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)pauseRecording
 {
+    dictationTimerSeconds = 0;
     
     recordingPauseAndExit=YES;
     
@@ -1540,6 +1543,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 -(void)stopRecording
 {
     [UIApplication sharedApplication].idleTimerDisabled = NO;
+    
+    dictationTimerSeconds = 0;
     
     [audioDurationLAbel setHidden:YES];
     
@@ -2192,7 +2197,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)composeAudio
 {
-    NSError* error1;
     
     bsackUpAudioFileName = existingAudioFileName;
     
@@ -2683,25 +2687,22 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     
     // Configure the cell...
-    UILabel* departmentLabel=[[UILabel alloc]initWithFrame:CGRectMake(40, 10, self.view.frame.size.width - 60.0f, 18)];
+    UILabel* tableViewDepartmentLabel=[[UILabel alloc]initWithFrame:CGRectMake(40, 10, self.view.frame.size.width - 60.0f, 18)];
     
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
     
-    departmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
+    tableViewDepartmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
     
-    departmentLabel.tag=indexPath.row+200;
+    tableViewDepartmentLabel.tag=indexPath.row+200;
     
     radioButton.tag=indexPath.row+100;
     
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+
+//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+//
+//    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    
-    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    
-    NSLog(@"%ld",deptObj1.Id);
-    
-    if ([deptObj.departmentName isEqualToString:departmentLabel.text])
+    if ([existingAudioDepartmentName isEqualToString:tableViewDepartmentLabel.text])
     {
         
         [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
@@ -2712,7 +2713,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [cell addSubview:radioButton];
     
-    [cell addSubview:departmentLabel];
+    [cell addSubview:tableViewDepartmentLabel];
     
     return cell;
 }
@@ -2724,6 +2725,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     UILabel* departmentNameLanel= [cell viewWithTag:indexPath.row+200];
     
     UIButton* radioButton=[cell viewWithTag:indexPath.row+100];
+    
+    existingAudioDepartmentName = departmentNameLanel.text;
     
     DepartMent *deptObj = [[DepartMent alloc]init];
     
@@ -2744,16 +2747,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 -(void)cancel:(id)sender
 {
-   
-    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-    
-    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
     
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
     
-    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
+    
+    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+
+    existingAudioDepartmentName = deptObj.departmentName;
     
     [popupView removeFromSuperview];
 }
@@ -2771,7 +2773,19 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     transferredByLabel.text=deptObj.departmentName;
     
+    existingAudioDepartmentName = deptObj.departmentName;
+    
     [[Database shareddatabase] updateDepartment:deptObj.Id fileName:self.existingAudioFileName];
+    
+    
+    if (self.isOpenedFromAudioDetails)
+    {
+       NSDictionary* audiorecordDict = [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRowOfAwaitingList];
+        
+        [audiorecordDict setValue:deptObj.departmentName forKey:@"Department"];
+        
+        [app.awaitingFileTransferNamesArray replaceObjectAtIndex:self.selectedRowOfAwaitingList withObject:audiorecordDict];
+    }
     
     [popupView removeFromSuperview];
 }
@@ -2787,6 +2801,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 - (IBAction)editAudioButtonClicked:(UIButton*)sender
 {
+    
     updatedInsertionTime = 0;
     
     [self prepareAudioPlayer];
@@ -2822,7 +2837,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                           int audioSeconds = audioHourByMod % 60;
                                                           
                                                           //int audioSeconds = (seconds) % 60;
-                                                          
+                                                          dictationTimerSeconds = 0; // for save dictation waiting by
                                                           timerHour = audioHour;
                                                           timerMinutes = audioMinutes;
                                                           timerSeconds = audioSeconds;
@@ -2940,7 +2955,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 -(void)deleteToEnd
 {
    // [sliderTimer invalidate];
-    
+    dictationTimerSeconds = 0;  // for save dictation waiting by timer value
     // backup: if get killed while saving the record
     AVMutableComposition* composition = [AVMutableComposition composition];
     
@@ -3339,7 +3354,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
         [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
     
-    BOOL remooved = [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@editedCopy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:nil];
+    [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@editedCopy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:nil];
     
     NSArray* pathComponents = [NSArray arrayWithObjects:
                                [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],

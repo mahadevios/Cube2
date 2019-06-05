@@ -10,7 +10,7 @@
 #import <Speech/Speech.h>
 #import "CommonDelegate.h"
 
-@interface SpeechRecognitionViewController : UIViewController<SFSpeechRecognitionTaskDelegate,AVCaptureAudioDataOutputSampleBufferDelegate,CommonDelegate>
+@interface SpeechRecognitionViewController : UIViewController<SFSpeechRecognitionTaskDelegate,AVCaptureAudioDataOutputSampleBufferDelegate,CommonDelegate,UITextViewDelegate>
 {
     NSTimer* newRequestTimer;
     NSTimer* demoTimer;

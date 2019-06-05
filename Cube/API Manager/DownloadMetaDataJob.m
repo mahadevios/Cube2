@@ -565,9 +565,7 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
             
             if ([[response objectForKey:@"code"] isEqualToString:@"200"])
             {
-                
-                NSString* path = [[NSBundle mainBundle] pathForResource:@"sample" ofType:@"doc"];
-                
+                                
                 NSString* byteCodeString = [response valueForKey:@"ByteDocForDownload"];
                 
                 NSString* DictationID = [response valueForKey:@"DictationID"];
@@ -590,7 +588,7 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
                     if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
                         [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
                     
-                   BOOL iswritten =  [decodedData writeToFile:newDestPath atomically:YES];
+                   [decodedData writeToFile:newDestPath atomically:YES];
                     
                 }
                 else

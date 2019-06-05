@@ -42,9 +42,9 @@
                                              selector:@selector(validateFileUploadResponse:) name:NOTIFICATION_FILE_UPLOAD_API
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(fileUploadClicked:) name:NOTIFICATION_FILE_UPLOAD_CLICKED
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(fileUploadClicked:) name:NOTIFICATION_FILE_UPLOAD_CLICKED
+//                                               object:nil];
     
     [self setUpNavigationView];
     
@@ -125,10 +125,7 @@
 
 }
 
--(void)fileUploadClicked:(NSNotification*)sender
-{
-    [self.tableView reloadData];
-}
+
 //-(void)setTimer1
 //{
 //    
@@ -186,13 +183,29 @@
                     {
                         NSDictionary* awaitingFileTransferDict = [[APIManager sharedManager].awaitingFileTransferNamesArray objectAtIndex:i];
                         
-                        if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]== NULL)
+//                        NSDictionary* dict  = [AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict;
+                        if (!([[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray containsObject:[awaitingFileTransferDict valueForKey:@"RecordItemName"]] || [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray containsObject:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]))
                         {
-                            
                             isWithoutUploadingFileAvailable = true;
+                            
+//                            selectedIndex = i;
                             
                             break;
                         }
+//                        if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]== NULL)
+//                        {
+//
+//                            isWithoutUploadingFileAvailable = true;
+//
+//                            break;
+//                        }
+//                        if ([AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count < 1 && [AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count < 1)//nothing in upload queue
+//                        {
+//                            
+//                            isWithoutUploadingFileAvailable = true;
+//                            
+//                            break;
+//                        }
                         
                     }
                     
@@ -252,8 +265,11 @@
 
 -(void)addAudioDetailsVCToSplitVC:(int)selectedIndex
 {
-    
-    detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
+//    if (detailVC == nil)
+//    {
+        detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
+
+//    }
     
     detailVC.delegate = self;
     
@@ -639,7 +655,7 @@
             [arrayOfMarked removeObject:indexPath];
             
             
-            selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
+            selectedCountLabel.text=[NSString stringWithFormat:@"%lu",(unsigned long)arrayOfMarked.count];
 
             UIBarButtonItem* vc=self.navigationItem.rightBarButtonItem;
             
@@ -697,10 +713,14 @@ else//to disaalow single row while that row is uploading
 
             if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
             {
-                AudioDetailsViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
-                vc.selectedRow=indexPath.row ;
-                vc.selectedView=self.currentViewName;
-                [self.navigationController presentViewController:vc animated:YES completion:nil];
+//                if (detailVC == nil)
+//                {
+                    detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
+
+//                }
+                detailVC.selectedRow=indexPath.row ;
+                detailVC.selectedView=self.currentViewName;
+                [self.navigationController presentViewController:detailVC animated:YES completion:nil];
 //                self.tableView.allowsMultipleSelection = NO;
             
             }
@@ -827,7 +847,10 @@ else//to disaalow single row while that row is uploading
             {
                 NSDictionary* awaitingFileTransferDict = [[APIManager sharedManager].awaitingFileTransferNamesArray objectAtIndex:i];
                 
-                if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]== NULL)
+                //                 if ([[AppPreferences sharedAppPreferences].fileNameSessionIdentifierDict valueForKey:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]== NULL)
+                //                if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count < 1 && [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray.count < 1)
+                if (!([[AppPreferences sharedAppPreferences].filesInAwaitingQueueArray containsObject:[awaitingFileTransferDict valueForKey:@"RecordItemName"]] || [[AppPreferences sharedAppPreferences].filesInUploadingQueueArray containsObject:[awaitingFileTransferDict valueForKey:@"RecordItemName"]]))
+                    
                 {
                     NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:i inSection:0];
                     
@@ -1045,17 +1068,18 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
                             
                             NSDictionary* awaitingFileTransferDict= [app.awaitingFileTransferNamesArray objectAtIndex:indexPath.row];
                             NSString* fileName=[awaitingFileTransferDict valueForKey:@"RecordItemName"];
-                                self.navigationItem.title=self.currentViewName;
-                                self.navigationItem.rightBarButtonItem = nil;
+                            self.navigationItem.title=self.currentViewName;
+                            self.navigationItem.rightBarButtonItem = nil;
                             self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-                                toolBarAdded=NO;
-                                [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
+                            toolBarAdded=NO;
+                            [db updateAudioFileStatus:@"RecordingDelete" fileName:fileName dateAndTime:dateAndTimeString];
                             [app deleteFile:fileName];
                             [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
-
+                            
                             
                         }
                         [arrayOfMarked removeAllObjects];
+                        [self.checkedIndexPath removeAllObjects];
                         [self.tableView reloadData];
 
                     }]; //You can use a block here to handle a press on this button
@@ -1116,6 +1140,8 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
                         for (int i=0; i<arrayOfMarked.count; i++)
                             
                         {
+                            isMultipleFilesActivated=NO;
+
                             APIManager* app=[APIManager sharedManager];
                             NSIndexPath* indexPath=[arrayOfMarked objectAtIndex:i];
                             //[aarayOfMarkedCopy addObject:[arrayOfMarked objectAtIndex:i]];
@@ -1264,6 +1290,9 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
 - (void)myClassDelegateMethod:(AudioDetailsViewController *)sender
 {
     [self.tableView reloadData];
+    
+    [self addEmptyVCToSplitVC];
+
 }
 
 

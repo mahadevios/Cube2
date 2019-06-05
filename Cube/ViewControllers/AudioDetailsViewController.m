@@ -544,9 +544,7 @@
                             copyArray=[sharedDefaults objectForKey:@"audioNamesArray"];
                             
                             sharedAudioNamesArray=[copyArray mutableCopy];
-                            
-                            NSMutableArray* forDeleteStatusProxyArray = [NSMutableArray new];
-                            
+                                                        
                             for (int i=0; i<sharedAudioNamesArray.count; i++)
                             {
                                 
@@ -818,11 +816,9 @@
                             
 //                            NSLog(@"Today's Transferred after DB");
                             
-                            if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-                            {
-                                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_CLICKED object:nil];
-                                
-                            }
+                           
+                            
+                          
                             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                 
                                 if ([AppPreferences sharedAppPreferences].isReachable)
@@ -832,12 +828,18 @@
                                 
                                 [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
                                 
-                                [self.delegate myClassDelegateMethod:nil];
+                                
+                               
                                 
                                 dispatch_async(dispatch_get_main_queue(), ^
                                                                       {
                                                                           [[self.view viewWithTag:507] setHidden:YES];
 
+                                                                          if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+                                                                          {
+                                                                              [self.delegate myClassDelegateMethod:nil];
+                                                                              
+                                                                          }
                                                                       });
                                 
                             });
@@ -897,7 +899,8 @@
 
                             [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
                         }
-                            [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+                        
+                        [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
 
                         isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
 
@@ -909,17 +912,23 @@
                             [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:803] removeFromSuperview];//remove edit button
                         
 
-                        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-                        {
-                            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_CLICKED object:nil];
-                            
-                        }
-                        
+                       
 
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                             
                                                        [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
             
+                            
+                            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                                
+                                if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+                                {
+                                    [self.delegate myClassDelegateMethod:nil];
+                                    
+                                }
+                            });
+                            
+                           
                             
                         });
                         
@@ -974,7 +983,7 @@
                                     
                                     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
                                     {
-                                        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_CLICKED object:nil];
+                                        [self.delegate myClassDelegateMethod:nil];
                                         
                                     }
                                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -1037,7 +1046,7 @@
                                
                                 if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
                                 {
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_FILE_UPLOAD_CLICKED object:nil];
+                                    [self.delegate myClassDelegateMethod:nil];
                                     
                                 }
                                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -1280,6 +1289,8 @@
     vc.existingAudioDepartmentName = [audiorecordDict valueForKey:@"Department"];
     
     vc.isOpenedFromAudioDetails = YES;
+    
+    vc.selectedRowOfAwaitingList = self.selectedRow;
     
     [self presentViewController:vc animated:YES completion:nil];
 

@@ -97,6 +97,8 @@
     float updatedInsertionTime;
     
     float playerDurationWithMilliSeconds;
+    
+    NSString* existingDepartmentName;
 
 }
 @property (nonatomic,strong)     AVAudioPlayer       *player;
