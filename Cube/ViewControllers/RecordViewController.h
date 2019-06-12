@@ -99,6 +99,8 @@
     float playerDurationWithMilliSeconds;
     
     NSString* existingDepartmentName;
+    
+    bool recordingSavedToDatabaseFromBG;
 
 }
 @property (nonatomic,strong)     AVAudioPlayer       *player;

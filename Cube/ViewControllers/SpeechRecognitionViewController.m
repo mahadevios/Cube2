@@ -1061,7 +1061,7 @@
     else
     {
         alertController = [UIAlertController alertControllerWithTitle:@"Create Text File?"
-                                                              message:@"Are you sure you want to create a text file of below the text?"
+                                                              message:@"Are you sure you want to create a text file?"
                                                        preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* actionCreate = [UIAlertAction actionWithTitle:@"Create"
                                             style:UIAlertActionStyleDefault

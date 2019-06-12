@@ -1152,10 +1152,19 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
                             self.navigationItem.rightBarButtonItem = nil;
                             self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
                             toolBarAdded=NO;
-                            [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:fileName];
                             
-                            
+                            NSString* transferStatus = [awaitingFileTransferDict valueForKey:@"TransferStatus"];
 
+                            if ([transferStatus isEqualToString:@"TransferFailed"])
+                            {
+                                int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:fileName];
+                                
+                                NSString* date=[app getDateAndTimeString];
+                                
+                                [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:fileName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                            }
+                            
+                            [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:fileName];
                             
                         }
                         [arrayOfMarked removeAllObjects];//array of marked is for to get marked cells(objects),got the file names from arrayof marked,update the db hence remove all objects,and rload table

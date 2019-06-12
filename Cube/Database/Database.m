@@ -1596,11 +1596,19 @@ static Database *db;
     
     
 }
+
 -(void)updateAudioFileUploadedStatus:(NSString*)status fileName:(NSString*)fileName dateAndTime:(NSString*)dateAndTimeString mobiledictationidval:(long) idval;
 {
     
 //    NSString *query3=[NSString stringWithFormat:@"Update CubeData set TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@'),TransferDate='%@',mobiledictationidval=%ld Where RecordItemName='%@'",status,dateAndTimeString,idval,fileName];
-     NSString *query3=[NSString stringWithFormat:@"Update CubeData set TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@'),mobiledictationidval=%ld, TransferDate='%@' Where RecordItemName='%@'",status,idval,dateAndTimeString,fileName];
+    NSString *query3;
+    
+    if ([dateAndTimeString isEqualToString:@"NotApplicable"])
+    {
+       query3=[NSString stringWithFormat:@"Update CubeData set TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@'),mobiledictationidval=%ld Where RecordItemName='%@'",status,idval,fileName];
+    }
+    else
+        query3=[NSString stringWithFormat:@"Update CubeData set TransferStatus=(Select Id from TransferStatus Where TransferStatus='%@'),mobiledictationidval=%ld, TransferDate='%@' Where RecordItemName='%@'",status,idval,dateAndTimeString,fileName];
     Database *db=[Database shareddatabase];
     NSString *dbPath=[db getDatabasePath];
     sqlite3_stmt *statement;

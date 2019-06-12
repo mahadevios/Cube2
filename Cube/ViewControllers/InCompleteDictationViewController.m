@@ -62,7 +62,8 @@
         }
     
     self.navigationItem.title=@"Incomplete Dictations";
-    app.inCompleteFileTransferNamesArray=[db getListOfFileTransfersOfStatus:@"RecordingPause"];
+       
+    [APIManager sharedManager].inCompleteFileTransferNamesArray = [db getListOfFileTransfersOfStatus:@"RecordingPause"];
     [self.tableView reloadData];
    // NSLog(@"%lu",(unsigned long)app.inCompleteFileTransferNamesArray.count);
     
