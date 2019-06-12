@@ -2746,22 +2746,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/RecordViewController.mm"
-            timestampString = "582029969.0818239"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3244"
-            endingLineNumber = "3244"
-            landmarkName = "-deleteToEnd"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/RecordViewController.mm"
             timestampString = "582029969.0818681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
