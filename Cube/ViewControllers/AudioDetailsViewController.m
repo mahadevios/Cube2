@@ -21,7 +21,7 @@
 
 @interface AudioDetailsViewController ()
 {
-  AVAudioPlayer       *player;
+    AVAudioPlayer       *player;
 }
 @end
 
@@ -40,19 +40,19 @@
     
     forTableViewObj=[[PopUpCustomView alloc]init];
     
-
+    
     if (self.splitViewController == nil)
     {
         self.backImageView.hidden = false;
         self.backButton.hidden = false;
-
+        
     }
     else
         if(self.splitViewController.isCollapsed == false)
         {
             self.backImageView.hidden = true;
             self.backButton.hidden = false;
-
+            
         }
     
 }
@@ -66,7 +66,7 @@
     {
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];
     }
-
+    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -75,200 +75,193 @@
         self.navigationController.navigationBar.hidden = true;
     }
     
-   [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
+    [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
     
-   if (![AppPreferences sharedAppPreferences].dismissAudioDetails && ![AppPreferences sharedAppPreferences].recordNew)
-   {
-    
-    APIManager* app=[APIManager sharedManager];
-    
-    if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
+    if (![AppPreferences sharedAppPreferences].dismissAudioDetails && ![AppPreferences sharedAppPreferences].recordNew)
     {
-        [transferDictationButton setHidden:NO];
         
-        [deleteDictationButton setHidden:NO];
-    }
-   
-       
-    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-       
-    transferDictationButton.layer.cornerRadius=4.0f;
-       
-    deleteDictationButton.layer.cornerRadius=4.0f;
-       
-    UILabel* filenameLabel=[self.view viewWithTag:501];
-       
-    UILabel* departmentLabel=[self.view viewWithTag:503];
-       
-    UILabel* dictatedOnLabel=[self.view viewWithTag:504];
-       
-    UILabel* transferStatusLabel=[self.view viewWithTag:505];
-       
-    UILabel* transferDateLabel=[self.view viewWithTag:506];
-       
-    UILabel* dictatedHeadingLabel=[self.view viewWithTag:2000];
-
-    [[self.view viewWithTag:507] setHidden:YES];
-    
-    if ([self.selectedView isEqualToString:@"Awaiting Transfer"])
-    {
-        audiorecordDict = [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRow];
-        
-        if (![[audiorecordDict valueForKey:@"TransferStatus"] isEqualToString:@"TransferFailed"])
-        {
-            if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
-            {
-                [self addEditDeleteAndUploadButtons];
-
-            }
-        }
-       
-        
-    }
-    else
-    if ([self.selectedView isEqualToString:@"Transferred Today"])
-    {
-        [transferDictationButton setTitle:@"Resend" forState:UIControlStateNormal];
-        
-        audiorecordDict= [app.todaysFileTransferNamesArray objectAtIndex:self.selectedRow];
-        
-        NSString* tarnsferStatus = [audiorecordDict valueForKey:@"TransferStatus"];
-
-        if ([[audiorecordDict valueForKey:@"DeleteStatus"] isEqualToString:@"Delete"])//to check wether transferred file is deleted
-        {
-            NSString* transferStatusString;
-            
-            if ([tarnsferStatus isEqualToString:@"TransferFailed"])
-            {
-                transferStatusString = @"Transfer Failed";
-            }
-            else if ([tarnsferStatus isEqualToString:@"NotTransferred"])
-            {
-                transferStatusString = @"Not Transferred";
-                
-            }
-            else
-            {
-                transferStatusString = tarnsferStatus;
-            }
-            
-            transferStatusLabel.text=[NSString stringWithFormat:@"%@, Deleted",transferStatusString];
-            
-            [transferDictationButton setHidden:YES];
-            
-            [deleteDictationButton setHidden:YES];
-        }
-    }
-    else
-    if ([self.selectedView isEqualToString:@"Transfer Failed"])
-    {
-        [transferDictationButton setTitle:@"Resend" forState:UIControlStateNormal];
-        
-        audiorecordDict= [app.failedTransferNamesArray objectAtIndex:self.selectedRow];
-    }
-    else
-    if ([self.selectedView isEqualToString:@"Imported"])
-    {
-        //[transferDictationButton setTitle:@"Transfer Recording" forState:UIControlStateNormal];
-        
-        audiorecordDict = [[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray objectAtIndex:self.selectedRow];
-        
-        [[self.view viewWithTag:507] setHidden:NO];
+        APIManager* app=[APIManager sharedManager];
         
         if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
         {
-            [self addEditDeleteAndUploadButtons];
+            [transferDictationButton setHidden:NO];
+            
+            [deleteDictationButton setHidden:NO];
+        }
+        
+        
+        self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+        
+        transferDictationButton.layer.cornerRadius=4.0f;
+        
+        deleteDictationButton.layer.cornerRadius=4.0f;
+        
+        UILabel* filenameLabel=[self.view viewWithTag:501];
+        
+        UILabel* departmentLabel=[self.view viewWithTag:503];
+        
+        UILabel* dictatedOnLabel=[self.view viewWithTag:504];
+        
+        UILabel* transferStatusLabel=[self.view viewWithTag:505];
+        
+        UILabel* transferDateLabel=[self.view viewWithTag:506];
+        
+        UILabel* dictatedHeadingLabel=[self.view viewWithTag:2000];
+        
+        [[self.view viewWithTag:507] setHidden:YES];
+        
+        if ([self.selectedView isEqualToString:@"Awaiting Transfer"])
+        {
+            audiorecordDict = [app.awaitingFileTransferNamesArray objectAtIndex:self.selectedRow];
+            
+            if (![[audiorecordDict valueForKey:@"TransferStatus"] isEqualToString:@"TransferFailed"])
+            {
+                if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
+                {
+                    [self addEditDeleteAndUploadButtons];
+                    
+                }
+            }
+            
+            [self setTransferStatus];
+        }
+        else
+            if ([self.selectedView isEqualToString:@"Transferred Today"])
+            {
+                [transferDictationButton setTitle:@"Resend" forState:UIControlStateNormal];
+                
+                audiorecordDict= [app.todaysFileTransferNamesArray objectAtIndex:self.selectedRow];
+                
+                NSString* tarnsferStatus = [audiorecordDict valueForKey:@"TransferStatus"];
+                
+                if ([[audiorecordDict valueForKey:@"DeleteStatus"] isEqualToString:@"Delete"])//to check wether transferred file is deleted
+                {
+                    NSString* transferStatusString;
+                    
+                    if ([tarnsferStatus isEqualToString:@"TransferFailed"])
+                    {
+                        transferStatusString = @"Transfer Failed";
+                    }
+                    else if ([tarnsferStatus isEqualToString:@"NotTransferred"])
+                    {
+                        transferStatusString = @"Not Transferred";
+                        
+                    }
+                    else
+                    {
+                        transferStatusString = tarnsferStatus;
+                    }
+                    
+                    transferStatusLabel.text=[NSString stringWithFormat:@"%@, Deleted",transferStatusString];
+                    
+                    [transferDictationButton setHidden:YES];
+                    
+                    [deleteDictationButton setHidden:YES];
+                }
+                else
+                {
+                    [self setTransferStatus];
+                }
+            }
+            else
+                if ([self.selectedView isEqualToString:@"Transfer Failed"])
+                {
+                    [transferDictationButton setTitle:@"Resend" forState:UIControlStateNormal];
+                    
+                    audiorecordDict= [app.failedTransferNamesArray objectAtIndex:self.selectedRow];
+                    
+                    [self setTransferStatus];
+                }
+                else
+                    if ([self.selectedView isEqualToString:@"Imported"])
+                    {
+                        //[transferDictationButton setTitle:@"Transfer Recording" forState:UIControlStateNormal];
+                        
+                        audiorecordDict = [[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray objectAtIndex:self.selectedRow];
+                        
+                        [[self.view viewWithTag:507] setHidden:NO];
+                        
+                        if (isDeleteEditTransferButtonsRemovedAfterTransfer == false)
+                        {
+                            [self addEditDeleteAndUploadButtons];
+                            
+                        }
+                        
+                        [self setTransferStatus];
+                    }
+        
+        
+        if ([self.selectedView isEqualToString:@"Imported"])
+        {
+            filenameLabel.text= [[audiorecordDict valueForKey:@"RecordItemName"] stringByDeletingPathExtension];
+            
+            dictatedHeadingLabel.text=@"Imported On";
+            
+            [[self.view viewWithTag:507] setHidden:NO];
             
         }
-
-    }
-       
-       
-    if ([self.selectedView isEqualToString:@"Imported"])
-    {
-        filenameLabel.text= [[audiorecordDict valueForKey:@"RecordItemName"] stringByDeletingPathExtension];
-
-        dictatedHeadingLabel.text=@"Imported On";
+        else
+        {
+            filenameLabel.text=[audiorecordDict valueForKey:@"RecordItemName"];
+        }
         
-        [[self.view viewWithTag:507] setHidden:NO];
-
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString* dateStr = [audiorecordDict valueForKey:@"RecordCreatedDate"];
+        NSDate *date = [dateFormatter dateFromString:dateStr];
+        
+        // Convert date object into desired format
+        [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+        NSString *newDateString = [dateFormatter stringFromDate:date];
+        
+        dictatedOnLabel.text = newDateString;
+        //    dictatedOnLabel.text=[audiorecordDict valueForKey:@"RecordCreatedDate"];
+        
+        NSString* departmentName = [audiorecordDict valueForKey:@"Department"];
+        
+        departmentLabel.text=departmentName;
+        
+        [audiorecordDict setValue:departmentName forKey:@"DepartmentCopy"];
+        
+        
+        //    transferDateLabel.text=[audiorecordDict valueForKey:@"TransferDate"];
+        
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        
+        NSDate *transferDate = [dateFormatter dateFromString:[audiorecordDict valueForKey:@"TransferDate"]];
+        
+        // Convert date object into desired format
+        [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+        NSString *newTransferDateString = [dateFormatter stringFromDate:transferDate];
+        
+        transferDateLabel.text = newTransferDateString;
+        
+        if ([self.selectedView isEqualToString:@"Transfer Failed"])
+        {
+            transferDateLabel.text=@"";
+        }
+        
+        
+        
+        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME_COPY];
+        
+        //    DepartMent *deptObj = [[DepartMent alloc]init];
+        //
+        //    long deptId= [[[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentLabel.text] longLongValue];
+        //
+        //    deptObj.Id=deptId;
+        //
+        //    deptObj.departmentName=departmentLabel.text;
+        //
+        //    NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
+        //
+        //    [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME];
+        
+        moreButton.userInteractionEnabled=YES;
+        
     }
-    else
-    {
-     filenameLabel.text=[audiorecordDict valueForKey:@"RecordItemName"];
-    }
-    
-       NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-       [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-       NSString* dateStr = [audiorecordDict valueForKey:@"RecordCreatedDate"];
-       NSDate *date = [dateFormatter dateFromString:dateStr];
-       
-       // Convert date object into desired format
-       [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
-       NSString *newDateString = [dateFormatter stringFromDate:date];
-       
-       dictatedOnLabel.text = newDateString;
-//    dictatedOnLabel.text=[audiorecordDict valueForKey:@"RecordCreatedDate"];
-       
-       NSString* departmentName = [audiorecordDict valueForKey:@"Department"];
-       
-    departmentLabel.text=departmentName;
-    
-    [audiorecordDict setValue:departmentName forKey:@"DepartmentCopy"];
-
-    NSString* tarnsferStatus = [audiorecordDict valueForKey:@"TransferStatus"];
-       
-    if ([tarnsferStatus isEqualToString:@"TransferFailed"])
-    {
-        transferStatusLabel.text = @"Transfer Failed";
-    }
-    else if ([tarnsferStatus isEqualToString:@"NotTransferred"])
-    {
-        transferStatusLabel.text = @"Not Transferred";
-
-    }
-    else
-    {
-        transferStatusLabel.text = tarnsferStatus;
-    }
-//    transferDateLabel.text=[audiorecordDict valueForKey:@"TransferDate"];
-     
-       [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-       
-       NSDate *transferDate = [dateFormatter dateFromString:[audiorecordDict valueForKey:@"TransferDate"]];
-       
-       // Convert date object into desired format
-       [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
-       NSString *newTransferDateString = [dateFormatter stringFromDate:transferDate];
-       
-       transferDateLabel.text = newTransferDateString;
-       
-    if ([self.selectedView isEqualToString:@"Transfer Failed"])
-    {
-        transferDateLabel.text=@"";
-    }
-       
-    
-
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-       
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME_COPY];
-
-//    DepartMent *deptObj = [[DepartMent alloc]init];
-//
-//    long deptId= [[[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentLabel.text] longLongValue];
-//
-//    deptObj.Id=deptId;
-//
-//    deptObj.departmentName=departmentLabel.text;
-//
-//    NSData *data1 = [NSKeyedArchiver archivedDataWithRootObject:deptObj];
-//
-//    [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME];
-       
-    moreButton.userInteractionEnabled=YES;
-       
-   }
     else
     {
         if ([AppPreferences sharedAppPreferences].recordNew)
@@ -290,7 +283,7 @@
         else
         {
             [AppPreferences sharedAppPreferences].dismissAudioDetails = NO;
-
+            
             [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:801] removeFromSuperview];//remove uploading buuton
             
             [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:802] removeFromSuperview];//remove delete button
@@ -303,6 +296,26 @@
     
 }
 
+-(void)setTransferStatus
+{
+    NSString* tarnsferStatus = [audiorecordDict valueForKey:@"TransferStatus"];
+    
+    UILabel* transferStatusLabel=[self.view viewWithTag:505];
+
+    if ([tarnsferStatus isEqualToString:@"TransferFailed"])
+    {
+        transferStatusLabel.text = @"Transfer Failed";
+    }
+    else if ([tarnsferStatus isEqualToString:@"NotTransferred"])
+    {
+        transferStatusLabel.text = @"Not Transferred";
+        
+    }
+    else
+    {
+        transferStatusLabel.text = tarnsferStatus;
+    }
+}
 
 -(void)addEditDeleteAndUploadButtons
 {
@@ -310,8 +323,7 @@
     {
         UIButton* uploadRecordButton;
         
-      
-            uploadRecordButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width*0.095, transferDictationButton.frame.origin.y, self.view.frame.size.width*0.83, transferDictationButton.frame.size.height)];
+        uploadRecordButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width*0.095, transferDictationButton.frame.origin.y, self.view.frame.size.width*0.83, transferDictationButton.frame.size.height)];
         
         uploadRecordButton.tag = 801;
         
@@ -327,7 +339,6 @@
         
         [uploadRecordButton addTarget:self action:@selector(transferDictationButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
-        [[[self.view viewWithTag:900] viewWithTag:800] addSubview:uploadRecordButton];
         
         
         
@@ -347,7 +358,6 @@
         
         [deleteRecordButton addTarget:self action:@selector(deleteRecording) forControlEvents:UIControlEventTouchUpInside];
         
-        [[[self.view viewWithTag:900] viewWithTag:800] addSubview:deleteRecordButton];
         
         
         UIButton* editRecordButton=[[UIButton alloc]initWithFrame:CGRectMake(deleteRecordButton.frame.origin.x+deleteRecordButton.frame.size.width+uploadRecordButton.frame.size.width*0.04, deleteRecordButton.frame.origin.y,uploadRecordButton.frame.size.width*0.48, deleteRecordButton.frame.size.height)];
@@ -366,26 +376,29 @@
         
         [editRecordButton addTarget:self action:@selector(showEditRecordingView) forControlEvents:UIControlEventTouchUpInside];
         
-//        NSArray* arr =  self.splitViewController.viewControllers;
+        //        NSArray* arr =  self.splitViewController.viewControllers;
         
-         long viewWidth = self.splitViewController.primaryColumnWidth;
+        long viewWidth = self.splitViewController.primaryColumnWidth;
         if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
         {//for ipad
             
-            uploadRecordButton.frame = CGRectMake((self.view.frame.size.width-viewWidth)*0.1, transferDictationButton.frame.origin.y+20, (self.view.frame.size.width-viewWidth)*0.8, transferDictationButton.frame.size.height);
+            uploadRecordButton.frame = CGRectMake((self.view.frame.size.width-viewWidth)*0.1, transferDictationButton.frame.origin.y, (self.view.frame.size.width-viewWidth)*0.8, transferDictationButton.frame.size.height);
             
             deleteRecordButton.frame = CGRectMake((self.view.frame.size.width-viewWidth)*0.1, uploadRecordButton.frame.origin.y+uploadRecordButton.frame.size.height+10, uploadRecordButton.frame.size.width*0.48, transferDictationButton.frame.size.height);
             
             editRecordButton.frame = CGRectMake(deleteRecordButton.frame.origin.x+deleteRecordButton.frame.size.width+uploadRecordButton.frame.size.width*0.04, uploadRecordButton.frame.origin.y+uploadRecordButton.frame.size.height+10, uploadRecordButton.frame.size.width*0.48, transferDictationButton.frame.size.height);
             
-//            uploadRecordButton.titleLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightSemibold];
-//            
-//            deleteRecordButton.titleLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightSemibold];
-//            
-//            editRecordButton.titleLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightSemibold];
+            //            uploadRecordButton.titleLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightSemibold];
+            //
+            //            deleteRecordButton.titleLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightSemibold];
+            //
+            //            editRecordButton.titleLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightSemibold];
             
             
         }
+        
+        [[[self.view viewWithTag:900] viewWithTag:800] addSubview:uploadRecordButton];
+        [[[self.view viewWithTag:900] viewWithTag:800] addSubview:deleteRecordButton];
         [[[self.view viewWithTag:900] viewWithTag:800] addSubview:editRecordButton];
     }
     
@@ -393,7 +406,7 @@
     [transferDictationButton removeFromSuperview];
     
     [deleteDictationButton removeFromSuperview];
-
+    
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -401,10 +414,10 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
     
-//    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-//    
-//    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-
+    //    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    //
+    //    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
 }
 -(void)popViewController:(id)sender
 {
@@ -491,11 +504,11 @@
     }
     else
     {
-//        NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
-//
-//        [subVC removeLastObject];
+        //        NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
+        //
+        //        [subVC removeLastObject];
         [self.navigationController popViewControllerAnimated:true];
-
+        
         
     }
     
@@ -544,7 +557,7 @@
                             copyArray=[sharedDefaults objectForKey:@"audioNamesArray"];
                             
                             sharedAudioNamesArray=[copyArray mutableCopy];
-                                                        
+                            
                             for (int i=0; i<sharedAudioNamesArray.count; i++)
                             {
                                 
@@ -569,7 +582,7 @@
                             [sharedDefaults synchronize];
                         }
                         
-                     
+                        
                         
                         if (delete)
                         {
@@ -595,7 +608,7 @@
     [self presentViewController:alertController animated:YES completion:nil];
     
     
-
+    
 }
 
 - (IBAction)playRecordingButtonPressed:(id)sender
@@ -615,7 +628,7 @@
         [alertController addAction:actionDelete];
         
         [self presentViewController:alertController animated:YES completion:nil];
-
+        
     }
     else
     {
@@ -623,7 +636,7 @@
         UIView * overlay1=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.05, self.view.center.y-40, self.view.frame.size.width*0.9, 80) senderNameForSlider:self player:player];
         
         [[[UIApplication sharedApplication] keyWindow] addSubview:overlay1];
-
+        
         sliderPopUpView=  [overlay1 viewWithTag:223];
         
         audioRecordSlider=  [sliderPopUpView viewWithTag:224];
@@ -632,8 +645,8 @@
         
         UILabel* dateAndTimeLabel=[sliderPopUpView viewWithTag:225];
         
-//        dateAndTimeLabel.text=[audiorecordDict valueForKey:@"RecordCreatedDate"];
-       
+        //        dateAndTimeLabel.text=[audiorecordDict valueForKey:@"RecordCreatedDate"];
+        
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         NSString* dateStr = [audiorecordDict valueForKey:@"RecordCreatedDate"];
@@ -646,40 +659,40 @@
         dateAndTimeLabel.text = newDateString;
         
         pauseOrPlayImageView.image=[UIImage imageNamed:@"Pause"];
-    
+        
         NSString* filName;
         
-
+        
         filName=[audiorecordDict valueForKey:@"RecordItemName"];
-
+        
         if (!IMPEDE_PLAYBACK)
         {
             [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryPlayback];
         }
         
         NSArray* pathComponents = [NSArray arrayWithObjects:
-                               [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
-                               AUDIO_FILES_FOLDER_NAME,
-                               [NSString stringWithFormat:@"%@.wav", filName],
-                               nil];
+                                   [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
+                                   AUDIO_FILES_FOLDER_NAME,
+                                   [NSString stringWithFormat:@"%@.wav", filName],
+                                   nil];
         
         NSURL* recordedAudioURL = [NSURL fileURLWithPathComponents:pathComponents];
-    
+        
         NSError* audioError;
-   
+        
         player= [[AVAudioPlayer alloc] initWithContentsOfURL:recordedAudioURL error:&audioError];
-    
+        
         player.delegate = self;
-    
+        
         [player prepareToPlay];
         NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateSliderTime:) userInfo:nil repeats:YES];
-    
+        
         audioRecordSlider.maximumValue=player.duration;
-   
+        
         [player play];
-      
-//        [UIApplication sharedApplication].idleTimerDisabled = YES;
-
+        
+        //        [UIApplication sharedApplication].idleTimerDisabled = YES;
+        
     }
 }
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player1 successfully:(BOOL)flag
@@ -707,19 +720,19 @@
         pauseOrImageView.image=[UIImage imageNamed:@"Play"] ;
         
         [player pause];
-
+        
     }
     else
-    if ([pauseOrImageView.image isEqual:[UIImage imageNamed:@"Play"]])
-    {
-        pauseOrImageView.image=[UIImage imageNamed:@"Pause"] ;
-        
-        [player play];
-        
-//        [UIApplication sharedApplication].idleTimerDisabled = YES;
-
-    }
-
+        if ([pauseOrImageView.image isEqual:[UIImage imageNamed:@"Play"]])
+        {
+            pauseOrImageView.image=[UIImage imageNamed:@"Pause"] ;
+            
+            [player play];
+            
+            //        [UIApplication sharedApplication].idleTimerDisabled = YES;
+            
+        }
+    
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
@@ -756,13 +769,13 @@
 -(void)updateSliderTime:(id)sender
 {
     audioRecordSlider.value = player.currentTime;
-
-
+    
+    
 }
 -(void)dismissPopView:(id)sender
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
-
+    
     
 }
 -(void)dismissPlayerView:(id)sender
@@ -773,7 +786,7 @@
     {
         [[[[UIApplication sharedApplication] keyWindow] viewWithTag:222] removeFromSuperview];
     }
-
+    
 }
 -(void)sliderValueChanged
 {
@@ -785,272 +798,42 @@
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
         moreButton.userInteractionEnabled=NO;
-
-
-    if ([self.selectedView isEqualToString:@"Transferred Today"])
-    {
-        alertController = [UIAlertController alertControllerWithTitle:RESEND_MESSAGE
-                                                              message:@""
-                                                       preferredStyle:UIAlertControllerStyleAlert];
-        actionDelete = [UIAlertAction actionWithTitle:@"Yes"
-                                                style:UIAlertActionStyleDefault
-                                              handler:^(UIAlertAction * action)
-                        {
-                           
-                            APIManager* app = [APIManager sharedManager];
-                            
-                            NSString* date = [app getDateAndTimeString];
-                            
-                            NSString* filName = [audiorecordDict valueForKey:@"RecordItemName"];
-                            
-                            isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
-                            
-                            [transferDictationButton setHidden:YES];
-                            
-                            [deleteDictationButton setHidden:YES];
-                            
-                            [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
-                            int mobileDictationIdVal = [[Database shareddatabase] getMobileDictationIdFromFileName:filName];
-                            
-                            [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
-                            
-//                            NSLog(@"Today's Transferred after DB");
-                            
-                           
-                            
-                          
-                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                
-                                if ([AppPreferences sharedAppPreferences].isReachable)
-                                {
-                                    [AppPreferences sharedAppPreferences].fileUploading=YES;
-                                }
-                                
-                                [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
-                                
-                                
-                               
-                                
-                                dispatch_async(dispatch_get_main_queue(), ^
-                                                                      {
-                                                                          [[self.view viewWithTag:507] setHidden:YES];
-
-                                                                          if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-                                                                          {
-                                                                              [self.delegate myClassDelegateMethod:nil];
-                                                                              
-                                                                          }
-                                                                      });
-                                
-                            });
-                            
-                        }]; //You can use a block here to handle a press on this button
-        [alertController addAction:actionDelete];
         
         
-        actionCancel = [UIAlertAction actionWithTitle:@"No"
-                                                style:UIAlertActionStyleCancel
-                                              handler:^(UIAlertAction * action)
-                        {
-                            [alertController dismissViewControllerAnimated:YES completion:nil];
-                            
-                        }]; //You can use a block here to handle a press on this button
-        [alertController addAction:actionCancel];
-        
-        
-     
-        
-    
-    }
-    else
-        if ([self.selectedView isEqualToString:@"Awaiting Transfer"])
+        if ([self.selectedView isEqualToString:@"Transferred Today"])
         {
-    
-            alertController = [UIAlertController alertControllerWithTitle:TRANSFER_MESSAGE
-                                                          message:@""
-                                                   preferredStyle:UIAlertControllerStyleAlert];
-            
-            actionDelete = [UIAlertAction actionWithTitle:@"Yes"
-                                            style:UIAlertActionStyleDefault
-                                          handler:^(UIAlertAction * action)
-                    {
-                        
-                        
-                        APIManager* app = [APIManager sharedManager];
-                        
-                        NSString* filName = [audiorecordDict valueForKey:@"RecordItemName"];
-                        
-                        NSString* transferStatus = [audiorecordDict valueForKey:@"TransferStatus"];
-
-                        [transferDictationButton setHidden:YES];
-                        
-                        [deleteDictationButton setHidden:YES];
-                        
-                        if ([AppPreferences sharedAppPreferences].isReachable)
-                        {
-                            [AppPreferences sharedAppPreferences].fileUploading=YES;
-                        }
-                        
-                        if ([transferStatus isEqualToString:@"TransferFailed"])
-                        {
-                            int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
-                            
-                            NSString* date=[app getDateAndTimeString];
-
-                            [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
-                        }
-                        
-                        [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
-
-                        isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
-
-                        
-                            [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:801] removeFromSuperview];//remove uploading buuton
-                           
-                            [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:802] removeFromSuperview];//remove delete button
-                            
-                            [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:803] removeFromSuperview];//remove edit button
-                        
-
-                       
-
-                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                            
-                                                       [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
-            
-                            
-                            dispatch_async(dispatch_get_main_queue(), ^(void) {
-                                
-                                if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-                                {
-                                    [self.delegate myClassDelegateMethod:nil];
-                                    
-                                }
-                            });
-                            
-                           
-                            
-                        });
-                        
-                    }]; //You can use a block here to handle a press on this button
-            
-    [alertController addAction:actionDelete];
-    
-    
-    actionCancel = [UIAlertAction actionWithTitle:@"No"
-                                            style:UIAlertActionStyleCancel
-                                          handler:^(UIAlertAction * action)
-                    {
-                        [alertController dismissViewControllerAnimated:YES completion:nil];
-                        
-                    }]; //You can use a block here to handle a press on this button
-            
-    [alertController addAction:actionCancel];
-        
-        
-     }
-        
-        else
-            if ([self.selectedView isEqualToString:@"Transfer Failed"])                //for incomplete and failed transfer please recheck
-            {
-                
-                alertController = [UIAlertController alertControllerWithTitle:TRANSFER_MESSAGE
-                                                                      message:@""
-                                                               preferredStyle:UIAlertControllerStyleAlert];
-                
-                actionDelete = [UIAlertAction actionWithTitle:@"Yes"
-                                                        style:UIAlertActionStyleDefault
-                                                      handler:^(UIAlertAction * action)
-                                {
-                                    APIManager* app=[APIManager sharedManager];
-                                    
-                                    NSString* date=[app getDateAndTimeString];
-
-                                    NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
-                                    
-                                    [transferDictationButton setHidden:YES];
-                                    
-                                    [deleteDictationButton setHidden:YES];
-                                    
-                                    isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
-
-                                   [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
-                                                       
-                                   int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
-                                                       
-                                   [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
-                                    
-                                    
-                                    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-                                    {
-                                        [self.delegate myClassDelegateMethod:nil];
-                                        
-                                    }
-                                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                        
-                                        [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
-                                        
-                                        [[self.view viewWithTag:507] setHidden:YES];
-                                        
-                                    });
-                                    
-                                }]; //You can use a block here to handle a press on this button
-                
-                [alertController addAction:actionDelete];
-                
-                actionCancel = [UIAlertAction actionWithTitle:@"No"
-                                                        style:UIAlertActionStyleCancel
-                                                      handler:^(UIAlertAction * action)
-                                {
-                                    [alertController dismissViewControllerAnimated:YES completion:nil];
-                                    
-                                }]; //You can use a block here to handle a press on this button
-                [alertController addAction:actionCancel];
-                
-                
-            }
-        
-        else
-        {
-            alertController = [UIAlertController alertControllerWithTitle:TRANSFER_MESSAGE
+            alertController = [UIAlertController alertControllerWithTitle:RESEND_MESSAGE
                                                                   message:@""
                                                            preferredStyle:UIAlertControllerStyleAlert];
             actionDelete = [UIAlertAction actionWithTitle:@"Yes"
                                                     style:UIAlertActionStyleDefault
                                                   handler:^(UIAlertAction * action)
                             {
-                                APIManager* app=[APIManager sharedManager];
                                 
-                                NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
+                                APIManager* app = [APIManager sharedManager];
                                 
-                                NSString* date=[app getDateAndTimeString];
+//                                NSString* date = [app getDateAndTimeString];
+                                NSString* date = @"NotApplicable";
                                 
-                                                   [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:801] removeFromSuperview];//remove uploading buuton
-                                                   [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:802] removeFromSuperview];//remove delete button
-                                                   
-                                                   [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:803] removeFromSuperview];//remove edit button
+                                NSString* filName = [audiorecordDict valueForKey:@"RecordItemName"];
                                 
-                                                    isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
-
-                                                   [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
-                                                   
-                                                   NSString* transferStatus=[audiorecordDict valueForKey:@"TransferStatus"];
-                                                   
-                                                   if ([transferStatus isEqualToString:@"Transferred"])
-                                                   {
-                                                       int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
-                                                       
-                                                       [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
-                                                   }
-
-                               
-                                if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-                                {
-                                    [self.delegate myClassDelegateMethod:nil];
-                                    
-                                }
+                                isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
+                                
+                                [transferDictationButton setHidden:YES];
+                                
+                                [deleteDictationButton setHidden:YES];
+                                
+                                [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+                                int mobileDictationIdVal = [[Database shareddatabase] getMobileDictationIdFromFileName:filName];
+                                
+                                [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                                
+                                //                            NSLog(@"Today's Transferred after DB");
+                                
+                                
+                                
+                                
                                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                                    
                                     
                                     if ([AppPreferences sharedAppPreferences].isReachable)
                                     {
@@ -1059,15 +842,23 @@
                                     
                                     [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
                                     
-                                    [[self.view viewWithTag:507] setHidden:YES];
-
-                                    //[self dismissViewControllerAnimated:YES completion:nil];
                                     
+                                    
+                                    
+                                    dispatch_async(dispatch_get_main_queue(), ^
+                                                   {
+                                                       [[self.view viewWithTag:507] setHidden:YES];
+                                                       
+                                                       if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+                                                       {
+                                                           [self.delegate myClassDelegateMethod:nil];
+                                                           
+                                                       }
+                                                   });
                                     
                                 });
                                 
                             }]; //You can use a block here to handle a press on this button
-            
             [alertController addAction:actionDelete];
             
             
@@ -1080,10 +871,236 @@
                             }]; //You can use a block here to handle a press on this button
             [alertController addAction:actionCancel];
             
-
+            
+            
+            
+            
         }
-
-     [self presentViewController:alertController animated:YES completion:nil];
+        else
+            if ([self.selectedView isEqualToString:@"Awaiting Transfer"])
+            {
+                
+                alertController = [UIAlertController alertControllerWithTitle:TRANSFER_MESSAGE
+                                                                      message:@""
+                                                               preferredStyle:UIAlertControllerStyleAlert];
+                
+                actionDelete = [UIAlertAction actionWithTitle:@"Yes"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * action)
+                                {
+                                    
+                                    
+                                    APIManager* app = [APIManager sharedManager];
+                                    
+                                    NSString* filName = [audiorecordDict valueForKey:@"RecordItemName"];
+                                    
+                                    NSString* transferStatus = [audiorecordDict valueForKey:@"TransferStatus"];
+                                    
+                                    [transferDictationButton setHidden:YES];
+                                    
+                                    [deleteDictationButton setHidden:YES];
+                                    
+                                    if ([AppPreferences sharedAppPreferences].isReachable)
+                                    {
+                                        [AppPreferences sharedAppPreferences].fileUploading=YES;
+                                    }
+                                    
+                                    if ([transferStatus isEqualToString:@"TransferFailed"])
+                                    {
+                                        int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
+                                        
+//                                        NSString* date=[app getDateAndTimeString];
+                                        NSString* date = @"NotApplicable";
+                                        
+                                        [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                                    }
+                                    
+                                    [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+                                    
+                                    isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
+                                    
+                                    
+                                    [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:801] removeFromSuperview];//remove uploading buuton
+                                    
+                                    [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:802] removeFromSuperview];//remove delete button
+                                    
+                                    [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:803] removeFromSuperview];//remove edit button
+                                    
+                                    
+                                    
+                                    
+                                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                        
+                                        [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
+                                        
+                                        
+                                        dispatch_async(dispatch_get_main_queue(), ^(void) {
+                                            
+                                            if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+                                            {
+                                                [self.delegate myClassDelegateMethod:nil];
+                                                
+                                            }
+                                        });
+                                        
+                                        
+                                        
+                                    });
+                                    
+                                }]; //You can use a block here to handle a press on this button
+                
+                [alertController addAction:actionDelete];
+                
+                
+                actionCancel = [UIAlertAction actionWithTitle:@"No"
+                                                        style:UIAlertActionStyleCancel
+                                                      handler:^(UIAlertAction * action)
+                                {
+                                    [alertController dismissViewControllerAnimated:YES completion:nil];
+                                    
+                                }]; //You can use a block here to handle a press on this button
+                
+                [alertController addAction:actionCancel];
+                
+                
+            }
+        
+            else
+                if ([self.selectedView isEqualToString:@"Transfer Failed"])                //for incomplete and failed transfer please recheck
+                {
+                    
+                    alertController = [UIAlertController alertControllerWithTitle:TRANSFER_MESSAGE
+                                                                          message:@""
+                                                                   preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    actionDelete = [UIAlertAction actionWithTitle:@"Yes"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action)
+                                    {
+                                        APIManager* app=[APIManager sharedManager];
+                                        
+//                                        NSString* date=[app getDateAndTimeString];
+                                        NSString* date = @"NotApplicable";
+                                        
+                                        NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
+                                        
+                                        [transferDictationButton setHidden:YES];
+                                        
+                                        [deleteDictationButton setHidden:YES];
+                                        
+                                        isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
+                                        
+                                        [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+                                        
+                                        int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
+                                        
+                                        [[Database shareddatabase] updateAudioFileUploadedStatus:@"ResendFailed" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                                        
+                                        
+                                        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+                                        {
+                                            [self.delegate myClassDelegateMethod:nil];
+                                            
+                                        }
+                                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                            
+                                            [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
+                                            
+                                            [[self.view viewWithTag:507] setHidden:YES];
+                                            
+                                        });
+                                        
+                                    }]; //You can use a block here to handle a press on this button
+                    
+                    [alertController addAction:actionDelete];
+                    
+                    actionCancel = [UIAlertAction actionWithTitle:@"No"
+                                                            style:UIAlertActionStyleCancel
+                                                          handler:^(UIAlertAction * action)
+                                    {
+                                        [alertController dismissViewControllerAnimated:YES completion:nil];
+                                        
+                                    }]; //You can use a block here to handle a press on this button
+                    [alertController addAction:actionCancel];
+                    
+                    
+                }
+        
+                else
+                {
+                    alertController = [UIAlertController alertControllerWithTitle:TRANSFER_MESSAGE
+                                                                          message:@""
+                                                                   preferredStyle:UIAlertControllerStyleAlert];
+                    actionDelete = [UIAlertAction actionWithTitle:@"Yes"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action)
+                                    {
+                                        APIManager* app=[APIManager sharedManager];
+                                        
+                                        NSString* filName=[audiorecordDict valueForKey:@"RecordItemName"];
+                                        
+//                                        NSString* date=[app getDateAndTimeString];
+                                        NSString* date = @"NotApplicable";
+                                        
+                                        [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:801] removeFromSuperview];//remove uploading buuton
+                                        [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:802] removeFromSuperview];//remove delete button
+                                        
+                                        [[[[self.view viewWithTag:900] viewWithTag:800] viewWithTag:803] removeFromSuperview];//remove edit button
+                                        
+                                        isDeleteEditTransferButtonsRemovedAfterTransfer = YES;
+                                        
+                                        [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:filName];
+                                        
+                                        NSString* transferStatus=[audiorecordDict valueForKey:@"TransferStatus"];
+                                        
+                                        if ([transferStatus isEqualToString:@"Transferred"])
+                                        {
+                                            int mobileDictationIdVal=[[Database shareddatabase] getMobileDictationIdFromFileName:filName];
+                                            
+                                            [[Database shareddatabase] updateAudioFileUploadedStatus:@"Resend" fileName:filName dateAndTime:date mobiledictationidval:mobileDictationIdVal];
+                                        }
+                                        
+                                        
+                                        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+                                        {
+                                            [self.delegate myClassDelegateMethod:nil];
+                                            
+                                        }
+                                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                            
+                                            
+                                            if ([AppPreferences sharedAppPreferences].isReachable)
+                                            {
+                                                [AppPreferences sharedAppPreferences].fileUploading=YES;
+                                            }
+                                            
+                                            [app uploadFileToServer:filName jobName:FILE_UPLOAD_API];
+                                            
+                                            [[self.view viewWithTag:507] setHidden:YES];
+                                            
+                                            //[self dismissViewControllerAnimated:YES completion:nil];
+                                            
+                                            
+                                        });
+                                        
+                                    }]; //You can use a block here to handle a press on this button
+                    
+                    [alertController addAction:actionDelete];
+                    
+                    
+                    actionCancel = [UIAlertAction actionWithTitle:@"No"
+                                                            style:UIAlertActionStyleCancel
+                                                          handler:^(UIAlertAction * action)
+                                    {
+                                        [alertController dismissViewControllerAnimated:YES completion:nil];
+                                        
+                                    }]; //You can use a block here to handle a press on this button
+                    [alertController addAction:actionCancel];
+                    
+                    
+                }
+        
+        [self presentViewController:alertController animated:YES completion:nil];
         
     }
     
@@ -1092,8 +1109,8 @@
     {
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
     }
- 
-
+    
+    
 }
 #pragma mark:TableView Datasource and Delegates
 
@@ -1153,7 +1170,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   
+    
     cell=[tableView cellForRowAtIndexPath:indexPath];
     
     UILabel* departmentNameLanel= [cell viewWithTag:indexPath.row+200];
@@ -1165,9 +1182,9 @@
     long deptId= [[[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentNameLanel.text] longLongValue];
     
     deptObj.Id=deptId;
-
+    
     deptObj.departmentName=departmentNameLanel.text;
- 
+    
     [audiorecordDict setValue:departmentNameLanel.text forKey:@"Department"];
     
     [radioButton setBackgroundImage:[UIImage imageNamed:@"RadioButton"] forState:UIControlStateNormal];
@@ -1178,15 +1195,15 @@
 
 -(void)cancel:(id)sender
 {
-////    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-////
-////    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
-//
-//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
-//
-////    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-//
-//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
+    ////    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+    ////
+    ////    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
+    //
+    //    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
+    //
+    ////    DepartMent *deptObj1 = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    //
+    //    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
     
     NSString* departmentName = [audiorecordDict valueForKey:@"DepartmentCopy"];
     
@@ -1198,12 +1215,12 @@
 -(void)save:(id)sender
 {
     
-//    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
-//
-//    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
+    //    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+    //
+    //    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data1];
     
     NSString* departmentName = [audiorecordDict valueForKey:@"Department"];
-
+    
     UILabel* transferredByLabel= [self.view viewWithTag:503];
     
     transferredByLabel.text = departmentName;
@@ -1213,15 +1230,15 @@
     NSString* departmentId = [[Database shareddatabase] getDepartMentIdFromDepartmentName:departmentName];
     
     [[Database shareddatabase] updateDepartment:[departmentId longLongValue] fileName:filenameLabel.text];
-
+    
     [audiorecordDict setValue:departmentName forKey:@"DepartmentCopy"];
     
     // set generic object back to orginal dept
-//    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
-//
-//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
-//
-//    [[NSUserDefaults standardUserDefaults] synchronize];
+    //    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME_COPY];
+    //
+    //    [[NSUserDefaults standardUserDefaults] setObject:data forKey:SELECTED_DEPARTMENT_NAME];
+    //
+    //    [[NSUserDefaults standardUserDefaults] synchronize];
     [self.delegate myClassDelegateMethod:nil];
     
     [popupView removeFromSuperview];
@@ -1239,7 +1256,7 @@
 - (IBAction)editRecordingButtonPressed:(id)sender
 {
     [self showEditRecordingView];
-   
+    
 }
 
 -(void)showEditRecordingView
@@ -1293,7 +1310,7 @@
     vc.selectedRowOfAwaitingList = self.selectedRow;
     
     [self presentViewController:vc animated:YES completion:nil];
-
+    
 }
 
 

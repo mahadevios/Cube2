@@ -37,9 +37,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [super viewDidLoad];
     
     [self setViewForViewDidLoad];
-    
-    
-    
+  
   //AVAudioSessionPortBuiltInMic;
 }
 
@@ -65,24 +63,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             isViewSetUpWhenFirstAppear = true;
         }
         
-        
-
-        
-        //---set and show recording file name when view will appear---//
-
-       
-       
-        
-        
         if (!IMPEDE_PLAYBACK)
         {
             [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryRecord];
         }
-        
-        //recordingNew=YES;
-        
-        
-        
+  
     }
 }
 
@@ -93,14 +78,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self performSelector:@selector(addView:) withObject:startRecordingView1 afterDelay:0.02];
     
-//    UIView* startRecordingView = [self.view viewWithTag:303];
-//    
-//    UIImageView* counterLabel = [startRecordingView viewWithTag:503];
-//    
-//    [[self.view viewWithTag:504] setHidden:YES];
-//    
-//    [counterLabel setHidden:NO];//hide time label when view appear
-//    
     cirecleTimerLAbel = [self.view viewWithTag:104];
     
     [cirecleTimerLAbel setHidden:YES];
@@ -465,19 +442,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)pauseRecordingFromBackGround
 {
-    if (!stopped && !paused)
+    if (!stopped)
     {
-        
-//        recordingPausedOrStoped=YES;
         
         UIImageView* animatedView= [self.view viewWithTag:1001];
         
         [animatedView stopAnimating];
         
         animatedView.image=[UIImage imageNamed:@"SoundWave-3"];
-        
-        
-        /////
+       
         [stopTimer invalidate];
         
         UIView* startRecordingView = [self.view viewWithTag:303];
@@ -485,9 +458,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         UIImageView* startRecordingImageView = [startRecordingView viewWithTag:403];
         
         [startRecordingImageView setFrame:CGRectMake((startRecordingView.frame.size.width/2)-15, (startRecordingView.frame.size.height/2)-16, 30, 32)];
-        
-//        startRecordingImageView.image=[UIImage imageNamed:@"ResumeNew"];
-        //
+       
         dictationTimerSeconds=0;
         recordingPauseAndExit=YES;
         paused=YES;
@@ -511,76 +482,99 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 task = UIBackgroundTaskInvalid;
             }];
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
                 [self performSelectorOnMainThread:@selector(showHud) withObject:nil waitUntilDone:NO];
                 
                 [self composeAudio];
                 
-                
-            });
+            [self updateDictationStatus:@"RecordingPause"];
+//            });
             startRecordingImageView.image=[UIImage imageNamed:@"ResumeNew"];
             
         }
         else
         {
+            
             recordingPausedOrStoped=YES;
             
             startRecordingImageView.image=[UIImage imageNamed:@"ResumeNew"];
+            
+            [self savePausedFileFromBG];
         }
-        
-        ////
       
-        
-    
     }
     
 }
 
+
+-(void)savePausedFileFromBG
+{
+    NSError* error;
+    
+    NSString* originalFilePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
+    
+   bool isCopied =  [[NSFileManager defaultManager] copyItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:originalFilePath error:&error];// save file for next time composition(i.e.1st file and 2nd will be editedCopy which we will record);
+    
+    [self saveAudioRecordToDatabase];
+    
+    edited = true;
+    
+    [self setCompressAudio];
+}
 -(void)saveRecordin  //save recording if user kill the app while recording
 {
+    //
     if ([AppPreferences sharedAppPreferences].isRecordView)
     {
+        NSError* error;
         
-        if (!stopped && !edited)
+        [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@editedCopy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error];
+        
+         [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error];
+        
+         [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error];
+        
+        if (!stopped)
         {
-            NSLog(@"in save");
-            
-            [self saveAudioRecordToDatabase];
-            
-            NSString* destinationPath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
-            
-            NSError* error1;
-            
-            [[NSFileManager defaultManager] moveItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:destinationPath error:&error1];
-            
-            [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
-            
-            
-            // [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@editedCopy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
-            
-            [[NSNotificationCenter defaultCenter] removeObserver:self];
-            
+            [self updateDictationStatus:@"RecordingPause"];
         }
-        else
-            if (!stopped && edited)
-            {
-                NSError* error1;
-
-                //[self saveAudioRecordToDatabase];
-                
-                [self updateDictationStatus];
-                
-                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
-                
-                
-                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@editedCopy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
-            }
-        
+//
+//        if (!stopped && !edited)
+//        {
+//            NSLog(@"in save");
+//
+//            [self saveAudioRecordToDatabase];
+//
+//            NSString* destinationPath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
+//
+//            NSError* error1;
+//
+//            [[NSFileManager defaultManager] moveItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:destinationPath error:&error1];
+//
+//            [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
+//
+//            [[NSNotificationCenter defaultCenter] removeObserver:self];
+//
+//        }
+//        else
+//            if (!stopped && edited)
+//            {
+//                NSError* error1;
+//
+//                [self updateDictationStatus:@"RecordingPause"];
+//
+//                NSString* destinationPath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
+//
+//                [[NSFileManager defaultManager] moveItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:destinationPath error:&error1];
+//
+//                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@editedCopy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
+//            }
+//
     }
 }
 
--(void)updateDictationStatus
+-(void)updateDictationStatus:(NSString*)dictationStatus
 {
     
     NSArray* pathComponents = [NSArray arrayWithObjects:
@@ -600,7 +594,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //    });
     dispatch_async(dispatch_get_main_queue(), ^{
     
-        [[Database shareddatabase] updateAudioFileName:self.recordedAudioFileName dictationStatus:@"RecordingPause"];
+        [[Database shareddatabase] updateAudioFileName:self.recordedAudioFileName dictationStatus:dictationStatus];
         
         [db updateAudioFileName:recordedAudioFileName duration:player.duration];
         
@@ -780,17 +774,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIView* startRecordingView= [self.view viewWithTag:303];
     
-    //    UIView* stopRecordingView = [self.view viewWithTag:301];
-    //
-    //    UIView* pauseRecordingView =  [self.view viewWithTag:302];
-    //
-    //    UILabel* stopRecordingLabel=[self.view viewWithTag:601];
-    //
-    //    UILabel* pauseRecordingLabel=[self.view viewWithTag:602];
-    //
-    //    UILabel* RecordingLabel=[self.view viewWithTag:603];
-    
-    
     if ([startRecordingView.backgroundColor isEqual:[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1]] || [startRecordingView.backgroundColor isEqual:[UIColor blackColor]])
     {
         if ([startRecordingView.backgroundColor isEqual:[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1]])
@@ -885,7 +868,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     [self showHud];
                     
                     [self pauseRecording];
-                    
                     
                     [self showHud];
                     
@@ -1052,8 +1034,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 -(void)setStopRecordingView:(UIButton*)sender
 {
     
-    
-    if (edited && !paused)
+    if (edited && !paused)  // if not edited && not paused, hence file has not been composed hence we need to compose it. i
     {
         
         if (![[NSUserDefaults standardUserDefaults] boolForKey:CONFIRM_BEFORE_SAVING_SETTING] || recordingRestrictionLimitCrossed)
@@ -1062,14 +1043,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             [stopTimer invalidate];
             
-//            dispatch_async(dispatch_get_main_queue(), ^
-//                           {
-                               [self hideViewForStopRecording];
-                               
-                               //[self showHud];
-                         //  });
+            [self hideViewForStopRecording];
             
             [self composeAudio];
+            
+            [self updateDictationStatus:@"RecordingComplete"];
             
             recordingRestrictionLimitCrossed = false;
         }
@@ -1093,11 +1071,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                                {
                                                    [self hideViewForStopRecording];
 
-                                                   //[self showHud];
                                                });
                                 
                                 [self composeAudio];
                                 
+                                [self updateDictationStatus:@"RecordingComplete"];
+
                             }];
             
             [alertController addAction:actionDelete];
@@ -1121,6 +1100,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         [self stopUneditedRecording];
 
+        [self updateDictationStatus:@"RecordingComplete"];
+
     }
     
 
@@ -1141,7 +1122,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIView* pauseRecordingView =  [self.view viewWithTag:302];
     
-    //        UILabel* recordingStatusLabel= [self.view viewWithTag:99];
     UILabel* stopRecordingLabel=[self.view viewWithTag:601];
     
     UILabel* pauseRecordingLabel=[self.view viewWithTag:602];
@@ -1184,7 +1164,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [stopLabel setHidden:YES];
     
-    
     startRecordingView.backgroundColor=[UIColor blackColor];
     
     UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
@@ -1193,7 +1172,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [startRecordingImageView setFrame:CGRectMake((startRecordingView.frame.size.width/2)-9, (startRecordingView.frame.size.height/2)-9, 18, 18)];
     
-    startRecordingImageView.image=[UIImage imageNamed:@"Play"];
+    startRecordingImageView.image = [UIImage imageNamed:@"Play"];
     
     [[self.view viewWithTag:701] setHidden:NO];
     
@@ -1203,7 +1182,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [[self.view viewWithTag:704] setHidden:NO];
     
-    
     [stopTimer invalidate];
     
     [cirecleTimerLAbel setHidden:YES];
@@ -1212,11 +1190,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     if (screenHeight<481)
     {
-        
         circleView.frame = CGRectMake(circleView.frame.origin.x, circleView.frame.origin.y-20, circleView.frame.size.width, circleView.frame.size.height);
     }
-
-
 }
 
 -(void)showAudioTimeDuration
@@ -1261,7 +1236,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             [self hideViewForStopRecording];
             
-            [self performSelector:@selector(stopRecording) withObject:nil afterDelay:0.0];
+            [self stopRecording];
             
             [self addAnimatedView];
             
@@ -1269,6 +1244,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             recordingRestrictionLimitCrossed = false;
             
+            [self updateDictationStatus:@"RecordingComplete"];
+
             if ([[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION])
             {
                 [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
@@ -1292,12 +1269,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
                                 [self hideViewForStopRecording];
 
-                                [self performSelector:@selector(stopRecording) withObject:nil afterDelay:0.0];
+                                [self stopRecording];
                                 
                                 [self addAnimatedView];
                                 
                                 [self showAudioTimeDuration];
                                 
+                                [self updateDictationStatus:@"RecordingComplete"];
+
                                 if ([[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION])
                                 {
                                     [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
@@ -1335,136 +1314,123 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     UIView* startRecordingView =  [self.view viewWithTag:303];
     
-//    if ([startRecordingView.backgroundColor isEqual:[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1]])
-//    {
+    UIImageView* animatedImageView= [self.view viewWithTag:1001];
     
-            UIImageView* animatedImageView= [self.view viewWithTag:1001];
-            
-            //UIView* startRecordingView= [self.view viewWithTag:303];
-            
-            UIView* stopRecordingView = [self.view viewWithTag:301];
-            
-            UIView* pauseRecordingView =  [self.view viewWithTag:302];
-            
-            //        UILabel* recordingStatusLabel= [self.view viewWithTag:99];
-            UILabel* stopRecordingLabel=[self.view viewWithTag:601];
-            
-            UILabel* pauseRecordingLabel=[self.view viewWithTag:602];
-            
-            UILabel* RecordingLabel=[self.view viewWithTag:603];
-            
-            [animatedImageView stopAnimating];
+    UIView* stopRecordingView = [self.view viewWithTag:301];
     
-            [animatedImageView setHidden:YES];
+    UIView* pauseRecordingView =  [self.view viewWithTag:302];
     
-            animatedImageView.image=[UIImage imageNamed:@"SoundWave-3"];
+    UILabel* stopRecordingLabel=[self.view viewWithTag:601];
+    
+    UILabel* pauseRecordingLabel=[self.view viewWithTag:602];
+    
+    UILabel* RecordingLabel=[self.view viewWithTag:603];
+    
+    [animatedImageView stopAnimating];
+    
+    [animatedImageView setHidden:YES];
+    
+    animatedImageView.image=[UIImage imageNamed:@"SoundWave-3"];
+    
+    [stopRecordingView setHidden:YES];
+    
+    [pauseRecordingView setHidden:YES];
+    
+    recordingPausedOrStoped=YES;
+    isRecordingStarted=NO;
+    
+    [stopRecordingView setHidden:YES];
+    
+    [pauseRecordingView setHidden:YES];
+    
+    [stopRecordingLabel setHidden:YES];
+    
+    [pauseRecordingLabel setHidden:YES];
+    
+    [RecordingLabel setHidden:YES];
+    
+    [stopNewImageView setHidden:YES];
+    
+    [stopNewButton setHidden:YES];
+    
+    [stopLabel setHidden:YES];
+    
+    
+    startRecordingView.backgroundColor=[UIColor blackColor];
+    
+    UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
+    
+    [startRecordingImageView setHidden:NO];
+    
+    [startRecordingImageView setFrame:CGRectMake((startRecordingView.frame.size.width/2)-9, (startRecordingView.frame.size.height/2)-9, 18, 18)];
+    
+    startRecordingImageView.image=[UIImage imageNamed:@"Play"];
+    
+    [[self.view viewWithTag:701] setHidden:NO];
+    
+    [[self.view viewWithTag:702] setHidden:NO];
+    
+    [[self.view viewWithTag:703] setHidden:NO];//edit button and image
+    [[self.view viewWithTag:704] setHidden:NO];
+    
+    
+    [stopTimer invalidate];
+    
+    [cirecleTimerLAbel setHidden:YES];
+    
+    // edited = NO;
+    
+    [self stopRecording];
+    
+    double screenHeight =  [[UIScreen mainScreen] bounds].size.height;
+    
+    if (screenHeight<481)
+    {
         
-//        dispatch_async(dispatch_get_main_queue(), ^
-//                       {
-//                           //NSLog(@"Reachable");
-//                           [self showHud];
-//                       });
-        
-            
-            [stopRecordingView setHidden:YES];
-            
-            [pauseRecordingView setHidden:YES];
-            
-            recordingPausedOrStoped=YES;
-            isRecordingStarted=NO;
-            
-            [stopRecordingView setHidden:YES];
-            
-            [pauseRecordingView setHidden:YES];
-            
-            [stopRecordingLabel setHidden:YES];
-            
-            [pauseRecordingLabel setHidden:YES];
-            
-            [RecordingLabel setHidden:YES];
-            
-            [stopNewImageView setHidden:YES];
-            
-            [stopNewButton setHidden:YES];
-            
-            [stopLabel setHidden:YES];
-            
-            
-            startRecordingView.backgroundColor=[UIColor blackColor];
-            
-            UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
-            
-            [startRecordingImageView setHidden:NO];
-            
-            [startRecordingImageView setFrame:CGRectMake((startRecordingView.frame.size.width/2)-9, (startRecordingView.frame.size.height/2)-9, 18, 18)];
-            
-            startRecordingImageView.image=[UIImage imageNamed:@"Play"];
-            
-            [[self.view viewWithTag:701] setHidden:NO];
-            
-            [[self.view viewWithTag:702] setHidden:NO];
-            
-            [[self.view viewWithTag:703] setHidden:NO];//edit button and image
-            [[self.view viewWithTag:704] setHidden:NO];
-            
-            
-            [stopTimer invalidate];
-            
-            [cirecleTimerLAbel setHidden:YES];
-            
-            // edited = NO;
-            
-            [self performSelector:@selector(stopRecording) withObject:nil afterDelay:0.0];
-            
-            double screenHeight =  [[UIScreen mainScreen] bounds].size.height;
-            
-            if (screenHeight<481)
-            {
-                
-                circleView.frame = CGRectMake(circleView.frame.origin.x, circleView.frame.origin.y-20, circleView.frame.size.width, circleView.frame.size.height);
-            }
-            
-            
-            [self addAnimatedView];
-            
-            if (edited)
-            {
-                NSArray* pathComponents = [NSArray arrayWithObjects:
-                                           [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
-                                           AUDIO_FILES_FOLDER_NAME,
-                                           [NSString stringWithFormat:@"%@.wav", self.recordedAudioFileName],
-                                           nil];
-                self.recordedAudioURL=[NSURL fileURLWithPathComponents:pathComponents];
-            }
-            
-            [self prepareAudioPlayer];
-            
-            int currentTime= player.duration;
-            int minutes=currentTime/60;
-            int seconds=currentTime%60;
-//            dispatch_async(dispatch_get_main_queue(), ^
-//                           {
-                               totalDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
-                               currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];
-                               audioRecordSlider.value= player.duration;
-                               currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
-                           //});
-            
-            
-            
-            
-            
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION])
-            {
-                [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
-        
-        
+        circleView.frame = CGRectMake(circleView.frame.origin.x, circleView.frame.origin.y-20, circleView.frame.size.width, circleView.frame.size.height);
+    }
+    
+    
+    [self addAnimatedView];
+    
+    if (edited)
+    {
+        NSArray* pathComponents = [NSArray arrayWithObjects:
+                                   [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
+                                   AUDIO_FILES_FOLDER_NAME,
+                                   [NSString stringWithFormat:@"%@.wav", self.recordedAudioFileName],
+                                   nil];
+        self.recordedAudioURL=[NSURL fileURLWithPathComponents:pathComponents];
+    }
+    
+    [self prepareAudioPlayer];
+    
+    int currentTime= player.duration;
+    int minutes=currentTime/60;
+    int seconds=currentTime%60;
+    //            dispatch_async(dispatch_get_main_queue(), ^
+    //                           {
+    totalDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
+    currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];
+    audioRecordSlider.value= player.duration;
+    currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
+    //});
+    
+    
+    
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION])
+    {
+        [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    
+    
     playerDurationWithMilliSeconds = player.duration;
-
-        
-  //  }
+    
+    
+    //  }
     
 }
 
@@ -1598,7 +1564,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)startRecordingForUserSetting
 {
-    
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     
     UIView* startRecordingView= [self.view viewWithTag:303];
@@ -1630,17 +1595,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld",todaysSerialNumberCount] forKey:@"todaysSerialNumberCount"];
     
     [self audioRecord];
-    
-//    dispatch_async(dispatch_get_main_queue(), ^{
-
-//    });
-    
-//    recordingStatusLabel.frame= CGRectMake(recordingStatusLabel.frame.origin.x, self.view.frame.origin.y + stopNewImageView.frame.size.height + 20, recordingStatusLabel.frame.size.width, recordingStatusLabel.frame.size.height);
-    
+  
     recordingStatusLabel.text=@"Your audio is being recorded";
-    
-//    UILabel* updatedrecordingStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(recordingStatusLabel.frame.origin.x, stopNewImageView.frame.origin.y + stopNewImageView.frame.size.height + 20, recordingStatusLabel.frame.size.width, 30)];
-    
+   
     double screenHeight =  [[UIScreen mainScreen] bounds].size.height;
     
     UIImageView* animatedImageView;
@@ -1661,7 +1618,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     updatedrecordingStatusLabel.textAlignment = NSTextAlignmentCenter;
     
-//    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.view.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular)
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {//for ipad
         updatedrecordingStatusLabel.font = [UIFont systemFontOfSize:23];
@@ -1686,8 +1642,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                          [UIImage imageNamed:@"SoundWave-2"],
                                          [UIImage imageNamed:@"SoundWave-3"],
                                           nil];
-    //animatedImageView.image= [UIImage animatedImageNamed:@"SoundWave-" duration:1.0f];
-    //[UIImage animatedImageNamed:@"SoundWave-" duration:1.0f];
 
     animatedImageView.animationDuration = 1.0f;
     
@@ -1703,47 +1657,26 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self.view addSubview: animatedImageView];
     
-//    cirecleTimerLAbel.frame=CGRectMake((startRecordingView.frame.size.width/2)-30, (startRecordingView.frame.size.height/2)-25, 60, 50);
-    
     cirecleTimerLAbel = [self.view viewWithTag:104];
-    //cirecleTimerLAbel.frame=CGRectMake((startRecordingView.frame.size.width/2)-30, (startRecordingView.frame.size.height/2)-25, 60, 50);
-    
-    
-    //cirecleTimerLAbel.textColor=[UIColor whiteColor];
-    
-    //cirecleTimerLAbel.font=[UIFont systemFontOfSize:20];
     
     cirecleTimerLAbel.textAlignment=NSTextAlignmentCenter;
     
     cirecleTimerLAbel.text=[NSString stringWithFormat:@"%02d:%02d:%02d",00,00,00];
-    
-   // [startRecordingView addSubview:cirecleTimerLAbel];
     
     isRecordingStarted=YES;
     
     recordingPausedOrStoped = NO;
     
     paused=NO;
-
-    //UIImageView* pauseRecordingImageView = [pauseRecordingView viewWithTag:402];
-    
-    //pauseRecordingImageView.image=[UIImage imageNamed:@"Pause"];
     
     startRecordingImageView= [startRecordingView viewWithTag:403];
     
     startRecordingImageView.image=[UIImage imageNamed:@"PauseNew"];
     
-    
-//    startRecordingImageView  = [startRecordingView viewWithTag:403];
-    
     [startRecordingImageView setFrame:CGRectMake((startRecordingView.frame.size.width/2)-9, (startRecordingView.frame.size.height/2)-18, 18, 36)];
    
-    //[startRecordingImageView setHidden:YES];
-    
     [self startRecorderAfterPrepared];
-   // [self performSelector:@selector(startRecorderAfterPrepared) withObject:nil afterDelay:0.3];
-
-
+   
 }
 
 /*
@@ -2227,17 +2160,24 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         [alertController addAction:actionDelete];
         
         
-        [self presentViewController:alertController animated:YES completion:nil];    }
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+    }
     else
     if (recordingPauseAndExit && !stopped)
     {
+        
+       
         [self saveAudioRecordToDatabase];
+
 
         NSString* destinationPath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
         NSError* error1;
          [[NSFileManager defaultManager] moveItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:destinationPath error:&error1];
         
         [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
+        
+        [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@editedCopy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
         
         //[self setCompressAudio];
         [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
@@ -2248,9 +2188,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         [player stop];
         
-        [self dismissViewControllerAnimated:YES completion:nil];
-        
         [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+        });
+        
 
 
     }
@@ -2495,7 +2440,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         [self saveAudioRecordToDatabase];
 
     }
-
+    
     dictationTimerSeconds = 0; // reset the save dicattaion waiting by timer
     [self setCompressAudio];
    
@@ -2668,12 +2613,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     if (error) {
         // delete output file if it exists since an error was returned during the conversion process
-        if ([[NSFileManager defaultManager] fileExistsAtPath:destinationFilePath]) {
-            [[NSFileManager defaultManager] removeItemAtPath:destinationFilePath error:nil];
-        }
-        NSString* destinationPath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
-          [[NSFileManager defaultManager] moveItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:destinationPath error:&error1];
-        printf("DoConvertFile failed! %d\n", (int)error);
+//        if ([[NSFileManager defaultManager] fileExistsAtPath:destinationFilePath]) {
+//            [[NSFileManager defaultManager] removeItemAtPath:destinationFilePath error:nil];
+//        }
+//        NSString* destinationPath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
+//          [[NSFileManager defaultManager] moveItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] toPath:destinationPath error:&error1];
+//        printf("DoConvertFile failed! %d\n", (int)error);
         dispatch_async(dispatch_get_main_queue(), ^
                        {
                            //NSLog(@"Reachable");
@@ -2776,7 +2721,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     else
         if (!stopped)
         {
-            [self updateDictationStatus];
+            [self updateDictationStatus:@"RecordingPause"];
         }
     
     
@@ -3441,11 +3386,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     AVURLAsset* newAsset = [[AVURLAsset alloc]
                             initWithURL:newFileUrl options:nil];
     
-    
-    
-    
-    // 2. Grab the first audio track and insert it into our appendedAudioTrack
-    
     NSArray *originalTrack = [originalAsset tracksWithMediaType:AVMediaTypeAudio];
     
     if (originalTrack.count <= 0)
@@ -3463,6 +3403,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     if (error)
     {
+        NSLog(@"errorF = %@", error.localizedFailureReason);
+        NSLog(@"errorD = %@", error.localizedDescription);
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
         
         return;
@@ -3486,19 +3428,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if ([editType isEqualToString:@"overWrite"])// if overwrite then get slider time, and insert new recording at slider position
     {
        
-//        if (updatedInsertionTime == 0)
-//        {
-//            int64_t sliderValue = audioRecordSlider.value;
-//
-//            totalTime =   CMTimeMake(sliderValue, 1);
-//        }
-//        else
-//        {
-//            int64_t sliderValue = player.duration ;
-//
-//            totalTime =   CMTimeMake(sliderValue, 1);
-//        }
-        
         if (updatedInsertionTime == 0)
         {
             float_t sliderValue;
@@ -3580,7 +3509,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     else
     if ([editType isEqualToString:@"insert"])// if its insert then insert new recording at end of original recording
-
     {
         totalTime = originalAsset.duration;
 //        totalTime =   originalAsset.duration;
@@ -3615,6 +3543,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if (error)
     {
         // do something
+        NSLog(@"error = %@", error.localizedDescription);
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
 //        editType = nil;
 
@@ -3649,14 +3578,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     exportSession.outputFileType = AVFileTypeWAVE;
     //    AVFileTypeAppleM4A
+    
     [exportSession exportAsynchronouslyWithCompletionHandler:^{
         
         // exported successfully?
         NSError* error;
         if (exportSession.status==AVAssetExportSessionStatusCompleted)
         {
+           
+            
 //            editType = nil;
-
             //first remove the existing file
             [[NSFileManager defaultManager] removeItemAtPath:destpath error:&error];
             [[NSFileManager defaultManager] removeItemAtPath:originalFilePath error:&error];
@@ -3717,6 +3648,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         switch (exportSession.status)
         {
             case AVAssetExportSessionStatusFailed:
+                 NSLog(@"exportSession.error = %@",exportSession.error.localizedDescription);
                 break;
             case AVAssetExportSessionStatusCompleted:
                 
@@ -3732,6 +3664,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     NSLog(@"%@",error.localizedDescription);
 }
+
 
 -(NSArray*)getCMTimeValueAndScaleForMilliseconds:(float_t)milliSeconds
 {

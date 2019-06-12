@@ -457,7 +457,9 @@
                                           handler:^(UIAlertAction * action)
                     {
                         APIManager* app=[APIManager sharedManager];
-                       NSString* date= [app getDateAndTimeString];
+//                       NSString* date= [app getDateAndTimeString];
+                        NSString* date = @"NotApplicable";
+                        
                         NSDictionary* audiorecordDic= [app.transferredListArray objectAtIndex:self.selectedRow];
                         NSString* filName=[audiorecordDic valueForKey:@"RecordItemName"];
                         [resendButton setHidden:YES];

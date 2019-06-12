@@ -51,10 +51,10 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                              selector:@selector(hideDeleteButton) name:NOTIFICATION_FILE_UPLOAD_API
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(deleteRecordin) name:NOTIFICATION_DELETE_RECORDING
-                                               object:nil];
-    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(deleteRecordin) name:NOTIFICATION_DELETE_RECORDING
+//                                               object:nil];
+//    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(pausePlayerFromBackGround) name:NOTIFICATION_PAUSE_AUDIO_PALYER
                                                object:nil];
@@ -345,14 +345,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
 }
 
--(void)deleteRecordin
-{
-    
-   //bsackUpAudioFileName=existingAudioFileName;
-    
-   // [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@backup.wav",AUDIO_FILES_FOLDER_NAME,bsackUpAudioFileName]];
-    
-}
+
 
 -(void)pauseRecordingFromBackGround
 {
@@ -2413,7 +2406,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]];
     
     //if co.wav exist then remove to store new co.wav
-   // [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]] error:&error];
+    [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]] error:&error];
     
     exportSession.outputURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]]];//composed audio url,later on this will be deleted
     
