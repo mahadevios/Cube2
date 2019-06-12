@@ -1296,7 +1296,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
     }
     
-    playerDurationWithMilliSeconds = player.duration - 0.03;// to adjust accuracy and file compose failure
+    playerDurationWithMilliSeconds = player.duration;
 
 
 }
@@ -1419,7 +1419,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     
     
-    playerDurationWithMilliSeconds = player.duration - 0.03;// to adjust accuracy and file compose failure;
+    playerDurationWithMilliSeconds = player.duration;
     
     
     //  }
@@ -2077,7 +2077,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     player.currentTime = audioRecordSlider.value;
     
-    playerDurationWithMilliSeconds = audioRecordSlider.value - 0.03;// to adjust accuracy and file compose failure;
+    playerDurationWithMilliSeconds = audioRecordSlider.value;
     
     int currentTime=audioRecordSlider.value;
     int minutes = currentTime/60;
@@ -2115,7 +2115,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 -(void)updateSliderTime:(UISlider*)sender
 {
-    playerDurationWithMilliSeconds = player.currentTime - 0.03;// to adjust accuracy and file compose failure;
+    playerDurationWithMilliSeconds = player.currentTime;
     
 //    NSLog(@"player current time = %f", player.currentTime);
     audioRecordSlider.value = player.currentTime;
@@ -3430,7 +3430,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         {
             float_t sliderValue;
             
-            sliderValue = playerDurationWithMilliSeconds - 0.03;// to adjust accuracy and file compose failure;
+            sliderValue = playerDurationWithMilliSeconds;
             
             NSLog(@"overwrite updatedInsertionTime = %f", playerDurationWithMilliSeconds);
             
@@ -3472,7 +3472,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         {
             float_t sliderValue;
         
-            sliderValue = playerDurationWithMilliSeconds - 0.03;// to adjust accuracy and file compose failure;
+            sliderValue = playerDurationWithMilliSeconds;
 
             if (sliderValue <= 0)
             {
