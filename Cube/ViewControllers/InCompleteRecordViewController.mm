@@ -2251,6 +2251,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     if (newTrack.count <= 0)
     {
+        NSLog(@"error in new track of incomplete= %@", error.localizedFailureReason);
+
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
         [self setCompressAudio];
         return;
@@ -2372,6 +2374,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if (error)
     {
         // do something
+        NSLog(@"error in insertTimeRange of incomplete = %@", error.localizedDescription);
+
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
         return;
     }
@@ -2385,7 +2389,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         // do something
         
 //        editType = nil;
-        
+        NSLog(@"error in exportSession of incomplete");
+
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
         
         return;
@@ -2490,12 +2495,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         if (exportSession.status==AVAssetExportSessionStatusFailed)
         {
 //            editType = nil;
+            NSLog(@"exportSession.error of incomplete= %@",exportSession.error.localizedDescription);
 
             [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
         }
         switch (exportSession.status)
         {
             case AVAssetExportSessionStatusFailed:
+                
+                NSLog(@"exportSession.error of incomplete= %@",exportSession.error.localizedDescription);
+
                 break;
             case AVAssetExportSessionStatusCompleted:
                 

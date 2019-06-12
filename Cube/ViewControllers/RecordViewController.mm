@@ -785,7 +785,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             if (!edited)// pause and resume for normal recording
             {
-                if ( !paused)
+                if (!paused)
                 {
                     recordingPausedOrStoped=YES;
                     
@@ -3119,7 +3119,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                  atTime:kCMTimeZero
                                   error:&error];
     
-    int64_t sliderValue = audioRecordSlider.value ;
+    float sliderValue = audioRecordSlider.value ;
 //    int64_t totalTrackDuration = player.duration ;
     
     
@@ -3155,25 +3155,29 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^
-                   {
+//    dispatch_async(dispatch_get_main_queue(), ^
+//                   {
                        // [self prepareAudioPlayer];
                        
+    
+    int totalMinutes=sliderValue/60;
+    int total=  sliderValue;
+    int totalFloatSeconds =  sliderValue;
+    
+    int totalSeconds= total%60;
+    
+    
+    totalDuration.text=[NSString stringWithFormat:@"%02d:%02d",totalMinutes,totalSeconds];
+    
+    if (totalMinutes>99)//foe more than 99 min show time in 3 digits
+    {
+        totalDuration.text=[NSString stringWithFormat:@"%03d:%02d",totalMinutes,totalSeconds];//for slider label time label
+        
+    }
+    audioRecordSlider.maximumValue=totalFloatSeconds;
+    audioRecordSlider.value = totalFloatSeconds;
                        
-                       int totalMinutes=sliderValue/60;
-                       int total=  sliderValue;
-                       int totalSeconds= total%60;
-                       totalDuration.text=[NSString stringWithFormat:@"%02d:%02d",totalMinutes,totalSeconds];
-                       
-                       if (totalMinutes>99)//foe more than 99 min show time in 3 digits
-                       {
-                           totalDuration.text=[NSString stringWithFormat:@"%03d:%02d",totalMinutes,totalSeconds];//for slider label time label
-                           
-                       }
-                       audioRecordSlider.maximumValue=total;
-                       audioRecordSlider.value = total;
-                       
-                   });
+//                   });
     
     
     
@@ -3418,6 +3422,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     if (newTrack.count <= 0)
     {
+        NSLog(@"error in new track = %@", error.localizedFailureReason);
+
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
         [self setCompressAudio];
 //        editType = nil;
@@ -3543,7 +3549,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if (error)
     {
         // do something
-        NSLog(@"error = %@", error.localizedDescription);
+        NSLog(@"error in insertTimeRange = %@", error.localizedDescription);
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
 //        editType = nil;
 
@@ -3557,6 +3563,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if (!exportSession)
     {
         // do something
+        NSLog(@"error in exportSession");
+
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
         
 //        editType = nil;
@@ -3641,6 +3649,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         if (exportSession.status==AVAssetExportSessionStatusFailed)
         {
 //            editType = nil;
+            NSLog(@"exportSession.error = %@",exportSession.error.localizedDescription);
 
             [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
             
@@ -3768,17 +3777,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     value = [[valueAndScaleArray objectAtIndex:0] longLongValue];
     
     scale = [[valueAndScaleArray objectAtIndex:1] intValue];
-    
-    //            NSLog(@"milliseconds = %f", milliSeconds);
-    //
-    //            NSLog(@"floor seconds = %lld", seconds);
-    //
-    //            NSLog(@"value = %lld", value);
-    //
-    //            NSLog(@"scale = %d", scale);
-    
-    //int64_t totalTrackDuration = player.duration;
-    
     
     if (value == 0)
     {
