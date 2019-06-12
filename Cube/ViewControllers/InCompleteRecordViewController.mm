@@ -232,7 +232,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
            
         isViewSetUpWhenFirstAppear = true;
         
-           playerDurationWithMilliSeconds = player.duration;
+           playerDurationWithMilliSeconds = player.duration- 0.03;// to adjust accuracy and file compose failure;
        }
 
     }
@@ -1479,7 +1479,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     else
     {
-        playerDurationWithMilliSeconds = player.duration;
+        playerDurationWithMilliSeconds = player.duration- 0.03;// to adjust accuracy and file compose failure;
 
         [self setCompressAudio];
 //        [self performSelector:@selector(setCompressAudio) withObject:nil afterDelay:0.0];
@@ -1724,7 +1724,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     player.currentTime = audioRecordSlider.value;
     
-    playerDurationWithMilliSeconds = audioRecordSlider.value;
+    playerDurationWithMilliSeconds = audioRecordSlider.value - 0.03;// to adjust accuracy and file compose failure;
 
     int currentTime=audioRecordSlider.value;
     int minutes=currentTime/60;
@@ -1756,7 +1756,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)updateSliderTime:(UISlider*)sender
 {
-    playerDurationWithMilliSeconds = player.currentTime;
+    playerDurationWithMilliSeconds = player.currentTime - 0.03;// to adjust accuracy and file compose failure;
 
     audioRecordSlider.value = player.currentTime;
     
@@ -2143,7 +2143,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
                            [self prepareAudioPlayer];
                            
-                           playerDurationWithMilliSeconds = player.duration;
+                           playerDurationWithMilliSeconds = player.duration - 0.03;// to adjust accuracy and file compose failure;
                            int currentTime= player.duration;
                            int minutes=currentTime/60;
                            int seconds=currentTime%60;
@@ -2264,7 +2264,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         {
             float_t sliderValue;
             
-            sliderValue = playerDurationWithMilliSeconds;
+            sliderValue = playerDurationWithMilliSeconds - 0.03;// to adjust accuracy and file compose failure;
             
             NSLog(@"overwrite updatedInsertionTime = %f", playerDurationWithMilliSeconds);
             
@@ -2309,7 +2309,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         {
             float_t sliderValue;
             
-            sliderValue = playerDurationWithMilliSeconds;
+            sliderValue = playerDurationWithMilliSeconds - 0.03;// to adjust accuracy and file compose failure;
             
             if (sliderValue <= 0)
             {
@@ -2465,7 +2465,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                          
                                          [self setCompressAudio];
                                          
-                                         playerDurationWithMilliSeconds = player.duration;
+                                         playerDurationWithMilliSeconds = player.duration - 0.03;// to adjust accuracy and file compose failure;
                                          
                                          NSLog(@"duration = %f", player.duration);
                                          
