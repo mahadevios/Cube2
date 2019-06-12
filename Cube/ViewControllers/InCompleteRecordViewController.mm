@@ -386,14 +386,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             task = UIBackgroundTaskInvalid;
         }];
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
             [self performSelectorOnMainThread:@selector(showHud) withObject:nil waitUntilDone:NO];
             
             [self composeAudio];
-            
-            
-        });
+        
+        [self updateDictationStatus:@"RecordingPause"];
+//        });
         startRecordingImageView.image=[UIImage imageNamed:@"ResumeNew"];
 
     }
@@ -2193,13 +2193,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     bsackUpAudioFileName = existingAudioFileName;
     
-    // backup: if get killed while saving the record
-    //NSString* backUpPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@backup.wav",AUDIO_FILES_FOLDER_NAME,bsackUpAudioFileName]];
-    
-    //[[NSFileManager defaultManager] removeItemAtPath:backUpPath error:&error1];
-    
-    //[[NSFileManager defaultManager] copyItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,self.existingAudioFileName]] toPath:backUpPath error:&error1];
-    
     AVMutableComposition* composition = [AVMutableComposition composition];
     
     AVMutableCompositionTrack* appendedAudioTrack =
@@ -2408,10 +2401,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     NSLog(@"insertion time = %f", updatedInsertionTime);
     
-    NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]];
+    NSString* destpath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]];
     
-    //if co.wav exist then remove to store new co.wav
-    [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]] error:&error];
+    NSString* outputUrlPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:outputUrlPath])
+    {
+        //if co.wav exist then remove to store new co.wav
+        [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]] error:&error];
+    }
+    
     
     exportSession.outputURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]]];//composed audio url,later on this will be deleted
     
@@ -2433,7 +2432,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             if (moved)
             {
                 //remove the composed file copy
-                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]] error:&error];
+//                [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]] error:&error];
                 
                 //remove the recorded audio
                 [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,recordedAudioFileName]] error:&error];//delete first recorded file when view was appeared
@@ -2460,10 +2459,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                      {
                                          [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryRecord];
                                      }
-                                     
-                                     
-                                     
-                                     
+                                    
                                      if (recordingStopped)
                                      {
                                          
@@ -3392,4 +3388,28 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [recorder record];
     
 }
+
+-(void)updateDictationStatus:(NSString*)dictationStatus
+{
+    
+//    NSArray* pathComponents = [NSArray arrayWithObjects:
+//                               [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
+//                               AUDIO_FILES_FOLDER_NAME,
+//                               [NSString stringWithFormat:@"%@.wav", existingAudioFileName],
+//                               nil];
+//    self.recordedAudioURL=[NSURL fileURLWithPathComponents:pathComponents];
+    
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self prepareAudioPlayer];
+
+        [[Database shareddatabase] updateAudioFileName:existingAudioFileName dictationStatus:dictationStatus];
+        
+        [db updateAudioFileName:existingAudioFileName duration:player.duration];
+        
+    });
+    
+}
+
 @end

@@ -585,22 +585,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     self.recordedAudioURL=[NSURL fileURLWithPathComponents:pathComponents];
     
     [self prepareAudioPlayer];
-    
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//
-//        [[Database shareddatabase] updateAudioFileName:self.recordedAudioFileName dictationStatus:@"RecordingPause"];
-//        
-//        [db updateAudioFileName:recordedAudioFileName duration:player.duration];
-//    });
+
     dispatch_async(dispatch_get_main_queue(), ^{
     
         [[Database shareddatabase] updateAudioFileName:self.recordedAudioFileName dictationStatus:dictationStatus];
         
         [db updateAudioFileName:recordedAudioFileName duration:player.duration];
-        
 
     });
-    
 
 }
 -(void)hideDeleteButton
