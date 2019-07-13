@@ -542,6 +542,11 @@
                         
                         [app deleteFile:[NSString stringWithFormat:@"%@backup",fileName]];
                         
+                        [app deleteFile:[NSString stringWithFormat:@"%@copy",fileName]];
+                        
+                        [app deleteFile:[NSString stringWithFormat:@"%@editedCopy",fileName]];
+
+                        
                         BOOL delete= [app deleteFile:fileName];
                         
                         if ([self.selectedView isEqualToString:@"Imported"])

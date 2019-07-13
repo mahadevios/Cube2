@@ -195,9 +195,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     // get and set minutes value after which record should pause automatically
     NSString* dictationTimeString = [[NSUserDefaults standardUserDefaults] valueForKey:SAVE_DICTATION_WAITING_SETTING];
-    
-    dictationTimeString = @"2 Minutes";
-    
+        
     NSArray* minutesAndValueArray = [dictationTimeString componentsSeparatedByString:@" "];
     
     if (minutesAndValueArray.count < 1)

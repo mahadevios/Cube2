@@ -202,8 +202,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
         NSString* dictationTimeString= [[NSUserDefaults standardUserDefaults] valueForKey:SAVE_DICTATION_WAITING_SETTING];
         
-        dictationTimeString = @"2 Minutes";
-
         NSArray* minutesAndValueArray= [dictationTimeString componentsSeparatedByString:@" "];
        
         if (minutesAndValueArray.count < 1)
@@ -631,7 +629,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)updateTimer
 {
-    NSLog(@"%f",recorder.currentTime);
+//    NSLog(@"%f",recorder.currentTime);
     ++dictationTimerSeconds;
     //++totalSecondsOfAudio;
     if (player.duration + recorder.currentTime >RECORDING_LIMIT)
@@ -2467,7 +2465,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                          
                                          playerDurationWithMilliSeconds = player.duration - 0.03;// to adjust accuracy and file compose failure;
                                          
-                                         NSLog(@"duration = %f", player.duration);
+//                                         NSLog(@"duration = %f", player.duration);
                                          
                                           [db updateAudioFileName:existingAudioFileName duration:player.duration];
                                          
@@ -2491,7 +2489,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         if (exportSession.status==AVAssetExportSessionStatusFailed)
         {
 //            editType = nil;
-            NSLog(@"exportSession.error of incomplete= %@",exportSession.error.localizedDescription);
+            
+            (@"exportSession.error of incomplete= %@",exportSession.error.localizedDescription);
 
             [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
         }

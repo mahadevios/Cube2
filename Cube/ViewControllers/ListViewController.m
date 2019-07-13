@@ -896,7 +896,7 @@
         {
             if(app.deletedListArray.count==0) // if delete count 0 then show empty else show audio details
             {
-                
+                [self addEmptyVCToSplitVC];
                 
             }
             else

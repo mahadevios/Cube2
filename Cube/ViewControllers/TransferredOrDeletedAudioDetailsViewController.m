@@ -142,9 +142,18 @@
             
             transferStatusString = [audiorecordDict valueForKey:@"status"];
             
-            if ([transferStatusString isEqualToString:@"NotTransferred"])
+            if ([transferStatusString isEqualToString:@"TransferFailed"])
+            {
+                transferStatusString = @"Transfer Failed";
+            }
+            else if ([transferStatusString isEqualToString:@"NotTransferred"])
             {
                 transferStatusString = @"Not Transferred";
+                
+            }
+            else
+            {
+                transferStatusString = transferStatusString;
             }
         }
         transferStatusLabel.text=[NSString stringWithFormat:@"Deleted, %@",transferStatusString];//if selected list is delete then we have status=deleted ,only fetch transfer status append it to transferStatusLabel
