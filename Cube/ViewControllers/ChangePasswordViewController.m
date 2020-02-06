@@ -401,12 +401,16 @@
                             vc.selectedIndex = 0;
                             
                             LoginViewController* regiController=(LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-                            [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:NO completion:nil];
+                                            [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:NO completion:nil];
+                                            
                             
-                            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:regiController
-                                                                                                         animated:NO
-                                                                                                       completion:nil];
-                            [alertController dismissViewControllerAnimated:NO completion:nil];
+                                            regiController.modalPresentationStyle = UIModalPresentationFullScreen;
+                            
+                                            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:regiController
+                                                                                                                         animated:NO
+                                                                                                                       completion:nil];
+                                            [alertController dismissViewControllerAnimated:NO completion:nil];
+            
                         }]; //You can use a block here to handle a press on this button
         [alertController addAction:actionDelete];
         

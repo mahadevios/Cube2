@@ -268,14 +268,18 @@
         {
             [AppPreferences sharedAppPreferences].recordNew = false;
             
-            if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-            {
-                [self.splitViewController presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
-            }
-            else
-            {
-                [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
-            }
+            UIViewController* vc= [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
+                       
+                       vc.modalPresentationStyle = UIModalPresentationFullScreen;
+                       
+                       if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+                       {
+                           [self.splitViewController presentViewController:vc animated:YES completion:nil];
+                       }
+                       else
+                       {
+                           [self presentViewController:vc animated:YES completion:nil];
+                       }
             
             
             [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
@@ -1313,6 +1317,8 @@
     vc.isOpenedFromAudioDetails = YES;
     
     vc.selectedRowOfAwaitingList = self.selectedRow;
+    
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
     
     [self presentViewController:vc animated:YES completion:nil];
     

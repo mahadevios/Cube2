@@ -74,11 +74,13 @@
         [[NSUserDefaults standardUserDefaults] setValue:trimmedIdTextField forKey:USER_ID];
         [[NSUserDefaults standardUserDefaults] setValue:trimmedPasswordTextfield forKey:USER_PASS];
 
-        PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
-        
-        [passwordTextfield resignFirstResponder];
-        
-        [self presentViewController:regiController animated:NO completion:nil];
+         PinRegistrationViewController* regiController=(PinRegistrationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"PinRegistrationViewController"];
+
+               [passwordTextfield resignFirstResponder];
+
+               regiController.modalPresentationStyle = UIModalPresentationFullScreen;
+
+               [self presentViewController:regiController animated:NO completion:nil];
        
     }
     else

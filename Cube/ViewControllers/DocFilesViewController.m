@@ -1089,8 +1089,11 @@
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     
-    
-    [self.navigationController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"EditDocxViewController"] animated:YES completion:nil];
+     UIViewController* vc= [self.storyboard  instantiateViewControllerWithIdentifier:@"EditDocxViewController"];
+       
+       vc.modalPresentationStyle = UIModalPresentationFullScreen;
+       
+       [self.navigationController presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)DeleteDocx

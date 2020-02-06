@@ -720,6 +720,8 @@ else//to disaalow single row while that row is uploading
 //                }
                 detailVC.selectedRow=indexPath.row ;
                 detailVC.selectedView=self.currentViewName;
+                detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
+                                   
                 [self.navigationController presentViewController:detailVC animated:YES completion:nil];
 //                self.tableView.allowsMultipleSelection = NO;
             
@@ -742,6 +744,7 @@ else//to disaalow single row while that row is uploading
             AudioDetailsViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
             vc.selectedRow=indexPath.row ;
             vc.selectedView=self.currentViewName;
+             vc.modalPresentationStyle = UIModalPresentationFullScreen;
             [self.navigationController presentViewController:vc animated:YES completion:nil];
             //                self.tableView.allowsMultipleSelection = NO;
             
@@ -759,6 +762,7 @@ else//to disaalow single row while that row is uploading
         AudioDetailsViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"AudioDetailsViewController"];
         vc.selectedRow=indexPath.row ;
         vc.selectedView=self.currentViewName;
+         vc.modalPresentationStyle = UIModalPresentationFullScreen;
         [self.navigationController presentViewController:vc animated:YES completion:nil];
     }
 

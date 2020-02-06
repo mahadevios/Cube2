@@ -613,7 +613,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [APIManager sharedManager].userSettingsClosed=NO;
     
-    [self presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
+   UIViewController* vc = [self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"];
+       
+       vc.modalPresentationStyle = UIModalPresentationFullScreen;
+       
+       [self presentViewController:vc animated:YES completion:nil];
+    
 }
 
 #pragma mark: Timer Methods

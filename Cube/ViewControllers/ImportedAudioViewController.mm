@@ -583,6 +583,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         vc.selectedRow=indexPath.row;
         
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
         
         if (self.splitViewController.isCollapsed)
         {

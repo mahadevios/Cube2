@@ -482,7 +482,12 @@
 -(void)UserSettings
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
-    [self.navigationController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
+        UIViewController* vc = [self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"];
+        
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        
+        
+        [self.navigationController presentViewController:vc animated:YES completion:nil];
 }
 -(void)dismissPopView:(id)sender
 {
@@ -737,6 +742,9 @@
             detailVC.listSelected = segment.selectedSegmentIndex;
             //NSLog(@"%ld",vc.listSelected);
             detailVC.selectedRow = indexPath.row;
+            
+              detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
+            
             [self.navigationController presentViewController:detailVC animated:YES completion:nil];
         }
         else
@@ -755,6 +763,8 @@
             detailVC.selectedRow = indexPath.row;
             
             [detailVC setAudioDetails];
+            
+//              detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
             
             [self.splitViewController showDetailViewController:detailVC sender:self];
 
