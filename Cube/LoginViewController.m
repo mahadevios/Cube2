@@ -36,6 +36,7 @@
 #import "MainTabBarViewController.h"
 #import "NSData+AES256.h"
 #import "Keychain.h"
+#import "SelectDepartmentViewController.h"
 
 @interface LoginViewController ()
 
@@ -47,6 +48,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [pinCode1TextField becomeFirstResponder];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -67,7 +70,7 @@
     //    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"System-Bold" size:20]}];
     //
     //@{NSForegroundColorAttributeName:[UIColor orangeColor]}
-    [pinCode1TextField becomeFirstResponder];
+    
     pinCode1TextField.delegate=self;
     pinCode2TextField.delegate=self;
     pinCode3TextField.delegate=self;
@@ -283,7 +286,11 @@
         
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
         {
-            [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+           SelectDepartmentViewController* viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"];
+            
+              viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+                              
+              [self presentViewController:viewController animated:NO completion:nil];
 //            [[[UIApplication sharedApplication] keyWindow].rootViewController presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
             
         }
@@ -478,7 +485,11 @@
                 if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"])
                 {
                     [pinCode4TextField resignFirstResponder];
-                    [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"] animated:NO completion:nil];
+                     SelectDepartmentViewController* viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectDepartmentViewController"];
+                    
+                      viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+                                      
+                      [self presentViewController:viewController animated:NO completion:nil];
                 }
                 else
                 {

@@ -335,6 +335,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 
                 if (![topRootViewController isKindOfClass: [LoginViewController class]])
                 {
+                     loginViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+                    
                     [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
 
                 }
@@ -376,6 +378,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     
                     if (![topRootViewController isKindOfClass: [LoginViewController class]])
                     {
+                         loginViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+                        
                         [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
 
                     }

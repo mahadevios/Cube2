@@ -33,6 +33,7 @@
         //recordingNew=YES;
         [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
         [AppPreferences sharedAppPreferences].recordNew=NO;
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:vc animated:YES completion:nil];
     }
     else
@@ -181,6 +182,7 @@
     vc.existingAudioDepartmentName=nameLabel.text;
     vc.existingAudioDate=dateLabel.text;
     vc.audioDurationInSeconds = audioDurationInSeconds;
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:vc animated:YES completion:nil];
    
 }

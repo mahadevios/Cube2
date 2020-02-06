@@ -235,10 +235,11 @@
 //                                           animated:NO
 //                                         completion:nil];
                         
-                        TandCViewController *viewController = (TandCViewController *)[storyboard instantiateViewControllerWithIdentifier:@"TandCViewController"];
-                        //[self.window makeKeyAndVisible];
-                        [self presentViewController:viewController animated:NO completion:NULL];
+                       TandCViewController *viewController = (TandCViewController *)[storyboard instantiateViewControllerWithIdentifier:@"TandCViewController"];
+                                               //[self.window makeKeyAndVisible];
+                                               viewController.modalPresentationStyle = UIModalPresentationFullScreen;
 
+                                               [self presentViewController:viewController animated:NO completion:NULL];
                     }]; //You can use a block here to handle a press on this button
         [alertController addAction:actionOk];
         [self presentViewController:alertController animated:YES completion:nil];

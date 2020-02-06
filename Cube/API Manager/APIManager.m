@@ -1228,7 +1228,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     NSMutableData *httpBody = [NSMutableData data];
     
     // add params (all params are strings)
-    
+
     [parameters enumerateKeysAndObjectsUsingBlock:^(NSString *parameterKey, NSString *parameterValue, BOOL *stop) {
         [httpBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [httpBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", parameterKey] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -1248,6 +1248,8 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
         
         [httpBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [httpBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", fieldName, filename] dataUsingEncoding:NSUTF8StringEncoding]];
+//        [httpBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data \r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+
         [httpBody appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n\r\n", mimetype] dataUsingEncoding:NSUTF8StringEncoding]];
         [httpBody appendData:data];
         [httpBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];

@@ -13,6 +13,7 @@
 #import "NSData+AES256.h"
 #import "SharedSession.h"
 #import "SelectFileViewController.h"
+#import "UserSettingsViewController.h"
 #import <StoreKit/SKStoreProductViewController.h>
 
 //#import <iTunesLibrary/ITLibrary.h>
@@ -565,7 +566,11 @@
 {
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     
-    [self.navigationController presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
+      UserSettingsViewController *vc = [self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"];
+     
+     vc.modalPresentationStyle = UIModalPresentationFullScreen;
+     
+     [self.tabBarController presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)Logout
@@ -574,9 +579,12 @@
     
     [AppPreferences sharedAppPreferences].userObj = nil;
     
-    UIViewController* vc= [self.storyboard  instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    
-    [self presentViewController:vc animated:true completion:nil];
+   UIViewController* vc= [self.storyboard  instantiateViewControllerWithIdentifier:@"LoginViewController"];
+       
+       vc.modalPresentationStyle = UIModalPresentationFullScreen;
+       
+       [self presentViewController:vc animated:true completion:nil];
+
 
 //    [[[UIApplication sharedApplication] keyWindow] setRootViewController:vc];
 }
@@ -627,6 +635,8 @@
         NSArray* splitVCArray = [[NSArray alloc] initWithObjects:navVC, nil];
 
         [splitVC setViewControllers:splitVCArray];
+        
+        splitVC.modalPresentationStyle = UIModalPresentationFullScreen;
         
         [self presentViewController:splitVC animated:NO completion:nil];
     }
@@ -685,6 +695,8 @@
         
         [splitVC setViewControllers:splitVCArray];
         
+         splitVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
         [self presentViewController:splitVC animated:NO completion:nil];
     }
     else
@@ -718,6 +730,8 @@
         NSArray* splitVCArray = [[NSArray alloc] initWithObjects:navVC, nil];
         
         [splitVC setViewControllers:splitVCArray];
+        
+         splitVC.modalPresentationStyle = UIModalPresentationFullScreen;
         
         [self presentViewController:splitVC animated:NO completion:nil];
     }

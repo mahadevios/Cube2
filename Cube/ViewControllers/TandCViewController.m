@@ -68,7 +68,10 @@
     if ([responseCodeString intValue]==1)
     {
         
-         [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"] animated:NO completion:nil];
+       LoginViewController* viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+                
+                 [self presentViewController:viewController animated:NO completion:nil];
        
     }
     else

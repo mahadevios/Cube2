@@ -1090,7 +1090,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         [self stopUneditedRecording];
 
-        [self updateDictationStatus:@"RecordingComplete"];
+       
 
     }
     
@@ -1222,6 +1222,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         if (![[NSUserDefaults standardUserDefaults] boolForKey:CONFIRM_BEFORE_SAVING_SETTING] || recordingRestrictionLimitCrossed)
         {
 
+//            [self updateDictationStatus:@"RecordingComplete"];
+            
             [recorder stop];
             
             [self hideViewForStopRecording];
@@ -2243,7 +2245,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [[[[UIApplication sharedApplication] keyWindow] viewWithTag:111] removeFromSuperview];
     [APIManager sharedManager].userSettingsOpened=YES;
     [APIManager sharedManager].userSettingsClosed=NO;
-    [self presentViewController:[self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"] animated:YES completion:nil];
+      UIViewController* vc = [self.storyboard  instantiateViewControllerWithIdentifier:@"UserSettingsViewController"];
+      vc.modalPresentationStyle = UIModalPresentationFullScreen;
 }
 
 
@@ -3923,7 +3926,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
         else
         {
-            SpeechRecognitionViewController* spvc = [self.storyboard instantiateViewControllerWithIdentifier:@"SpeechRecognitionViewController"];
+             SpeechRecognitionViewController* spvc = [self.storyboard instantiateViewControllerWithIdentifier:@"SpeechRecognitionViewController"];
+                      
+                      spvc.modalPresentationStyle = UIModalPresentationFullScreen;
             
             [self presentViewController:spvc animated:true completion:nil];
         }

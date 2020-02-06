@@ -9,6 +9,7 @@
 #import "RecordTabViewController.h"
 #import "AppPreferences.h"
 #import "Constants.h"
+#import "RecordViewController.h"
 
 @interface RecordTabViewController ()
 
@@ -41,7 +42,13 @@
         self.tabBarController.selectedIndex=0;
     }
     else
-        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"] animated:YES completion:nil];
+    {
+        RecordViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
+               
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        
+         [self.tabBarController presentViewController:vc animated:YES completion:nil];
+    }
 }
 - (void)didReceiveMemoryWarning
 {
