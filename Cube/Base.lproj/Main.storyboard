@@ -5065,7 +5065,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RHn-hT-xSF">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="630"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your your PIN code,please save this for future use." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcZ-LP-Q8d">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your PIN code, please save this for future use." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcZ-LP-Q8d">
                                                 <rect key="frame" x="20.666666666666657" y="29.999999999999996" width="372.66666666666674" height="40.666666666666657"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="Mho-7a-7hA"/>
