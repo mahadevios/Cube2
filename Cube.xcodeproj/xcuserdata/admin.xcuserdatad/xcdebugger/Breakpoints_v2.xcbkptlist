@@ -833,8 +833,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3067"
             endingLineNumber = "3067"
-            landmarkName = "RecordViewController"
-            landmarkType = "3">
+            landmarkName = "-editAudioButtonPressed:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1946,7 +1946,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "02AE70A2-A3FD-43DC-827D-0738DFC0D0DF"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/TandCViewController.m"
@@ -1963,7 +1963,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "404E35A3-DDB1-42FB-B1FB-52F496484F5C"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/DownloadMetaDataJob.m"
@@ -1987,25 +1987,25 @@
             timestampString = "581097870.923288"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "-webViewDidFinishLoad:"
-            landmarkType = "7">
+            startingLineNumber = "142"
+            endingLineNumber = "142"
+            landmarkName = "TandCViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "19455881-1CE6-4B5A-AA91-387EE6B7AE5D"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/TandCViewController.m"
             timestampString = "581097870.923332"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
             landmarkName = "-tcSubmitButtonClicked:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2014,7 +2014,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "571483AF-C04F-481B-8D1E-9A303B431A7E"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/APIManager.m"
@@ -2031,7 +2031,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "1635E8DE-0AC4-4E7F-AC3C-6DCB91B13676"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/API Manager/APIManager.m"
@@ -2234,23 +2234,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E838A13B-CAF7-48E9-8DAA-BA0440CD05E4"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/TandCViewController.m"
-            timestampString = "581097870.924421"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
-            landmarkName = "-zoomToFit"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "A333832B-3485-4576-8D92-5C1E3249AAFD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -2259,10 +2242,10 @@
             timestampString = "581097870.9244649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "-webViewDidFinishLoad:"
-            landmarkType = "7">
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "TandCViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2311,7 +2294,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "210"
                   endingLineNumber = "210"
-                  offsetFromSymbolStart = "1328">
+                  offsetFromSymbolStart = "1369">
                </Location>
                <Location
                   uuid = "5A325CE2-8957-400A-9337-7C3E8A435A33 - 5f5f92f3fae29bb6"
@@ -2326,7 +2309,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "210"
                   endingLineNumber = "210"
-                  offsetFromSymbolStart = "1384">
+                  offsetFromSymbolStart = "1437">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -2904,7 +2887,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "2422"
                   endingLineNumber = "2422"
-                  offsetFromSymbolStart = "5408">
+                  offsetFromSymbolStart = "7252">
                </Location>
                <Location
                   uuid = "2B6AF506-B222-4BC1-87E1-917A1C09751E - 7b54acbc2d197d44"
@@ -2919,7 +2902,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "2422"
                   endingLineNumber = "2422"
-                  offsetFromSymbolStart = "20">
+                  offsetFromSymbolStart = "15">
                </Location>
                <Location
                   uuid = "2B6AF506-B222-4BC1-87E1-917A1C09751E - e4f740b9e738899c"
@@ -2985,7 +2968,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "3407"
                   endingLineNumber = "3407"
-                  offsetFromSymbolStart = "48">
+                  offsetFromSymbolStart = "46">
                </Location>
                <Location
                   uuid = "5BB666AF-44B7-4E32-A967-D919312E5847 - 45d8703593e6a849"
@@ -3000,7 +2983,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "3407"
                   endingLineNumber = "3407"
-                  offsetFromSymbolStart = "16">
+                  offsetFromSymbolStart = "12">
                </Location>
             </Locations>
          </BreakpointContent>
