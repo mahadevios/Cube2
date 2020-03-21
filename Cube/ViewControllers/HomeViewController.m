@@ -105,8 +105,7 @@
     
 //    [self deleteDictation];
     NSLog(@"%@",NSHomeDirectory());
-   
-    
+
 }
 
 #pragma mark:Split VC delegate

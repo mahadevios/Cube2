@@ -14,6 +14,7 @@
 #import "Constants.h"
 #import "InCompleteDictationViewController.h"
 #import "ImportedAudioViewController.h"
+#import "VideoCallViewController.h"
 
 @interface AlertViewController ()
 
@@ -189,6 +190,31 @@
             }
                 
                 break;
+                
+            case 3:
+            {
+                VideoCallViewController *detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"VideoCallViewController"];
+                                   
+                                   navVC = [navVC initWithRootViewController:detailVC];
+                                   
+                                   NSMutableArray* subVC = [[NSMutableArray alloc] initWithArray:[self.splitViewController viewControllers]];
+                                   
+                                   if (subVC.count > 1)
+                                   {
+                                       [subVC removeObjectAtIndex:1];
+                                       
+                                       [subVC addObject:navVC];
+                                       
+                                   }
+                                   else
+                                   {
+                                       [subVC addObject:navVC];
+                                   }
+                                   
+                                   [self.splitViewController setViewControllers:subVC];
+                
+                break;
+            }
             default:
                 break;
         }
@@ -290,7 +316,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 4;
     
 }
 
@@ -314,6 +340,10 @@
             
         case 2:inCompleteDictationLabel.text=@"Imported Dictations";
             noDictationLabel.text=[NSString stringWithFormat:@"%ld",[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count];
+            break;
+            
+        case 3:inCompleteDictationLabel.text=@"Make FaceTime Video Call";
+//            noDictationLabel.text=[NSString stringWithFormat:@"%ld",[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count];
             break;
             
 //        case 3:inCompleteDictationLabel.text=@"Completed Doc Files";
@@ -378,6 +408,17 @@
             
             break;
          
+        case 3:
+            if (self.splitViewController.isCollapsed)
+            {
+                [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"VideoCallViewController"] animated:YES];
+            }
+            else
+            {
+                [self setSplitVCDetailViewSelectedRow:3];
+            }
+            
+            break;
 //        case 3:
 //            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"DocFilesViewController"] animated:YES];
 //            break;

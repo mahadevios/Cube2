@@ -1061,7 +1061,7 @@ bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
                                             style:UIAlertActionStyleDestructive
                                           handler:^(UIAlertAction * action)
                     {
-                        
+                        isMultipleFilesActivated = NO;
                         for (int i=0; i<arrayOfMarked.count; i++)
                             
                         {
