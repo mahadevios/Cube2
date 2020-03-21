@@ -476,6 +476,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 -(void)presentRecordView
 {
+    [player stop];
     
     [AppPreferences sharedAppPreferences].selectedTabBarIndex=3;
     

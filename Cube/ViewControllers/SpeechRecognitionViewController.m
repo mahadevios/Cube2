@@ -283,14 +283,14 @@
     UIView* keyWindow = [UIApplication sharedApplication].keyWindow;
     
    
-    transcriptionStatusView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width*0.05, -70, self.view.frame.size.width*0.8, 48)];
+    transcriptionStatusView = [[UIView alloc] initWithFrame:CGRectMake(0, -70, self.view.frame.size.width, 55)];
     
     transcriptionStatusView.tag = 3000;
     
    
     transcriptionStatusView.layer.cornerRadius = 4.0;
     
-    transcriptionStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width*0.1, 5, transcriptionStatusView.frame.size.width*0.9, 30)];
+    transcriptionStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusView.frame.size.width*0.05, 10, transcriptionStatusView.frame.size.width*0.9, 30)];
     
     transcriptionStatusLabel.font = [UIFont systemFontOfSize:15];
     
@@ -298,28 +298,31 @@
     
     transcriptionStatusLabel.textAlignment = NSTextAlignmentCenter;
     
+    transcriptionStatusLabel.textColor = [UIColor whiteColor];
 //    timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusLabel.frame.origin.x, transcriptionStatusLabel.frame.origin.y+transcriptionStatusLabel.frame.size.height, transcriptionStatusLabel.frame.size.width, 50)];
 
-    timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusLabel.frame.origin.x, 30, transcriptionStatusLabel.frame.size.width, 20)];
+    timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(transcriptionStatusLabel.frame.origin.x, 35, transcriptionStatusLabel.frame.size.width, 20)];
     timerLabel.text = @"00:59";
     
     timerLabel.font = [UIFont systemFontOfSize:15];
 
     timerLabel.textAlignment = NSTextAlignmentCenter;
     
+    timerLabel.textColor = [UIColor whiteColor];
+    
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
         transcriptionStatusView.frame = CGRectMake(self.view.frame.size.width*0.05, self.view.frame.size.height + 20, self.view.frame.size.width*0.8, 60);  // set animate view at bottom+20 of the view
         
-        timerLabel.frame = CGRectMake(transcriptionStatusLabel.frame.origin.x, 35, transcriptionStatusLabel.frame.size.width, 50);
+        timerLabel.frame = CGRectMake(transcriptionStatusLabel.frame.origin.x, 35, transcriptionStatusLabel.frame.size.width, 55);
         
         transcriptionStatusView.backgroundColor = [UIColor whiteColor];
         
         self.startPauseDocBGView.layer.cornerRadius = 4.0;
         
-        transcriptionStatusLabel.textColor = [UIColor lightGrayColor];
+        transcriptionStatusLabel.textColor = [UIColor whiteColor];
         
-        timerLabel.textColor = [UIColor darkGrayColor];
+        timerLabel.textColor = [UIColor whiteColor];
         
         transcriptionStatusLabel.font = [UIFont systemFontOfSize:21];
 
@@ -368,7 +371,7 @@
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                    self.transcriptionStatusView.frame = CGRectMake(self.view.frame.size.width*0.05, self.view.frame.size.height + moveDownDistance, self.view.frame.size.width*0.9, 48);
+                    self.transcriptionStatusView.frame = CGRectMake(0, self.view.frame.size.height + moveDownDistance, self.view.frame.size.width, 55);
             });
             
         }
@@ -380,12 +383,12 @@
             }
             else
             {
-                moveDownDistance = -60;
+                moveDownDistance = -70;
                 
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                self.transcriptionStatusView.frame = CGRectMake(self.view.frame.size.width*0.05, moveDownDistance, self.view.frame.size.width*0.9, 48);
+                self.transcriptionStatusView.frame = CGRectMake(0, moveDownDistance, self.view.frame.size.width, 65);
             });
             
         }
@@ -700,17 +703,17 @@
 
 -(void)speechRecognitionDidDetectSpeech:(SFSpeechRecognitionTask *)task
 {
-    NSLog(@"Task cancelled");
+    
 }
 
 -(void)speechRecognitionTaskWasCancelled:(SFSpeechRecognitionTask *)task
 {
-    NSLog(@"1");
+   
 }
 
 -(void)speechRecognitionTaskFinishedReadingAudio:(SFSpeechRecognitionTask *)task
 {
-     NSLog(@"2");
+  
     
     [[AppPreferences sharedAppPreferences] showHudWithTitle:@"Transcribing.." detailText:@"Please wait"];
     
@@ -718,7 +721,7 @@
 
 -(void)speechRecognitionTask:(SFSpeechRecognitionTask *)task didFinishSuccessfully:(BOOL)successfully
 {
-    NSLog(@"3");
+  
     
     isTranscripting = false;
 
@@ -738,7 +741,7 @@
 
 -(void)speechRecognitionTask:(SFSpeechRecognitionTask *)task didFinishRecognition:(SFSpeechRecognitionResult *)recognitionResult
 {
-    NSLog(@"4");
+   
    
     if(recognitionResult.isFinal)
     {
@@ -755,7 +758,7 @@
 
 -(void)speechRecognitionTask:(SFSpeechRecognitionTask *)task didHypothesizeTranscription:(SFTranscription *)transcription
 {
-    NSLog(@"5");
+  
     
     if (transcription != nil)
     {
@@ -821,7 +824,7 @@
                                
 //                           }
                            
-                           NSLog(@"text = %@", [self.previousTranscriptedArray objectAtIndex:0]);
+                       
                            
                            CGSize maximumLabelSize = CGSizeMake(96, FLT_MAX);
                            

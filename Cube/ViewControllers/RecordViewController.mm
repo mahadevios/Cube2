@@ -38,11 +38,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self setViewForViewDidLoad];
   
+    
   //AVAudioSessionPortBuiltInMic;
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+   
     [AppPreferences sharedAppPreferences].isRecordView=YES;
     
     if (![APIManager sharedManager].userSettingsOpened)

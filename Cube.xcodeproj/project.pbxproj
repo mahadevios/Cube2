@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8400457B1EC1F1470001369A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846DE68E1D72BDB10004C886 /* AVFoundation.framework */; };
 		8400457C1EC1F1520001369A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840045761EC1EB0A0001369A /* AudioToolbox.framework */; };
+		8408BBCF2425F11000564B0E /* VideoCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8408BBCE2425F11000564B0E /* VideoCallViewController.m */; };
 		840AC7551D8280F200EF6AF7 /* CAStreamBasicDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 840AC7511D8280F200EF6AF7 /* CAStreamBasicDescription.mm */; };
 		840AC7561D8280F200EF6AF7 /* CAXException.mm in Sources */ = {isa = PBXBuildFile; fileRef = 840AC7531D8280F200EF6AF7 /* CAXException.mm */; };
 		840AC7581D82816000EF6AF7 /* ExtAudioFileConvert.mm in Sources */ = {isa = PBXBuildFile; fileRef = 840AC7571D82816000EF6AF7 /* ExtAudioFileConvert.mm */; };
@@ -145,6 +146,8 @@
 
 /* Begin PBXFileReference section */
 		840045761EC1EB0A0001369A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		8408BBCD2425F11000564B0E /* VideoCallViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoCallViewController.h; sourceTree = "<group>"; };
+		8408BBCE2425F11000564B0E /* VideoCallViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoCallViewController.m; sourceTree = "<group>"; };
 		840AC74F1D8280F200EF6AF7 /* CADebugMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADebugMacros.h; sourceTree = "<group>"; };
 		840AC7501D8280F200EF6AF7 /* CAMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMath.h; sourceTree = "<group>"; };
 		840AC7511D8280F200EF6AF7 /* CAStreamBasicDescription.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAStreamBasicDescription.mm; sourceTree = "<group>"; };
@@ -749,6 +752,8 @@
 				846B5A5120B43EAB0012F6D9 /* EmptyViewController.m */,
 				84A180C021AD7632004F539D /* TandCViewController.h */,
 				84A180C121AD7632004F539D /* TandCViewController.m */,
+				8408BBCD2425F11000564B0E /* VideoCallViewController.h */,
+				8408BBCE2425F11000564B0E /* VideoCallViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1049,6 +1054,7 @@
 				84FCCFB11D48D01000E3D7AE /* MainTabBarViewController.m in Sources */,
 				843B341D20452BD20080F355 /* unzip.c in Sources */,
 				847D95951D5F14DC00145C32 /* AppPreferences.m in Sources */,
+				8408BBCF2425F11000564B0E /* VideoCallViewController.m in Sources */,
 				848B31041FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m in Sources */,
 				847D95B31D5F157C00145C32 /* MBProgressHUD.m in Sources */,
 				844C4A791D4B736700CF3DB4 /* SwitchCreation.m in Sources */,
@@ -1163,7 +1169,7 @@
 				INFOPLIST_FILE = "Copy to Cube/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.0.11;
+				MARKETING_VERSION = 1.0.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate.CopytoCube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0e8eea66-bdda-4edd-8661-5b7df9f7e67e";
@@ -1193,7 +1199,7 @@
 				INFOPLIST_FILE = "Copy to Cube/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.0.11;
+				MARKETING_VERSION = 1.0.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate.CopytoCube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9f74969c-d172-411b-b6fa-c0c9399e893e";
@@ -1326,6 +1332,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
+				MARKETING_VERSION = 1.0.12;
 				New_Setting = "";
 				OTHER_LDFLAGS = "";
 				"OTHER_LDFLAGS[arch=*]" = "";
@@ -1358,6 +1365,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
+				MARKETING_VERSION = 1.0.12;
 				New_Setting = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate;
