@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import <WebKit/WebKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TandCViewController : UIViewController<UIWebViewDelegate,UIScrollViewDelegate, UITextViewDelegate>
+@interface TandCViewController : UIViewController<UIWebViewDelegate,UIScrollViewDelegate, UITextViewDelegate, WKNavigationDelegate>
 {
     bool checkBoxSelected ;
     BOOL isScrollViewLoadedOnce;
@@ -30,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)tcSubmitButtonClicked:(id)sender;
 @property (weak, nonatomic) MBProgressHUD *hud;
 @property (weak, nonatomic) IBOutlet UITextView *privacyPolicyLinkTextVIew;
+@property(nonatomic, strong) WKWebView* wkWebView;
+@property (weak, nonatomic) IBOutlet UIView *navigationView;
 
 @end
 
