@@ -276,6 +276,10 @@
 		847D95BE1D5F292700145C32 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		847D95CA1D5F325600145C32 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		847DCBBF1DE590FD002D78BB /* Cube.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cube.entitlements; sourceTree = "<group>"; };
+		847FCB2224260BBC00AA9B7D /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		847FCB2324260BBC00AA9B7D /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		847FCB2624260CE500AA9B7D /* ContactsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ContactsUI.framework; path = System/Library/Frameworks/ContactsUI.framework; sourceTree = SDKROOT; };
+		847FCB2724260CE500AA9B7D /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		8480AAF81D787DD500473651 /* Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Keychain.h; sourceTree = "<group>"; };
 		8480AAF91D787DD500473651 /* Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Keychain.m; sourceTree = "<group>"; };
 		8488B7B81FC6A8C7006FE0FA /* TableViewButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewButton.h; sourceTree = "<group>"; };
@@ -684,6 +688,10 @@
 		84EACD9A1E03FA64002C43BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				847FCB2724260CE500AA9B7D /* Contacts.framework */,
+				847FCB2624260CE500AA9B7D /* ContactsUI.framework */,
+				847FCB2324260BBC00AA9B7D /* AddressBook.framework */,
+				847FCB2224260BBC00AA9B7D /* AddressBookUI.framework */,
 				846A561E219AA51400EC0B3C /* StoreKit.framework */,
 				849AF4AA2029CDCC008B6566 /* libxml2.tbd */,
 				848B31051FC7ECF700CE3AC8 /* Speech.framework */,

@@ -439,7 +439,7 @@
 {
     NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
     
-    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+20, 160, 40) andSubViews:subViewArray :self];
+    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+40, 160, 40) andSubViews:subViewArray :self];
     
     [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
 }

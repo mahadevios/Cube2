@@ -947,7 +947,7 @@ else//to disaalow single row while that row is uploading
     
      //Create a spacer.
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    bi.width = 12.0f;
+    bi.width = 10.0f;
     [buttons addObject:bi];
     
     
@@ -956,12 +956,20 @@ else//to disaalow single row while that row is uploading
     [buttons addObject:bi];
 
     bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    bi.width = 9.0f;
+    bi.width = 10.0f;
     [buttons addObject:bi];
     
     bi = [[UIBarButtonItem alloc]initWithTitle:@"Select all" style:UIBarButtonItemStylePlain target:self action:@selector(selectAllFiles:)];
     bi.tag=102;
+    
+    [bi setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+    [UIFont fontWithName:@"Helvetica-Bold" size:14.0], NSFontAttributeName,
+    [UIColor darkGrayColor], NSForegroundColorAttributeName,
+    nil]
+                          forState:UIControlStateNormal];
     [buttons addObject:bi];
+    
+    
     
     
     // Add buttons to toolbar and toolbar to nav bar.
@@ -976,28 +984,28 @@ else//to disaalow single row while that row is uploading
     //UIToolbar *tools1 = [[UIToolbar alloc]
      //                   initWithFrame:CGRectMake(-50.0f, 10.0f, 150.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
     UIToolbar *tools1 = [[UIToolbar alloc]
-                         initWithFrame:CGRectMake(0.0f, 0.0f, 95.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
+                         initWithFrame:CGRectMake(0.0f, 0.0f, 88.0f, 44.01f)]; // 44.01 shifts it up 1px for some reason
     //tools.layer.borderWidth = 1;
     tools1.tag=101;
     tools1.layer.borderColor = [[UIColor whiteColor] CGColor];
     tools1.clipsToBounds = YES;
     
     NSMutableArray *buttons1 = [[NSMutableArray alloc] initWithCapacity:4];
-    // Create a standard refresh button.
-    UIBarButtonItem *bi1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
-bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
-    [buttons1 addObject:bi1];
-    
-    //Create a spacer.
-    bi1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    bi1.width = 8.0f;
-    [buttons1 addObject:bi1];
+//    // Create a standard refresh button.
+//    UIBarButtonItem *bi1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+//bi1.imageInsets=UIEdgeInsetsMake(0, -30, 0, 0);
+//    [buttons1 addObject:bi1];
+//
+//    //Create a spacer.
+//    bi1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//    bi1.width = 8.0f;
+//    [buttons1 addObject:bi1];
     
     
     // Add profile button.
     selectedCountLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 5, 30, 20)];
     selectedCountLabel.text=[NSString stringWithFormat:@"%ld",arrayOfMarked.count];
-    bi1 = [[UIBarButtonItem alloc]initWithCustomView:selectedCountLabel];
+    UIBarButtonItem* bi1 = [[UIBarButtonItem alloc]initWithCustomView:selectedCountLabel];
     [buttons1 addObject:bi1];
     
     bi1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
