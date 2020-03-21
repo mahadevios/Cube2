@@ -22,6 +22,38 @@
     // Do any additional setup after loading the view.
 }
 
+//-(void) getContactPermission
+//{
+//   CNContactStore *store = [[CNContactStore alloc] init];
+//    [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
+//        if (granted == YES) {
+//            //keys with fetching properties
+//            NSArray *keys = @[CNContactFamilyNameKey, CNContactGivenNameKey, CNContactPhoneNumbersKey, CNContactImageDataKey];
+//            NSString *containerId = store.defaultContainerIdentifier;
+//            NSPredicate *predicate = [CNContact predicateForContactsInContainerWithIdentifier:containerId];
+//            NSError *error;
+//            NSArray *cnContacts = [store unifiedContactsMatchingPredicate:predicate keysToFetch:keys error:&error];
+//            if (error) {
+//                NSLog(@"error fetching contacts %@", error);
+//            } else {
+//                for (CNContact *contact in cnContacts) {
+//                    // copy data to my custom Contacts class.
+//                    Contact *newContact = [[Contact alloc] init];
+//                    newContact.firstName = contact.givenName;
+//                    newContact.lastName = contact.familyName;
+//                    UIImage *image = [UIImage imageWithData:contact.imageData];
+//                    newContact.image = image;
+//                    for (CNLabeledValue *label in contact.phoneNumbers) {
+//                        NSString *phone = [label.value stringValue];
+//                        if ([phone length] > 0) {
+//                            [contact.phones addObject:phone];
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }];
+//}
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
