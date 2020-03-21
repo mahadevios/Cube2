@@ -5167,7 +5167,7 @@
                                                     <action selector="submitButtonClicked:" destination="BNf-De-8Pl" eventType="touchUpInside" id="NQe-8y-ntz"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confirm PINcode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5d-FZ-UVf">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confirm PIN code" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5d-FZ-UVf">
                                                 <rect key="frame" x="107" y="159.66666666666666" width="200" height="20.333333333333343"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="200" id="64z-HT-VMs"/>
