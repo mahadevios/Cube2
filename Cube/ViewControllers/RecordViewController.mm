@@ -2972,6 +2972,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                         }
                         
                     }]; //You can use a block here to handle a press on this button
+    
     [alertController addAction:actionInsert];
     
     UIAlertAction* actionInsertInBetween = [UIAlertAction actionWithTitle:@"Insert in Between"

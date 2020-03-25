@@ -74,6 +74,8 @@
 		8488B7BA1FC6A8C7006FE0FA /* TableViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7B91FC6A8C7006FE0FA /* TableViewButton.m */; };
 		8488B7BD1FC6EA00006FE0FA /* UIColor+ApplicationColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7BC1FC6E9FF006FE0FA /* UIColor+ApplicationColors.m */; };
 		848B31041FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B31031FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m */; };
+		848B379D242B32C4003E49E8 /* AppointmentDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B379C242B32C4003E49E8 /* AppointmentDetailsViewController.m */; };
+		848B37A0242B778E003E49E8 /* CustomSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B379F242B778E003E49E8 /* CustomSplitViewController.m */; };
 		849094AF1FE92B6500B00C0B /* DocFileDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 849094AE1FE92B6500B00C0B /* DocFileDetails.m */; };
 		849A20791E080F000004DDD2 /* BrowseMusicViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 849A20781E080F000004DDD2 /* BrowseMusicViewController.mm */; };
 		849AF4AB2029CDCC008B6566 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 849AF4AA2029CDCC008B6566 /* libxml2.tbd */; };
@@ -96,6 +98,7 @@
 		84D0B52C1D81B4D70084E016 /* SBJson4StreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D0B5231D81B4D70084E016 /* SBJson4StreamWriter.m */; };
 		84D0B52D1D81B4D70084E016 /* SBJson4StreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D0B5251D81B4D70084E016 /* SBJson4StreamWriterState.m */; };
 		84D0B52E1D81B4D70084E016 /* SBJson4Writer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D0B5271D81B4D70084E016 /* SBJson4Writer.m */; };
+		84DEE9E92427384F00B310E0 /* PatientDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DEE9E82427384F00B310E0 /* PatientDetails.m */; };
 		84F5641A1FCD4970006FC7AD /* SelectFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F564191FCD4970006FC7AD /* SelectFileViewController.m */; };
 		84F5641D1FCD522D006FC7AD /* CommonDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 84F5641C1FCD522D006FC7AD /* CommonDelegate.h */; };
 		84FCCFA21D48B75A00E3D7AE /* SelectDepartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FCCFA11D48B75A00E3D7AE /* SelectDepartmentViewController.m */; };
@@ -289,6 +292,10 @@
 		848B31021FC7EC8200CE3AC8 /* SpeechRecognitionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpeechRecognitionViewController.h; sourceTree = "<group>"; };
 		848B31031FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpeechRecognitionViewController.m; sourceTree = "<group>"; };
 		848B31051FC7ECF700CE3AC8 /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = System/Library/Frameworks/Speech.framework; sourceTree = SDKROOT; };
+		848B379B242B32C4003E49E8 /* AppointmentDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppointmentDetailsViewController.h; sourceTree = "<group>"; };
+		848B379C242B32C4003E49E8 /* AppointmentDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppointmentDetailsViewController.m; sourceTree = "<group>"; };
+		848B379E242B778E003E49E8 /* CustomSplitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomSplitViewController.h; sourceTree = "<group>"; };
+		848B379F242B778E003E49E8 /* CustomSplitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomSplitViewController.m; sourceTree = "<group>"; };
 		849094AD1FE92B6500B00C0B /* DocFileDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DocFileDetails.h; sourceTree = "<group>"; };
 		849094AE1FE92B6500B00C0B /* DocFileDetails.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DocFileDetails.m; sourceTree = "<group>"; };
 		849A20771E080F000004DDD2 /* BrowseMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseMusicViewController.h; sourceTree = "<group>"; };
@@ -332,6 +339,8 @@
 		84D0B5251D81B4D70084E016 /* SBJson4StreamWriterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4StreamWriterState.m; sourceTree = "<group>"; };
 		84D0B5261D81B4D70084E016 /* SBJson4Writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson4Writer.h; sourceTree = "<group>"; };
 		84D0B5271D81B4D70084E016 /* SBJson4Writer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4Writer.m; sourceTree = "<group>"; };
+		84DEE9E72427384F00B310E0 /* PatientDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PatientDetails.h; sourceTree = "<group>"; };
+		84DEE9E82427384F00B310E0 /* PatientDetails.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PatientDetails.m; sourceTree = "<group>"; };
 		84EACD9D1E03FF65002C43BE /* iTunesLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iTunesLibrary.framework; path = ../../../../../Library/Frameworks/iTunesLibrary.framework; sourceTree = "<group>"; };
 		84EACDA11E040CE2002C43BE /* iTunesLibrary */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = iTunesLibrary; path = ../../../../../Library/Frameworks/iTunesLibrary.framework/Versions/A/iTunesLibrary; sourceTree = "<group>"; };
 		84F564181FCD4970006FC7AD /* SelectFileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectFileViewController.h; sourceTree = "<group>"; };
@@ -762,6 +771,10 @@
 				84A180C121AD7632004F539D /* TandCViewController.m */,
 				8408BBCD2425F11000564B0E /* VideoCallViewController.h */,
 				8408BBCE2425F11000564B0E /* VideoCallViewController.m */,
+				848B379B242B32C4003E49E8 /* AppointmentDetailsViewController.h */,
+				848B379C242B32C4003E49E8 /* AppointmentDetailsViewController.m */,
+				848B379E242B778E003E49E8 /* CustomSplitViewController.h */,
+				848B379F242B778E003E49E8 /* CustomSplitViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -779,6 +792,8 @@
 				84CC5F751D74351900D1E982 /* DepartMent.m */,
 				849F02651D75328000E74723 /* User.h */,
 				849F02661D75328000E74723 /* User.m */,
+				84DEE9E72427384F00B310E0 /* PatientDetails.h */,
+				84DEE9E82427384F00B310E0 /* PatientDetails.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1010,6 +1025,7 @@
 				84AB68591D536961006F962D /* InCompleteDictationViewController.m in Sources */,
 				84BFFB4B21ABDD8500DD8E04 /* Reachability.m in Sources */,
 				843B341F20452BD20080F355 /* SSZipArchive.m in Sources */,
+				848B379D242B32C4003E49E8 /* AppointmentDetailsViewController.m in Sources */,
 				845A96781DDDEF9A007F460C /* NSData+AES256.m in Sources */,
 				8488B7BA1FC6A8C7006FE0FA /* TableViewButton.m in Sources */,
 				84F5641A1FCD4970006FC7AD /* SelectFileViewController.m in Sources */,
@@ -1049,6 +1065,7 @@
 				843B340F20452BD20080F355 /* aes_ni.c in Sources */,
 				843B341420452BD20080F355 /* hmac.c in Sources */,
 				84B87BCE1D76859A002B91FB /* UIDevice+Identifier.m in Sources */,
+				848B37A0242B778E003E49E8 /* CustomSplitViewController.m in Sources */,
 				84CC5F731D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m in Sources */,
 				84BD03061FC2DD7C006C45A6 /* DocFilesViewController.m in Sources */,
 				84302E9C1D5E094C005E14E2 /* RecordTabViewController.m in Sources */,
@@ -1060,6 +1077,7 @@
 				843B341220452BD20080F355 /* aestab.c in Sources */,
 				84FCCFA51D48CE3700E3D7AE /* HomeViewController.m in Sources */,
 				84FCCFB11D48D01000E3D7AE /* MainTabBarViewController.m in Sources */,
+				84DEE9E92427384F00B310E0 /* PatientDetails.m in Sources */,
 				843B341D20452BD20080F355 /* unzip.c in Sources */,
 				847D95951D5F14DC00145C32 /* AppPreferences.m in Sources */,
 				8408BBCF2425F11000564B0E /* VideoCallViewController.m in Sources */,
@@ -1164,7 +1182,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Copy to Cube/Copy to Cube.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1177,7 +1195,7 @@
 				INFOPLIST_FILE = "Copy to Cube/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.0.12;
+				MARKETING_VERSION = 1.0.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate.CopytoCube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0e8eea66-bdda-4edd-8661-5b7df9f7e67e";
@@ -1198,7 +1216,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Copy to Cube/Copy to Cube.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1207,7 +1225,7 @@
 				INFOPLIST_FILE = "Copy to Cube/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.0.12;
+				MARKETING_VERSION = 1.0.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate.CopytoCube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9f74969c-d172-411b-b6fa-c0c9399e893e";
@@ -1330,7 +1348,7 @@
 				CODE_SIGN_ENTITLEMENTS = Cube/Cube.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INPUT_FILETYPE = automatic;
@@ -1340,7 +1358,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
-				MARKETING_VERSION = 1.0.12;
+				MARKETING_VERSION = 1.0.13;
 				New_Setting = "";
 				OTHER_LDFLAGS = "";
 				"OTHER_LDFLAGS[arch=*]" = "";
@@ -1363,7 +1381,7 @@
 				CODE_SIGN_ENTITLEMENTS = Cube/Cube.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INPUT_FILETYPE = automatic;
@@ -1373,7 +1391,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
-				MARKETING_VERSION = 1.0.12;
+				MARKETING_VERSION = 1.0.13;
 				New_Setting = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate;

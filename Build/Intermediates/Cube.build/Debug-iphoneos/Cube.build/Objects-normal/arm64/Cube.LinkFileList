@@ -2,6 +2,7 @@
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/InCompleteDictationViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/Reachability.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/SSZipArchive.o
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/AppointmentDetailsViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/NSData+AES256.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/TableViewButton.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/SelectFileViewController.o
@@ -41,6 +42,7 @@
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/aes_ni.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/hmac.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/UIDevice+Identifier.o
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/CustomSplitViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/TransferredOrDeletedAudioDetailsViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/DocFilesViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/RecordTabViewController.o
@@ -51,6 +53,7 @@
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/aestab.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/HomeViewController.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/MainTabBarViewController.o
+/Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/PatientDetails.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/unzip.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/AppPreferences.o
 /Users/admin/Documents/CubeBackUp/cube-master 2__16-aug/Build/Intermediates/Cube.build/Debug-iphoneos/Cube.build/Objects-normal/arm64/VideoCallViewController.o

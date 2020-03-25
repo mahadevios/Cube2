@@ -23,6 +23,8 @@ static NSURLSession * sharedSession =nil;
         
         NSURLSessionConfiguration * backgroundConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"Xanadutec"];
 
+        backgroundConfig.timeoutIntervalForResource = 30*60;// time wait for upload
+        
 //        backgroundConfig.sessionSendsLaunchEvents = false;
         
         sharedSession = [NSURLSession sessionWithConfiguration:backgroundConfig delegate:sender delegateQueue:[NSOperationQueue mainQueue]];

@@ -316,7 +316,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 4 ;
     
 }
 
@@ -342,7 +342,7 @@
             noDictationLabel.text=[NSString stringWithFormat:@"%ld",[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count];
             break;
             
-        case 3:inCompleteDictationLabel.text=@"Make FaceTime Video Call";
+        case 3:inCompleteDictationLabel.text=@"Appointments";
 //            noDictationLabel.text=[NSString stringWithFormat:@"%ld",[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count];
             break;
             

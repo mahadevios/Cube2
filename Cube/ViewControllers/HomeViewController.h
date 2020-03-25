@@ -12,6 +12,7 @@
 #import "APIManager.h"
 #import "AppPreferences.h"
 #import "Constants.h"
+#import "CustomSplitViewController.h"
 
 @interface HomeViewController : UIViewController<UISplitViewControllerDelegate>
 {
@@ -29,6 +30,7 @@
     UIAlertAction *actionCancel;
     MBProgressHUD* hud;
     NSURLSession* session;
+    UISplitViewController* splitVC;
     
 }
 @property (weak, nonatomic) IBOutlet UIView *transferredView;

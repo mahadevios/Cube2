@@ -30,9 +30,9 @@
 //    {
     [self beginAppearanceTransition:true animated:true];
 
-        self.splitViewController.delegate = self;
+//        self.splitViewController.delegate = self;
     
-        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
+    [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
 //    }
      
     detailVC.delegate = self;
@@ -60,8 +60,8 @@
         [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
     
         [self setAudioDetailOrEmptyViewController:0];
-    
-        [self setFirstRowSelected];
+//
+//        [self setFirstRowSelected];
     }
 }
 
@@ -129,11 +129,16 @@
 {
     if (self.splitViewController.isCollapsed == false) // for ipad reguler width reguler height
     {
-        NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        
-        [self.tableView selectRowAtIndexPath:firstRowPath animated:NO scrollPosition: UITableViewScrollPositionNone];
-        
-        [self tableView:self.tableView didSelectRowAtIndexPath:firstRowPath];
+        //if loop For iPad: added this because without this app was shwing empty audio detail screen when there is not any file list tab(after removing this check how list look when there is no file in list)
+        if([APIManager sharedManager].transferredListArray.count >0 || [APIManager sharedManager].deletedListArray.count>0)
+        {
+            NSIndexPath *firstRowPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                   
+            [self.tableView selectRowAtIndexPath:firstRowPath animated:NO scrollPosition: UITableViewScrollPositionNone];
+                   
+            [self tableView:self.tableView didSelectRowAtIndexPath:firstRowPath];
+        }
+       
     }
    
 }

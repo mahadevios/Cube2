@@ -32,16 +32,18 @@
                                              selector:@selector(validateTandCResponse:) name:NOTIFICATION_ACCEPT_TANDC_API
                                                object:nil];
     
-    NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:@"By agreeing to use our service you agree to our privacy policy"];
-    
-    [str addAttribute: NSLinkAttributeName value: @"http://xanadutec.com.au/privacy-policy.html" range: NSMakeRange(48, 14)];
+//    NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:@"By agreeing to use our service you agree to our privacy policy"];
+//
+    NSString* str = @"By agreeing to use our service you agree to our privacy policy";
+//    [str addAttribute: NSLinkAttributeName value: @"http://xanadutec.com.au/privacy-policy.html" range: NSMakeRange(48, 14)];
     
     self.privacyPolicyLinkTextVIew.scrollEnabled = NO;
     self.privacyPolicyLinkTextVIew.editable = NO;
     self.privacyPolicyLinkTextVIew.textContainer.lineFragmentPadding = 0;
     self.privacyPolicyLinkTextVIew.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.privacyPolicyLinkTextVIew.delegate = self;
-    self.privacyPolicyLinkTextVIew.attributedText = str;
+//    self.privacyPolicyLinkTextVIew.attributedText = str;
+    self.privacyPolicyLinkTextVIew.text = str;
     self.privacyPolicyLinkTextVIew.font = [UIFont systemFontOfSize:14];
     // Do any additional setup after loading the view.
 }

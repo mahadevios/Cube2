@@ -450,9 +450,57 @@ if ([self.downLoadEntityJobName isEqualToString:VALIDATE_PIN_API])
                 
             }
             else
-                {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ACCEPT_TANDC_API object:response];
-                }
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ACCEPT_TANDC_API object:response];
+            }
+        }else
+        {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+            
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
+    }
+    
+    if ([self.downLoadEntityJobName isEqualToString:GET_APNTMNT_LIST_API])
+    {
+        
+        if (response != nil)
+        {
+            
+            if ([[response objectForKey:@"code"]intValue]==1)
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GET_APNTMNT_LIST object:response];
+                
+                
+            }
+            else
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GET_APNTMNT_LIST object:response];
+            }
+        }else
+        {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+            
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+        }
+    }
+    
+    if ([self.downLoadEntityJobName isEqualToString:UPDATE_APNTMNT_STATUS_API])
+    {
+        
+        if (response != nil)
+        {
+            
+            if ([[response objectForKey:@"code"]intValue]==1)
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UPDATE_APNTMNT_STATUS object:response];
+                
+                
+            }
+            else
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UPDATE_APNTMNT_STATUS object:response];
+            }
         }else
         {
             [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];

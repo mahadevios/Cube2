@@ -199,7 +199,7 @@
 //
 //}
 
--(void)validatePinResponseCheck:(NSNotification*)dictObj;
+-(void)validatePinResponseCheck:(NSNotification*)dictObj
 {
     NSDictionary* responseDict=dictObj.object;
     
