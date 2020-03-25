@@ -96,4 +96,9 @@
 -(void)uploadDocxFileToServer:(NSString*)docxFileName;
 
 -(void) acceptTandC:(NSString*) macID dateAndTIme:(NSString*)dateAndTIme acceptFlag:(NSString*)acceptFlag;
+
+-(void) getAppointmentList:(NSString*)dictatorId;
+
+-(void) updateAppointmentStatus:(NSString*)appointementStatus appointmentId:(NSString*)appointmentId;
+
 @end

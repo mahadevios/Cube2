@@ -34,7 +34,11 @@
     
 }
 
-
+//-(void)awakeFromNib
+//{
+//    [super awakeFromNib];
+//    self.splitViewController.delegate = self;
+//}
 -(void)viewWillAppear:(BOOL)animated
 {
     
@@ -83,6 +87,10 @@
     [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
 }
 
+-(BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController
+{
+    return true;
+}
 -(void)setUpNavigationView
 {
     self.navigationItem.title=self.currentViewName;

@@ -39,8 +39,10 @@
 #define  FILE_DOWNLOAD_API                    @"encedecr_MobileDownloadDocFile"
 #define  SEND_DICTATION_IDS_API               @"encrdecr_MobileRequestForCompleteFiles"
 #define  SEND_COMMENT_API                     @"encdecr_MobileDocFileComment"
-#define  DOCX_FILE_UPLOAD_API                  @"encedecr_MobileUploadDocFile"
-#define  ACCEPY_TandC_API                  @"encedecr_MobileTermsAndConditions"
+#define  DOCX_FILE_UPLOAD_API                 @"encedecr_MobileUploadDocFile"
+#define  ACCEPY_TandC_API                     @"encedecr_MobileTermsAndConditions"
+#define  GET_APNTMNT_LIST_API                 @"FetchClinicalList"
+#define  UPDATE_APNTMNT_STATUS_API            @"UpdateAppointmentStatus"
 
 
 #define  SECRET_KEY                           @"cubemob"
@@ -77,6 +79,8 @@
 #define NOTIFICATION_SEND_COMMENT_API               @"commentNotification"
 #define NOTIFICATION_FILE_UPLOAD_CLICKED            @"fileUploadClicked"
 #define NOTIFICATION_STOP_VRS                       @"stopVRS"
+#define NOTIFICATION_GET_APNTMNT_LIST               @"notiGetApntmntList"
+#define NOTIFICATION_UPDATE_APNTMNT_STATUS          @"notiUpdateApntStatus"
 
 //Settimg Constants
 
