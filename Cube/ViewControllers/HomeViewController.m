@@ -205,26 +205,26 @@
 
     }
 }
--(void)checkForCompletedDocFiles
-{
-    // get mobiledicataionid to send it to the server
-    NSArray* uploadedFilesDictationIdArray = [[Database shareddatabase] getUploadedFilesDictationIdList:false filterDate:@"5"];
-    
-    NSString* uploadedFilesDictationIdString = [uploadedFilesDictationIdArray componentsJoinedByString:@","];
-    
-    // send dictation ids to server to get list of completed doc
-    
-    if ([[AppPreferences sharedAppPreferences] isReachable])
-    {
-        [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
-
-        [self showActivityIndicator];
-    }
-    else
-    {
-        
-    }
-}
+//-(void)checkForCompletedDocFiles
+//{
+//    // get mobiledicataionid to send it to the server
+//    NSArray* uploadedFilesDictationIdArray = [[Database shareddatabase] getUploadedFilesDictationIdList:false filterDate:@"5"];
+//    
+//    NSString* uploadedFilesDictationIdString = [uploadedFilesDictationIdArray componentsJoinedByString:@","];
+//    
+//    // send dictation ids to server to get list of completed doc
+//    
+//    if ([[AppPreferences sharedAppPreferences] isReachable])
+//    {
+//        [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
+//
+//        [self showActivityIndicator];
+//    }
+//    else
+//    {
+//        
+//    }
+//}
 
 
 -(void)getAppointmentList

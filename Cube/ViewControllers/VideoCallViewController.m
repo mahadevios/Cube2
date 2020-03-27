@@ -602,7 +602,9 @@
         case 3:
              status.text = @"Not Attended";
             break;
-            
+        case 5:
+            status.text = @"Rescheduled";
+            break;
         case 6:
              status.text = @"Closed";
             break;
@@ -747,7 +749,7 @@
 */
 - (void)myClassDelegateMethod:(AppointmentDetailsViewController *)sender
 {
-    if (patientsDetailsArray.count-1 >= sender.selectedRow) {
+    if ((int)patientsDetailsArray.count-1 >= sender.selectedRow) {
          PatientDetails* patientDetails = [patientsDetailsArray objectAtIndex:sender.selectedRow];
            if (patientDetails.AppointementID == sender.patientDetails.AppointementID) {
                [patientsDetailsArray removeObjectAtIndex:sender.selectedRow];
