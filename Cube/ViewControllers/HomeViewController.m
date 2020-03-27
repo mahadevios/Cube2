@@ -35,6 +35,10 @@
     
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+      selector:@selector(validateApntmntListResponse:) name:NOTIFICATION_GET_APNTMNT_LIST
+        object:nil];
+    
 //    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
     
 //    [self beginAppearanceTransition:true animated:true];
@@ -52,12 +56,12 @@
     // tap gesture recognisers for four title views
     transferredTodayViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
     awaitingViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
-    completedDocViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showCompletedDocFIlesView:)];
+    appointmentTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showAppointmentView:)];
     vrsDocViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showVRSDocFilesView:)];
 
     [transferredView addGestureRecognizer:transferredTodayViewTapRecogniser];
     [awaitingTransferView addGestureRecognizer:awaitingViewTapRecogniser];
-    [transferFailedView addGestureRecognizer:completedDocViewTapRecogniser];
+    [transferFailedView addGestureRecognizer:appointmentTapRecogniser];
     [VRSDOCFilesView addGestureRecognizer:vrsDocViewTapRecogniser];
 
     // observer for transfer, awiating, failed recording counts change
@@ -72,6 +76,32 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)validateApntmntListResponse:(NSNotification*)dictObj
+{
+    NSDictionary* responseDict=dictObj.object;
+       
+    [self showIndicator:false];
+    
+    if ([[responseDict valueForKey:@"code"] isEqualToString:@"200"]) {
+                      
+              NSArray* aptList =  [responseDict valueForKey:@"ClinicalList"];
+              
+    self.completedDocCountLabel.text =  [NSString stringWithFormat:@"%ld",aptList.count];
+        
+    
+     
+//              if ([responseCodeString intValue] == 2001 || [responseCodeString intValue] == -1001)
+//              {
+//
+//              }
+    }
+    else
+    {
+        self.completedDocCountLabel.text =  [NSString stringWithFormat:@"0"];
+    }
+      
+      
+}
 -(void)viewWillAppear:(BOOL)animated
 {
 //    NSLog(@"navi height = %@", self.navigationController.navigationBar.bounds);
@@ -95,7 +125,7 @@
     [self showVRSFileCount];
 
     // check for complted docx file count
-//    [self checkForCompletedDocFiles];
+    [self getAppointmentList];
     
     // check files tobe purge
     [self checkFilesToBePurge];
@@ -103,6 +133,10 @@
     
     [self setSplitViewController];
     
+    NSDateFormatter *dfmt = [[NSDateFormatter alloc] init];
+    [dfmt setDateFormat:@"dd-MM-yyyy"];
+    NSString *dateString = [dfmt stringFromDate:[NSDate date]];
+    self.appointmentDateLabel.text = [NSString stringWithFormat:@"For %@", dateString];
 //    [self deleteDictation];
     NSLog(@"%@",NSHomeDirectory());
 
@@ -138,6 +172,39 @@
     }
 }
 
+-(void)showAppointmentView:(UITapGestureRecognizer*)sender
+{
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        VideoCallViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"VideoCallViewController"];
+        
+        CustomSplitViewController* splitVC = [CustomSplitViewController new];
+        
+        UINavigationController* navVC = [[UINavigationController alloc] initWithRootViewController:vc];;
+        //
+        [navVC.navigationBar setTintColor:[UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1.0]];
+        
+        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                   [UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1],NSForegroundColorAttributeName,[UIFont systemFontOfSize:20.0 weight:UIFontWeightBold],NSFontAttributeName, nil];
+        
+        //            [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+        
+        [navVC.navigationBar setTitleTextAttributes:navbarTitleTextAttributes];
+        
+        NSArray* splitVCArray = [[NSArray alloc] initWithObjects:navVC, nil];
+        
+        [splitVC setViewControllers:splitVCArray];
+        
+         splitVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
+        [self presentViewController:splitVC animated:NO completion:nil];
+    }
+    else
+    {
+        [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"VideoCallViewController"] animated:YES];
+
+    }
+}
 -(void)checkForCompletedDocFiles
 {
     // get mobiledicataionid to send it to the server
@@ -159,6 +226,45 @@
     }
 }
 
+
+-(void)getAppointmentList
+{
+    NSString* date = [[APIManager sharedManager] getDateAndTimeString];
+      [date componentsSeparatedByString:@" "];
+     
+    
+    if ([[AppPreferences sharedAppPreferences] isReachable]) {
+        
+           NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+           DepartMent* deptObj = [[DepartMent alloc] init];
+           deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+//        [[APIManager sharedManager] getAppointmentList:@"407" date:@"2020-03-26"];
+
+           [[APIManager sharedManager] getAppointmentList:[NSString stringWithFormat:@"%ld",deptObj.Id] date:date];
+        
+           
+        [self showIndicator:true];
+       }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:NO_INTERNET_TITLE_MESSAGE withMessage:NO_INTERNET_DETAIL_MESSAGE withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+}
+
+-(void) showIndicator:(BOOL)show
+{
+    if (show) {
+        [self.activityIndicator startAnimating];
+        [self.activityIndicator setHidden:false];
+        [self.completedDocCountLabel setHidden:true];
+    }
+    else
+    {
+        [self.activityIndicator stopAnimating];
+        [self.activityIndicator setHidden:true];
+        [self.completedDocCountLabel setHidden:false];
+    }
+}
 -(void)showActivityIndicator
 {
     // remove spinner if already exist
@@ -169,12 +275,10 @@
     
     //creating a spinner
     UIActivityIndicatorView * completedDocSpinner = [[UIActivityIndicatorView alloc]init];
-    
     //changing color of completed document spinner
-    completedDocSpinner.color = [UIColor blackColor];
     
     // setting position of spinner on ui
-    completedDocSpinner.frame = CGRectMake(_completedDocCountLabel.frame.origin.x,_completedDocCountLabel.frame.origin.y+10 ,30 ,30 );
+    completedDocSpinner.frame = CGRectMake(_completedDocCountLabel.frame.origin.x,_completedDocCountLabel.frame.origin.y-20 ,30 ,30 );
     
     //making spinner height and weight bigger than the default size of spinner.
     completedDocSpinner.transform = CGAffineTransformMakeScale(1.75, 1.75);

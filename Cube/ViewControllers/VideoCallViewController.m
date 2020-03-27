@@ -25,9 +25,7 @@
     selector:@selector(validateApntmntListResponse:) name:NOTIFICATION_GET_APNTMNT_LIST
       object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-    selector:@selector(validateApnmntStatus:) name:NOTIFICATION_UPDATE_APNTMNT_STATUS
-      object:nil];
+  
     self.dateTextField.delegate = self;
   
    [self setTextFieldDate:[NSDate date]];
@@ -46,58 +44,110 @@
     
     patientsDetailsArray = [NSMutableArray new];
     
-    [self setPatientDetailsFromAPI];
+//    [self setPatientDetailsFromAPI];
+    NSString* date = [[APIManager sharedManager] getDateAndTimeString];
+    [date componentsSeparatedByString:@" "];
+    [self getAppointmentList:[date componentsSeparatedByString:@" "][0]];
+   
 }
 
+-(void)getAppointmentList:(NSString*) date
+{
+    if ([[AppPreferences sharedAppPreferences] isReachable]) {
+        [self showHud];
+           NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+           DepartMent* deptObj = [[DepartMent alloc] init];
+           deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+//        [[APIManager sharedManager] getAppointmentList:@"407" date:@"2020-03-26"];
+
+           [[APIManager sharedManager] getAppointmentList:[NSString stringWithFormat:@"%ld",deptObj.Id] date:date];
+        
+       }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:NO_INTERNET_TITLE_MESSAGE withMessage:NO_INTERNET_DETAIL_MESSAGE withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+}
+
+-(void)showHud
+{
+    hud.minSize = CGSizeMake(150.f, 100.f);
+    
+    [hud hideAnimated:NO];
+    
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    hud.mode = MBProgressHUDModeIndeterminate;
+    
+    hud.label.text = @"Loading Appointments...";
+    
+    hud.detailsLabel.text = @"Please wait";
+    
+    
+}
 -(void)popViewController:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+     if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
+       {
+           [self.navigationController popViewControllerAnimated:YES];
+       }
+       else
+       {
+           [self dismissViewControllerAnimated:false completion:nil];
+       }
+       [self.tabBarController.tabBar setHidden:NO];
     
 }
 
 -(void)validateApntmntListResponse:(NSNotification*)dictObj
 {
     NSDictionary* responseDict=dictObj.object;
-       
-       NSString* responseCodeString=  [responseDict valueForKey:RESPONSE_CODE];
-       
-       NSArray* aptList =  [responseDict valueForKey:@"respArray"];
-       
-       for (NSDictionary* aptDict in aptList) {
-           int aptId = [[aptDict valueForKey:@"AppointementID"] intValue];
-           NSString* patientTitle = [aptDict valueForKey:@"PatTitle"];
-           NSString* PatFirstname = [aptDict valueForKey:@"PatFirstname"];
-           NSString* PatLastname = [aptDict valueForKey:@"PatLastname"];
-           NSString* MRN = [aptDict valueForKey:@"MRN"];
-           NSString* NHSNumber = [aptDict valueForKey:@"NHSNumber"];
-           NSString* DOB = [aptDict valueForKey:@"DOB"];
-           NSString* PatientContactNumber = [aptDict valueForKey:@"PatientContactNumber"];
-           NSString* PatientContactNumber2 = [aptDict valueForKey:@"PatientContactNumber2"];
-           NSString* AppointmentDate = [aptDict valueForKey:@"AppointmentDate"];
-           NSString* AppointmentTime = [aptDict valueForKey:@"AppointmentTime"];
-           NSString* AppointmentStatus = [aptDict valueForKey:@"AppointmentStatus"];
-           NSString* DepartmentID = [aptDict valueForKey:@"DepartmentID"];
-           
-           PatientDetails* patientDetails = [PatientDetails new];
-           patientDetails.AppointementID = aptId;
-           patientDetails.PatTitle = patientTitle;
-           patientDetails.PatFirstname = PatFirstname;
-           patientDetails.PatLastname = PatLastname;
-           patientDetails.MRN = MRN;
-           patientDetails.NHSNumber = NHSNumber;
-           patientDetails.DOB = DOB;
-           patientDetails.PatientContactNumber = PatientContactNumber;
-           patientDetails.PatientContactNumber2 = PatientContactNumber2;
-           patientDetails.AppointmentDate = AppointmentDate;
-           patientDetails.AppointmentTime = AppointmentTime;
-           patientDetails.AppointmentStatus = AppointmentStatus;
-           patientDetails.DepartmentID = DepartmentID;
-       }
+    [hud removeFromSuperview];
+    
+    [patientsDetailsArray removeAllObjects];
+    
+    if ([[responseDict valueForKey:@"code"] isEqualToString:@"200"]) {
+                      
+              NSArray* aptList =  [responseDict valueForKey:@"ClinicalList"];
+              
+              for (NSDictionary* aptDict in aptList) {
+                  int aptId = [[aptDict valueForKey:@"AppointmentID"] intValue];
+                  NSString* patientTitle = [aptDict valueForKey:@"PatTitle"];
+                  NSString* PatFirstname = [aptDict valueForKey:@"PatFirstname"];
+                  NSString* PatLastname = [aptDict valueForKey:@"PatLastname"];
+                  NSString* MRN = [aptDict valueForKey:@"MRN"];
+                  NSString* NHSNumber = [aptDict valueForKey:@"NHSNumber"];
+                  NSString* DOB = [aptDict valueForKey:@"DOB"];
+                  NSString* PatientContactNumber = [aptDict valueForKey:@"PatientContactNumber"];
+                  NSString* AppointmentDate = [aptDict valueForKey:@"AppointmentDate"];
+                  NSString* AppointmentTime = [aptDict valueForKey:@"AppointmentTime"];
+                  NSString* AppointmentStatus = [aptDict valueForKey:@"AppointmentStatus"];
+                  NSString* DepartmentID = [aptDict valueForKey:@"DepartmentID"];
+                  
+                  PatientDetails* patientDetails = [PatientDetails new];
+                  patientDetails.AppointementID = aptId;
+                  patientDetails.PatTitle = patientTitle;
+                  patientDetails.PatFirstname = PatFirstname;
+                  patientDetails.PatLastname = PatLastname;
+                  patientDetails.MRN = MRN;
+                  patientDetails.NHSNumber = NHSNumber;
+                  patientDetails.DOB = DOB;
+                  patientDetails.PatientContactNumber = PatientContactNumber;
+                  patientDetails.AppointmentDate = AppointmentDate;
+                  patientDetails.AppointmentTime = AppointmentTime;
+                  patientDetails.AppointmentStatus = AppointmentStatus;
+                  patientDetails.DepartmentID = DepartmentID;
+                  
+                  [patientsDetailsArray addObject:patientDetails];
+              }
 
-       if ([responseCodeString intValue] == 2001 || [responseCodeString intValue] == -1001)
-       {
-          
-       }
+        [self.tabelView reloadData];
+//              if ([responseCodeString intValue] == 2001 || [responseCodeString intValue] == -1001)
+//              {
+//
+//              }
+    }
+      
       
 }
 
@@ -143,7 +193,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 //    NSDate* date = [NSDate date];
-     
+      [self setAudioDetailOrEmptyViewController:0];
+    
 }
 
 -(void) setTextFieldDate:(NSDate*)date
@@ -171,277 +222,221 @@
 //{
 //      [self addDatePicker];
 //}
--(void) showVideoCallingOptionsOrNumbers:(UIButton*)sender
+-(void) showVideoCallingOptions:(UIButton*)sender
 {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tabelView];
     NSIndexPath *indexPath = [self.tabelView indexPathForRowAtPoint:buttonPosition];
     
-    PatientDetails* pD = [patientsDetailsArray objectAtIndex:indexPath.row];
+    //    PatientDetails* pD = [patientsDetailsArray objectAtIndex:indexPath.row];
     
-    if ([pD.PatientContactNumber2 isEqualToString:@""]  || pD.PatientContactNumber == nil) {
-        [self showVideoCallingOptions:sender contactNo:pD.PatientContactNumber];
-    }
-    else
-    {
-        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tabelView];
-        NSIndexPath *indexPath = [self.tabelView indexPathForRowAtPoint:buttonPosition];
-        
-        PatientDetails* pD = [patientsDetailsArray objectAtIndex:indexPath.row];
-        alertController = [UIAlertController alertControllerWithTitle:@""
-                                                              message:@"Select Contact Number to make a call"
-                                                       preferredStyle:UIAlertControllerStyleActionSheet];
-        
-        UIAlertAction* actionContact1 = [UIAlertAction actionWithTitle:pD.PatientContactNumber
-                                                                 style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction * action)
-                                         {
-            
-           [self showVideoCallingOptions:sender contactNo:pD.PatientContactNumber];
-                 
-            
-        }];
-        [alertController addAction:actionContact1];
-
-        UIAlertAction* actionContact2 = [UIAlertAction actionWithTitle:pD.PatientContactNumber2
-                                                                 style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction * action)
-                                         {
-            
-               [self showVideoCallingOptions:sender contactNo:pD.PatientContactNumber];
-            
-        }]; //You can use a block here to handle a press on this button
-       
-        [alertController addAction:actionContact2];
-        
-        [self addCancelAction];
-
-        
-        [alertController setModalPresentationStyle:UIModalPresentationPopover];
-        
-        
-        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-        {
-            UIPopoverPresentationController *popPresenter = [alertController
-                                                             popoverPresentationController];
-            popPresenter.sourceView = sender;
-            popPresenter.sourceRect = sender.bounds;
-        }
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
+    detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AppointmentDetailsViewController"];
+    detailVC.isOpenedThroughButton = YES;
+    detailVC.selectedRow = indexPath.row ;
+    detailVC.patientDetails = [patientsDetailsArray objectAtIndex:indexPath.row];
+    detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+    [self.navigationController presentViewController:detailVC animated:YES completion:nil];
 }
--(void) showVideoCallingOptions:(UIButton*)sender contactNo:(NSString*)contactNo
+-(void) showVideoCallingOptionsOrNumbers:(UIButton*)sender
 {
    
-    alertController = [UIAlertController alertControllerWithTitle:@""
-                                                          message:@"Select an application to make a call"
-                                                   preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction* actionWhatsapp = [UIAlertAction actionWithTitle:@"Whatsapp"
-                                                             style:UIAlertActionStyleDefault
-                                                           handler:^(UIAlertAction * action)
-                                     {
-        
-       
-               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"whatsapp://send?phone=%@",contactNo]]];
-        
-    }]; //You can use a block here to handle a press on this button
-    UIImage *img = [UIImage imageNamed:@"Whatsapp"];
-    [actionWhatsapp setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
-    [alertController addAction:actionWhatsapp];
+//    if ([pD.PatientContactNumber2 isEqualToString:@""]  || pD.PatientContactNumber == nil) {
+//        [self showVideoCallingOptions:sender];
+//    }
+//    else
+//    {
+//        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tabelView];
+//        NSIndexPath *indexPath = [self.tabelView indexPathForRowAtPoint:buttonPosition];
+//
+//        PatientDetails* pD = [patientsDetailsArray objectAtIndex:indexPath.row];
+//        alertController = [UIAlertController alertControllerWithTitle:@""
+//                                                              message:@"Select Contact Number to make a call"
+//                                                       preferredStyle:UIAlertControllerStyleActionSheet];
+//
+//        UIAlertAction* actionContact1 = [UIAlertAction actionWithTitle:pD.PatientContactNumber
+//                                                                 style:UIAlertActionStyleDefault
+//                                                               handler:^(UIAlertAction * action)
+//                                         {
+//
+//           [self showVideoCallingOptions:sender];
+//
+//
+//        }];
+//        [alertController addAction:actionContact1];
+//
+//        UIAlertAction* actionContact2 = [UIAlertAction actionWithTitle:pD.PatientContactNumber2
+//                                                                 style:UIAlertActionStyleDefault
+//                                                               handler:^(UIAlertAction * action)
+//                                         {
+//
+//               [self showVideoCallingOptions:sender];
+//
+//        }]; //You can use a block here to handle a press on this button
+//
+//        [alertController addAction:actionContact2];
+//
+//        [self addCancelAction];
+//
+//
+//        [alertController setModalPresentationStyle:UIModalPresentationPopover];
+//
+//
+//        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+//        {
+//            UIPopoverPresentationController *popPresenter = [alertController
+//                                                             popoverPresentationController];
+//            popPresenter.sourceView = sender;
+//            popPresenter.sourceRect = sender.bounds;
+//        }
+//
+//        [self presentViewController:alertController animated:YES completion:nil];
+//    }
+}
 
-    UIAlertAction* actionFaceTime = [UIAlertAction actionWithTitle:@"FaceTime"
-                                                             style:UIAlertActionStyleDefault
-                                                           handler:^(UIAlertAction * action)
-                                     {
-        
-              [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"facetime://%@",contactNo]]];
-        
-    }]; //You can use a block here to handle a press on this button
-    img = [UIImage imageNamed:@"FaceTime"];
-    [actionFaceTime setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
-    [alertController addAction:actionFaceTime];
-    
-//    UIAlertAction* actionGoogleDuo = [UIAlertAction actionWithTitle:@"Google Duo"
+//
+//-(void) showStatusChangeOptions:(UIButton*)sender
+//{
+//
+//
+//    alertController = [UIAlertController alertControllerWithTitle:@""
+//                                                          message:@"Select status to update"
+//                                                   preferredStyle:UIAlertControllerStyleActionSheet];
+//
+//    UIAlertAction* actionComplete = [UIAlertAction actionWithTitle:@"Complete"
 //                                                             style:UIAlertActionStyleDefault
 //                                                           handler:^(UIAlertAction * action)
 //                                     {
 //
-//
+//        [self confirmUpdateApntmntStatus:2 sender:sender];
+//             // update status API call
 //
 //    }]; //You can use a block here to handle a press on this button
-//    img = [UIImage imageNamed:@"GoogleDuo"];
-//    [actionGoogleDuo setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
-//    [alertController addAction:actionGoogleDuo];
-    
-    UIAlertAction* phoneCall = [UIAlertAction actionWithTitle:@"Phone Call"
-                                                             style:UIAlertActionStyleDefault
-                                                           handler:^(UIAlertAction * action)
-                                     {
-        
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",contactNo]]];
-
-        
-    }]; //You can use a block here to handle a press on this button
-    img = [UIImage imageNamed:@"PhoneCall"];
-    [phoneCall setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
-    [alertController addAction:phoneCall];
-    
-    [self addCancelAction];
-    
-    [alertController setModalPresentationStyle:UIModalPresentationPopover];
-    
-    
-    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-    {
-        UIPopoverPresentationController *popPresenter = [alertController
-                                                         popoverPresentationController];
-        popPresenter.sourceView = sender;
-        popPresenter.sourceRect = sender.bounds;
-    }
-    
-    [self presentViewController:alertController animated:YES completion:nil];
-}
-
--(void) showStatusChangeOptions:(UIButton*)sender
-{
-   
-   
-    alertController = [UIAlertController alertControllerWithTitle:@""
-                                                          message:@"Select status to update"
-                                                   preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction* actionComplete = [UIAlertAction actionWithTitle:@"Complete"
-                                                             style:UIAlertActionStyleDefault
-                                                           handler:^(UIAlertAction * action)
-                                     {
-        
-        [self confirmUpdateApntmntStatus:2 sender:sender];
-             // update status API call
-        
-    }]; //You can use a block here to handle a press on this button
-//    UIImage *img = [UIImage imageNamed:@"Whatsapp"];
-//    [actionWhatsapp setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
-    [alertController addAction:actionComplete];
-    
-    UIAlertAction* actionNotAttended = [UIAlertAction actionWithTitle:@"Not Attended"
-                                                                 style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction * action)
-                                         {
-            
-         [self confirmUpdateApntmntStatus:3 sender:sender];
-                 // update status API call
-            
-        }];
-    [alertController addAction:actionNotAttended];
-    
-    UIAlertAction* actionClosed = [UIAlertAction actionWithTitle:@"Close"
-                                                                 style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction * action)
-                                         {
-            
-          [self confirmUpdateApntmntStatus:6 sender:sender];
-                 // update status API call
-            
-        }];
-    [alertController addAction:actionClosed];
-    
-     [self addCancelAction];
-     
-     [alertController setModalPresentationStyle:UIModalPresentationPopover];
-     
-     
-     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
-     {
-         UIPopoverPresentationController *popPresenter = [alertController
-                                                          popoverPresentationController];
-         popPresenter.sourceView = sender;
-         popPresenter.sourceRect = sender.bounds;
-     }
-     
-     [self presentViewController:alertController animated:YES completion:nil];
-}
-
--(void) confirmUpdateApntmntStatus:(int)status sender:(UIButton*)sender
-{
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tabelView];
-    NSIndexPath *indexPath = [self.tabelView indexPathForRowAtPoint:buttonPosition];
-    
-    PatientDetails* pD = [patientsDetailsArray objectAtIndex:indexPath.row];
-    NSString* statusString;
-    switch (status) {
-               case 2:
-            statusString = @"Completed";
-                   break;
-               
-               case 3:
-                  statusString = @"Not Attended";
-                   break;
-               
-               case 6:
-                   statusString = @"Closed";
-                   break;
-               default:
-                   break;
-           }
-    NSString* updateMessage = [NSString stringWithFormat:@"Are you sure you want to update appointment status to %@ ?",statusString];
-    
-    alertController = [UIAlertController alertControllerWithTitle:@"Update Status?"
-                                                          message:updateMessage
-                                                   preferredStyle:UIAlertControllerStyleAlert];
-    actionDelete = [UIAlertAction actionWithTitle:@"Update"
-                                            style:UIAlertActionStyleDefault
-                                          handler:^(UIAlertAction * action)
-                    {
-        
-        switch (status) {
-            case 2:
-                pD.AppointmentStatus = @"2";
-//                [[APIManager sharedManager] updateAppointmentStatus:[NSString stringWithFormat:@"%d",status] appointmentId:[NSString stringWithFormat:@"%ld",pD.AppointementID]];
-                break;
-            
-            case 3:
-                pD.AppointmentStatus = @"3";
-//                [[APIManager sharedManager] updateAppointmentStatus:[NSString stringWithFormat:@"%d",status] appointmentId:[NSString stringWithFormat:@"%ld",pD.AppointementID]];
-                break;
-            
-            case 6:
-                pD.AppointmentStatus = @"6";
-//                [[APIManager sharedManager] updateAppointmentStatus:[NSString stringWithFormat:@"%d",status] appointmentId:[NSString stringWithFormat:@"%ld",pD.AppointementID]];
-                break;
-            default:
-                break;
-        }
-                      
-        [patientsDetailsArray replaceObjectAtIndex:indexPath.row withObject:pD];
-        
-        NSArray* arr = [[NSArray alloc] initWithObjects:indexPath, nil];
-        [self.tabelView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationAutomatic];
-                        
-                    }]; //You can use a block here to handle a press on this button
-    [alertController addAction:actionDelete];
-    
-    
-    actionCancel = [UIAlertAction actionWithTitle:@"Cancel"
-                                            style:UIAlertActionStyleCancel
-                                          handler:^(UIAlertAction * action)
-                    {
-                        [alertController dismissViewControllerAnimated:YES completion:nil];
-                        
-                    }]; //You can use a block here to handle a press on this button
-    
-    [alertController addAction:actionCancel];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
-    
-}
+////    UIImage *img = [UIImage imageNamed:@"Whatsapp"];
+////    [actionWhatsapp setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
+//    [alertController addAction:actionComplete];
+//
+//    UIAlertAction* actionNotAttended = [UIAlertAction actionWithTitle:@"Not Attended"
+//                                                                 style:UIAlertActionStyleDefault
+//                                                               handler:^(UIAlertAction * action)
+//                                         {
+//
+//         [self confirmUpdateApntmntStatus:3 sender:sender];
+//                 // update status API call
+//
+//        }];
+//    [alertController addAction:actionNotAttended];
+//
+//    UIAlertAction* actionClosed = [UIAlertAction actionWithTitle:@"Close"
+//                                                                 style:UIAlertActionStyleDefault
+//                                                               handler:^(UIAlertAction * action)
+//                                         {
+//
+//          [self confirmUpdateApntmntStatus:6 sender:sender];
+//                 // update status API call
+//
+//        }];
+//    [alertController addAction:actionClosed];
+//
+//     [self addCancelAction];
+//
+//     [alertController setModalPresentationStyle:UIModalPresentationPopover];
+//
+//
+//     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+//     {
+//         UIPopoverPresentationController *popPresenter = [alertController
+//                                                          popoverPresentationController];
+//         popPresenter.sourceView = sender;
+//         popPresenter.sourceRect = sender.bounds;
+//     }
+//
+//     [self presentViewController:alertController animated:YES completion:nil];
+//}
+//
+//-(void) confirmUpdateApntmntStatus:(int)status sender:(UIButton*)sender
+//{
+//    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tabelView];
+//    NSIndexPath *indexPath = [self.tabelView indexPathForRowAtPoint:buttonPosition];
+//
+//    PatientDetails* pD = [patientsDetailsArray objectAtIndex:indexPath.row];
+//    NSString* statusString;
+//    switch (status) {
+//               case 2:
+//            statusString = @"Completed";
+//                   break;
+//
+//               case 3:
+//                  statusString = @"Not Attended";
+//                   break;
+//
+//               case 6:
+//                   statusString = @"Closed";
+//                   break;
+//               default:
+//                   break;
+//           }
+//    NSString* updateMessage = [NSString stringWithFormat:@"Are you sure you want to update appointment status to %@ ?",statusString];
+//
+//    alertController = [UIAlertController alertControllerWithTitle:@"Update Status?"
+//                                                          message:updateMessage
+//                                                   preferredStyle:UIAlertControllerStyleAlert];
+//    actionDelete = [UIAlertAction actionWithTitle:@"Update"
+//                                            style:UIAlertActionStyleDefault
+//                                          handler:^(UIAlertAction * action)
+//                    {
+//
+//        switch (status) {
+//            case 2:
+//                pD.AppointmentStatus = @"2";
+////                [[APIManager sharedManager] updateAppointmentStatus:[NSString stringWithFormat:@"%d",status] appointmentId:[NSString stringWithFormat:@"%ld",pD.AppointementID]];
+//                break;
+//
+//            case 3:
+//                pD.AppointmentStatus = @"3";
+////                [[APIManager sharedManager] updateAppointmentStatus:[NSString stringWithFormat:@"%d",status] appointmentId:[NSString stringWithFormat:@"%ld",pD.AppointementID]];
+//                break;
+//
+//            case 6:
+//                pD.AppointmentStatus = @"6";
+////                [[APIManager sharedManager] updateAppointmentStatus:[NSString stringWithFormat:@"%d",status] appointmentId:[NSString stringWithFormat:@"%ld",pD.AppointementID]];
+//                break;
+//            default:
+//                break;
+//        }
+//
+//        [patientsDetailsArray replaceObjectAtIndex:indexPath.row withObject:pD];
+//
+//        NSArray* arr = [[NSArray alloc] initWithObjects:indexPath, nil];
+//        [self.tabelView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationAutomatic];
+//
+//                    }]; //You can use a block here to handle a press on this button
+//    [alertController addAction:actionDelete];
+//
+//
+//    actionCancel = [UIAlertAction actionWithTitle:@"Cancel"
+//                                            style:UIAlertActionStyleCancel
+//                                          handler:^(UIAlertAction * action)
+//                    {
+//                        [alertController dismissViewControllerAnimated:YES completion:nil];
+//
+//                    }]; //You can use a block here to handle a press on this button
+//
+//    [alertController addAction:actionCancel];
+//
+//    [self presentViewController:alertController animated:YES completion:nil];
+//
+//}
 
 -(void)addDatePicker
 {
     picker = [[UIDatePicker alloc]init];
     picker.datePickerMode = UIDatePickerModeDate;
 
-      [picker setDate:[NSDate date]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"dd MMMM yyyy";
+    NSDate* strDate = [dateFormatter dateFromString:self.dateTextField.text];
+    
+      [picker setDate:strDate];
       [picker addTarget:self action:@selector(updateTextField:) forControlEvents:UIControlEventValueChanged];
       [self.dateTextField setInputView:picker];
       
@@ -531,6 +526,21 @@
 //        }
 //    }];
 //}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+
+    UILabel *myLabel = [[UILabel alloc] init];
+    myLabel.frame = CGRectMake(10, 8, 320, 20);
+    myLabel.font = [UIFont boldSystemFontOfSize:16];
+    myLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+
+    UIView *headerView = [[UIView alloc] init];
+    [headerView setBackgroundColor:[UIColor lightGrayColor]];
+    [headerView addSubview:myLabel];
+
+    return headerView;
+}
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -542,7 +552,7 @@
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"Appointments";
+    return [NSString stringWithFormat:@"Appointments for %@", self.dateTextField.text];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -557,7 +567,6 @@
     PatientDetails* patientDetails = [patientsDetailsArray objectAtIndex:indexPath.row];
     UILabel* patientName = [cell viewWithTag:101];
     UILabel* status = [cell viewWithTag:102];
-    UIButton* statusButton = [cell viewWithTag:103];
     UILabel* dateTime = [cell viewWithTag:104];
     UIButton* callButton = [cell viewWithTag:105];
 //    if ([cell viewWithTag:indexPath.row] != nil) {
@@ -588,28 +597,17 @@
     }
     
 //    status.text = patientDetails.AppointmentStatus;
+//    [self showVideoCallingOptions:sender contactNo:pD.PatientContactNumber];
     
-    [statusButton addTarget:self action:@selector(showStatusChangeOptions:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [callButton addTarget:self action:@selector(showVideoCallingOptionsOrNumbers:) forControlEvents:UIControlEventTouchUpInside];
-    UILabel* contactNo1 = [cell viewWithTag:106];
-    UILabel* contactNo2 = [cell viewWithTag:107];
-
-    UILabel* dob = [cell viewWithTag:108];
-//    UILabel* email = [cell viewWithTag:106];
-    UILabel* hospitalNo = [cell viewWithTag:109];
-    UILabel* nhsNo = [cell viewWithTag:110];
+    [callButton addTarget:self action:@selector(showVideoCallingOptions:) forControlEvents:UIControlEventTouchUpInside];
+ 
+   
     
     patientName.text = [NSString stringWithFormat:@"%@ %@ %@", patientDetails.PatTitle, patientDetails.PatFirstname, patientDetails.PatLastname];
     
-    contactNo1.text = patientDetails.PatientContactNumber;
-    contactNo2.text = patientDetails.PatientContactNumber2;
+ 
+    dateTime.text = [NSString stringWithFormat:@"%@",patientDetails.AppointmentTime];
 
-    dateTime.text = [NSString stringWithFormat:@"%@ %@", patientDetails.AppointmentDate, patientDetails.AppointmentTime];
-    dob.text = patientDetails.DOB;
-//    email.text = patientDetails.emailId;
-    hospitalNo.text = patientDetails.MRN;
-    nhsNo.text = patientDetails.NHSNumber;
     
     return cell;
 }
@@ -622,7 +620,7 @@
     {
         
         detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AppointmentDetailsViewController"];
-        
+        detailVC.delegate = self;
         detailVC.selectedRow = indexPath.row ;
         detailVC.patientDetails = [patientsDetailsArray objectAtIndex:indexPath.row];
         detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -634,7 +632,7 @@
     else
     {
         [self setAudioDetailOrEmptyViewController:indexPath.row];
-        
+
     }
     
 //    [tableView beginUpdates]; // tell the table you're about to start making changes
@@ -708,8 +706,8 @@
     
     detailVC.selectedRow = selectedIndex;
     
-    [self.navigationController pushViewController:detailVC animated:true];
-//    [self.splitViewController showDetailViewController:detailVC sender:self];
+//    [self.navigationController pushViewController:detailVC animated:true];
+    [self.splitViewController showDetailViewController:detailVC sender:self];
     
 }
 
@@ -718,9 +716,9 @@
     // Compares the index path for the current cell to the index path stored in the expanded
     // index path variable. If the two match, return a height of 100 points, otherwise return
     // a height of 44 points.
-    if ([indexPath compare:self.expandedIndexPath] == NSOrderedSame) {
-        return 200.0; // Expanded height
-    }
+//    if ([indexPath compare:self.expandedIndexPath] == NSOrderedSame) {
+//        return 200.0; // Expanded height
+//    }
     return 75.0; // Normal height
 }
 /*
@@ -734,14 +732,22 @@
 */
 - (void)myClassDelegateMethod:(AppointmentDetailsViewController *)sender
 {
+    [patientsDetailsArray removeObjectAtIndex:sender.selectedRow];
+    
     [self.tabelView reloadData];
     
-    [self addEmptyVCToSplitVC];
+//    [self addEmptyVCToSplitVC];
 
 }
 
 - (IBAction)searchButtonClicked:(id)sender {
     
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"dd MMMM yyyy";
+    NSDate* strDate = [dateFormatter dateFromString:self.dateTextField.text];
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    NSString *dateString = [dateFormatter stringFromDate:strDate];
+    [self getAppointmentList:dateString];
     [self removePickerAndDoneButton];
 }
 @end

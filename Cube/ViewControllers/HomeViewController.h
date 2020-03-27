@@ -13,12 +13,13 @@
 #import "AppPreferences.h"
 #import "Constants.h"
 #import "CustomSplitViewController.h"
+#import "VideoCallViewController.h"
 
 @interface HomeViewController : UIViewController<UISplitViewControllerDelegate>
 {
     UITapGestureRecognizer* transferredTodayViewTapRecogniser;
     UITapGestureRecognizer* awaitingViewTapRecogniser;
-    UITapGestureRecognizer* completedDocViewTapRecogniser;
+    UITapGestureRecognizer* appointmentTapRecogniser;
     UITapGestureRecognizer* vrsDocViewTapRecogniser;
 
     UIView* overlayView;
@@ -47,5 +48,7 @@
 @property (weak, nonatomic) IBOutlet UIView *transferFailedCountView;
 @property (weak, nonatomic) IBOutlet UILabel *transferFailedCountLabel;
 @property(nonatomic, strong)NSMutableArray* VRSDocFilesArray;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UILabel *appointmentDateLabel;
 
 @end

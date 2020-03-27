@@ -20,13 +20,101 @@
     {
         self.navigationItem.title=@"Appointment Details";
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+      selector:@selector(validateApnmntStatus:) name:NOTIFICATION_UPDATE_APNTMNT_STATUS
+        object:nil];
+    
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
+    
+    if (self.splitViewController == nil)
+    {
+        self.backImageView.hidden = false;
+        self.backButton.hidden = false;
+        
+    }
+    else
+        if(self.splitViewController.isCollapsed == false)
+        {
+            self.backImageView.hidden = true;
+            self.backButton.hidden = true;
+            
+        }
+    
+    self.changeAptStatusButton.layer.cornerRadius = 4.0;
     // Do any additional setup after loading the view.
 }
+
+
+-(void) showVideoCallingOptions
+{
+    alertController = [UIAlertController alertControllerWithTitle:@""
+                                                          message:@"Select an application to make a call"
+                                                   preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction* actionWhatsapp = [UIAlertAction actionWithTitle:@"Whatsapp"
+                                                             style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action)
+                                     {
+        
+       
+               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"whatsapp://send?phone=%@",self.patientDetails.PatientContactNumber]]];
+        
+    }]; //You can use a block here to handle a press on this button
+    UIImage *img = [UIImage imageNamed:@"Whatsapp"];
+    [actionWhatsapp setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
+    [alertController addAction:actionWhatsapp];
+
+    UIAlertAction* actionFaceTime = [UIAlertAction actionWithTitle:@"FaceTime"
+                                                             style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action)
+                                     {
+        
+              [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"facetime://%@",self.patientDetails.PatientContactNumber]]];
+        
+    }]; //You can use a block here to handle a press on this button
+    img = [UIImage imageNamed:@"FaceTime"];
+    [actionFaceTime setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
+    [alertController addAction:actionFaceTime];
+
+    
+    UIAlertAction* phoneCall = [UIAlertAction actionWithTitle:@"Phone Call"
+                                                             style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action)
+                                     {
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",self.patientDetails.PatientContactNumber]]];
+
+        
+    }]; //You can use a block here to handle a press on this button
+    img = [UIImage imageNamed:@"PhoneCall"];
+    [phoneCall setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
+    [alertController addAction:phoneCall];
+    
+    [self addCancelAction];
+    
+    [alertController setModalPresentationStyle:UIModalPresentationPopover];
+    
+    
+//    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+//    {
+//        UIPopoverPresentationController *popPresenter = [alertController
+//                                                         popoverPresentationController];
+//        popPresenter.sourceView = sender;
+//        popPresenter.sourceRect = sender.bounds;
+//    }
+//
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+
 -(void)viewWillAppear:(BOOL)animated
 {
-    
-
+    if (self.isOpenedThroughButton && !callOptionShownOnce) {
+        callOptionShownOnce = true;
+           [self showVideoCallingOptions];
+       }
+    [self setAptDetails];
 
 }
 -(void)popViewController:(id)sender
@@ -36,7 +124,15 @@
 }
 -(void)validateApnmntStatus:(NSNotification*)dictObj
 {
-   [self setStatusStringUsingStatusId:selectedAppointmentStatus];
+    [hud removeFromSuperview];
+    NSDictionary* response = dictObj.object;
+    if([[response valueForKey:@"code"] intValue] == 200)
+    {
+        [self.delegate myClassDelegateMethod:self];
+         [self setStatusStringUsingStatusId:selectedAppointmentStatus];
+    }
+    
+  
     
 }
 
@@ -49,7 +145,7 @@
     
     self.contactNameLabel.text = self.patientDetails.PatientContactNumber;
     
-    self.dateAndTimeLabel.text = [NSString stringWithFormat:@"%@, %@",self.patientDetails.AppointmentDate, self.patientDetails.AppointmentTime];
+    self.dateAndTimeLabel.text = [NSString stringWithFormat:@"%@ %@",self.patientDetails.AppointmentDate, self.patientDetails.AppointmentTime];
     
     self.dateOfBirthLabel.text = self.patientDetails.DOB;
     
@@ -103,7 +199,14 @@
 }
 
 - (IBAction)changeAptStatusButtonClicked:(id)sender {
-    [self showStatusChangeOptions:sender];
+    if ([[AppPreferences sharedAppPreferences] isReachable]) {
+        [self showStatusChangeOptions:sender];
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:NO_INTERNET_TITLE_MESSAGE withMessage:NO_INTERNET_DETAIL_MESSAGE withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+    
 }
 
 -(void) showStatusChangeOptions:(UIButton*)sender
@@ -197,24 +300,21 @@
         
         switch (status) {
             case 2:
-                selectedAppointmentStatus = @"2";
-//                [[APIManager sharedManager] updateAppointmentStatus:[NSString stringWithFormat:@"%d",status] appointmentId:[NSString stringWithFormat:@"%ld",pD.AppointementID]];
+               [self updateStatus:status];
                 break;
             
             case 3:
-                selectedAppointmentStatus = @"3";
-//                [[APIManager sharedManager] updateAppointmentStatus:[NSString stringWithFormat:@"%d",status] appointmentId:[NSString stringWithFormat:@"%ld",pD.AppointementID]];
+                [self updateStatus:status];
                 break;
             
             case 6:
-                selectedAppointmentStatus = @"6";
-//                [[APIManager sharedManager] updateAppointmentStatus:[NSString stringWithFormat:@"%d",status] appointmentId:[NSString stringWithFormat:@"%ld",pD.AppointementID]];
+                [self updateStatus:status];
                 break;
             default:
                 break;
         }
                       
-        [self validateApnmntStatus:nil];
+       // [self validateApnmntStatus:nil];
                         
                     }]; //You can use a block here to handle a press on this button
     [alertController addAction:actionUpdate];
@@ -234,7 +334,38 @@
     
 }
 
+-(void)showHud
+{
+    hud.minSize = CGSizeMake(150.f, 100.f);
+    
+    [hud hideAnimated:NO];
+    
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    hud.mode = MBProgressHUDModeIndeterminate;
+    
+    hud.label.text = @"Loading Appointments...";
+    
+    hud.detailsLabel.text = @"Please wait";
+    
+    
+}
 
+-(void)updateStatus:(int)status
+{
+    if ([[AppPreferences sharedAppPreferences] isReachable]) {
+        [self showHud];
+                       selectedAppointmentStatus = [NSString stringWithFormat:@"%d", status];
+                      [[APIManager sharedManager] updateAppointmentStatus:selectedAppointmentStatus appointmentId:[NSString stringWithFormat:@"%ld",self.patientDetails.AppointementID]];
+                     }
+                     else
+                     {
+                         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:NO_INTERNET_TITLE_MESSAGE withMessage:NO_INTERNET_DETAIL_MESSAGE withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+                     }
+//    selectedAppointmentStatus = [NSString stringWithFormat:@"%d", status];
+//    [self validateApnmntStatus:nil];
+                  
+}
 - (IBAction)backButtonClicked:(id)sender {
     if (self.splitViewController.isCollapsed || self.splitViewController == nil)
     {
@@ -250,5 +381,14 @@
         
         
     }
+}
+- (IBAction)whatsappButtonClicked:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"whatsapp://send?phone=%@",self.patientDetails.PatientContactNumber]]];
+}
+- (IBAction)facetimeButtonClicked:(id)sender {
+     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"facetime://%@",self.patientDetails.PatientContactNumber]]];
+}
+- (IBAction)phoneCallButtonClicked:(id)sender {
+     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",self.patientDetails.PatientContactNumber]]];
 }
 @end

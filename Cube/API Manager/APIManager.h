@@ -97,7 +97,7 @@
 
 -(void) acceptTandC:(NSString*) macID dateAndTIme:(NSString*)dateAndTIme acceptFlag:(NSString*)acceptFlag;
 
--(void) getAppointmentList:(NSString*)dictatorId;
+-(void) getAppointmentList:(NSString*)dictatorId date:(NSString*)date;
 
 -(void) updateAppointmentStatus:(NSString*)appointementStatus appointmentId:(NSString*)appointmentId;
 
