@@ -41,8 +41,8 @@
 #define  SEND_COMMENT_API                     @"encdecr_MobileDocFileComment"
 #define  DOCX_FILE_UPLOAD_API                 @"encedecr_MobileUploadDocFile"
 #define  ACCEPY_TandC_API                     @"encedecr_MobileTermsAndConditions"
-#define  GET_APNTMNT_LIST_API                 @"FetchClinicalList"
-#define  UPDATE_APNTMNT_STATUS_API            @"UpdateAppointmentStatus"
+#define  GET_APNTMNT_LIST_API                 @"encrdecr_MobileClinicList"
+#define  UPDATE_APNTMNT_STATUS_API            @"encrdecr_MobileAppointmentStatus"
 
 
 #define  SECRET_KEY                           @"cubemob"

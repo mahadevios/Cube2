@@ -422,7 +422,7 @@ static APIManager *singleton = nil;
 }
 
 // appointment
--(void) getAppointmentList:(NSString*)dictatorId
+-(void) getAppointmentList:(NSString*)dictatorId date:(NSString*)date
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
@@ -431,7 +431,7 @@ static APIManager *singleton = nil;
         
         
         NSError* error;
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:dictatorId,@"LoggedInDictatorID", nil];
+        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:dictatorId,@"DepartmentID",date,@"ApptDate", nil];
         
         
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
@@ -469,7 +469,7 @@ static APIManager *singleton = nil;
         
         
         NSError* error;
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:appointmentId,@"AppointementID",appointementStatus,@"AppointementStatus", nil];
+        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:appointmentId,@"AppointmentID",appointementStatus,@"AppointmentStatus", nil];
         
         
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1

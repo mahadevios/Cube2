@@ -11,6 +11,7 @@
 #import "Constants.h"
 #import "APIManager.h"
 #import "AppointmentDetailsViewController.h"
+#import "MBProgressHUD.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
     UIAlertAction *actionDelete;
     UIAlertAction *actionCancel;
     AppointmentDetailsViewController* detailVC;
+    MBProgressHUD *hud;
 }
 @property (strong, nonatomic) NSIndexPath *expandedIndexPath;
 
@@ -30,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)searchButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
 @property (weak, nonatomic) IBOutlet UIButton *searchButton;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -216,7 +216,7 @@
     NSData* data=[decodedData AES256DecryptWithKey:SECRET_KEY];
     
     NSString* responseString=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
+    //{"code":200}
     NSDictionary *response;
     if (responseString!=nil)
     {
@@ -467,7 +467,7 @@ if ([self.downLoadEntityJobName isEqualToString:VALIDATE_PIN_API])
         if (response != nil)
         {
             
-            if ([[response objectForKey:@"code"]intValue]==1)
+            if ([[response objectForKey:@"code"]intValue]==200)
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GET_APNTMNT_LIST object:response];
                 
@@ -491,7 +491,7 @@ if ([self.downLoadEntityJobName isEqualToString:VALIDATE_PIN_API])
         if (response != nil)
         {
             
-            if ([[response objectForKey:@"code"]intValue]==1)
+            if ([[response objectForKey:@"code"]intValue]==200)
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UPDATE_APNTMNT_STATUS object:response];
                 
