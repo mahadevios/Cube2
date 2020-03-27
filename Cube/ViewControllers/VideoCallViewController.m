@@ -102,12 +102,26 @@
 -(void)validateApntmntListResponse:(NSNotification*)dictObj
 {
     NSDictionary* responseDict=dictObj.object;
-    [hud removeFromSuperview];
+    NSString* responseCodeString=  [responseDict valueForKey:RESPONSE_CODE];
+
+     [hud removeFromSuperview];
     
-    [patientsDetailsArray removeAllObjects];
+    if ([responseCodeString intValue] == 2001 || [responseCodeString intValue] == -1001)
+       {
+           // received unexpected response, just remove the hud
+           //[hud hideAnimated:YES];
+           return;
+           
+       }
     
-    if ([[responseDict valueForKey:@"code"] isEqualToString:@"200"]) {
-                      
+   
+    
+  
+    
+    if ([responseCodeString isEqualToString:@"200"]) {
+              
+              [patientsDetailsArray removeAllObjects];
+        
               NSArray* aptList =  [responseDict valueForKey:@"ClinicalList"];
               
               for (NSDictionary* aptDict in aptList) {
@@ -123,7 +137,8 @@
                   NSString* AppointmentTime = [aptDict valueForKey:@"AppointmentTime"];
                   NSString* AppointmentStatus = [aptDict valueForKey:@"AppointmentStatus"];
                   NSString* DepartmentID = [aptDict valueForKey:@"DepartmentID"];
-                  
+                  NSString* CountryCode = [aptDict valueForKey:@"CountryCode"];
+
                   PatientDetails* patientDetails = [PatientDetails new];
                   patientDetails.AppointementID = aptId;
                   patientDetails.PatTitle = patientTitle;
@@ -132,11 +147,12 @@
                   patientDetails.MRN = MRN;
                   patientDetails.NHSNumber = NHSNumber;
                   patientDetails.DOB = DOB;
-                  patientDetails.PatientContactNumber = PatientContactNumber;
+                  patientDetails.PatientContactNumber = [NSString stringWithFormat:@"%@ %@",CountryCode,PatientContactNumber];
                   patientDetails.AppointmentDate = AppointmentDate;
                   patientDetails.AppointmentTime = AppointmentTime;
                   patientDetails.AppointmentStatus = AppointmentStatus;
                   patientDetails.DepartmentID = DepartmentID;
+                  patientDetails.CountryCode = CountryCode;
                   
                   [patientsDetailsArray addObject:patientDetails];
               }
@@ -174,9 +190,7 @@
         patientDetails.MRN = [NSString stringWithFormat:@"MRN %d", i+1];
         patientDetails.NHSNumber = [NSString stringWithFormat:@"NHS London %d", i+1];
         
-     
-        patientDetails.PatientContactNumber2 = [NSString stringWithFormat:@"+918956498302"];
-        
+            
         
 //
         
@@ -230,6 +244,7 @@
     //    PatientDetails* pD = [patientsDetailsArray objectAtIndex:indexPath.row];
     
     detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AppointmentDetailsViewController"];
+    detailVC.delegate = self;
     detailVC.isOpenedThroughButton = YES;
     detailVC.selectedRow = indexPath.row ;
     detailVC.patientDetails = [patientsDetailsArray objectAtIndex:indexPath.row];
@@ -732,9 +747,17 @@
 */
 - (void)myClassDelegateMethod:(AppointmentDetailsViewController *)sender
 {
-    [patientsDetailsArray removeObjectAtIndex:sender.selectedRow];
-    
-    [self.tabelView reloadData];
+    if (patientsDetailsArray.count-1 >= sender.selectedRow) {
+         PatientDetails* patientDetails = [patientsDetailsArray objectAtIndex:sender.selectedRow];
+           if (patientDetails.AppointementID == sender.patientDetails.AppointementID) {
+               [patientsDetailsArray removeObjectAtIndex:sender.selectedRow];
+               [self.tabelView reloadData];
+           }
+           
+           
+           
+    }
+   
     
 //    [self addEmptyVCToSplitVC];
 

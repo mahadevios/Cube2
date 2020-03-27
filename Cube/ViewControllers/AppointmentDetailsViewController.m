@@ -16,6 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+
     if (self.splitViewController.isCollapsed == false || self.splitViewController == nil)
     {
         self.navigationItem.title=@"Appointment Details";
@@ -45,6 +48,10 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)appWillResignActive:(NSNotification*)note
+{
+    [alertController dismissViewControllerAnimated:true completion:nil];
+}
 
 -(void) showVideoCallingOptions
 {
@@ -114,9 +121,15 @@
         callOptionShownOnce = true;
            [self showVideoCallingOptions];
        }
-    [self setAptDetails];
+    if(!aptDetailsSet)
+    {
+        aptDetailsSet = YES;
+        [self setAptDetails];
+    }
+    
 
 }
+
 -(void)popViewController:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -126,9 +139,17 @@
 {
     [hud removeFromSuperview];
     NSDictionary* response = dictObj.object;
-    if([[response valueForKey:@"code"] intValue] == 200)
+    NSString* responseCodeString=  [response valueForKey:RESPONSE_CODE];
+
+      if ([responseCodeString intValue] == 2001 || [responseCodeString intValue] == -1001)
+         {
+             return;
+         }
+    
+    if([responseCodeString intValue] == 200)
     {
         [self.delegate myClassDelegateMethod:self];
+       
          [self setStatusStringUsingStatusId:selectedAppointmentStatus];
     }
     
@@ -143,7 +164,7 @@
     
     self.patientNameLabel.text = [NSString stringWithFormat:@"%@ %@ %@",self.patientDetails.PatTitle, self.patientDetails.PatFirstname, self.patientDetails.PatLastname];
     
-    self.contactNameLabel.text = self.patientDetails.PatientContactNumber;
+    self.contactNameLabel.text = [NSString stringWithFormat:@"%@",self.patientDetails.PatientContactNumber];
     
     self.dateAndTimeLabel.text = [NSString stringWithFormat:@"%@ %@",self.patientDetails.AppointmentDate, self.patientDetails.AppointmentTime];
     
@@ -344,7 +365,7 @@
     
     hud.mode = MBProgressHUDModeIndeterminate;
     
-    hud.label.text = @"Loading Appointments...";
+    hud.label.text = @"Changing Appointment Status...";
     
     hud.detailsLabel.text = @"Please wait";
     

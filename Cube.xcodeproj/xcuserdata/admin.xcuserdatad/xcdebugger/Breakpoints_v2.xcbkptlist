@@ -2395,7 +2395,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "823"
             endingLineNumber = "823"
-            landmarkName = "-URLSession:dataTask:didReceiveData:"
+            landmarkName = "-uploadDocxFileAfterGettingdatabaseValues:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2412,8 +2412,40 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "936"
             endingLineNumber = "936"
-            landmarkName = "-URLSession:task:didCompleteWithError:"
+            landmarkName = "-URLSession:dataTask:didReceiveData:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "74A480DD-15D4-41A5-B51A-404462110AE2 - e1d59e1cc2a4c89"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__58-[DownloadMetaDataJob URLSession:dataTask:didReceiveData:]_block_invoke_2"
+                  moduleName = "Cube"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Documents/CubeBackUp/cube-master%202__16-aug/Cube/API%20Manager/DownloadMetaDataJob.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "937"
+                  endingLineNumber = "937"
+                  offsetFromSymbolStart = "652">
+               </Location>
+               <Location
+                  uuid = "74A480DD-15D4-41A5-B51A-404462110AE2 - e1d59e1cc2a4c89"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__58-[DownloadMetaDataJob URLSession:dataTask:didReceiveData:]_block_invoke_2"
+                  moduleName = "Cube"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Documents/CubeBackUp/cube-master%202__16-aug/Cube/API%20Manager/DownloadMetaDataJob.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "937"
+                  endingLineNumber = "937"
+                  offsetFromSymbolStart = "672">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3023,22 +3055,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "FD8518FA-10FE-4FA2-801A-9167E300CF6D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/API Manager/DownloadMetaDataJob.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "491"
-            endingLineNumber = "491"
-            landmarkName = "-connectionDidFinishLoading:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "538FD954-D99B-4B22-8755-E395E4E23ADA"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -3062,9 +3078,9 @@
             filePath = "Cube/ViewControllers/AppointmentDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "-validateApnmntStatus:"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "-popViewController:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3078,8 +3094,8 @@
             filePath = "Cube/ViewControllers/AppointmentDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
             landmarkName = "-validateApnmntStatus:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3087,16 +3103,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4E8AF624-4D01-4916-8CCE-FB29A22B1115"
+            uuid = "7E480750-E351-4598-B258-1FC228175648"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/HomeViewController.m"
+            filePath = "Cube/ViewControllers/VideoCallViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "-validateApntmntListResponse:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F2F4113A-93B1-460A-9CBA-6AFF3F618140"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/VideoCallViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
+            landmarkName = "-showVideoCallingOptions:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "69C6D655-CC38-4655-BCC9-C9ED199A8276"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/AppointmentDetailsViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "-showVideoCallingOptions"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
