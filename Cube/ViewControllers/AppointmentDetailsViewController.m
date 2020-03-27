@@ -186,9 +186,11 @@
                self.aptStatusLabel.text = @"Completed";
                break;
            case 3:
-                self.aptStatusLabel.text = @"Not Attended";
+               self.aptStatusLabel.text = @"Not Attended";
                break;
-               
+           case 5:
+                self.aptStatusLabel.text = @"Rescheduled";
+                break;
            case 6:
                 self.aptStatusLabel.text = @"Closed";
                break;

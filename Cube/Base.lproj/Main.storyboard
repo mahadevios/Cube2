@@ -415,7 +415,7 @@
                     <tabBar key="tabBar" userInteractionEnabled="NO" contentMode="scaleToFill" id="q6t-Fo-dvN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <color key="selectedImageTintColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
@@ -1218,10 +1218,10 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="5ON-Tq-jcf"/>
                                                 <exclude reference="7Hz-jf-NDa"/>
                                                 <exclude reference="LS2-UA-0dh"/>
                                                 <exclude reference="ZEi-3o-Ndj"/>
+                                                <exclude reference="5ON-Tq-jcf"/>
                                                 <exclude reference="7y0-Fk-aWX"/>
                                                 <exclude reference="FRh-Ft-arK"/>
                                                 <exclude reference="Lnz-5q-eXz"/>
@@ -1239,7 +1239,6 @@
                                                 <exclude reference="pUw-yZ-7tD"/>
                                                 <exclude reference="r5I-KF-i6g"/>
                                                 <exclude reference="tZm-bJ-tR5"/>
-                                                <exclude reference="gyl-L5-ngf"/>
                                                 <exclude reference="6A2-5I-i6h"/>
                                                 <exclude reference="Bkz-ds-l8u"/>
                                                 <exclude reference="Jh8-gG-IaM"/>
@@ -1250,21 +1249,22 @@
                                                 <exclude reference="Roa-TQ-N3v"/>
                                                 <exclude reference="oFS-Yc-xZD"/>
                                                 <exclude reference="tUx-N2-o5X"/>
-                                                <exclude reference="rLF-Av-Swu"/>
-                                                <exclude reference="uzu-4R-ABh"/>
+                                                <exclude reference="gyl-L5-ngf"/>
                                                 <exclude reference="nhg-s2-KfM"/>
                                                 <exclude reference="s4W-zd-IAu"/>
-                                                <exclude reference="5gO-uF-Nr7"/>
-                                                <exclude reference="HNW-bX-2dW"/>
-                                                <exclude reference="dfn-vo-Zu9"/>
                                                 <exclude reference="GEG-lJ-X2e"/>
                                                 <exclude reference="OLL-c5-MUe"/>
                                                 <exclude reference="UgP-3h-0pH"/>
+                                                <exclude reference="rLF-Av-Swu"/>
+                                                <exclude reference="uzu-4R-ABh"/>
+                                                <exclude reference="5gO-uF-Nr7"/>
+                                                <exclude reference="HNW-bX-2dW"/>
+                                                <exclude reference="dfn-vo-Zu9"/>
+                                                <exclude reference="Bmh-Ug-a2c"/>
+                                                <exclude reference="zif-nW-beg"/>
                                                 <exclude reference="4NW-xa-cKv"/>
                                                 <exclude reference="Ya5-U8-cbL"/>
                                                 <exclude reference="c7k-PB-YXu"/>
-                                                <exclude reference="Bmh-Ug-a2c"/>
-                                                <exclude reference="zif-nW-beg"/>
                                                 <exclude reference="zxc-fJ-9wn"/>
                                                 <exclude reference="NSP-BG-hie"/>
                                                 <exclude reference="zWz-Sd-lOC"/>
@@ -1437,6 +1437,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="ido-32-CXF" firstAttribute="width" secondItem="rZS-FQ-lH9" secondAttribute="width" multiplier="0.95" id="aXo-I4-N3Q"/>
                                             <constraint firstItem="ido-32-CXF" firstAttribute="centerX" secondItem="rZS-FQ-lH9" secondAttribute="centerX" id="mQa-7l-zlo"/>
@@ -1458,6 +1459,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="ljk-ws-o08"/>
                                         </constraints>
+                                        <color key="sectionIndexColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell1" id="jpa-xG-BPi">
                                                 <rect key="frame" x="0.0" y="28" width="373" height="44"/>
@@ -1500,6 +1502,7 @@
                                                         </mask>
                                                     </variation>
                                                 </tableViewCellContentView>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="12R-ti-rJr" firstAttribute="leading" secondItem="jpa-xG-BPi" secondAttribute="leading" constant="9" id="8Fe-DR-h0r"/>
                                                     <constraint firstItem="12R-ti-rJr" firstAttribute="centerY" secondItem="jpa-xG-BPi" secondAttribute="centerY" id="f8z-x2-29i"/>
@@ -1790,6 +1793,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NDy-Eb-0eg">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell" rowHeight="84" id="WS8-V4-lZX">
                                         <rect key="frame" x="0.0" y="28" width="414" height="84"/>
@@ -1844,6 +1848,7 @@
                                                 <constraint firstItem="1Bs-6C-8h3" firstAttribute="leading" secondItem="EBY-2U-G0x" secondAttribute="leading" id="uOj-b1-hyk"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="jB8-HY-1IV" firstAttribute="centerY" secondItem="WS8-V4-lZX" secondAttribute="centerY" multiplier="0.5" id="DSP-hG-6vm"/>
                                             <constraint firstItem="1Bs-6C-8h3" firstAttribute="centerY" secondItem="WS8-V4-lZX" secondAttribute="centerY" id="Hd1-sF-cPS"/>
@@ -3930,10 +3935,10 @@
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" tag="900" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kbh-eR-6ck">
-                                <rect key="frame" x="-4" y="80" width="422" height="742"/>
+                                <rect key="frame" x="0.0" y="80" width="414" height="782"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="upl-aI-zMD">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="816"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Appointment Status:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CmD-yT-NUg">
                                                 <rect key="frame" x="25" y="10" width="132.5" height="17"/>
@@ -4175,13 +4180,13 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="upl-aI-zMD" firstAttribute="height" secondItem="gkf-nk-zuT" secondAttribute="height" id="1gI-K9-vRR"/>
+                            <constraint firstItem="upl-aI-zMD" firstAttribute="height" secondItem="gkf-nk-zuT" secondAttribute="height" constant="-80" id="1gI-K9-vRR"/>
                             <constraint firstItem="NT2-de-mHu" firstAttribute="centerX" secondItem="gkf-nk-zuT" secondAttribute="centerX" id="53S-4Y-3C8"/>
-                            <constraint firstItem="Syc-Ju-ZAB" firstAttribute="top" secondItem="Kbh-eR-6ck" secondAttribute="bottom" constant="40" id="CIv-Oc-ek3"/>
-                            <constraint firstItem="Kbh-eR-6ck" firstAttribute="leading" secondItem="gkf-nk-zuT" secondAttribute="leading" constant="-4" id="HZs-VV-KWn"/>
+                            <constraint firstItem="Syc-Ju-ZAB" firstAttribute="top" secondItem="Kbh-eR-6ck" secondAttribute="bottom" id="CIv-Oc-ek3"/>
+                            <constraint firstItem="Kbh-eR-6ck" firstAttribute="leading" secondItem="gkf-nk-zuT" secondAttribute="leading" id="HZs-VV-KWn"/>
                             <constraint firstItem="NT2-de-mHu" firstAttribute="top" secondItem="gkf-nk-zuT" secondAttribute="top" id="TM1-RB-ltQ"/>
                             <constraint firstItem="upl-aI-zMD" firstAttribute="width" secondItem="NT2-de-mHu" secondAttribute="width" id="gR3-j6-OZT"/>
-                            <constraint firstAttribute="trailing" secondItem="Kbh-eR-6ck" secondAttribute="trailing" constant="-4" id="mTk-w7-BYq"/>
+                            <constraint firstAttribute="trailing" secondItem="Kbh-eR-6ck" secondAttribute="trailing" id="mTk-w7-BYq"/>
                             <constraint firstItem="Kbh-eR-6ck" firstAttribute="top" secondItem="NT2-de-mHu" secondAttribute="bottom" id="ran-Gz-mGC"/>
                             <constraint firstItem="NT2-de-mHu" firstAttribute="width" secondItem="gkf-nk-zuT" secondAttribute="width" id="spP-d0-EoH"/>
                         </constraints>
@@ -4440,6 +4445,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.25098039220000001" green="0.25098039220000001" blue="0.25098039220000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                             <color key="textColor" red="0.98039215690000003" green="0.63529411759999999" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4819,10 +4825,10 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="Epb-lh-168"/>
                                                 <exclude reference="53g-Fu-fdR"/>
                                                 <exclude reference="Ydp-3p-nGE"/>
                                                 <exclude reference="fHE-iE-GQ1"/>
+                                                <exclude reference="Epb-lh-168"/>
                                                 <exclude reference="BoT-Sn-JiW"/>
                                                 <exclude reference="LSl-aB-lUv"/>
                                                 <exclude reference="e02-iJ-BBB"/>
@@ -4840,7 +4846,6 @@
                                                 <exclude reference="cY6-Of-BlG"/>
                                                 <exclude reference="jpy-If-5m7"/>
                                                 <exclude reference="sao-wj-PDx"/>
-                                                <exclude reference="81q-Tl-9at"/>
                                                 <exclude reference="3OO-m0-9CV"/>
                                                 <exclude reference="DAJ-PI-VbW"/>
                                                 <exclude reference="mrw-Tt-QbT"/>
@@ -4851,23 +4856,24 @@
                                                 <exclude reference="gcF-FT-tAY"/>
                                                 <exclude reference="iLw-M1-WXf"/>
                                                 <exclude reference="qcJ-Vf-Aix"/>
-                                                <exclude reference="jTp-lc-n5O"/>
-                                                <exclude reference="w2d-ZN-v2X"/>
+                                                <exclude reference="81q-Tl-9at"/>
                                                 <exclude reference="BaO-nH-fRZ"/>
                                                 <exclude reference="tMb-VR-Et8"/>
-                                                <exclude reference="88Q-uy-JWj"/>
-                                                <exclude reference="9EZ-gZ-JfL"/>
-                                                <exclude reference="kNo-Fa-dTp"/>
                                                 <exclude reference="5WZ-vS-jim"/>
                                                 <exclude reference="9G8-T8-RM4"/>
                                                 <exclude reference="kb1-JQ-8Hi"/>
+                                                <exclude reference="jTp-lc-n5O"/>
+                                                <exclude reference="w2d-ZN-v2X"/>
+                                                <exclude reference="88Q-uy-JWj"/>
+                                                <exclude reference="9EZ-gZ-JfL"/>
+                                                <exclude reference="kNo-Fa-dTp"/>
                                                 <exclude reference="2ON-fL-3gV"/>
                                                 <exclude reference="A7C-hh-cSw"/>
                                                 <exclude reference="XxQ-zi-0kW"/>
+                                                <exclude reference="Dx0-NF-FOL"/>
                                                 <exclude reference="Ei8-6j-RIZ"/>
                                                 <exclude reference="aKB-VN-htj"/>
                                                 <exclude reference="qPw-Ec-66v"/>
-                                                <exclude reference="Dx0-NF-FOL"/>
                                                 <exclude reference="Ei4-J1-HCS"/>
                                                 <exclude reference="ZtZ-MQ-FFk"/>
                                             </mask>
@@ -4935,6 +4941,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.25098039220000001" green="0.25098039220000001" blue="0.25098039220000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                             <color key="textColor" red="0.98039215690000003" green="0.63529411759999999" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
