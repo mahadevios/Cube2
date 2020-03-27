@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
    NSString* selectedAppointmentStatus;
     BOOL callOptionShownOnce;
     MBProgressHUD *hud;
+    BOOL aptDetailsSet;
 }
 - (IBAction)changeAptStatusButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *changeAptStatusButton;

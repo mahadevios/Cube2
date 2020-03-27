@@ -178,6 +178,28 @@
                 [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured!" withMessage:[NSString stringWithFormat:@"%@",error.localizedDescription] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
             }
     else
+    if ([self.downLoadEntityJobName isEqualToString:GET_APNTMNT_LIST_API])
+        
+    {
+        
+        NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"-1001",RESPONSE_CODE,error.localizedDescription,RESPONSE_MESSAGE, nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_GET_APNTMNT_LIST object:response]; // to hide hud
+        
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured!" withMessage:[NSString stringWithFormat:@"%@",error.localizedDescription] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+    }
+    else
+    if ([self.downLoadEntityJobName isEqualToString:UPDATE_APNTMNT_STATUS_API])
+        
+    {
+        
+        NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"-1001",RESPONSE_CODE,error.localizedDescription,RESPONSE_MESSAGE, nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UPDATE_APNTMNT_STATUS object:response]; // to hide hud
+        
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured!" withMessage:[NSString stringWithFormat:@"%@",error.localizedDescription] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+    }
+    else
     {
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error occured!" withMessage:[NSString stringWithFormat:@"%@",error.localizedDescription] withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
     }
