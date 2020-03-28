@@ -242,7 +242,10 @@
     NSIndexPath *indexPath = [self.tabelView indexPathForRowAtPoint:buttonPosition];
     
     //    PatientDetails* pD = [patientsDetailsArray objectAtIndex:indexPath.row];
-    
+    if (detailVC != nil) {
+        detailVC.delegate = nil;
+        detailVC = nil;
+    }
     detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AppointmentDetailsViewController"];
     detailVC.delegate = self;
     detailVC.isOpenedThroughButton = YES;
@@ -444,9 +447,18 @@
 
 -(void)addDatePicker
 {
-    picker = [[UIDatePicker alloc]init];
+    picker = [[UIDatePicker alloc] init];
+
+    CGRect bounds = [self.view bounds];
+    int datePickerHeight = picker.frame.size.height;
+    picker.frame = CGRectMake(0, bounds.size.height - (datePickerHeight), self.view.frame.size.width, picker.frame.size.height);
+    picker.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     picker.datePickerMode = UIDatePickerModeDate;
 
+    UITextInputAssistantItem* item = self.dateTextField.inputAssistantItem;
+       item.leadingBarButtonGroups = @[];
+       item.trailingBarButtonGroups = @[];
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"dd MMMM yyyy";
     NSDate* strDate = [dateFormatter dateFromString:self.dateTextField.text];
@@ -455,7 +467,7 @@
       [picker addTarget:self action:@selector(updateTextField:) forControlEvents:UIControlEventValueChanged];
       [self.dateTextField setInputView:picker];
       
-      toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - picker.frame.size.height -40, [UIScreen mainScreen].bounds.size.width, 50)];
+      toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - picker.frame.size.height -40, self.view.frame.size.width, 50)];
       toolbar.barStyle = UIBarStyleBlackTranslucent;
       toolbar.items = @[[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(onDoneButtonClick)]];
       [toolbar sizeToFit];
@@ -635,7 +647,10 @@
     
     if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
     {
-        
+        if (detailVC != nil) {
+            detailVC.delegate = nil;
+            detailVC = nil;
+        }
         detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"AppointmentDetailsViewController"];
         detailVC.delegate = self;
         detailVC.selectedRow = indexPath.row ;
@@ -755,9 +770,7 @@
                [patientsDetailsArray removeObjectAtIndex:sender.selectedRow];
                [self.tabelView reloadData];
            }
-           
-           
-           
+      
     }
    
     
