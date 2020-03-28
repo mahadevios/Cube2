@@ -4107,6 +4107,13 @@
                                                     <constraint firstAttribute="height" constant="1" id="7g1-tQ-GOg"/>
                                                 </constraints>
                                             </view>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTz-Wa-sEx">
+                                                <rect key="frame" x="208" y="393" width="46" height="30"/>
+                                                <state key="normal" title="Dictate"/>
+                                                <connections>
+                                                    <action selector="recordButtonClicked:" destination="uBO-EO-Cfb" eventType="touchUpInside" id="wzt-Ho-DTr"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -4137,6 +4144,7 @@
                                             <constraint firstItem="uCe-f2-keM" firstAttribute="top" secondItem="PVR-vG-8e6" secondAttribute="bottom" constant="10" id="Lui-Fu-hvs"/>
                                             <constraint firstItem="8o3-EV-sr6" firstAttribute="width" secondItem="pIy-q4-CtG" secondAttribute="width" id="Nfg-vR-3v4"/>
                                             <constraint firstItem="cDJ-Is-oBj" firstAttribute="top" secondItem="Sud-SW-beW" secondAttribute="bottom" constant="15" id="OlE-oW-Ivj"/>
+                                            <constraint firstItem="aTz-Wa-sEx" firstAttribute="centerX" secondItem="hfK-rQ-Wer" secondAttribute="centerX" id="PeE-2T-Mxi"/>
                                             <constraint firstItem="yxf-Bb-q7t" firstAttribute="top" secondItem="S3e-sP-Vbt" secondAttribute="bottom" constant="10" id="Rha-NK-c9u"/>
                                             <constraint firstItem="8o3-EV-sr6" firstAttribute="top" secondItem="nEg-C1-wT5" secondAttribute="bottom" constant="10" id="RsX-xb-CvW"/>
                                             <constraint firstItem="S3e-sP-Vbt" firstAttribute="centerX" secondItem="nxi-jK-rlW" secondAttribute="centerX" id="SQz-WU-ldP"/>
@@ -4165,6 +4173,7 @@
                                             <constraint firstItem="S3e-sP-Vbt" firstAttribute="top" secondItem="z62-QX-Zni" secondAttribute="bottom" constant="10" id="nEn-U4-4Fe"/>
                                             <constraint firstItem="CmD-yT-NUg" firstAttribute="top" secondItem="upl-aI-zMD" secondAttribute="top" constant="10" id="pFy-Wa-6fl"/>
                                             <constraint firstItem="8o3-EV-sr6" firstAttribute="centerX" secondItem="pIy-q4-CtG" secondAttribute="centerX" id="sKw-sL-DfS"/>
+                                            <constraint firstItem="aTz-Wa-sEx" firstAttribute="top" secondItem="hfK-rQ-Wer" secondAttribute="bottom" constant="80" id="tfo-JH-HlQ"/>
                                             <constraint firstItem="ksG-id-s1W" firstAttribute="leading" secondItem="H4x-n2-9xd" secondAttribute="leading" id="tvX-pH-YZd"/>
                                             <constraint firstItem="ksG-id-s1W" firstAttribute="top" secondItem="FoL-0F-dQN" secondAttribute="bottom" constant="10" id="uBZ-Rd-bq0"/>
                                         </constraints>
@@ -4204,6 +4213,7 @@
                         <outlet property="nhsNoLabel" destination="vnh-dG-NR3" id="ltJ-m7-Qpd"/>
                         <outlet property="patientNameLabel" destination="i5l-Fo-Pza" id="obA-sq-9F3"/>
                         <outlet property="phoneCallButton" destination="cDJ-Is-oBj" id="tvN-Xc-zxM"/>
+                        <outlet property="recordButton" destination="aTz-Wa-sEx" id="9hP-bN-KeC"/>
                         <outlet property="whatsappButton" destination="8jL-Ky-55n" id="jE4-Do-2zf"/>
                     </connections>
                 </viewController>
@@ -5007,7 +5017,7 @@
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CIp-jS-ncU">
                                         <rect key="frame" x="175" y="49" width="190" height="30"/>
-                                        <color key="backgroundColor" red="0.35686274509999999" green="0.51372549020000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.98039215690000003" green="0.63529411759999999" blue="0.1058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="190" id="TRu-EJ-VMR"/>
                                         </constraints>

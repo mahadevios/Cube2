@@ -117,21 +117,35 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    if (self.isOpenedThroughButton && !callOptionShownOnce) {
-        callOptionShownOnce = true;
-           [self showVideoCallingOptions];
-       }
-    if(!aptDetailsSet)
+    if ([AppPreferences sharedAppPreferences].recordNewOffline)// use recordNewOffline here in sharing with SplashScreenVC 
     {
-        aptDetailsSet = YES;
-        [self setAptDetails];
+        RecordViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
+        //recordingNew=YES;
+        [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
+        [AppPreferences sharedAppPreferences].recordNew=NO;
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+        [self presentViewController:vc animated:YES completion:nil];
     }
+    else
+    {
+        if (self.isOpenedThroughButton && !callOptionShownOnce) {
+               callOptionShownOnce = true;
+                  [self showVideoCallingOptions];
+              }
+           if(!aptDetailsSet)
+           {
+               aptDetailsSet = YES;
+               [self setAptDetails];
+           }
+    }
+   
     
-
+    
 }
 
 -(void)popViewController:(id)sender
 {
+    self.delegate = nil;
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -148,9 +162,16 @@
     
     if([responseCodeString intValue] == 200)
     {
+      
+        
         [self.delegate myClassDelegateMethod:self];
        
          [self setStatusStringUsingStatusId:selectedAppointmentStatus];
+                                 
+//        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+//                 {
+//                     [self dismissViewControllerAnimated:true completion:nil];
+//                 }
     }
     
   
@@ -413,5 +434,14 @@
 }
 - (IBAction)phoneCallButtonClicked:(id)sender {
      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",self.patientDetails.PatientContactNumber]]];
+}
+- (IBAction)recordButtonClicked:(id)sender {
+   
+    RecordViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
+    
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+    [self presentViewController:vc animated:YES completion:nil];
+       
 }
 @end

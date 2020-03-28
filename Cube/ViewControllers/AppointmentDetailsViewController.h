@@ -11,6 +11,7 @@
 #import "APIManager.h"
 #import "Constants.h"
 #import "MBProgressHUD.h"
+#import "RecordViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 @class AppointmentDetailsViewController;
@@ -52,6 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *facetimeButton;
 - (IBAction)phoneCallButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *phoneCallButton;
+- (IBAction)recordButtonClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *recordButton;
 @end
 
 NS_ASSUME_NONNULL_END
