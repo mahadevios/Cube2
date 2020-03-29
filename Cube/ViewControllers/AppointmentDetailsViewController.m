@@ -121,12 +121,17 @@
     {
         RecordViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
         //recordingNew=YES;
-        [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
-        [AppPreferences sharedAppPreferences].recordNew=NO;
+//        [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
+      //  [AppPreferences sharedAppPreferences].recordNew=NO;
         vc.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:vc animated:YES completion:nil];
     }
     else
+    {
+         [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
+    }
+    
+    
     {
         if (self.isOpenedThroughButton && !callOptionShownOnce) {
                callOptionShownOnce = true;
