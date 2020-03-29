@@ -470,6 +470,8 @@
       toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - picker.frame.size.height -40, self.view.frame.size.width, 50)];
       toolbar.barStyle = UIBarStyleBlackTranslucent;
       toolbar.items = @[[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil], [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(onDoneButtonClick)]];
+    toolbar.backgroundColor = [UIColor lightGrayColor];
+    toolbar.barTintColor = [UIColor lightGrayColor];
       [toolbar sizeToFit];
       [self.view addSubview:toolbar];
 }
