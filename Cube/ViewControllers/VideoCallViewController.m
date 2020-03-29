@@ -513,8 +513,13 @@
 
 -(void) removePickerAndDoneButton
 {
-    [toolbar removeFromSuperview];
-       [picker removeFromSuperview];
+    if (toolbar != nil) {
+         [toolbar removeFromSuperview];
+    }
+   if (picker != nil) {
+        [picker removeFromSuperview];
+   }
+       
        [self.dateTextField resignFirstResponder];
 }
 -(void)onDoneButtonClick {
@@ -644,7 +649,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    [self removePickerAndDoneButton];
     if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
     {
         if (detailVC != nil) {
