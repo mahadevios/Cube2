@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSString* DOB;
 @property(nonatomic, strong) NSString* PatientContactNumber;
 @property(nonatomic, strong) NSString* CountryCode;
-
+@property(nonatomic, strong) NSString* SkypeCode;
 @property(nonatomic, strong) NSString* AppointmentDate;
 @property(nonatomic, strong) NSString* AppointmentTime;
 @property(nonatomic, strong) NSString* AppointmentStatus;

@@ -138,6 +138,7 @@
                   NSString* AppointmentStatus = [aptDict valueForKey:@"AppointmentStatus"];
                   NSString* DepartmentID = [aptDict valueForKey:@"DepartmentID"];
                   NSString* CountryCode = [aptDict valueForKey:@"CountryCode"];
+                  NSString* SkypeId = [aptDict valueForKey:@"SkypeId"];
 
                   PatientDetails* patientDetails = [PatientDetails new];
                   patientDetails.AppointementID = aptId;
@@ -147,13 +148,18 @@
                   patientDetails.MRN = MRN;
                   patientDetails.NHSNumber = NHSNumber;
                   patientDetails.DOB = DOB;
-                  patientDetails.PatientContactNumber = [NSString stringWithFormat:@"%@ %@",CountryCode,PatientContactNumber];
+                  patientDetails.PatientContactNumber = [NSString stringWithFormat:@"%@%@",CountryCode,PatientContactNumber];
                   patientDetails.AppointmentDate = AppointmentDate;
                   patientDetails.AppointmentTime = AppointmentTime;
                   patientDetails.AppointmentStatus = AppointmentStatus;
                   patientDetails.DepartmentID = DepartmentID;
                   patientDetails.CountryCode = CountryCode;
-                  
+                  if (SkypeId == nil || [SkypeId isEqualToString:@""]) {
+                      patientDetails.SkypeCode = @"";
+                  }
+                  else{
+                      patientDetails.SkypeCode = SkypeId;
+                  }
                   [patientsDetailsArray addObject:patientDetails];
               }
 

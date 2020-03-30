@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *dateAndTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateOfBirthLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nhsNoLabel;
+@property (weak, nonatomic) IBOutlet UIButton *skypeButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *mrnNoLabel;
 @property (nonatomic)int selectedRow;
@@ -55,6 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *phoneCallButton;
 - (IBAction)recordButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *recordButton;
+-(IBAction)skypeCallButtonClicked:(id)sender;
 @end
 
 NS_ASSUME_NONNULL_END
