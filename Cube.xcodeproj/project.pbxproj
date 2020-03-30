@@ -1182,7 +1182,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Copy to Cube/Copy to Cube.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1216,7 +1216,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Copy to Cube/Copy to Cube.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1348,7 +1348,7 @@
 				CODE_SIGN_ENTITLEMENTS = Cube/Cube.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INPUT_FILETYPE = automatic;
@@ -1381,7 +1381,7 @@
 				CODE_SIGN_ENTITLEMENTS = Cube/Cube.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INPUT_FILETYPE = automatic;

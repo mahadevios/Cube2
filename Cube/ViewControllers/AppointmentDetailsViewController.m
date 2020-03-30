@@ -80,10 +80,35 @@
               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"facetime://%@",self.patientDetails.PatientContactNumber]]];
         
     }]; //You can use a block here to handle a press on this button
+    
     img = [UIImage imageNamed:@"FaceTime"];
     [actionFaceTime setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
     [alertController addAction:actionFaceTime];
 
+//    if (![self.patientDetails.SkypeCode isEqualToString:@""]) {
+         
+            UIAlertAction* actionSkype = [UIAlertAction actionWithTitle:@"Skype"
+                                                                        style:UIAlertActionStyleDefault
+                                                                      handler:^(UIAlertAction * action)
+                                                {
+                   
+                         NSURL *skype = [NSURL URLWithString:[NSString stringWithFormat:@"skype:%@?call", self.patientDetails.SkypeCode]];
+
+        //                 NSURL *skype = [NSURL URLWithString:[NSString stringWithFormat:@"skype:"]];
+                            if ([[UIApplication sharedApplication] canOpenURL:skype]) {
+                            [[UIApplication sharedApplication] openURL:skype];
+                            } else {
+                            // skype not Installed in your Device
+                                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Skype not installed!" withMessage:@"Please install Skype and try again." withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                            }
+                      
+               }]; //You can use a block here to handle a press on this button
+               img = [UIImage imageNamed:@"Skype"];
+               [actionSkype setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
+               [alertController addAction:actionSkype];
+//    }
+   
+    
     
     UIAlertAction* phoneCall = [UIAlertAction actionWithTitle:@"Phone Call"
                                                              style:UIAlertActionStyleDefault
@@ -131,8 +156,8 @@
          [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
     }
     
-    
-    {
+//    else
+//    {
         if (self.isOpenedThroughButton && !callOptionShownOnce) {
                callOptionShownOnce = true;
                   [self showVideoCallingOptions];
@@ -142,7 +167,7 @@
                aptDetailsSet = YES;
                [self setAptDetails];
            }
-    }
+//    }
    
     
     
@@ -199,6 +224,10 @@
     self.nhsNoLabel.text = self.patientDetails.NHSNumber;
     
     self.mrnNoLabel.text = self.patientDetails.MRN;
+    
+//    if ([self.patientDetails.SkypeCode isEqualToString:@""]) {
+//        [_skypeButton setHidden:true];
+//    }
 
 }
 
@@ -439,6 +468,18 @@
 }
 - (IBAction)phoneCallButtonClicked:(id)sender {
      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",self.patientDetails.PatientContactNumber]]];
+}
+- (IBAction)skypeCallButtonClicked:(id)sender {
+
+     NSURL *skype = [NSURL URLWithString:[NSString stringWithFormat:@"skype:%@?call", self.patientDetails.SkypeCode]];
+
+    if ([[UIApplication sharedApplication] canOpenURL:skype]) {
+        [[UIApplication sharedApplication] openURL:skype];
+    } else {
+        // skype not Installed in your Device
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Skype not installed!" withMessage:@"Please install Skype and try again." withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+    }
+    
 }
 - (IBAction)recordButtonClicked:(id)sender {
    
