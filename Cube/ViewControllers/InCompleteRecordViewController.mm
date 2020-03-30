@@ -578,8 +578,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 -(void)disMis
 {
-    [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismis"];
+//    [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismis"];
     
+    [AppPreferences sharedAppPreferences].recordNew = NO;
     [self dismissViewControllerAnimated:YES completion:nil];
     
     [player stop];

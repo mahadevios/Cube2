@@ -4080,12 +4080,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cDJ-Is-oBj">
-                                                <rect key="frame" x="362" y="270" width="32" height="32"/>
+                                                <rect key="frame" x="352" y="270" width="42" height="42"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="32" id="1DF-uY-Zfi"/>
-                                                    <constraint firstAttribute="width" constant="32" id="kGp-jY-CA5"/>
-                                                    <constraint firstAttribute="height" constant="32" id="ptU-cX-3J9"/>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="u5e-cu-CvF"/>
+                                                    <constraint firstAttribute="width" constant="42" id="kGp-jY-CA5"/>
+                                                    <constraint firstAttribute="height" constant="42" id="ptU-cX-3J9"/>
                                                 </constraints>
                                                 <state key="normal" image="PhoneCall"/>
                                                 <connections>
@@ -4093,35 +4091,35 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1s-BU-GhJ">
-                                                <rect key="frame" x="310" y="270" width="32" height="32"/>
+                                                <rect key="frame" x="295" y="270" width="42" height="42"/>
                                                 <state key="normal" image="FaceTime"/>
                                                 <connections>
                                                     <action selector="facetimeButtonClicked:" destination="uBO-EO-Cfb" eventType="touchUpInside" id="IcH-ve-2Ul"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8jL-Ky-55n">
-                                                <rect key="frame" x="258" y="270" width="32" height="32"/>
+                                                <rect key="frame" x="238" y="270" width="42" height="42"/>
                                                 <state key="normal" image="Whatsapp"/>
                                                 <connections>
                                                     <action selector="whatsappButtonClicked:" destination="uBO-EO-Cfb" eventType="touchUpInside" id="Wwb-SF-Yhq"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WpX-7U-688">
-                                                <rect key="frame" x="192" y="271" width="46" height="30"/>
+                                                <rect key="frame" x="181" y="270" width="42" height="42"/>
                                                 <state key="normal" image="Skype"/>
                                                 <connections>
                                                     <action selector="skypeCallButtonClicked:" destination="uBO-EO-Cfb" eventType="touchUpInside" id="K7U-vT-58o"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hfK-rQ-Wer">
-                                                <rect key="frame" x="20.5" y="312" width="373" height="1"/>
+                                                <rect key="frame" x="20.5" y="322" width="373" height="1"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="7g1-tQ-GOg"/>
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTz-Wa-sEx">
-                                                <rect key="frame" x="177" y="363" width="60" height="60"/>
+                                                <rect key="frame" x="177" y="373" width="60" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="60" id="BRg-G7-bRk"/>
                                                     <constraint firstAttribute="height" constant="60" id="GuM-YN-GxT"/>
@@ -4132,7 +4130,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dictate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RyF-bM-qL0">
-                                                <rect key="frame" x="184" y="426" width="46.5" height="17"/>
+                                                <rect key="frame" x="184" y="436" width="46.5" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -4148,7 +4146,7 @@
                                             <constraint firstItem="rkH-Ai-LKQ" firstAttribute="trailing" secondItem="i5l-Fo-Pza" secondAttribute="trailing" id="3Dt-nl-K43"/>
                                             <constraint firstItem="nEg-C1-wT5" firstAttribute="top" secondItem="pIy-q4-CtG" secondAttribute="bottom" constant="10" id="3sb-8M-Psn"/>
                                             <constraint firstItem="i5l-Fo-Pza" firstAttribute="centerY" secondItem="nEg-C1-wT5" secondAttribute="centerY" id="4LI-Ih-uGk"/>
-                                            <constraint firstItem="cDJ-Is-oBj" firstAttribute="leading" secondItem="I1s-BU-GhJ" secondAttribute="trailing" constant="20" id="823-Ht-uXQ"/>
+                                            <constraint firstItem="cDJ-Is-oBj" firstAttribute="leading" secondItem="I1s-BU-GhJ" secondAttribute="trailing" constant="15" id="823-Ht-uXQ"/>
                                             <constraint firstItem="TNM-xB-UTw" firstAttribute="centerY" secondItem="H4x-n2-9xd" secondAttribute="centerY" id="8gQ-g6-DxQ"/>
                                             <constraint firstItem="8jL-Ky-55n" firstAttribute="centerY" secondItem="I1s-BU-GhJ" secondAttribute="centerY" id="8iW-gU-xJL"/>
                                             <constraint firstItem="nxi-jK-rlW" firstAttribute="centerX" secondItem="FoL-0F-dQN" secondAttribute="centerX" id="8rW-7s-DQe"/>
@@ -4173,14 +4171,14 @@
                                             <constraint firstItem="cDJ-Is-oBj" firstAttribute="top" secondItem="Sud-SW-beW" secondAttribute="bottom" constant="15" id="OlE-oW-Ivj"/>
                                             <constraint firstItem="aTz-Wa-sEx" firstAttribute="centerX" secondItem="hfK-rQ-Wer" secondAttribute="centerX" id="PeE-2T-Mxi"/>
                                             <constraint firstItem="8jL-Ky-55n" firstAttribute="width" secondItem="I1s-BU-GhJ" secondAttribute="width" id="Qtc-N0-YVC"/>
-                                            <constraint firstItem="WpX-7U-688" firstAttribute="width" secondItem="8jL-Ky-55n" secondAttribute="width" multiplier="1.4375" id="Qtn-Mj-rlA"/>
+                                            <constraint firstItem="WpX-7U-688" firstAttribute="width" secondItem="8jL-Ky-55n" secondAttribute="width" id="Qtn-Mj-rlA"/>
                                             <constraint firstItem="yxf-Bb-q7t" firstAttribute="top" secondItem="S3e-sP-Vbt" secondAttribute="bottom" constant="10" id="Rha-NK-c9u"/>
                                             <constraint firstItem="8o3-EV-sr6" firstAttribute="top" secondItem="nEg-C1-wT5" secondAttribute="bottom" constant="10" id="RsX-xb-CvW"/>
                                             <constraint firstItem="S3e-sP-Vbt" firstAttribute="centerX" secondItem="nxi-jK-rlW" secondAttribute="centerX" id="SQz-WU-ldP"/>
                                             <constraint firstItem="hfK-rQ-Wer" firstAttribute="top" secondItem="cDJ-Is-oBj" secondAttribute="bottom" constant="10" id="Sf6-CA-Blr"/>
                                             <constraint firstItem="rkH-Ai-LKQ" firstAttribute="leading" secondItem="0YF-Kd-JWk" secondAttribute="trailing" constant="7" id="Tbm-sg-Hnz"/>
                                             <constraint firstItem="ol1-nc-bVm" firstAttribute="trailing" secondItem="vnh-dG-NR3" secondAttribute="trailing" id="Ub2-JQ-x3R"/>
-                                            <constraint firstItem="8jL-Ky-55n" firstAttribute="leading" secondItem="WpX-7U-688" secondAttribute="trailing" constant="20" id="Ubb-1W-LXL"/>
+                                            <constraint firstItem="8jL-Ky-55n" firstAttribute="leading" secondItem="WpX-7U-688" secondAttribute="trailing" constant="15" id="Ubb-1W-LXL"/>
                                             <constraint firstItem="yxf-Bb-q7t" firstAttribute="centerY" secondItem="zfQ-zM-Dxb" secondAttribute="centerY" id="W31-Vj-3Rz"/>
                                             <constraint firstItem="pIy-q4-CtG" firstAttribute="width" secondItem="upl-aI-zMD" secondAttribute="width" multiplier="0.9" id="WH2-qX-WgZ"/>
                                             <constraint firstItem="0YF-Kd-JWk" firstAttribute="centerY" secondItem="CmD-yT-NUg" secondAttribute="centerY" id="XFA-Oh-OVi"/>
@@ -4199,7 +4197,7 @@
                                             <constraint firstItem="pIy-q4-CtG" firstAttribute="centerX" secondItem="upl-aI-zMD" secondAttribute="centerX" id="jeg-2R-XEV"/>
                                             <constraint firstItem="ol1-nc-bVm" firstAttribute="centerY" secondItem="z62-QX-Zni" secondAttribute="centerY" id="ljc-FB-9jW"/>
                                             <constraint firstItem="z62-QX-Zni" firstAttribute="top" secondItem="nxi-jK-rlW" secondAttribute="bottom" constant="10" id="mPt-Xh-7NA"/>
-                                            <constraint firstItem="I1s-BU-GhJ" firstAttribute="leading" secondItem="8jL-Ky-55n" secondAttribute="trailing" constant="20" id="miO-9h-hy6"/>
+                                            <constraint firstItem="I1s-BU-GhJ" firstAttribute="leading" secondItem="8jL-Ky-55n" secondAttribute="trailing" constant="15" id="miO-9h-hy6"/>
                                             <constraint firstItem="H4x-n2-9xd" firstAttribute="top" secondItem="8o3-EV-sr6" secondAttribute="bottom" constant="10" id="mpR-9L-yxN"/>
                                             <constraint firstItem="yxf-Bb-q7t" firstAttribute="trailing" secondItem="ol1-nc-bVm" secondAttribute="trailing" id="nCs-1h-d5m"/>
                                             <constraint firstItem="S3e-sP-Vbt" firstAttribute="top" secondItem="z62-QX-Zni" secondAttribute="bottom" constant="10" id="nEn-U4-4Fe"/>
@@ -4208,7 +4206,7 @@
                                             <constraint firstItem="aTz-Wa-sEx" firstAttribute="top" secondItem="hfK-rQ-Wer" secondAttribute="bottom" constant="50" id="tfo-JH-HlQ"/>
                                             <constraint firstItem="ksG-id-s1W" firstAttribute="leading" secondItem="H4x-n2-9xd" secondAttribute="leading" id="tvX-pH-YZd"/>
                                             <constraint firstItem="ksG-id-s1W" firstAttribute="top" secondItem="FoL-0F-dQN" secondAttribute="bottom" constant="10" id="uBZ-Rd-bq0"/>
-                                            <constraint firstItem="WpX-7U-688" firstAttribute="height" secondItem="8jL-Ky-55n" secondAttribute="height" multiplier="0.9375" id="wzo-YV-zrA"/>
+                                            <constraint firstItem="WpX-7U-688" firstAttribute="height" secondItem="8jL-Ky-55n" secondAttribute="height" id="wzo-YV-zrA"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -6003,7 +6001,7 @@
         <image name="Delete" width="15" height="21.5"/>
         <image name="Dictate" width="60" height="60"/>
         <image name="Edit" width="18" height="20"/>
-        <image name="FaceTime" width="32" height="32"/>
+        <image name="FaceTime" width="40" height="40"/>
         <image name="File" width="20" height="24"/>
         <image name="HomeActive" width="24.5" height="24.5"/>
         <image name="HomeGray" width="24.5" height="24.5"/>
@@ -6012,16 +6010,16 @@
         <image name="ListGray" width="24.5" height="19"/>
         <image name="Locale" width="23" height="23"/>
         <image name="More" width="6" height="21"/>
-        <image name="PhoneCall" width="32" height="32"/>
+        <image name="PhoneCall" width="42" height="42"/>
         <image name="Play" width="30" height="36"/>
         <image name="PlayRecrding" width="65.5" height="65.5"/>
         <image name="RecordTab" width="22.5" height="26.5"/>
-        <image name="Skype" width="32" height="32"/>
+        <image name="Skype" width="50" height="50"/>
         <image name="SpeechToText" width="70" height="70"/>
         <image name="StopNew" width="78.5" height="78.5"/>
         <image name="TransFile" width="35" height="35"/>
         <image name="TransRecord" width="35" height="35"/>
         <image name="TransStop" width="35" height="35"/>
-        <image name="Whatsapp" width="32" height="32"/>
+        <image name="Whatsapp" width="40" height="40"/>
     </resources>
 </document>

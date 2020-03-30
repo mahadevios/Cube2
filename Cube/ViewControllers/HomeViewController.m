@@ -107,6 +107,7 @@
 //    NSLog(@"navi height = %@", self.navigationController.navigationBar.bounds);
    
     self.splitViewController.delegate = self;
+    [AppPreferences sharedAppPreferences].selectedTabBarIndex=0;
     [AppPreferences sharedAppPreferences].isRecordView = NO;
 
 //    [UIApplication sharedApplication].idleTimerDisabled = YES;

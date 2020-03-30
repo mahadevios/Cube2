@@ -25,7 +25,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     //NSLog(@"%@",self.view.window.rootViewController);
-    [AppPreferences sharedAppPreferences].selectedTabBarIndex=2;
+    [AppPreferences sharedAppPreferences].selectedTabBarIndex=1;
     UIViewController *alertViewController = [self.tabBarController.viewControllers objectAtIndex:ALERT_TAB_LOCATION];
     
      NSString* alertCount=[[NSUserDefaults standardUserDefaults] valueForKey:INCOMPLETE_TRANSFER_COUNT_BADGE];
