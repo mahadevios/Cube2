@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Apple Phone.png",
+      "filename" : "Apple Phone (2).png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Apple Phone (2).png",
+      "filename" : "Apple Phone (3).png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Apple Phone (3).png",
+      "filename" : "Apple Phone (3) copy.png",
       "scale" : "3x"
     }
   ],

@@ -59,6 +59,30 @@
                                                           message:@"Select an application to make a call"
                                                    preferredStyle:UIAlertControllerStyleActionSheet];
     
+     UIAlertAction* actionSkype = [UIAlertAction actionWithTitle:@"Skype"
+                                                                            style:UIAlertActionStyleDefault
+                                                                          handler:^(UIAlertAction * action)
+                                                    {
+                       
+                             NSURL *skype = [NSURL URLWithString:[NSString stringWithFormat:@"skype:%@?call", self.patientDetails.SkypeCode]];
+
+            //                 NSURL *skype = [NSURL URLWithString:[NSString stringWithFormat:@"skype:"]];
+                                if ([[UIApplication sharedApplication] canOpenURL:skype]) {
+                                [[UIApplication sharedApplication] openURL:skype];
+                                } else {
+                                // skype not Installed in your Device
+                                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Skype not installed!" withMessage:@"Please install Skype and try again." withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                                }
+                          
+                   }]; //You can use a block here to handle a press on this button
+                   UIImage *img = [UIImage imageNamed:@"SkypePopup"];
+                   [actionSkype setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
+                   [alertController addAction:actionSkype];
+    //    }
+       
+        
+    
+    
     UIAlertAction* actionWhatsapp = [UIAlertAction actionWithTitle:@"Whatsapp"
                                                              style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * action)
@@ -68,7 +92,7 @@
                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"whatsapp://send?phone=%@",self.patientDetails.PatientContactNumber]]];
         
     }]; //You can use a block here to handle a press on this button
-    UIImage *img = [UIImage imageNamed:@"Whatsapp"];
+    img = [UIImage imageNamed:@"Whatsapp"];
     [actionWhatsapp setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
     [alertController addAction:actionWhatsapp];
 
@@ -87,28 +111,7 @@
 
 //    if (![self.patientDetails.SkypeCode isEqualToString:@""]) {
          
-            UIAlertAction* actionSkype = [UIAlertAction actionWithTitle:@"Skype"
-                                                                        style:UIAlertActionStyleDefault
-                                                                      handler:^(UIAlertAction * action)
-                                                {
-                   
-                         NSURL *skype = [NSURL URLWithString:[NSString stringWithFormat:@"skype:%@?call", self.patientDetails.SkypeCode]];
-
-        //                 NSURL *skype = [NSURL URLWithString:[NSString stringWithFormat:@"skype:"]];
-                            if ([[UIApplication sharedApplication] canOpenURL:skype]) {
-                            [[UIApplication sharedApplication] openURL:skype];
-                            } else {
-                            // skype not Installed in your Device
-                                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Skype not installed!" withMessage:@"Please install Skype and try again." withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-                            }
-                      
-               }]; //You can use a block here to handle a press on this button
-               img = [UIImage imageNamed:@"Skype"];
-               [actionSkype setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
-               [alertController addAction:actionSkype];
-//    }
-   
-    
+           
     
     UIAlertAction* phoneCall = [UIAlertAction actionWithTitle:@"Phone Call"
                                                              style:UIAlertActionStyleDefault
@@ -142,7 +145,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    if ([AppPreferences sharedAppPreferences].recordNewOffline)// use recordNewOffline here in sharing with SplashScreenVC 
+    if ([AppPreferences sharedAppPreferences].recordNewOffline)// use recordNewOffline here in sharing with SplashScreenVC
     {
         RecordViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
         //recordingNew=YES;
@@ -155,7 +158,19 @@
     {
          [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
     }
-    
+//    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"dismiss"] isEqualToString:@"yes"])
+//    {
+//        [[NSUserDefaults standardUserDefaults] setValue:@"no" forKey:@"dismiss"];
+//
+//    }
+//    else
+//    {
+//        RecordViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
+//
+//        vc.modalPresentationStyle = UIModalPresentationFullScreen;
+//
+//         [self presentViewController:vc animated:YES completion:nil];
+//    }
 //    else
 //    {
         if (self.isOpenedThroughButton && !callOptionShownOnce) {
