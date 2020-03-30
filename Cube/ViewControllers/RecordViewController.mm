@@ -1910,18 +1910,19 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                 [[self.view viewWithTag:703] setHidden:YES];//edit button and image
                                 [[self.view viewWithTag:704] setHidden:YES];
                                 [[Database shareddatabase] updateAudioFileStatus:@"RecordingFileUpload" fileName:self.recordedAudioFileName];
-                                
+               
                                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                     
                                     
                                     [app uploadFileToServer:self.recordedAudioFileName jobName:FILE_UPLOAD_API];
                                     [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
+                                   
                                     dispatch_async(dispatch_get_main_queue(), ^
                                                    {
                                                        sender.userInteractionEnabled=NO;
                                                        deleteButton.userInteractionEnabled=NO;
                                                        recordingNew=NO;
-                                                       
+                                                        [AppPreferences sharedAppPreferences].recordNewOffline = NO;
                                                        [self dismissViewControllerAnimated:YES completion:nil];
                                                    });
                                     
