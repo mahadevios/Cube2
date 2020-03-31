@@ -135,6 +135,7 @@
                   NSString* DepartmentID = [aptDict valueForKey:@"DepartmentID"];
                   NSString* CountryCode = [aptDict valueForKey:@"CountryCode"];
                   NSString* SkypeId = [aptDict valueForKey:@"SkypeID"];
+//                  NSString* SkypeId = @"kulkarnikuldeep";
 
                   PatientDetails* patientDetails = [PatientDetails new];
                   patientDetails.AppointementID = aptId;
@@ -155,7 +156,9 @@
                       patientDetails.SkypeCode = @"";
                   }
                   else{
-                      patientDetails.SkypeCode = SkypeId;
+//                      patientDetails.SkypeCode = [NSString stringWithFormat:@"live:%@",SkypeId];
+                      patientDetails.SkypeCode = [NSString stringWithFormat:@"%@",SkypeId];
+
                   }
                   [patientsDetailsArray addObject:patientDetails];
               }
@@ -798,4 +801,8 @@
     [self getAppointmentList:dateString];
     [self removePickerAndDoneButton];
 }
+
+
+
+
 @end

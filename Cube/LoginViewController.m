@@ -50,13 +50,23 @@
     [super viewDidLoad];
     
     [pinCode1TextField becomeFirstResponder];
-    // Do any additional setup after loading the view, typically from a nib.
+  
 }
 
+-(void) addWebView
+{
+    WKWebViewConfiguration *theConfiguration = [[WKWebViewConfiguration alloc] init];
+    webView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:theConfiguration];
+    webView.navigationDelegate = self;
+    NSURL *nsurl=[NSURL URLWithString:@"https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=438659271"];
+    NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
+    [webView loadRequest:nsrequest];
+    [self.view addSubview:webView];
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {
-
+//    [self addWebView];
     NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
     
     //self.navigationItem.title=@"Pin Login";
