@@ -64,16 +64,17 @@
                                                                           handler:^(UIAlertAction * action)
                                                     {
                        
-                             NSURL *skype = [NSURL URLWithString:[NSString stringWithFormat:@"skype:%@?call", self.patientDetails.SkypeCode]];
+         BOOL installed = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"skype:"]];
 
-            //                 NSURL *skype = [NSURL URLWithString:[NSString stringWithFormat:@"skype:"]];
-                                if ([[UIApplication sharedApplication] canOpenURL:skype]) {
-                                [[UIApplication sharedApplication] openURL:skype];
-                                } else {
-                                // skype not Installed in your Device
-                                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Skype not installed!" withMessage:@"Please install Skype and try again." withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-                                }
-                          
+         if(installed){
+
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"skype:%@?call", self.patientDetails.SkypeCode]]];
+            }
+         else
+         {
+               [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Skype not installed!" withMessage:@"Please install Skype and try again." withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+         }
+
                    }]; //You can use a block here to handle a press on this button
                    UIImage *img = [UIImage imageNamed:@"SkypePopup"];
                    [actionSkype setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
@@ -89,7 +90,18 @@
                                      {
         
        
-               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"whatsapp://send?phone=%@",self.patientDetails.PatientContactNumber]]];
+             
+        BOOL installed = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"whatsapp:"]];
+
+                if(installed){
+
+                       [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"whatsapp://send?phone=%@",self.patientDetails.PatientContactNumber]]];
+                             
+                   }
+                else
+                {
+                      [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Whatsapp not installed!" withMessage:@"Please install Whatsapp and try again." withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                }
         
     }]; //You can use a block here to handle a press on this button
     img = [UIImage imageNamed:@"Whatsapp"];
@@ -101,7 +113,20 @@
                                                            handler:^(UIAlertAction * action)
                                      {
         
-              [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"facetime://%@",self.patientDetails.PatientContactNumber]]];
+        BOOL installed = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"facetime:"]];
+
+                       if(installed){
+
+                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"facetime://%@",self.patientDetails.PatientContactNumber]]];
+                            
+                                    
+                          }
+                       else
+                       {
+                             [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Facetime not installed!" withMessage:@"Please install Facetime and try again." withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                       }
+        
+             
         
     }]; //You can use a block here to handle a press on this button
     
@@ -476,24 +501,51 @@
     }
 }
 - (IBAction)whatsappButtonClicked:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"whatsapp://send?phone=%@",self.patientDetails.PatientContactNumber]]];
+    BOOL installed = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"whatsapp:"]];
+
+    if(installed){
+
+                       [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"whatsapp://send?phone=%@",self.patientDetails.PatientContactNumber]]];
+                    }
+                 else
+                 {
+                       [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Whatsapp not installed!" withMessage:@"Please install Whatsapp and try again." withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                 }
+    
+   
 }
 - (IBAction)facetimeButtonClicked:(id)sender {
-     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"facetime://%@",self.patientDetails.PatientContactNumber]]];
+   
+    BOOL installed = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"facetime:"]];
+
+    if(installed){
+
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"facetime://%@",self.patientDetails.PatientContactNumber]]];
+                          
+
+                    }
+                 else
+                 {
+                       [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Facetime not installed!" withMessage:@"Please install Facetime and try again." withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+                 }
 }
 - (IBAction)phoneCallButtonClicked:(id)sender {
      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",self.patientDetails.PatientContactNumber]]];
 }
 - (IBAction)skypeCallButtonClicked:(id)sender {
 
-     NSURL *skype = [NSURL URLWithString:[NSString stringWithFormat:@"skype:%@?call", self.patientDetails.SkypeCode]];
+     BOOL installed = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"skype:"]];
 
-    if ([[UIApplication sharedApplication] canOpenURL:skype]) {
-        [[UIApplication sharedApplication] openURL:skype];
-    } else {
-        // skype not Installed in your Device
-        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Skype not installed!" withMessage:@"Please install Skype and try again." withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
-    }
+              if(installed){
+
+                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"skype:%@?call", self.patientDetails.SkypeCode]]];
+     //             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"skype:martina.makasare?call"] options:@{} completionHandler:nil];
+
+                 }
+              else
+              {
+                    [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Skype not installed!" withMessage:@"Please install Skype and try again." withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+              }
     
 }
 - (IBAction)recordButtonClicked:(id)sender {

@@ -71,6 +71,7 @@
 		847D95B31D5F157C00145C32 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 847D959F1D5F157C00145C32 /* MBProgressHUD.m */; };
 		847D95CB1D5F325600145C32 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 847D95CA1D5F325600145C32 /* libsqlite3.0.tbd */; };
 		8480AAFA1D787DD500473651 /* Keychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 8480AAF91D787DD500473651 /* Keychain.m */; };
+		8487355224331B5300155623 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 848735502433119900155623 /* WebKit.framework */; };
 		8488B7BA1FC6A8C7006FE0FA /* TableViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7B91FC6A8C7006FE0FA /* TableViewButton.m */; };
 		8488B7BD1FC6EA00006FE0FA /* UIColor+ApplicationColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 8488B7BC1FC6E9FF006FE0FA /* UIColor+ApplicationColors.m */; };
 		848B31041FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B31031FC7EC8200CE3AC8 /* SpeechRecognitionViewController.m */; };
@@ -285,6 +286,7 @@
 		847FCB2724260CE500AA9B7D /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		8480AAF81D787DD500473651 /* Keychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Keychain.h; sourceTree = "<group>"; };
 		8480AAF91D787DD500473651 /* Keychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Keychain.m; sourceTree = "<group>"; };
+		848735502433119900155623 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		8488B7B81FC6A8C7006FE0FA /* TableViewButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewButton.h; sourceTree = "<group>"; };
 		8488B7B91FC6A8C7006FE0FA /* TableViewButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewButton.m; sourceTree = "<group>"; };
 		8488B7BB1FC6E9FF006FE0FA /* UIColor+ApplicationColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+ApplicationColors.h"; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8487355224331B5300155623 /* WebKit.framework in Frameworks */,
 				846A561F219AA51400EC0B3C /* StoreKit.framework in Frameworks */,
 				8400457C1EC1F1520001369A /* AudioToolbox.framework in Frameworks */,
 				849AF4AB2029CDCC008B6566 /* libxml2.tbd in Frameworks */,
@@ -697,6 +700,7 @@
 		84EACD9A1E03FA64002C43BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				848735502433119900155623 /* WebKit.framework */,
 				847FCB2724260CE500AA9B7D /* Contacts.framework */,
 				847FCB2624260CE500AA9B7D /* ContactsUI.framework */,
 				847FCB2324260BBC00AA9B7D /* AddressBook.framework */,

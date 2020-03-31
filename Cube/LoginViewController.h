@@ -12,11 +12,13 @@
 #import "APIManager.h"
 #import "AppPreferences.h"
 #import "Database.h"
+#import <WebKit/WebKit.h>
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 
 {
     BOOL isLoadedFirstTime;
+    WKWebView *webView;
     
 }
 @property (weak, nonatomic) IBOutlet UITextField *pinCode1TextField;
