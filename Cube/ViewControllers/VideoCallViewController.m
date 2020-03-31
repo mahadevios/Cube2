@@ -113,11 +113,7 @@
            return;
            
        }
-    
-   
-    
   
-    
     if ([responseCodeString isEqualToString:@"200"]) {
               
               [patientsDetailsArray removeAllObjects];
@@ -138,7 +134,7 @@
                   NSString* AppointmentStatus = [aptDict valueForKey:@"AppointmentStatus"];
                   NSString* DepartmentID = [aptDict valueForKey:@"DepartmentID"];
                   NSString* CountryCode = [aptDict valueForKey:@"CountryCode"];
-                  NSString* SkypeId = [aptDict valueForKey:@"SkypeId"];
+                  NSString* SkypeId = [aptDict valueForKey:@"SkypeID"];
 
                   PatientDetails* patientDetails = [PatientDetails new];
                   patientDetails.AppointementID = aptId;
@@ -154,6 +150,7 @@
                   patientDetails.AppointmentStatus = AppointmentStatus;
                   patientDetails.DepartmentID = DepartmentID;
                   patientDetails.CountryCode = CountryCode;
+                  
                   if (SkypeId == nil || [SkypeId isEqualToString:@""]) {
                       patientDetails.SkypeCode = @"";
                   }

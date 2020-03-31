@@ -499,10 +499,62 @@
 - (IBAction)recordButtonClicked:(id)sender {
    
     RecordViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
-    
+
     vc.modalPresentationStyle = UIModalPresentationFullScreen;
-    
+
     [self presentViewController:vc animated:YES completion:nil];
        
+//    [self openChrome];
+}
+
+-(void) openChrome
+{
+    NSURL *inputURL = [NSURL URLWithString:@"https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=811726552"];
+    NSString *scheme = inputURL.scheme;
+
+    // Replace the URL Scheme with the Chrome equivalent.
+    NSString *chromeScheme = nil;
+    if ([scheme isEqualToString:@"http"]) {
+      chromeScheme = @"googlechrome";
+    } else if ([scheme isEqualToString:@"https"]) {
+      chromeScheme = @"googlechromes";
+    }
+
+    // Proceed only if a valid Google Chrome URI Scheme is available.
+    if (chromeScheme) {
+      NSString *absoluteString = [inputURL absoluteString];
+      NSRange rangeForScheme = [absoluteString rangeOfString:@":"];
+      NSString *urlNoScheme =
+          [absoluteString substringFromIndex:rangeForScheme.location];
+      NSString *chromeURLString =
+          [chromeScheme stringByAppendingString:urlNoScheme];
+      NSURL *chromeURL = [NSURL URLWithString:chromeURLString];
+
+      // Open the URL with Chrome.
+      [[UIApplication sharedApplication] openURL:chromeURL];
+    }
+}
+
+-(void) openSafari
+{
+//    https://cfscommunicatorsocket.herokuapp.com:443/    socket url
+//
+//    http://cfscommunicatorsocket.herokuapp.com/
+//        NSURL *URL = [NSURL URLWithString:@"https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=315428527"];
+//
+//        if (URL) {
+//            if ([SFSafariViewController class] != nil) {
+//                SFSafariViewController *sfvc = [[SFSafariViewController alloc] initWithURL:URL];
+//                sfvc.delegate = self;
+//                [self presentViewController:sfvc animated:YES completion:nil];
+//            } else {
+//                if (![[UIApplication sharedApplication] openURL:url]) {
+//                    NSLog(@"%@%@",@"Failed to open url:",[url description]);
+//                }
+//            }
+//        } else {
+//            // will have a nice alert displaying soon.
+//        }
+    
 }
 @end

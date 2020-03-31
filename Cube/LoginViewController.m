@@ -550,5 +550,9 @@
     [pinCode1TextField becomeFirstResponder];
     
     [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Hit home button to exit" withMessage:@"" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    
 }
+
+
+
 @end
