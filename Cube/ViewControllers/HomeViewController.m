@@ -16,6 +16,7 @@
 #import "UserSettingsViewController.h"
 #import <StoreKit/SKStoreProductViewController.h>
 
+
 //#import <iTunesLibrary/ITLibrary.h>
 
 
@@ -76,6 +77,10 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+   
+}
 -(void)validateApntmntListResponse:(NSNotification*)dictObj
 {
     NSDictionary* responseDict=dictObj.object;

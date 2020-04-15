@@ -59,6 +59,24 @@
                                                           message:@"Select an application to make a call"
                                                    preferredStyle:UIAlertControllerStyleActionSheet];
     
+    
+    UIAlertAction* learniphiCall = [UIAlertAction actionWithTitle:@"Meeting Room"
+                                                                   style:UIAlertActionStyleDefault
+                                                                 handler:^(UIAlertAction * action)
+                                           {
+              
+        [self startLearniphiVideoCall];
+           
+          }]; //You can use a block here to handle a press on this button
+           UIImage *img = [UIImage imageNamed:@"PhoneCall"];
+          [learniphiCall setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
+          [alertController addAction:learniphiCall];
+          
+          [self addCancelAction];
+    
+    
+    
+    
      UIAlertAction* actionSkype = [UIAlertAction actionWithTitle:@"Skype"
                                                                             style:UIAlertActionStyleDefault
                                                                           handler:^(UIAlertAction * action)
@@ -76,14 +94,14 @@
          }
 
                    }]; //You can use a block here to handle a press on this button
-                   UIImage *img = [UIImage imageNamed:@"SkypePopup"];
+                   img = [UIImage imageNamed:@"SkypePopup"];
                    [actionSkype setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
                    [alertController addAction:actionSkype];
     //    }
        
         
     
-    
+    /*
     UIAlertAction* actionWhatsapp = [UIAlertAction actionWithTitle:@"Whatsapp"
                                                              style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * action)
@@ -103,11 +121,14 @@
                       [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Whatsapp not installed!" withMessage:@"Please install Whatsapp and try again." withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
                 }
         
-    }]; //You can use a block here to handle a press on this button
+    }];
     img = [UIImage imageNamed:@"Whatsapp"];
     [actionWhatsapp setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
     [alertController addAction:actionWhatsapp];
 
+    
+    
+    
     UIAlertAction* actionFaceTime = [UIAlertAction actionWithTitle:@"FaceTime"
                                                              style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * action)
@@ -133,11 +154,8 @@
     img = [UIImage imageNamed:@"FaceTime"];
     [actionFaceTime setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
     [alertController addAction:actionFaceTime];
-
-//    if (![self.patientDetails.SkypeCode isEqualToString:@""]) {
-         
-           
-    
+ */
+  
     UIAlertAction* phoneCall = [UIAlertAction actionWithTitle:@"Phone Call"
                                                              style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * action)
@@ -151,11 +169,8 @@
     [phoneCall setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
     [alertController addAction:phoneCall];
     
-    [self addCancelAction];
-    
-    [alertController setModalPresentationStyle:UIModalPresentationPopover];
-    
-    
+   
+   
 //    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
 //    {
 //        UIPopoverPresentationController *popPresenter = [alertController
@@ -164,6 +179,10 @@
 //        popPresenter.sourceRect = sender.bounds;
 //    }
 //
+    
+   
+       
+       [alertController setModalPresentationStyle:UIModalPresentationPopover];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -265,6 +284,7 @@
     
     self.mrnNoLabel.text = self.patientDetails.MRN;
     
+    self.skypeIdLabel.text = self.patientDetails.SkypeCode;
 //    if ([self.patientDetails.SkypeCode isEqualToString:@""]) {
 //        [_skypeButton setHidden:true];
 //    }
@@ -532,6 +552,10 @@
 - (IBAction)phoneCallButtonClicked:(id)sender {
      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",self.patientDetails.PatientContactNumber]]];
 }
+- (IBAction)learniphiVideoCallButtonClicked:(id)sender {
+    [self startLearniphiVideoCall];
+}
+
 - (IBAction)skypeCallButtonClicked:(id)sender {
 
      BOOL installed = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"skype:"]];
@@ -548,6 +572,16 @@
               }
     
 }
+
+
+-(void)startLearniphiVideoCall
+{
+    sf = [self.storyboard instantiateViewControllerWithIdentifier:@"SafariSupportViewController"];
+    sf.modalPresentationStyle = UIModalPresentationFullScreen;
+    sf.doctorMeetingUrlString = self.patientDetails.DoctorUrl;
+//    sf.doctorMeetingUrlString = @"http://liveklasserp.testbot.xyz/Sessions/join?m=156&p=668467&u=mm";
+    [self presentViewController:sf animated:YES completion:nil];
+}
 - (IBAction)recordButtonClicked:(id)sender {
    
     RecordViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"RecordViewController"];
@@ -559,36 +593,36 @@
 //    [self openChrome];
 }
 
--(void) openChrome
-{
-    NSURL *inputURL = [NSURL URLWithString:@"https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=811726552"];
-    NSString *scheme = inputURL.scheme;
+//-(void) openChrome
+//{
+//    NSURL *inputURL = [NSURL URLWithString:@"https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=811726552"];
+//    NSString *scheme = inputURL.scheme;
+//
+//    // Replace the URL Scheme with the Chrome equivalent.
+//    NSString *chromeScheme = nil;
+//    if ([scheme isEqualToString:@"http"]) {
+//      chromeScheme = @"googlechrome";
+//    } else if ([scheme isEqualToString:@"https"]) {
+//      chromeScheme = @"googlechromes";
+//    }
+//
+//    // Proceed only if a valid Google Chrome URI Scheme is available.
+//    if (chromeScheme) {
+//      NSString *absoluteString = [inputURL absoluteString];
+//      NSRange rangeForScheme = [absoluteString rangeOfString:@":"];
+//      NSString *urlNoScheme =
+//          [absoluteString substringFromIndex:rangeForScheme.location];
+//      NSString *chromeURLString =
+//          [chromeScheme stringByAppendingString:urlNoScheme];
+//      NSURL *chromeURL = [NSURL URLWithString:chromeURLString];
+//
+//      // Open the URL with Chrome.
+//      [[UIApplication sharedApplication] openURL:chromeURL];
+//    }
+//}
 
-    // Replace the URL Scheme with the Chrome equivalent.
-    NSString *chromeScheme = nil;
-    if ([scheme isEqualToString:@"http"]) {
-      chromeScheme = @"googlechrome";
-    } else if ([scheme isEqualToString:@"https"]) {
-      chromeScheme = @"googlechromes";
-    }
-
-    // Proceed only if a valid Google Chrome URI Scheme is available.
-    if (chromeScheme) {
-      NSString *absoluteString = [inputURL absoluteString];
-      NSRange rangeForScheme = [absoluteString rangeOfString:@":"];
-      NSString *urlNoScheme =
-          [absoluteString substringFromIndex:rangeForScheme.location];
-      NSString *chromeURLString =
-          [chromeScheme stringByAppendingString:urlNoScheme];
-      NSURL *chromeURL = [NSURL URLWithString:chromeURLString];
-
-      // Open the URL with Chrome.
-      [[UIApplication sharedApplication] openURL:chromeURL];
-    }
-}
-
--(void) openSafari
-{
+//-(void) openSafari
+//{
 //    https://cfscommunicatorsocket.herokuapp.com:443/    socket url
 //
 //    http://cfscommunicatorsocket.herokuapp.com/
@@ -608,5 +642,5 @@
 //            // will have a nice alert displaying soon.
 //        }
     
-}
+//}
 @end

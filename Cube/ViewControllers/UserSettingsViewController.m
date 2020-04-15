@@ -22,6 +22,7 @@
     [super viewDidLoad];
    
     poUpTableView.layer.cornerRadius=2.0f;
+    
     app = [AppPreferences sharedAppPreferences];
 
     recordSettingsItemsarray=[[NSMutableArray alloc]initWithObjects:@"Save Dictation Waiting By",@"Confirm Before Saving",@"Alert Before Recording",@"Back To Home After Dictation", nil];
@@ -677,4 +678,5 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 @end

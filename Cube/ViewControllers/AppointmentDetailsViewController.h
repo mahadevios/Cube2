@@ -12,6 +12,7 @@
 #import "Constants.h"
 #import "MBProgressHUD.h"
 #import "RecordViewController.h"
+#import "SafariSupportViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 @class AppointmentDetailsViewController;
@@ -29,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
     BOOL callOptionShownOnce;
     MBProgressHUD *hud;
     BOOL aptDetailsSet;
+    SafariSupportViewController* sf;
 }
 - (IBAction)changeAptStatusButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *changeAptStatusButton;
@@ -56,6 +58,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *phoneCallButton;
 - (IBAction)recordButtonClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *recordButton;
+@property (weak, nonatomic) IBOutlet UILabel *skypeIdLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *learniphiVideoCallButton;
+@property (nonatomic, strong) NSString* patientMeetingUrlString;
+- (IBAction)learniphiVideoCallButtonClicked:(id)sender;
+
 -(IBAction)skypeCallButtonClicked:(id)sender;
 @end
 
