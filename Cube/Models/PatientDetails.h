@@ -26,7 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) NSString* AppointmentTime;
 @property(nonatomic, strong) NSString* AppointmentStatus;
 @property(nonatomic, strong) NSString* DepartmentID;
-
+@property(nonatomic, strong) NSString* DoctorUrl;
+@property(nonatomic, strong) NSString* PatUrl;
 //    "AppointementID": 1,
 //    "PatTitle": "Mr.",
 //    "PatFirstname": "Amol",

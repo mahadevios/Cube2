@@ -426,10 +426,7 @@ static APIManager *singleton = nil;
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
-//        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macID,@"macid",pin,@"PIN", nil];
-//        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary1, nil];
-        
-        
+
         NSError* error;
         NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:dictatorId,@"DepartmentID",date,@"ApptDate", nil];
         
@@ -498,6 +495,41 @@ static APIManager *singleton = nil;
     
 }
 
+
+-(void) createAppointmentSession:(NSString*)dictatorId date:(NSString*)date
+{
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+
+        NSError* error;
+        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:dictatorId,@"DepartmentID",date,@"ApptDate", nil];
+        
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
+                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
+                                                             error:&error];
+        
+        
+        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
+        
+        
+        
+        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
+        
+        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+        
+        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+        NSString* downloadMethodType = @"urlConnection";
+
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:GET_APNTMNT_LIST_API withRequestParameter:array withResourcePath:GET_APNTMNT_LIST_API withHttpMethd:POST downloadMethodType:downloadMethodType];
+        [downloadmetadatajob startMetaDataDownLoad];
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+    
+}
 //
 
 -(void)mobileDictationsInsertMobileStatus:(NSString* )mobilestatus OriginalFileName:(NSString*)OriginalFileName andMacID:(NSString*)macID

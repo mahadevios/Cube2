@@ -135,6 +135,8 @@
                   NSString* DepartmentID = [aptDict valueForKey:@"DepartmentID"];
                   NSString* CountryCode = [aptDict valueForKey:@"CountryCode"];
                   NSString* SkypeId = [aptDict valueForKey:@"SkypeID"];
+                  NSString* DoctorUrl = [aptDict valueForKey:@"DoctorUrl"];
+                  NSString* PatUrl = [aptDict valueForKey:@"PatUrl"];
 //                  NSString* SkypeId = @"kulkarnikuldeep";
 
                   PatientDetails* patientDetails = [PatientDetails new];
@@ -151,6 +153,8 @@
                   patientDetails.AppointmentStatus = AppointmentStatus;
                   patientDetails.DepartmentID = DepartmentID;
                   patientDetails.CountryCode = CountryCode;
+                  patientDetails.DoctorUrl = DoctorUrl;
+                  patientDetails.PatUrl = PatUrl;
                   
                   if (SkypeId == nil || [SkypeId isEqualToString:@""]) {
                       patientDetails.SkypeCode = @"";
@@ -173,43 +177,7 @@
       
 }
 
--(void) setPatientDetailsFromAPI
-{
-    NSDateFormatter *dfmt = [[NSDateFormatter alloc] init];
-    [dfmt setDateFormat:@"dd-MM-yyyy"];
-    
-    for (int i=0; i<20; i++) {
-        PatientDetails* patientDetails = [PatientDetails new];
-        patientDetails.AppointementID = 1;
-        patientDetails.PatTitle = [NSString stringWithFormat:@"Mr."];
-        patientDetails.PatFirstname = [NSString stringWithFormat:@"FName%d", i+1];
-        patientDetails.PatLastname = [NSString stringWithFormat:@"LName%d", i+1];
-        
-        patientDetails.PatientContactNumber = [NSString stringWithFormat:@"+918956498302"];
-        
-        NSString *dateString = [dfmt stringFromDate:[NSDate date]];
-        patientDetails.AppointmentDate = [NSString stringWithFormat:@"%@",dateString];
-        patientDetails.AppointmentTime = [NSString stringWithFormat:@"%@",@"02:23 PM"];
-        
-        patientDetails.DOB = [NSString stringWithFormat:@"%d/1/1993", i+1];
-        
-        patientDetails.MRN = [NSString stringWithFormat:@"MRN %d", i+1];
-        patientDetails.NHSNumber = [NSString stringWithFormat:@"NHS London %d", i+1];
-        
-            
-        
-//
-        
-        patientDetails.AppointmentStatus = @"1";
-        patientDetails.DepartmentID = [NSString stringWithFormat:@"%@",@"18929"];
-//        patientDetails.emailId = [NSString stringWithFormat:@"patient%d@gml.com", i+1];
-        
-        
-        [patientsDetailsArray addObject:patientDetails];
-    }
-    
-    [self.tabelView reloadData];
-}
+
 -(void)viewWillAppear:(BOOL)animated
 {
 //    NSDate* date = [NSDate date];

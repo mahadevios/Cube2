@@ -816,7 +816,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "618"
             endingLineNumber = "618"
-            landmarkName = "-downloadFileUsingConnection:"
+            landmarkName = "-sendDictationIds:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -833,7 +833,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "759"
             endingLineNumber = "759"
-            landmarkName = "-URLSession:dataTask:didReceiveData:"
+            landmarkName = "-downloafFileUsingSession:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -850,7 +850,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1146"
             endingLineNumber = "1146"
-            landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
+            landmarkName = "-uploadFileToServerUsingNSURLSession:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -952,7 +952,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "701"
             endingLineNumber = "701"
-            landmarkName = "-downloafFileUsingSession:"
+            landmarkName = "-sendComment:dictationId:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1088,7 +1088,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "661"
             endingLineNumber = "661"
-            landmarkName = "-sendComment:dictationId:"
+            landmarkName = "-downloadFileUsingConnection:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1190,7 +1190,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "998"
             endingLineNumber = "998"
-            landmarkName = "-URLSession:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:"
+            landmarkName = "-URLSession:task:didCompleteWithError:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2040,8 +2040,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "462"
             endingLineNumber = "462"
-            landmarkName = "-application:handleEventsForBackgroundURLSession:completionHandler:"
-            landmarkType = "7">
+            landmarkName = "AppDelegate"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2901,7 +2901,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1270"
             endingLineNumber = "1270"
-            landmarkName = "-uploadFileToServer:jobName:"
+            landmarkName = "-uploadFileAfterGettingdatabaseValues:departmentID:transferStatus:mobileDictationIdVal:isFileTypeAudio:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2918,54 +2918,6 @@
             startingLineNumber = "130"
             endingLineNumber = "130"
             landmarkName = "-setFirstRowSelected"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C6691AF8-8852-4EB8-B562-DDBD1725569A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/AppointmentDetailsViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
-            landmarkName = "-viewWillAppear:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "69C6D655-CC38-4655-BCC9-C9ED199A8276"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/AppointmentDetailsViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "-showVideoCallingOptions"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "086E291F-9E43-47E5-8141-CF1B4360C958"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/AppointmentDetailsViewController.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
-            landmarkName = "-viewWillAppear:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3043,9 +2995,9 @@
             filePath = "Cube/ViewControllers/AppointmentDetailsViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "501"
-            endingLineNumber = "501"
-            landmarkName = "-skypeCallButtonClicked:"
+            startingLineNumber = "497"
+            endingLineNumber = "497"
+            landmarkName = "-updateStatus:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3059,8 +3011,8 @@
             filePath = "Cube/ViewControllers/VideoCallViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "-validateApntmntListResponse:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3068,16 +3020,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "97B2D093-8DA4-40B6-9DE5-99CEDF924CD4"
+            uuid = "3B494DE2-1F5E-4D62-A268-AF2C0A235D09"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/AppointmentDetailsViewController.m"
+            filePath = "Cube/ViewControllers/VideoCallViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "-showVideoCallingOptions"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "-validateApntmntListResponse:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C81A5872-5A8D-4477-9BBE-CDB955709DB6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/VideoCallViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
+            landmarkName = "-showVideoCallingOptions:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

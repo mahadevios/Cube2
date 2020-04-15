@@ -6,7 +6,7 @@
 //  Copyright © 2016 Xanadutec. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+//#import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 #import "Constants.h"
 #import "APIManager.h"
@@ -18,7 +18,7 @@
 
 {
     BOOL isLoadedFirstTime;
-    WKWebView *webView;
+//    WKWebView *webView;
     
 }
 @property (weak, nonatomic) IBOutlet UITextField *pinCode1TextField;

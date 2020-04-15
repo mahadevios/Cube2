@@ -53,16 +53,16 @@
   
 }
 
--(void) addWebView
-{
-    WKWebViewConfiguration *theConfiguration = [[WKWebViewConfiguration alloc] init];
-    webView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:theConfiguration];
-    webView.navigationDelegate = self;
-    NSURL *nsurl=[NSURL URLWithString:@"https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=438659271"];
-    NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
-    [webView loadRequest:nsrequest];
-    [self.view addSubview:webView];
-}
+//-(void) addWebView
+//{
+//    WKWebViewConfiguration *theConfiguration = [[WKWebViewConfiguration alloc] init];
+//    webView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:theConfiguration];
+//    webView.navigationDelegate = self;
+//    NSURL *nsurl=[NSURL URLWithString:@"https://cfscommunicator.com/#/login/GuestUserWithMeeting?meetingCode=438659271"];
+//    NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
+//    [webView loadRequest:nsrequest];
+//    [self.view addSubview:webView];
+//}
 
 -(void)viewWillAppear:(BOOL)animated
 {

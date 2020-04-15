@@ -44,6 +44,9 @@
 #define  GET_APNTMNT_LIST_API                 @"encrdecr_MobileClinicList"
 #define  UPDATE_APNTMNT_STATUS_API            @"encrdecr_MobileAppointmentStatus"
 
+#define  MEETING_USER_ENDPOINT_API            @"http://liveklasserp.testbot.xyz/Sessions/join?m=91&p=532714&u="
+#define  MEETING_MENTOR_ENDPOINT              @"http://liveklasserp.testbot.xyz/Sessions/join?m=91&p=861720&u=";
+
 
 #define  SECRET_KEY                           @"cubemob"
 #define  POST                           @"POST"
