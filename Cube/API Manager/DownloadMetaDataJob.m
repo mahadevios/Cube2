@@ -207,19 +207,14 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    ////NSLog(@"Success");
- 
+
     NSError *error;
-//    NSDictionary *response1 = [NSJSONSerialization JSONObjectWithData:responseData
-//                                                                 options:NSUTF8StringEncoding
-//                                                                   error:&error];
     
     
     NSString* encryptedResponse = [NSJSONSerialization JSONObjectWithData:responseData
                                                              options:NSUTF8StringEncoding
                                                                error:&error];
     
-//    encryptedResponse = nil;
     id encryptedResponseDict = encryptedResponse;
     if ([encryptedResponseDict isKindOfClass:[NSDictionary class]])
     {
@@ -254,39 +249,6 @@
 
     }
     
-//    NSString *response1 = [NSJSONSerialization JSONObjectWithData:responseData
-//                                                             options:NSJSONReadingAllowFragments
-//                                                               error:&error];
-//    NSData *decryptedData = [RNDecryptor decryptData:responseData
-//                                        withSettings:kRNCryptorAES256Settings
-//                                            password:SECRET_KEY
-//                                               error:&error];
-//    NSString *encString = [decryptedData base64EncodedStringWithOptions:0];
-    //NSLog(@"Job Name = %@ Response %@",self.downLoadEntityJobName,response);
-    //NSLog(@"%@",response);
-    
-//    if ([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
-//    {
-//        if (response != nil)
-//        {
-//            if ([[response objectForKey:@"code"] isEqualToString:SUCCESS])
-//            {
-//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];
-//                
-//                
-//            }else
-//            {
-//                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-//            }
-//        }else
-//        {
-//            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Something went wrong, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-//        }
-//    }
- 
-  
-
-
 
 if([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
 
@@ -294,19 +256,7 @@ if([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
     
     if (response != nil)
     {
-//        NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:response1 options:0];
-//        NSData* data=[decodedData AES256DecryptWithKey:SECRET_KEY];
-//        NSString* responseString=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        
-//        responseString=[responseString stringByReplacingOccurrencesOfString:@"True" withString:@"1"];
-//        responseString=[responseString stringByReplacingOccurrencesOfString:@"False" withString:@"0"];
-//
-//        NSData *responsedData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-//        
-//        NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responsedData
-//                                                                                options:NSJSONReadingAllowFragments
-//                                                                                  error:&error];
-        
+ 
         NSLog(@"%@",error);
 
         NSString* code=[response objectForKey:RESPONSE_CODE];
@@ -342,14 +292,11 @@ if([self.downLoadEntityJobName isEqualToString:CHECK_DEVICE_REGISTRATION])
             NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE,@"2002",RESPONSE_PIN_VERIFY, nil];
 
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHECK_DEVICE_REGISTRATION object:response];// to remove the hud
-
-//            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
         
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Could not connect to the sever, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Could not connect to the server, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
         }
     }else
     {
-//        [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
 
         NSDictionary* response = [[NSDictionary alloc] initWithObjectsAndKeys:@"2001",RESPONSE_CODE,@"2002",RESPONSE_PIN_VERIFY, nil];
         

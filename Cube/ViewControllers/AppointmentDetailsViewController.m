@@ -68,7 +68,7 @@
         [self startLearniphiVideoCall];
            
           }]; //You can use a block here to handle a press on this button
-           UIImage *img = [UIImage imageNamed:@"PhoneCall"];
+           UIImage *img = [UIImage imageNamed:@"VideoCall"];
           [learniphiCall setValue:[img imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] forKey:@"image"];
           [alertController addAction:learniphiCall];
           

@@ -137,6 +137,8 @@
                   NSString* SkypeId = [aptDict valueForKey:@"SkypeID"];
                   NSString* DoctorUrl = [aptDict valueForKey:@"DoctorUrl"];
                   NSString* PatUrl = [aptDict valueForKey:@"PatUrl"];
+                  NSString* PatientInWaitingRoom = [aptDict valueForKey:@"PatientInWaitingRoom"];
+
 //                  NSString* SkypeId = @"kulkarnikuldeep";
 
                   PatientDetails* patientDetails = [PatientDetails new];
@@ -155,7 +157,8 @@
                   patientDetails.CountryCode = CountryCode;
                   patientDetails.DoctorUrl = DoctorUrl;
                   patientDetails.PatUrl = PatUrl;
-                  
+                  patientDetails.PatientInWaitingRoom = PatientInWaitingRoom;
+
                   if (SkypeId == nil || [SkypeId isEqualToString:@""]) {
                       patientDetails.SkypeCode = @"";
                   }
@@ -574,8 +577,20 @@
 
     PatientDetails* patientDetails = [patientsDetailsArray objectAtIndex:indexPath.row];
     UILabel* patientName = [cell viewWithTag:101];
+   
+    
     UILabel* status = [cell viewWithTag:102];
     UILabel* dateTime = [cell viewWithTag:104];
+    UILabel* onlineStatusView = [cell viewWithTag:106];
+
+//    if ([patientDetails.PatientInWaitingRoom isEqualToString:@"Yes"]) {
+//        [onlineStatusView setHidden:YES];
+//    }
+//    else
+//    {
+//         [onlineStatusView setHidden:NO];
+//    }
+
     UIButton* callButton = [cell viewWithTag:105];
 //    if ([cell viewWithTag:indexPath.row] != nil) {
 //        [[cell viewWithTag:indexPath.row] removeFromSuperview];
@@ -618,7 +633,14 @@
  
     dateTime.text = [NSString stringWithFormat:@"%@",patientDetails.AppointmentTime];
 
+    CGRect nameLabelFrame = CGRectMake(patientName.frame.origin.x, patientName.frame.origin.y, patientName.intrinsicContentSize.width, patientName.frame.size.height);
     
+       patientName.frame = nameLabelFrame;
+    
+//    onlineStatusView.alpha = 1;
+//               [UIView animateWithDuration:.7 delay:0.5 options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse animations:^{
+//                   onlineStatusView.alpha = 0;
+//               } completion:nil];
     return cell;
 }
 

@@ -416,13 +416,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         //        startRecordingImageView.image=[UIImage imageNamed:@"Record"];
         //
         //        startRecordingImageView.frame=CGRectMake((startRecordingView.frame.size.width/2)-15, (startRecordingView.frame.size.height/2)-25, 30, 50);
-        //    
+        //
         //        [animatedView removeFromSuperview];
         
 //        if (player.isPlaying)
 //        {
 //            startRecordingImageView.image=[UIImage imageNamed:@"Play"];
-//            
+//
 //            [player pause];
 //        }
        
@@ -645,7 +645,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 -(void)addView:(UIView*)sender
 {
     if (sender.tag==203)//Greater width for middle circle
-    {        
+    {
         double screenHeight =  [[UIScreen mainScreen] bounds].size.height;
         
         if (screenHeight<481)
@@ -698,24 +698,24 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if (roundedView.tag==201)
     {
 //        startStopPauseImageview.image=[UIImage imageNamed:@"Stop"];
-//        
+//
 //        startStopPauseImageview.frame=CGRectMake((circleView.frame.size.width/2)-15, (circleView.frame.size.height/2)-8, 15, 15);
-//        
+//
 //        circleView.backgroundColor=[UIColor grayColor];
-//        
+//
 //        [viewClickbutton addTarget:self action:@selector(setStopRecordingView:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     if (roundedView.tag==202)
     {
 //        startStopPauseImageview.image=[UIImage imageNamed:@"Play"];
-//        
+//
 //        startStopPauseImageview.frame=CGRectMake((newSize/2), (newSize/2)-8, 15, 15);
-//        
+//
 //        startStopPauseImageview.tag=roundedView.tag+200;
-//        
+//
 //        circleView.backgroundColor=[UIColor grayColor];
-//        
+//
 //        [viewClickbutton addTarget:self action:@selector(setPauseRecordingView:) forControlEvents:UIControlEventTouchUpInside];
         
     }
@@ -740,15 +740,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     //----------------------------------//
 //    UILabel* recordLabel = [[UILabel alloc] initWithFrame:CGRectMake(recordLAbel.frame.origin.x, circleView.frame.origin.y + circleView.frame.size.height+10, recordLAbel.frame.size.width, recordLAbel.frame.size.height)];
-//    
+//
 //    recordLabel.tag = 603;
-//    
+//
 //    recordLabel.textColor = [UIColor colorWithRed:194/255.0 green:19/255.0 blue:19/255.0 alpha:1.0];
-//    
+//
 //    recordLabel.font = [UIFont systemFontOfSize:15];
-//    
+//
 //    recordLabel.text = @"Recording";
-//    
+//
 //    recordLAbel.frame = CGRectMake(recordLAbel.frame.origin.x, circleView.frame.origin.y + circleView.frame.size.height+10, recordLAbel.frame.size.width, recordLAbel.frame.size.height);
     
     [circleView addSubview:viewClickbutton];
@@ -1434,49 +1434,49 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //
 //    UIView* pauseView=  [self.view viewWithTag:302];
 //    UIImageView* pauseImageView= [pauseView viewWithTag:402];
-//    
-//    
+//
+//
 //    if ( !paused)
 //    {
 //        recordingPausedOrStoped=YES;
-//        
+//
 //        paused=YES;
 //
 //        UIImageView* animatedView= [self.view viewWithTag:1001];
-//        
+//
 //        [animatedView stopAnimating];
-//        
+//
 //        animatedView.image=[UIImage imageNamed:@"SoundWave-3"];
-//        
+//
 //        [self pauseRecording];
-//        
+//
 //        [stopTimer invalidate];
-//        
+//
 //        pauseImageView.image=[UIImage imageNamed:@"Play"];
-//        
+//
 //    }
 //    else if ( isRecordingStarted==YES && paused)
 //    {
 //        recordingPausedOrStoped=NO;
-//        
+//
 //        paused=NO;
 //
 //        [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryPlayAndRecord];
-//        
+//
 //        UIImageView* animatedView= [self.view viewWithTag:1001];
-//        
+//
 //        [animatedView startAnimating];
-//        
+//
 //        [self setTimer];
-//        
+//
 //        [self performSelector:@selector(mdRecord) withObject:nil afterDelay:0.1];
-//        
+//
 //        [UIApplication sharedApplication].idleTimerDisabled = YES;
-//        
+//
 //        pauseImageView.image=[UIImage imageNamed:@"Pause"];
 //    }
 //
-//    
+//
 //    // pauseImageView.image=[UIImage imageNamed:@"play"];
 //}
 
@@ -2065,7 +2065,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //    int totalTime= recorder.currentTime + player.duration;
 //    int audioHour= (recorder.currentTime + player.duration)/(60*60);
 //    int audioHourByMod = totalTime % (60*60);
-//    
+//
 //    int audioMinutes = audioHourByMod / 60;
 //    int audioSeconds = audioHourByMod % 60;
     cirecleTimerLAbel.text = [NSString stringWithFormat:@"%02d:%02d:%02d",circleViewTimerHours,circleViewTimerMinutes,circleViewTimerSeconds];//for circleView timer label
@@ -3344,7 +3344,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 //-(void)editRecording
 //{
-//    
+//
 //    [self checkPermissionAndStartRecording];
 //    [[self.view viewWithTag:98] removeFromSuperview];
 //
@@ -3868,13 +3868,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         animatedImageView = [[UIImageView alloc] initWithFrame:CGRectMake(recordingStatusLabel.frame.origin.x-10, stopNewImageView.frame.origin.y + stopNewImageView.frame.size.height + 40, recordingStatusLabel.frame.size.width+20, 30)];
     
 //    UILabel* updatedrecordingStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(recordingStatusLabel.frame.origin.x, animatedImageView.frame.origin.y + animatedImageView.frame.size.height + 10, recordingStatusLabel.frame.size.width, 30)];
-//    
+//
 //    updatedrecordingStatusLabel.text=@"Your audio is being recorded";
-//    
+//
 //    updatedrecordingStatusLabel.textColor = [UIColor lightGrayColor];
-//    
+//
 //    updatedrecordingStatusLabel.textAlignment = NSTextAlignmentCenter;
-//    
+//
 //    updatedrecordingStatusLabel.font = [UIFont systemFontOfSize:18];
     
     //[recordingStatusLabel setHidden:YES];
