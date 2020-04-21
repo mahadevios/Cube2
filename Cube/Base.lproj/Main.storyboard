@@ -4142,8 +4142,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C9a-jU-7Id">
-                                                <rect key="frame" x="230" y="294.5" width="50" height="50"/>
-                                                <state key="normal" image="Skype"/>
+                                                <rect key="frame" x="240" y="299.5" width="40" height="40"/>
+                                                <state key="normal" image="VideoCall"/>
                                                 <connections>
                                                     <action selector="learniphiVideoCallButtonClicked:" destination="uBO-EO-Cfb" eventType="touchUpInside" id="JyY-9z-g4j"/>
                                                 </connections>
@@ -5137,7 +5137,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Patient Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2u3-TB-66x">
-                                                    <rect key="frame" x="10" y="11" width="198.5" height="18"/>
+                                                    <rect key="frame" x="10" y="11" width="96.5" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="Xmj-6k-zQd"/>
                                                     </constraints>
@@ -5145,6 +5145,19 @@
                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view tag="106" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D19-As-lAV">
+                                                    <rect key="frame" x="118.5" y="14" width="12" height="12"/>
+                                                    <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="12" id="Utp-Rk-6Ed"/>
+                                                        <constraint firstAttribute="width" constant="12" id="ie6-Bp-bHY"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="6"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="50t-Bv-5Qv">
                                                     <rect key="frame" x="271.5" y="11" width="132.5" height="18"/>
                                                     <constraints>
@@ -5155,7 +5168,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="104" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqe-nX-uAi">
-                                                    <rect key="frame" x="10" y="39" width="198.5" height="18"/>
+                                                    <rect key="frame" x="10" y="39" width="96.5" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="DBn-7w-xVU"/>
                                                     </constraints>
@@ -5179,7 +5192,9 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="mqe-nX-uAi" firstAttribute="leading" secondItem="2u3-TB-66x" secondAttribute="leading" id="4VZ-Dy-Qrq"/>
+                                                <constraint firstItem="D19-As-lAV" firstAttribute="leading" secondItem="2u3-TB-66x" secondAttribute="trailing" constant="12" id="6ey-FH-7ob"/>
                                                 <constraint firstItem="4ps-OB-uB0" firstAttribute="trailing" secondItem="50t-Bv-5Qv" secondAttribute="trailing" id="GKr-IB-4Dw"/>
+                                                <constraint firstItem="D19-As-lAV" firstAttribute="centerY" secondItem="2u3-TB-66x" secondAttribute="centerY" id="Mli-0n-hcf"/>
                                                 <constraint firstItem="50t-Bv-5Qv" firstAttribute="centerY" secondItem="2u3-TB-66x" secondAttribute="centerY" id="O5l-od-rP1"/>
                                                 <constraint firstItem="4ps-OB-uB0" firstAttribute="top" secondItem="50t-Bv-5Qv" secondAttribute="bottom" constant="10" id="PTS-6W-QNU"/>
                                                 <constraint firstItem="mqe-nX-uAi" firstAttribute="width" secondItem="2u3-TB-66x" secondAttribute="width" id="ZAR-7h-jn6"/>
@@ -5193,7 +5208,6 @@
                                             <constraint firstAttribute="trailing" secondItem="50t-Bv-5Qv" secondAttribute="trailing" constant="10" id="HAW-WY-H6o"/>
                                             <constraint firstAttribute="trailing" secondItem="M4C-vj-v17" secondAttribute="trailing" id="ZTW-3l-ezX"/>
                                             <constraint firstItem="2u3-TB-66x" firstAttribute="leading" secondItem="vEi-X6-aBr" secondAttribute="leading" constant="10" id="drm-Zw-U1D"/>
-                                            <constraint firstItem="2u3-TB-66x" firstAttribute="width" secondItem="vEi-X6-aBr" secondAttribute="width" multiplier="0.48" id="ig3-yB-nVS"/>
                                             <constraint firstItem="M4C-vj-v17" firstAttribute="centerY" secondItem="vEi-X6-aBr" secondAttribute="centerY" id="ocG-wl-mBP"/>
                                             <constraint firstItem="2u3-TB-66x" firstAttribute="top" secondItem="vEi-X6-aBr" secondAttribute="top" constant="11" id="u6Z-XY-IqY"/>
                                         </constraints>
@@ -6065,6 +6079,7 @@
         <image name="TransFile" width="35" height="35"/>
         <image name="TransRecord" width="35" height="35"/>
         <image name="TransStop" width="35" height="35"/>
+        <image name="VideoCall" width="40" height="40"/>
         <image name="Whatsapp" width="40" height="40"/>
     </resources>
 </document>

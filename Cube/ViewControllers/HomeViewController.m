@@ -89,7 +89,7 @@
     
     if ([[responseDict valueForKey:@"code"] isEqualToString:@"200"]) {
                       
-              NSArray* aptList =  [responseDict valueForKey:@"ClinicalList"];
+    NSArray* aptList =  [responseDict valueForKey:@"ClinicalList"];
               
     self.completedDocCountLabel.text =  [NSString stringWithFormat:@"%ld",aptList.count];
         
