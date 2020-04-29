@@ -286,9 +286,18 @@
         NSArray* pathComponents = [NSArray arrayWithObjects:
                                    [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
                                    AUDIO_FILES_FOLDER_NAME,
-                                   [NSString stringWithFormat:@"%@.wav", filName],
+                                   [NSString stringWithFormat:@"%@.caf", filName],
                                    nil];
         NSURL* recordedAudioURL = [NSURL fileURLWithPathComponents:pathComponents];
+        
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[recordedAudioURL path]]) {
+            pathComponents = [NSArray arrayWithObjects:
+            [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
+            AUDIO_FILES_FOLDER_NAME,
+            [NSString stringWithFormat:@"%@.wav", filName],
+            nil];
+            recordedAudioURL = [NSURL fileURLWithPathComponents:pathComponents];
+        }
         NSError* audioError;
         player= [[AVAudioPlayer alloc] initWithContentsOfURL:recordedAudioURL error:&audioError];
         

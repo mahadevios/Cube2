@@ -4120,29 +4120,22 @@
                                                     <action selector="phoneCallButtonClicked:" destination="uBO-EO-Cfb" eventType="touchUpInside" id="EVP-BZ-ebN"/>
                                                 </connections>
                                             </button>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1s-BU-GhJ">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1s-BU-GhJ">
                                                 <rect key="frame" x="295" y="298.5" width="42" height="42"/>
                                                 <state key="normal" image="FaceTime"/>
                                                 <connections>
                                                     <action selector="facetimeButtonClicked:" destination="uBO-EO-Cfb" eventType="touchUpInside" id="IcH-ve-2Ul"/>
                                                 </connections>
                                             </button>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8jL-Ky-55n">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8jL-Ky-55n">
                                                 <rect key="frame" x="238" y="298.5" width="42" height="42"/>
                                                 <state key="normal" image="Whatsapp"/>
                                                 <connections>
                                                     <action selector="whatsappButtonClicked:" destination="uBO-EO-Cfb" eventType="touchUpInside" id="Wwb-SF-Yhq"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WpX-7U-688">
-                                                <rect key="frame" x="295" y="298.5" width="42" height="42"/>
-                                                <state key="normal" image="Skype"/>
-                                                <connections>
-                                                    <action selector="skypeCallButtonClicked:" destination="uBO-EO-Cfb" eventType="touchUpInside" id="K7U-vT-58o"/>
-                                                </connections>
-                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C9a-jU-7Id">
-                                                <rect key="frame" x="240" y="299.5" width="40" height="40"/>
+                                                <rect key="frame" x="126" y="299.5" width="40" height="40"/>
                                                 <state key="normal" image="VideoCall"/>
                                                 <connections>
                                                     <action selector="learniphiVideoCallButtonClicked:" destination="uBO-EO-Cfb" eventType="touchUpInside" id="JyY-9z-g4j"/>
@@ -4172,6 +4165,13 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WpX-7U-688">
+                                                <rect key="frame" x="181" y="298.5" width="42" height="42"/>
+                                                <state key="normal" image="Skype"/>
+                                                <connections>
+                                                    <action selector="skypeCallButtonClicked:" destination="uBO-EO-Cfb" eventType="touchUpInside" id="K7U-vT-58o"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -4212,7 +4212,6 @@
                                             <constraint firstItem="aTz-Wa-sEx" firstAttribute="centerX" secondItem="hfK-rQ-Wer" secondAttribute="centerX" id="PeE-2T-Mxi"/>
                                             <constraint firstItem="8jL-Ky-55n" firstAttribute="width" secondItem="I1s-BU-GhJ" secondAttribute="width" id="Qtc-N0-YVC"/>
                                             <constraint firstItem="WpX-7U-688" firstAttribute="width" secondItem="8jL-Ky-55n" secondAttribute="width" id="Qtn-Mj-rlA"/>
-                                            <constraint firstItem="cDJ-Is-oBj" firstAttribute="leading" secondItem="WpX-7U-688" secondAttribute="trailing" constant="15" id="Rar-QD-hLs"/>
                                             <constraint firstItem="yxf-Bb-q7t" firstAttribute="top" secondItem="S3e-sP-Vbt" secondAttribute="bottom" constant="10" id="Rha-NK-c9u"/>
                                             <constraint firstItem="8o3-EV-sr6" firstAttribute="top" secondItem="nEg-C1-wT5" secondAttribute="bottom" constant="10" id="RsX-xb-CvW"/>
                                             <constraint firstItem="S3e-sP-Vbt" firstAttribute="centerX" secondItem="nxi-jK-rlW" secondAttribute="centerX" id="SQz-WU-ldP"/>
@@ -4228,6 +4227,7 @@
                                             <constraint firstItem="RyF-bM-qL0" firstAttribute="top" secondItem="aTz-Wa-sEx" secondAttribute="bottom" constant="3" id="c9E-bQ-jhI"/>
                                             <constraint firstItem="eeB-H1-Y3l" firstAttribute="trailing" secondItem="yxf-Bb-q7t" secondAttribute="trailing" id="cOd-Ob-3rw"/>
                                             <constraint firstItem="rkH-Ai-LKQ" firstAttribute="centerY" secondItem="0YF-Kd-JWk" secondAttribute="centerY" id="dST-4Y-SIV"/>
+                                            <constraint firstItem="8jL-Ky-55n" firstAttribute="leading" secondItem="WpX-7U-688" secondAttribute="trailing" constant="15" id="dYC-rS-YLf"/>
                                             <constraint firstItem="zfQ-zM-Dxb" firstAttribute="leading" secondItem="uCe-f2-keM" secondAttribute="leading" id="dpJ-0n-qjP"/>
                                             <constraint firstItem="I1s-BU-GhJ" firstAttribute="height" secondItem="cDJ-Is-oBj" secondAttribute="height" id="eov-V2-6VI"/>
                                             <constraint firstItem="PVR-vG-8e6" firstAttribute="centerX" secondItem="hfK-rQ-Wer" secondAttribute="centerX" id="gIp-gj-W8y"/>

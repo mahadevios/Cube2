@@ -583,13 +583,13 @@
     UILabel* dateTime = [cell viewWithTag:104];
     UILabel* onlineStatusView = [cell viewWithTag:106];
 
-//    if ([patientDetails.PatientInWaitingRoom isEqualToString:@"Yes"]) {
-//        [onlineStatusView setHidden:YES];
-//    }
-//    else
-//    {
-//         [onlineStatusView setHidden:NO];
-//    }
+    if ([patientDetails.PatientInWaitingRoom isEqualToString:@""] || patientDetails.PatientInWaitingRoom == nil) {
+        [onlineStatusView setHidden:YES];
+    }
+    else
+    {
+         [onlineStatusView setHidden:NO];
+    }
 
     UIButton* callButton = [cell viewWithTag:105];
 //    if ([cell viewWithTag:indexPath.row] != nil) {

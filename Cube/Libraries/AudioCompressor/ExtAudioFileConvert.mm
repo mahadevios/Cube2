@@ -285,7 +285,7 @@ OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSType outpu
         printf("\nDestination file format: "); dstFormat.Print();
         
         // create the destination file 
-        XThrowIfError(ExtAudioFileCreateWithURL(destinationURL, kAudioFileWAVEType, &dstFormat, NULL, kAudioFileFlags_EraseFile, &destinationFile), "ExtAudioFileCreateWithURL failed!");
+        XThrowIfError(ExtAudioFileCreateWithURL(destinationURL, kAudioFileCAFType, &dstFormat, NULL, kAudioFileFlags_EraseFile, &destinationFile), "ExtAudioFileCreateWithURL failed!");
 
         // set the client format - The format must be linear PCM (kAudioFormatLinearPCM)
         // You must set this in order to encode or decode a non-PCM file data format

@@ -578,9 +578,16 @@
 {
     sf = [self.storyboard instantiateViewControllerWithIdentifier:@"SafariSupportViewController"];
     sf.modalPresentationStyle = UIModalPresentationFullScreen;
-    sf.doctorMeetingUrlString = self.patientDetails.DoctorUrl;
-//    sf.doctorMeetingUrlString = @"http://liveklasserp.testbot.xyz/Sessions/join?m=156&p=668467&u=mm";
-    [self presentViewController:sf animated:YES completion:nil];
+    if ([self.patientDetails.DoctorUrl isEqualToString:@""] || self.patientDetails.DoctorUrl == nil) {
+        
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"Meeting URL is not available yet, please try after some time" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+    }
+    else{
+        sf.doctorMeetingUrlString = self.patientDetails.DoctorUrl;
+        //    sf.doctorMeetingUrlString = @"http://liveklasserp.testbot.xyz/Sessions/join?m=156&p=668467&u=mm";
+        [self presentViewController:sf animated:YES completion:nil];
+    }
+  
 }
 - (IBAction)recordButtonClicked:(id)sender {
    

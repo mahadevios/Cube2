@@ -150,12 +150,24 @@ static APIManager *singleton = nil;
 -(BOOL)deleteFile:(NSString*)fileName
 {
     NSError* error;
-    NSString* filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,fileName]];
+    // check if newly added .caf exist if not then check if wav exist
+    NSString* filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,fileName]];
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        return  false;
-    }
+       {
+           filePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,fileName]];
+           
+          if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+             {
+                 return  false;
+             }
+           else
+             {
+                 [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+                 return true;
+             }
+       }
+   
     else
     {
         [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
@@ -1168,7 +1180,13 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     });
     
     NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:
-                          [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,str] ];
+                          [NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,str] ];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+    {
+        filePath = [NSHomeDirectory() stringByAppendingPathComponent:
+        [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,str] ];
+    }
     
     NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", BASE_URL_PATH, FILE_UPLOAD_API]];
     
@@ -1287,8 +1305,13 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
         if ([AppPreferences sharedAppPreferences].filesInUploadingQueueArray.count == 1)
         {
             NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:
-                                  [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,[[AppPreferences sharedAppPreferences].filesInUploadingQueueArray objectAtIndex:0]] ];
+                                  [NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,[[AppPreferences sharedAppPreferences].filesInUploadingQueueArray objectAtIndex:0]] ];
             
+            if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+            {
+                filePath = [NSHomeDirectory() stringByAppendingPathComponent:
+                [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,[[AppPreferences sharedAppPreferences].filesInUploadingQueueArray objectAtIndex:0]] ];
+            }
             long firstFileSize = [self getFileSize:filePath];
 
             if (firstFileSize>30000000)
@@ -1299,7 +1322,12 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
             else
             {
                 filePath = [NSHomeDirectory() stringByAppendingPathComponent:
-                            [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,str]];
+                            [NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,str]];
+                if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+                {
+                    filePath = [NSHomeDirectory() stringByAppendingPathComponent:
+                    [NSString stringWithFormat:@"Documents/%@/%@.wav",AUDIO_FILES_FOLDER_NAME,str]];
+                }
                 long secondFileSize = [self getFileSize:filePath];
 
                 if (secondFileSize>30000000)
@@ -1382,7 +1410,15 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     assert(UTI != NULL);
     
     NSString *mimetype = CFBridgingRelease(UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType));
-    
+
+    NSString *ExtensionStr = (__bridge NSString *)extension;
+    //audio/x-caf
+    if ([ExtensionStr isEqualToString:@"caf"]) {
+        mimetype = @"audio/x-caf";
+    }
+    else if (mimetype == nil){
+        mimetype = @"audio/wav";
+    }
     assert(mimetype != NULL);
     
     CFRelease(UTI);

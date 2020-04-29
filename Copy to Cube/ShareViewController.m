@@ -223,27 +223,6 @@ SLComposeSheetConfigurationItem *item;
                                        completionHandler:nil];
 }
 
-//-(uint64_t)getFileSize:(NSURL*)fileURL
-//{
-//    uint64_t totalSpace = 0;
-//    uint64_t totalFreeSpace = 0;
-//    NSError *error = nil;
-//    
-//    NSDictionary *dictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:fileURL.path  error:&error];
-//    
-//    if (dictionary)
-//    {
-//        NSNumber *fileSystemSizeInBytes = [dictionary objectForKey: NSFileSize];
-//        totalSpace = [fileSystemSizeInBytes unsignedLongLongValue];
-//        
-//    }
-//    else
-//    {
-//        // NSLog(@"Error Obtaining System Memory Info: Domain = %@, Code = %ld", [error domain], (long)[error code]);
-//    }
-//    
-//    return totalSpace;
-//}
 
 - (void)copyAudioFileButtonClicked:(id)sender
 {
@@ -399,18 +378,9 @@ SLComposeSheetConfigurationItem *item;
                                                             
                                                             NSString* editedNameString = [[alertController textFields][0] text];
                                                             
-
-                                                            NSError *error = nil;
-                                                            
                                                             editedNameString = [editedNameString stringByTrimmingCharactersInSet:
                                                                                 [NSCharacterSet whitespaceCharacterSet]];
-                                                            
-//                                                            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"  +" options:NSRegularExpressionCaseInsensitive error:&error];
-//                                                            
-//                                                            editedNameString = [regex stringByReplacingMatchesInString:editedNameString options:0 range:NSMakeRange(0, [editedNameString length]) withTemplate:@" "];
-
-                                                            
-                                                            
+                                                        
                                                             NSInteger fileNameLength = editedNameString.length;
                                                             
                                                             if (fileNameLength>30)
@@ -534,8 +504,6 @@ SLComposeSheetConfigurationItem *item;
                                                             {
                                                                 fileName=[[alertController textFields][0] text];
                                                                 
-                                                                //fileName=[fileName stringByReplacingOccurrencesOfString:@" " withString:@""];
-
                                                                 fileNamePathExtension=[imageURL pathExtension];
 
                                                                 fileName=[fileName stringByAppendingPathExtension:fileNamePathExtension];
@@ -553,48 +521,7 @@ SLComposeSheetConfigurationItem *item;
                                                                                                                                    completionHandler:nil];
                                                           NSLog(@"Canelled");
                                                       }];
-//                                                      [alerController addAction:cancelAction];
 
-//                 alertController = [UIAlertController alertControllerWithTitle:@"File already exist!"
-//                                                                       message:[NSString stringWithFormat:@"Save with another name,%@"]
-//                                                                preferredStyle:UIAlertControllerStyleAlert];
-//
-//                 actionDelete = [UIAlertAction actionWithTitle:@"Replace"
-//                                                         style:UIAlertActionStyleDefault
-//                                                       handler:^(UIAlertAction * action)
-//                                 {
-//                                     NSDictionary* copyDict=[sharedDefaults objectForKey:@"updatedFileDict"];
-//                                     
-//                                     NSMutableDictionary* updatedFileDict=[copyDict mutableCopy];
-//                                     
-//                                     NSDictionary* dict1=[NSDictionary new];
-//                                     
-//                                     NSDictionary* copy1Dict=[sharedDefaults objectForKey:@"isFileInsertedDict"];
-//                                     
-//                                     
-//                                     NSMutableDictionary* isFileInsertedDict=[copy1Dict mutableCopy];
-//                                     
-//                                     dict1=[sharedDefaults objectForKey:@"audioNamesAndDateDict"];
-////
-//                                     
-//                                     
-//
-//                                     
-//                                     [self saveAudio:imageURL];
-//                                     
-//
-//                                 }]; //You can use a block here to handle a press on this button
-//                 [alertController addAction:actionDelete];
-//                 
-//                 
-//                 actionCancel = [UIAlertAction actionWithTitle:@"Cancel"
-//                                                         style:UIAlertActionStyleCancel
-//                                                       handler:^(UIAlertAction * action)
-//                                 {
-//                                     [alertController dismissViewControllerAnimated:YES completion:nil];
-//                                     [self.extensionContext completeRequestReturningItems:@[]
-//                                                                        completionHandler:nil];
-//                                 }]; //You can use a block here to handle a press on this button
                  [alertController addAction:actionCancel];
 //                 
                  
@@ -640,11 +567,7 @@ SLComposeSheetConfigurationItem *item;
             NSLog(@"dir was created....");
         }
     }//create audio folder if not exist
-    
-    
-    
-    //fileName=[url lastPathComponent];
-    
+  
     audioFilePathString=[audioFolderString stringByAppendingPathComponent:fileName];
     
     NSData* audioData= data;
@@ -655,10 +578,7 @@ SLComposeSheetConfigurationItem *item;
     }
     
     [audioData writeToFile:audioFilePathString atomically:YES];
-    
-    //[sharedDefaults synchronize];
-    //[sharedDefaults setObject:[NSString stringWithFormat:@"%@",audioFilePathString] forKey:@"output1"];
-
+  
     [self convertToWavCopy];
     
 }
@@ -681,17 +601,7 @@ SLComposeSheetConfigurationItem *item;
     
     NSString* sharedAudioFilePathString=[sharedAudioFolderPathUrl.path stringByAppendingPathComponent:sharedAudioFileNameString];
     
-    
-    NSURL* newAssetUrl = [NSURL fileURLWithPath:sharedAudioFilePathString];
-    
-    // url = newAssetUrl;
-    
-    //[sharedDefaults setObject:newAssetUrl forKey:@"output"];
-    
-    
-    //NSString* audioFilePath=[sharedAudioFilePathString stringByDeletingPathExtension];
     NSString* audioFilePath = sharedAudioFilePathString;
-    // audioFilePath=[audioFilePath stringByAppendingPathExtension:@"wav"];
     
     NSString* waveFileName=[audioFilePath lastPathComponent];
     
@@ -788,80 +698,6 @@ SLComposeSheetConfigurationItem *item;
         
 
         
-   // }
-    
-//    else
-//    {
-//        NSDictionary* dict1=[NSDictionary new];
-//        //
-//        //        array1=[sharedDefaults objectForKey:@"audioNamesArray"];
-//        //
-//        dict1=[sharedDefaults objectForKey:@"audioNamesAndDateDict"];
-//        //
-//        //        NSMutableArray* audioNamesArray=[NSMutableArray new];
-//        //
-//        NSMutableDictionary* audioNamesAndDatesDict=[NSMutableDictionary new];
-//        //
-//        NSString* date=[self getDateAndTimeString];
-//        
-//        if (dict1==NULL)
-//        {
-//            //
-//            //            [audioNamesArray addObject:waveFileName];
-//            //            [sharedDefaults setObject:audioNamesArray forKey:@"audioNamesArray"];
-//            //
-//            //
-//            [audioNamesAndDatesDict setObject:date forKey:waveFileName];
-//            [sharedDefaults setObject:audioNamesAndDatesDict forKey:@"audioNamesAndDateDict"];
-//            //
-//            //
-//        }
-//        else
-//        {
-//            //            audioNamesArray= [array1 mutableCopy];
-//            //            [audioNamesArray addObject:waveFileName];
-//            //            [sharedDefaults setObject:audioNamesArray forKey:@"audioNamesArray"];
-//            //
-//            audioNamesAndDatesDict=[dict1 mutableCopy];
-//            [audioNamesAndDatesDict setObject:date forKey:waveFileName];
-//            [sharedDefaults setObject:audioNamesAndDatesDict forKey:@"audioNamesAndDateDict"];
-//            //            
-//            //            
-//        }
-//
-//        NSDictionary* copy1Dict=[sharedDefaults objectForKey:@"isFileInsertedDict"];
-//        
-//        
-//        NSMutableDictionary* isFileInsertedDict=[copy1Dict mutableCopy];
-//
-//        NSString* containsKeyString = [isFileInsertedDict objectForKey:waveFileName];
-//        
-//            if ([containsKeyString isEqualToString:@"NO"])
-//                
-//            {
-//                [isFileInsertedDict setObject:@"NO" forKey:waveFileName];
-//                
-//                [sharedDefaults setObject:isFileInsertedDict forKey:@"isFileInsertedDict"];
-//                [sharedDefaults setObject:@"in" forKey:@"ins"];
-//                
-//                [sharedDefaults synchronize];
-//            }
-//            else
-//                if ([containsKeyString isEqualToString:@"YES"])
-//                    
-//                {
-//                    [isFileInsertedDict setObject:@"UPDATE" forKey:waveFileName];
-//                    
-//                    [sharedDefaults setObject:@"inside" forKey:@"ins"];
-//                    [sharedDefaults setObject:isFileInsertedDict forKey:@"isFileInsertedDict"];
-//                    
-//                    [sharedDefaults synchronize];
-//                }
-//
-//    }
-//    
-    
-    
     
     [sharedDefaults synchronize];
     
