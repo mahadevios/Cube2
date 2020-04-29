@@ -595,7 +595,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "473"
             endingLineNumber = "473"
-            landmarkName = "-dismissView"
+            landmarkName = "-disMissPopView:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -610,9 +610,9 @@
             timestampString = "582277324.4910901"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2206"
-            endingLineNumber = "2206"
-            landmarkName = "-composeAudio"
+            startingLineNumber = "2218"
+            endingLineNumber = "2218"
+            landmarkName = "-convertAudio"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -629,7 +629,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "618"
             endingLineNumber = "618"
-            landmarkName = "-sendDictationIds:"
+            landmarkName = "-changePinOldPin:NewPin:macID:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -680,8 +680,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1152"
             endingLineNumber = "1152"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "7">
+            landmarkName = "AudioDetailsViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -797,8 +797,8 @@
             timestampString = "582277324.491836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3148"
-            endingLineNumber = "3148"
+            startingLineNumber = "3166"
+            endingLineNumber = "3166"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -901,7 +901,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "661"
             endingLineNumber = "661"
-            landmarkName = "-downloadFileUsingConnection:"
+            landmarkName = "-sendDictationIds:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1010,23 +1010,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F24AD051-BEDC-4019-857C-CCF1C9465176"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Copy to Cube/ShareViewController.m"
-            timestampString = "532429190.638343"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
-            landmarkName = "ShareViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "48E95AE8-4ADD-4AFB-971C-DABDFB647140"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -1086,9 +1069,9 @@
             timestampString = "582277324.492583"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2904"
-            endingLineNumber = "2904"
-            landmarkName = "-editAudioButtonClicked:"
+            startingLineNumber = "2922"
+            endingLineNumber = "2922"
+            landmarkName = "-save:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1103,9 +1086,9 @@
             timestampString = "582277324.492694"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2881"
-            endingLineNumber = "2881"
-            landmarkName = "-editAudioButtonClicked:"
+            startingLineNumber = "2899"
+            endingLineNumber = "2899"
+            landmarkName = "-cancel:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1120,9 +1103,9 @@
             timestampString = "582277324.4928041"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2860"
-            endingLineNumber = "2860"
-            landmarkName = "-editAudioButtonClicked:"
+            startingLineNumber = "2878"
+            endingLineNumber = "2878"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1137,9 +1120,9 @@
             timestampString = "582277324.4929"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2809"
-            endingLineNumber = "2809"
-            landmarkName = "-editAudioButtonClicked:"
+            startingLineNumber = "2827"
+            endingLineNumber = "2827"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1156,7 +1139,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "634"
             endingLineNumber = "634"
-            landmarkName = "-setTimer"
+            landmarkName = "-moreButtonPressed:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1358,8 +1341,8 @@
             timestampString = "582277324.494426"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1573"
-            endingLineNumber = "1573"
+            startingLineNumber = "1557"
+            endingLineNumber = "1557"
             landmarkName = "-stopRecording"
             landmarkType = "7">
          </BreakpointContent>
@@ -1375,9 +1358,9 @@
             timestampString = "582277324.494493"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3005"
-            endingLineNumber = "3005"
-            landmarkName = "-deleteToEnd"
+            startingLineNumber = "3023"
+            endingLineNumber = "3023"
+            landmarkName = "-editAudioButtonClicked:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1392,8 +1375,8 @@
             timestampString = "582277324.494575"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2488"
-            endingLineNumber = "2488"
+            startingLineNumber = "2506"
+            endingLineNumber = "2506"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -1409,9 +1392,9 @@
             timestampString = "582277324.494669"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2264"
-            endingLineNumber = "2264"
-            landmarkName = "-composeAudio"
+            startingLineNumber = "2276"
+            endingLineNumber = "2276"
+            landmarkName = "-convertAudio"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1426,9 +1409,9 @@
             timestampString = "582277324.494742"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3021"
-            endingLineNumber = "3021"
-            landmarkName = "-deleteToEnd"
+            startingLineNumber = "3039"
+            endingLineNumber = "3039"
+            landmarkName = "-editAudioButtonClicked:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1443,8 +1426,8 @@
             timestampString = "582277324.494885"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3102"
-            endingLineNumber = "3102"
+            startingLineNumber = "3120"
+            endingLineNumber = "3120"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -1700,24 +1683,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "462"
             endingLineNumber = "462"
-            landmarkName = "AppDelegate"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F922EE23-AB39-4ADE-85E4-19EE2AD20D4D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/API Manager/APIManager.m"
-            timestampString = "597565999.734172"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
-            landmarkName = "-checkDeviceRegistrationMacID:"
+            landmarkName = "-application:handleEventsForBackgroundURLSession:completionHandler:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1960,23 +1926,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "66F5E555-D623-4EBD-B147-415AACFAE65C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/API Manager/APIManager.m"
-            timestampString = "597565999.7344379"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1011"
-            endingLineNumber = "1011"
-            landmarkName = "-URLSession:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "EC6A1E9E-0964-4877-B5E3-0829EFAA12CD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -2028,40 +1977,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "30E3BA5B-8B66-49D7-A087-32AF936048D7"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "582277324.49624"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2496"
-            endingLineNumber = "2496"
-            landmarkName = "-composeAudio"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "FC055E42-3E6F-4056-8428-F6CA0EE64134"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "582277324.496848"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3366"
-            endingLineNumber = "3366"
-            landmarkName = "-editRecord"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "0C1F0AE8-649A-4BF6-9CDA-34DFAFDB4945"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -2070,25 +1985,8 @@
             timestampString = "582277324.496968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2371"
-            endingLineNumber = "2371"
-            landmarkName = "-composeAudio"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "431BA0FD-BB15-4BF8-8EC9-C9417019317A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "582277324.4973921"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2437"
-            endingLineNumber = "2437"
+            startingLineNumber = "2383"
+            endingLineNumber = "2383"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -2097,168 +1995,17 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "6F1A2E62-E6F0-4690-984C-DB70BC617B2D"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
             timestampString = "582277324.49748"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2431"
-            endingLineNumber = "2431"
+            startingLineNumber = "2443"
+            endingLineNumber = "2443"
             landmarkName = "-composeAudio"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E59066B8-B50C-4C4E-9F1C-BB11B0FFD9DC"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "582277324.497545"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2425"
-            endingLineNumber = "2425"
-            landmarkName = "-composeAudio"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "31D0D65A-4EE6-4EB7-B9EF-D06D3491F089"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "582277324.49761"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2427"
-            endingLineNumber = "2427"
-            landmarkName = "-composeAudio"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CA9693E9-2E32-4E79-AC66-1756BF97BCFB"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "582277324.497666"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2414"
-            endingLineNumber = "2414"
-            landmarkName = "-composeAudio"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2B6AF506-B222-4BC1-87E1-917A1C09751E"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "582277324.4977241"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2422"
-            endingLineNumber = "2422"
-            landmarkName = "-composeAudio"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "456F5468-5E3E-4AB9-AB46-772BACA530F1"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "582277324.4978"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2457"
-            endingLineNumber = "2457"
-            landmarkName = "-composeAudio"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5BB666AF-44B7-4E32-A967-D919312E5847"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "582277324.497888"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3407"
-            endingLineNumber = "3407"
-            landmarkName = "-updateDictationStatus:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1900B3CD-9FD0-4CA4-B4BE-60183314FB31"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
-            timestampString = "582277324.4979531"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3409"
-            endingLineNumber = "3409"
-            landmarkName = "-updateDictationStatus:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "1900B3CD-9FD0-4CA4-B4BE-60183314FB31 - c01c709c3265b1d8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[InCompleteRecordViewController updateDictationStatus:]"
-                  moduleName = "Cube"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Documents/CubeBackUp/cube-master%202__16-aug/Cube/ViewControllers/InCompleteRecordViewController.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "3409"
-                  endingLineNumber = "3409"
-                  offsetFromSymbolStart = "48">
-               </Location>
-               <Location
-                  uuid = "1900B3CD-9FD0-4CA4-B4BE-60183314FB31 - 45d8703593e6a849"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__56-[InCompleteRecordViewController updateDictationStatus:]_block_invoke"
-                  moduleName = "Cube"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Documents/CubeBackUp/cube-master%202__16-aug/Cube/ViewControllers/InCompleteRecordViewController.mm"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "3409"
-                  endingLineNumber = "3409"
-                  offsetFromSymbolStart = "16">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2339,7 +2086,199 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "247"
             endingLineNumber = "247"
-            landmarkName = "-showVideoCallingOptions:"
+            landmarkName = "-showVideoCallingOptionsOrNumbers:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C9225BBA-D545-40A7-8F56-A25D57DD58A4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/RecordViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3573"
+            endingLineNumber = "3573"
+            landmarkName = "-composeAudio"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4943FCE1-1590-4FB6-B7D1-F83724D65E31"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/RecordViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3364"
+            endingLineNumber = "3364"
+            landmarkName = "-composeAudio"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E314EB41-9339-4DCD-B84C-5B5E0D3F5167"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/VideoCallViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "-validateApntmntListResponse:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "82DE4295-883C-4B7D-BA56-09903C3DE804"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3108"
+            endingLineNumber = "3108"
+            landmarkName = "-deleteToEnd"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "26402574-4C7A-484D-8E8F-50671298EF2E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2181"
+            endingLineNumber = "2181"
+            landmarkName = "-convertAudio"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "38B0F756-FBB1-4E86-99B8-A7E9AB9C0981"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/InCompleteRecordViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2150"
+            endingLineNumber = "2150"
+            landmarkName = "-setCompressAudio"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8B55E593-C75A-4692-B6F2-D2F434CF7484"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/RecordViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2112"
+            endingLineNumber = "2112"
+            landmarkName = "-backButtonPressed:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BC5B0585-38CC-45B5-8323-578E102EA0DA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/ViewControllers/RecordViewController.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2618"
+            endingLineNumber = "2618"
+            landmarkName = "-saveAudioRecordToDatabase"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9B49599F-909D-4D88-9451-A90FB92AA4BA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/API Manager/APIManager.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1408"
+            endingLineNumber = "1408"
+            landmarkName = "-mimeTypeForPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DD7A968B-4E18-424C-95E2-99A2922A646F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/AppDelegate.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "504"
+            endingLineNumber = "504"
+            landmarkName = "-getImportedFiles"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "788E9F81-D347-460F-946B-B21F53BE6699"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/AppDelegate.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "548"
+            endingLineNumber = "548"
+            landmarkName = "-convertToWav:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5FCFDF5D-EEC6-419D-9772-A0F5727F010C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cube/AppDelegate.mm"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "773"
+            endingLineNumber = "773"
+            landmarkName = "-convertToWavFileName:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
