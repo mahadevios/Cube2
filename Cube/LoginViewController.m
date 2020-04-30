@@ -277,6 +277,15 @@
         
         [[NSUserDefaults standardUserDefaults] setValue:fileNamePrefix forKey:@"FileNamePrefix"];
         
+        NSString* enableVRSForUser = [responseDict valueForKey:@"IsVRS"];
+
+        if ([enableVRSForUser isEqualToString:@"True"] || enableVRSForUser == nil || [enableVRSForUser isEqualToString:@""]) {
+            [AppPreferences sharedAppPreferences].enableVRSForUser = YES;
+        }else{
+            [AppPreferences sharedAppPreferences].enableVRSForUser = NO;
+        }
+        
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [self.view endEditing:true];

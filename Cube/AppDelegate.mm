@@ -42,8 +42,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-
+ 
     [[AppPreferences sharedAppPreferences] startReachabilityNotifier];
     [APIManager sharedManager].userSettingsOpened=NO;
     [AppPreferences sharedAppPreferences].filesInAwaitingQueueArray = [[NSMutableArray alloc] init];
