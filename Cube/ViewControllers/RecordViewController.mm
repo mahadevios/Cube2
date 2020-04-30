@@ -47,6 +47,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
    
     [AppPreferences sharedAppPreferences].isRecordView=YES;
     
+    if ([AppPreferences sharedAppPreferences].enableVRSForUser == YES) {
+         [SpeechToTextView setHidden:NO];
+    }else{
+         [SpeechToTextView setHidden:YES];
+    }
+    
     if (![APIManager sharedManager].userSettingsOpened)
     {
         

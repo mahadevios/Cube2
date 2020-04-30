@@ -35,6 +35,7 @@
 @property (nonatomic,assign)    BOOL                        fileUploading;
 @property (nonatomic,assign)    BOOL                        dismissAudioDetails;
 @property (nonatomic,assign)    BOOL                        isImporting;
+@property (nonatomic,assign)    BOOL                        enableVRSForUser;
 
 
 @property (nonatomic,strong) NSMutableArray*                importedFilesAudioDetailsArray;
