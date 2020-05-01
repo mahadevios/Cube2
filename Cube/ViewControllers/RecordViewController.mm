@@ -188,10 +188,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     NSString *newDateString = [dateFormatter stringFromDate:date];
     
     dateLabel.text = newDateString;
-    
-//    dateLabel.text = dateString;
-    
-    // set the slected department to user defaults
+
     NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
     
     [[NSUserDefaults standardUserDefaults] setObject:data1 forKey:SELECTED_DEPARTMENT_NAME_COPY];
@@ -381,58 +378,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if (![APIManager sharedManager].userSettingsOpened)
     {
         
-//                UIView* startRecordingView= [self.view viewWithTag:303];
-        //
-        //        UILabel* recordingStatusLabel=[self.view viewWithTag:99];
-        //
-//                UIImageView* startRecordingImageView= [startRecordingView viewWithTag:403];
-        //
-        //        UIImageView* counterLabel= [startRecordingView viewWithTag:503];
-        //
-        //        UIView* stopRecordingCircleView = [self.view viewWithTag:301];
-        //
-        //        UIView* pauseRecordingCircleView =  [self.view viewWithTag:302];
-        //
-        //        UILabel* stopRecordingLabel=[self.view viewWithTag:601];
-        //
-        //        UILabel* pauseRecordingLabel=[self.view viewWithTag:602];
-        //
-        //        UILabel* recordingLabel=[self.view viewWithTag:603];
-        //
-        //        UIView* animatedView=  [self.view viewWithTag:98];
-        //
-        //        [startRecordingImageView setHidden:NO];
-        //
-        //        [counterLabel setHidden:YES];
-        //
-        //        [stopRecordingCircleView setHidden:NO];
-        //
-        //        [pauseRecordingCircleView setHidden:NO];
-        //
-        //        [stopRecordingLabel setHidden:NO];
-        //
-        //        [pauseRecordingLabel setHidden:NO];
-        //
-        //        [recordingLabel setHidden:NO];
-        //
-        //        recordingStatusLabel.text=@"Tap on recording to start recording your audio";
-        //
-        //        startRecordingView.backgroundColor=[UIColor colorWithRed:194/255.0 green:19/255.0 blue:19/255.0 alpha:1];
-        //
-        //        startRecordingImageView.image=[UIImage imageNamed:@"Record"];
-        //
-        //        startRecordingImageView.frame=CGRectMake((startRecordingView.frame.size.width/2)-15, (startRecordingView.frame.size.height/2)-25, 30, 50);
-        //
-        //        [animatedView removeFromSuperview];
-        
-//        if (player.isPlaying)
-//        {
-//            startRecordingImageView.image=[UIImage imageNamed:@"Play"];
-//
-//            [player pause];
-//        }
-       
-        //   [UIApplication sharedApplication].idleTimerDisabled = NO;
     }
     
     if([AppPreferences sharedAppPreferences].recordNew)
@@ -713,19 +658,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
     }
     
-    //----------------------------------//
-//    UILabel* recordLabel = [[UILabel alloc] initWithFrame:CGRectMake(recordLAbel.frame.origin.x, circleView.frame.origin.y + circleView.frame.size.height+10, recordLAbel.frame.size.width, recordLAbel.frame.size.height)];
-//
-//    recordLabel.tag = 603;
-//
-//    recordLabel.textColor = [UIColor colorWithRed:194/255.0 green:19/255.0 blue:19/255.0 alpha:1.0];
-//
-//    recordLabel.font = [UIFont systemFontOfSize:15];
-//
-//    recordLabel.text = @"Recording";
-//
-//    recordLAbel.frame = CGRectMake(recordLAbel.frame.origin.x, circleView.frame.origin.y + circleView.frame.size.height+10, recordLAbel.frame.size.width, recordLAbel.frame.size.height);
-    
+   
     [circleView addSubview:viewClickbutton];
     
     [circleView addSubview:startStopPauseImageview];
@@ -2065,8 +1998,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     int minutes = currentTime/60;
     int seconds = currentTime%60;
     
-    dispatch_async(dispatch_get_main_queue(), ^
-                   {
+//    dispatch_async(dispatch_get_main_queue(), ^
+//                   {
                        //NSLog(@"Reachable");
                        currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
                        
@@ -2075,7 +2008,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                            currentDuration.text=[NSString stringWithFormat:@"%03d:%02d",minutes,seconds];//for slider label time label
                            
                        }
-                   });
+//                   });
     
 
     float sliderCurrentTimeDown = floorf(audioRecordSlider.value * 100) / 100;
@@ -2418,6 +2351,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     
     dictationTimerSeconds = 0; // reset the save dicattaion waiting by timer
+    
     [self setCompressAudio];
    
     app.awaitingFileTransferCount= [db getCountOfTransfersOfDicatationStatus:@"RecordingComplete"];
@@ -2520,16 +2454,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     int minutes=currentTime/60;
     int seconds=currentTime%60;
     currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
-    
+    totalDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
     if (minutes>99)//foe more than 99 min show time in 3 digits
     {
         currentDuration.text=[NSString stringWithFormat:@"%03d:%02d",minutes,seconds];//for slider label time label
         
     }
 
-    //currentDuration.text=[NSString stringWithFormat:@"00:00"];//for slider label time label
-    
-    //[[self player] stop];
+   
 }
 
 
@@ -2574,13 +2506,12 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 - (bool)convertAudio
 {
-//    outputFormat = kAudioFormatLinearPCM;
-    outputFormat = kAudioFormatMPEG4AAC;
 
-    sampleRate = 16000;
     NSError* error1;
+    
     NSString* filePath=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:AUDIO_FILES_FOLDER_NAME]];
-       NSString *source=[filePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@copy.caf",self.recordedAudioFileName]];
+    
+    NSString *source=[filePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@copy.caf",self.recordedAudioFileName]];
     
 //    OSStatus error = DoConvertFile(sourceURL, destinationURL, outputFormat, sampleRate);
     if ([[NSFileManager defaultManager] fileExistsAtPath:destinationFilePath] && [[NSFileManager defaultManager] fileExistsAtPath:source]) {// if reocrded new then only remove old
@@ -3263,7 +3194,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     {
                         dispatch_async(dispatch_get_main_queue(), ^{
                         
-                            [self prepareAudioPlayer];
+                            [self prepareAudioPlayerForOriginalFileDuration];
                             
                             [db updateAudioFileName:recordedAudioFileName duration:player.duration];
                             
@@ -3551,8 +3482,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         return;
     }
     
-//    NSArray* arr = [AVAssetExportSession exportPresetsCompatibleWithAsset:composition];
-    
+    // *purpose of below paths
+    // 1) copy.caf : save one copy of composed file as ..copy.caf and use this copy as orginal one when user stop the recording
+    // 2) .caf : save one copy of composed file as .. .caf and use this copy to compose newly recorded file
+    // 3) editedCopy.caf : when compose complete, remove editedCopy
+    // 4) co.caf : export the composed files at this path and then distribute the composed file copy to 1) and 2)
     NSString* destpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.caf",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
     
     NSString* originalFilePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
@@ -3565,10 +3499,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     exportSession.outputFileType = AVFileTypeAppleM4A;
 //    exportSession.outputFileType = AVFileTypeMPEG4;
-
-    //    AVFileTypeAppleM4A
-    
-    
+ 
     [exportSession exportAsynchronouslyWithCompletionHandler:^{
         
         // exported successfully?
@@ -3855,18 +3786,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     }
     else
         animatedImageView = [[UIImageView alloc] initWithFrame:CGRectMake(recordingStatusLabel.frame.origin.x-10, stopNewImageView.frame.origin.y + stopNewImageView.frame.size.height + 40, recordingStatusLabel.frame.size.width+20, 30)];
-    
-//    UILabel* updatedrecordingStatusLabel = [[UILabel alloc] initWithFrame:CGRectMake(recordingStatusLabel.frame.origin.x, animatedImageView.frame.origin.y + animatedImageView.frame.size.height + 10, recordingStatusLabel.frame.size.width, 30)];
-//
-//    updatedrecordingStatusLabel.text=@"Your audio is being recorded";
-//
-//    updatedrecordingStatusLabel.textColor = [UIColor lightGrayColor];
-//
-//    updatedrecordingStatusLabel.textAlignment = NSTextAlignmentCenter;
-//
-//    updatedrecordingStatusLabel.font = [UIFont systemFontOfSize:18];
-    
-    //[recordingStatusLabel setHidden:YES];
+
     
     animatedImageView.animationDuration = 1.0f;
     
