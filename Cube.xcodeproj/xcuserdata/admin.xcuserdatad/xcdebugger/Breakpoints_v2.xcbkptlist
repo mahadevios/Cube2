@@ -2100,8 +2100,8 @@
             filePath = "Cube/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3577"
-            endingLineNumber = "3577"
+            startingLineNumber = "3581"
+            endingLineNumber = "3581"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -2116,8 +2116,8 @@
             filePath = "Cube/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3373"
-            endingLineNumber = "3373"
+            startingLineNumber = "3377"
+            endingLineNumber = "3377"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -2148,8 +2148,8 @@
             filePath = "Cube/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2631"
-            endingLineNumber = "2631"
+            startingLineNumber = "2635"
+            endingLineNumber = "2635"
             landmarkName = "-saveAudioRecordToDatabase"
             landmarkType = "7">
          </BreakpointContent>
@@ -2212,8 +2212,8 @@
             filePath = "Cube/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2666"
-            endingLineNumber = "2666"
+            startingLineNumber = "2670"
+            endingLineNumber = "2670"
             landmarkName = "-saveAudioRecordToDatabase"
             landmarkType = "7">
          </BreakpointContent>
@@ -2244,8 +2244,8 @@
             filePath = "Cube/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2604"
-            endingLineNumber = "2604"
+            startingLineNumber = "2608"
+            endingLineNumber = "2608"
             landmarkName = "-convertAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -2388,8 +2388,8 @@
             filePath = "Cube/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3411"
-            endingLineNumber = "3411"
+            startingLineNumber = "3415"
+            endingLineNumber = "3415"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -2420,8 +2420,8 @@
             filePath = "Cube/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2991"
-            endingLineNumber = "2991"
+            startingLineNumber = "2995"
+            endingLineNumber = "2995"
             landmarkName = "-editAudioButtonPressed:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2436,8 +2436,8 @@
             filePath = "Cube/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3108"
-            endingLineNumber = "3108"
+            startingLineNumber = "3112"
+            endingLineNumber = "3112"
             landmarkName = "-deleteToEnd"
             landmarkType = "7">
          </BreakpointContent>
@@ -2452,8 +2452,8 @@
             filePath = "Cube/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3382"
-            endingLineNumber = "3382"
+            startingLineNumber = "3386"
+            endingLineNumber = "3386"
             landmarkName = "-composeAudio"
             landmarkType = "7">
          </BreakpointContent>
@@ -2468,8 +2468,8 @@
             filePath = "Cube/ViewControllers/RecordViewController.mm"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2895"
-            endingLineNumber = "2895"
+            startingLineNumber = "2899"
+            endingLineNumber = "2899"
             landmarkName = "-editAudioButtonPressed:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2487,22 +2487,6 @@
             startingLineNumber = "2064"
             endingLineNumber = "2064"
             landmarkName = "-sliderValueChanged"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "20F42B7F-FD63-4BED-BC4B-4A3FAA315535"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Cube/ViewControllers/RecordViewController.mm"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1245"
-            endingLineNumber = "1245"
-            landmarkName = "-stopUneditedRecording"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

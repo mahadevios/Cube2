@@ -2578,15 +2578,20 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     outputFormat = kAudioFormatMPEG4AAC;
 
     sampleRate = 16000;
-NSError* error1;
+    NSError* error1;
     NSString* filePath=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:AUDIO_FILES_FOLDER_NAME]];
        NSString *source=[filePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@copy.caf",self.recordedAudioFileName]];
     
 //    OSStatus error = DoConvertFile(sourceURL, destinationURL, outputFormat, sampleRate);
-    if ([[NSFileManager defaultManager] fileExistsAtPath:destinationFilePath]) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:destinationFilePath] && [[NSFileManager defaultManager] fileExistsAtPath:source]) {// if reocrded new then only remove old
         [[NSFileManager defaultManager] removeItemAtPath:destinationFilePath error:&error1];
     }
-    bool copied =  [[NSFileManager defaultManager] copyItemAtPath:source toPath:destinationFilePath error:&error1];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:source]) {
+        bool copied =  [[NSFileManager defaultManager] copyItemAtPath:source toPath:destinationFilePath error:&error1];
+
+         bool removed =    [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.caf",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
+    }
     
     
 //    if (error) {
@@ -2600,7 +2605,7 @@ NSError* error1;
 //    }
 //    else
 //    {
-                    bool moved =    [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.caf",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
+       
         NSArray* pathComponents = [NSArray arrayWithObjects:
                                    [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
                                    AUDIO_FILES_FOLDER_NAME,
