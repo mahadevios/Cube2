@@ -408,71 +408,76 @@
     NSURLSessionDataTask *  theTask = [session dataTaskWithRequest: [NSURLRequest requestWithURL: url] completionHandler:
                                        ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
                                        {
-                                           NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-                                           
-                                           if ([lookup[@"resultCount"] integerValue] == 1)
-                                           {
-                                               
-                                               NSString* appStoreVersion = lookup[@"results"][0][@"version"];
-                                              
-                                               NSInteger kAppITunesItemIdentifier = [lookup[@"results"][0][@"trackId"] integerValue];
+        if (data != nil) {
+            
+            
+             NSDictionary* lookup = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                                                       
+                                                       if ([lookup[@"resultCount"] integerValue] == 1)
+                                                       {
+                                                           
+                                                           NSString* appStoreVersion = lookup[@"results"][0][@"version"];
+                                                          
+                                                           NSInteger kAppITunesItemIdentifier = [lookup[@"results"][0][@"trackId"] integerValue];
 
-                                               NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
-                                              
-//                                                       if ([appStoreVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending)
-                                               if (![appStoreVersion isEqualToString:currentVersion])
+                                                           NSString* currentVersion = infoDictionary[@"CFBundleShortVersionString"];
+                                                          
+            //                                                       if ([appStoreVersion compare:currentVersion options:NSNumericSearch] == NSOrderedDescending)
+                                                           if (![appStoreVersion isEqualToString:currentVersion])
 
-                                               {
-                                                   
-                                                   
-                                                   dispatch_async(dispatch_get_main_queue(), ^(void) {
-                                                       
-                                                       NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
-                                                       //
-                                                       alertController = [UIAlertController alertControllerWithTitle:@"Update available for Cube dictate"
-                                                                                                             message:nil
-                                                                                                      preferredStyle:UIAlertControllerStyleAlert];
-                                                       
-                                                       actionDelete = [UIAlertAction actionWithTitle:@"Update"
-                                                                                               style:UIAlertActionStyleDefault
-                                                                                             handler:^(UIAlertAction * action)
-                                                                       {
-                                                                           [self openStoreProductViewControllerWithITunesItemIdentifier:kAppITunesItemIdentifier];
-                                                                           //                                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.com/apps/CubeDictate"]];
-                                                                           
-                                                                           [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
-                                                                           //
-                                                                       }]; //You can use a block here to handle a press on this button
-                                                       [alertController addAction:actionDelete];
-                                                       
-                                                       
-                                                       actionCancel = [UIAlertAction actionWithTitle:@"Later"
-                                                                                               style:UIAlertActionStyleCancel
-                                                                                             handler:^(UIAlertAction * action)
-                                                                       {
-                                                                           
-                                                                           
-                                                                           [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
-                                                                           
-                                                                           [alertController dismissViewControllerAnimated:YES completion:nil];
-                                                                           //
-                                                                       }]; //You can use a block here to handle a press on this button
-                                                       [alertController addAction:actionCancel];
-                                                       
-                                                       
-                                                       [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:alertController animated:YES completion:nil];
-                                                       
-                                                   });
-                                                   
-                                               }
-                                               else
-                                               {
-                                                   [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];
+                                                           {
+                                                               
+                                                               
+                                                               dispatch_async(dispatch_get_main_queue(), ^(void) {
+                                                                   
+                                                                   NSLog(@"Need to update [%@ != %@]", appStoreVersion, currentVersion);
+                                                                   //
+                                                                   alertController = [UIAlertController alertControllerWithTitle:@"Update available for Cube dictate"
+                                                                                                                         message:nil
+                                                                                                                  preferredStyle:UIAlertControllerStyleAlert];
+                                                                   
+                                                                   actionDelete = [UIAlertAction actionWithTitle:@"Update"
+                                                                                                           style:UIAlertActionStyleDefault
+                                                                                                         handler:^(UIAlertAction * action)
+                                                                                   {
+                                                                                       [self openStoreProductViewControllerWithITunesItemIdentifier:kAppITunesItemIdentifier];
+                                                                                       //                                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.com/apps/CubeDictate"]];
+                                                                                       
+                                                                                       [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
+                                                                                       //
+                                                                                   }]; //You can use a block here to handle a press on this button
+                                                                   [alertController addAction:actionDelete];
+                                                                   
+                                                                   
+                                                                   actionCancel = [UIAlertAction actionWithTitle:@"Later"
+                                                                                                           style:UIAlertActionStyleCancel
+                                                                                                         handler:^(UIAlertAction * action)
+                                                                                   {
+                                                                                       
+                                                                                       
+                                                                                       [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];//to avoid multiple popuops on same day
+                                                                                       
+                                                                                       [alertController dismissViewControllerAnimated:YES completion:nil];
+                                                                                       //
+                                                                                   }]; //You can use a block here to handle a press on this button
+                                                                   [alertController addAction:actionCancel];
+                                                                   
+                                                                   
+                                                                   [[[[UIApplication sharedApplication] keyWindow] rootViewController]  presentViewController:alertController animated:YES completion:nil];
+                                                                   
+                                                               });
+                                                               
+                                                           }
+                                                           else
+                                                           {
+                                                               [[NSUserDefaults standardUserDefaults] setValue:todaysDate forKey:PURGE_DATA_DATE];
 
-                                               }
-                                                   //return YES;
-                                               }
-                                           
+                                                           }
+                                                               //return YES;
+                                                           }
+                                                       
+        }
+                                          
                                        }];
     
     [theTask resume];

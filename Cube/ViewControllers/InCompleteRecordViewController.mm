@@ -3217,7 +3217,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     // Create a new audio file using the appendedAudioTrack
     AVAssetExportSession* exportSession = [AVAssetExportSession
                                            exportSessionWithAsset:composition
-                                           presetName:AVAssetExportPresetPassthrough];
+                                           presetName:AVAssetExportPresetAppleM4A];
     if (!exportSession)
     {
         // do something
@@ -3238,12 +3238,16 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         exportSessionpath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@co.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]];
         
+        exportSession = [AVAssetExportSession
+        exportSessionWithAsset:composition
+        presetName:AVAssetExportPresetPassthrough];
+        
         exportSession.outputFileType = AVFileTypeWAVE;
 
     }
     
     
-    [[NSFileManager defaultManager] removeItemAtPath:exportSessionpath error:&error];
+    bool isremoved = [[NSFileManager defaultManager] removeItemAtPath:exportSessionpath error:&error];
     
     exportSession.outputURL = [NSURL fileURLWithPath:exportSessionpath];//composed audio url,later on this will be deleted
     // export.outputFileType = AVFileTypeWAVE;

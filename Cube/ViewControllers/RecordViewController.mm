@@ -38,7 +38,11 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     [self setViewForViewDidLoad];
   
-    
+    if ([AppPreferences sharedAppPreferences].enableVRSForUser == YES) {
+            [SpeechToTextView setHidden:NO];
+       }else{
+            [SpeechToTextView setHidden:YES];
+       }
   //AVAudioSessionPortBuiltInMic;
 }
 
@@ -47,11 +51,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
    
     [AppPreferences sharedAppPreferences].isRecordView=YES;
     
-    if ([AppPreferences sharedAppPreferences].enableVRSForUser == YES) {
-         [SpeechToTextView setHidden:NO];
-    }else{
-         [SpeechToTextView setHidden:YES];
-    }
+   
     
     if (![APIManager sharedManager].userSettingsOpened)
     {
@@ -448,7 +448,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 -(void)pauseRecordingFromBackGround
 {
-    if (!stopped)
+    if (!stopped && !paused)
     {
         
         UIImageView* animatedView= [self.view viewWithTag:1001];
@@ -1215,6 +1215,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
             
             [self updateDictationStatus:@"RecordingComplete"];
 
+            playerDurationWithMilliSeconds = player.duration;
+            
             if ([[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION])
             {
                 [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
@@ -1246,6 +1248,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                                 
                                 [self updateDictationStatus:@"RecordingComplete"];
 
+                                playerDurationWithMilliSeconds = player.duration;
+                
                                 if ([[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION])
                                 {
                                     [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
@@ -1273,9 +1277,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
     }
     
-    playerDurationWithMilliSeconds = player.duration;
+    
 
-
+    NSLog(@"");
 }
 
 -(void)stopEditedRecording
@@ -2149,7 +2153,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         
         [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@editedCopy.caf",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
         
-        //[self setCompressAudio];
+      
         [[NSUserDefaults standardUserDefaults] setValue:@"yes" forKey:@"dismiss"];
         
         [AppPreferences sharedAppPreferences].recordNewOffline = NO;
@@ -2437,9 +2441,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     player.currentTime = audioRecordSlider.value;
     
     player.delegate = self;
-    
-//    playerDurationWithMilliSeconds = player.duration;
-    
+        
     [player prepareToPlay];
     
 }
@@ -2470,8 +2472,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     player.delegate = self;
     
-//    playerDurationWithMilliSeconds = player.duration;
-
     [player prepareToPlay];
     
 }
@@ -2538,9 +2538,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 -(void)setCompressAudio
 {
     
-    NSString* filePath=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:AUDIO_FILES_FOLDER_NAME]];
-    NSString *source=[filePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@copy.caf",self.recordedAudioFileName]];
-    
+//    NSString* filePath=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:AUDIO_FILES_FOLDER_NAME]];
+//    NSString *source=[filePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@copy.caf",self.recordedAudioFileName]];
+//
     // NSString *source = [[NSBundle mainBundle] pathForResource:@"sourceALAC" ofType:@"caf"];
     
     NSArray  *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -2548,8 +2548,8 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     destinationFilePath= [[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:AUDIO_FILES_FOLDER_NAME]] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf",self.recordedAudioFileName]];
     //destinationFilePath = [[NSString alloc] initWithFormat: @"%@/output.caf", documentsDirectory];
-    destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)destinationFilePath, kCFURLPOSIXPathStyle, false);
-    sourceURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)source, kCFURLPOSIXPathStyle, false);
+//    destinationURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)destinationFilePath, kCFURLPOSIXPathStyle, false);
+//    sourceURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (CFStringRef)source, kCFURLPOSIXPathStyle, false);
     NSError* error;
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAudioProcessing error:&error];
@@ -2575,15 +2575,18 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 - (bool)convertAudio
 {
 //    outputFormat = kAudioFormatLinearPCM;
-    outputFormat = kAudioFormatOpus;
+    outputFormat = kAudioFormatMPEG4AAC;
 
-    sampleRate = 0;
+    sampleRate = 16000;
 NSError* error1;
     NSString* filePath=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:AUDIO_FILES_FOLDER_NAME]];
        NSString *source=[filePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@copy.caf",self.recordedAudioFileName]];
     
 //    OSStatus error = DoConvertFile(sourceURL, destinationURL, outputFormat, sampleRate);
-    [[NSFileManager defaultManager] copyItemAtPath:source toPath:destinationFilePath error:&error1];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:destinationFilePath]) {
+        [[NSFileManager defaultManager] removeItemAtPath:destinationFilePath error:&error1];
+    }
+    bool copied =  [[NSFileManager defaultManager] copyItemAtPath:source toPath:destinationFilePath error:&error1];
     
     
 //    if (error) {
@@ -2597,7 +2600,7 @@ NSError* error1;
 //    }
 //    else
 //    {
-                        [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.caf",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
+                    bool moved =    [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.caf",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] error:&error1];
         NSArray* pathComponents = [NSArray arrayWithObjects:
                                    [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
                                    AUDIO_FILES_FOLDER_NAME,
@@ -3160,7 +3163,7 @@ NSError* error1;
     // Create a new audio file using the appendedAudioTrack
     AVAssetExportSession* exportSession = [AVAssetExportSession
                                            exportSessionWithAsset:composition
-                                           presetName:AVAssetExportPresetPassthrough];
+                                           presetName:AVAssetExportPresetAppleM4A];
     if (!exportSession)
     {
         // do something
@@ -3289,11 +3292,7 @@ NSError* error1;
                 [self.view setUserInteractionEnabled:YES];
                 
             });
-            //                if (recordingStopped)
-            //                {
-            //                    [self setCompressAudio];
-            //                    //[self composeAudio];
-            //                }
+           
         }
         switch (exportSession.status)
         {
@@ -3531,12 +3530,7 @@ NSError* error1;
         return;
     }
     
-    // Create a new audio file using the appendedAudioTrack
-    [AVAssetExportSession determineCompatibilityOfExportPreset:AVAssetExportPresetPassthrough withAsset:newAsset outputFileType:AVFileTypeCoreAudioFormat completionHandler:^(BOOL compatible) {
-        
-        NSLog(@"compatible = %d", compatible);
-
-    }];
+   
     AVAssetExportSession* exportSession = [AVAssetExportSession
                                            exportSessionWithAsset:composition
                                            presetName:AVAssetExportPresetAppleM4A];
