@@ -3181,6 +3181,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
         else
         {
+            time = CMTimeMakeWithSeconds(audioRecordSlider.value, 1);
+            time1 = CMTimeMakeWithSeconds(player.duration, 1);
+            timeRange = CMTimeRangeMake(time, time1);
             [appendedAudioTrack removeTimeRange:timeRange];
             
         }
