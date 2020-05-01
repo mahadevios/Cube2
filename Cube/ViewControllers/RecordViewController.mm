@@ -3031,6 +3031,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 //    int64_t totalTrackDuration = player.duration ;
     
     
+
     CMTime time =   [self getTotalCMTimeFromMilliSeconds:audioRecordSlider.value];
     
     CMTime time1 =   [self getTotalCMTimeFromMilliSeconds:player.duration - audioRecordSlider.value];
@@ -3058,6 +3059,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
         }
         else
         {
+            time = CMTimeMakeWithSeconds(audioRecordSlider.value, 1);
+            time1 = CMTimeMakeWithSeconds(player.duration, 1);
+            timeRange = CMTimeRangeMake(time, time1);
             [appendedAudioTrack removeTimeRange:timeRange];
             
         }
