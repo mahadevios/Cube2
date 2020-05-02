@@ -839,7 +839,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                 if ([startRecordingImageView.image isEqual:[UIImage imageNamed:@"Play"]] || !player.isPlaying)
                 {
                     
-                    sliderTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateSliderTime:) userInfo:nil repeats:YES];
+                    sliderTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(keepUpdatingSliderTimeWhileAudioPlaying:) userInfo:nil repeats:YES];
                     
                     [self prepareAudioPlayer];
                     
@@ -1341,57 +1341,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 }
 
 
-//-(void)setPauseRecordingView:(UIButton*)sender
-//{
-//
-//    UIView* pauseView=  [self.view viewWithTag:302];
-//    UIImageView* pauseImageView= [pauseView viewWithTag:402];
-//
-//
-//    if ( !paused)
-//    {
-//        recordingPausedOrStoped=YES;
-//
-//        paused=YES;
-//
-//        UIImageView* animatedView= [self.view viewWithTag:1001];
-//
-//        [animatedView stopAnimating];
-//
-//        animatedView.image=[UIImage imageNamed:@"SoundWave-3"];
-//
-//        [self pauseRecording];
-//
-//        [stopTimer invalidate];
-//
-//        pauseImageView.image=[UIImage imageNamed:@"Play"];
-//
-//    }
-//    else if ( isRecordingStarted==YES && paused)
-//    {
-//        recordingPausedOrStoped=NO;
-//
-//        paused=NO;
-//
-//        [AudioSessionManager setAudioSessionCategory:AVAudioSessionCategoryPlayAndRecord];
-//
-//        UIImageView* animatedView= [self.view viewWithTag:1001];
-//
-//        [animatedView startAnimating];
-//
-//        [self setTimer];
-//
-//        [self performSelector:@selector(mdRecord) withObject:nil afterDelay:0.1];
-//
-//        [UIApplication sharedApplication].idleTimerDisabled = YES;
-//
-//        pauseImageView.image=[UIImage imageNamed:@"Pause"];
-//    }
-//
-//
-//    // pauseImageView.image=[UIImage imageNamed:@"play"];
-//}
-
 #pragma mark: Progress Hud Methods
 
 -(void)showHud
@@ -1585,83 +1534,6 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
    
 }
 
-/*
- 
- -(void)startRecordingForUserSetting
- {
- [UIApplication sharedApplication].idleTimerDisabled = YES;
- 
- UIView* startRecordingView= [self.view viewWithTag:303];
- 
- UIView* pauseRecordingView =  [self.view viewWithTag:302];
- 
- UILabel* recordingStatusLabel= [self.view viewWithTag:99];
- 
- UIImageView* startRecordingImageView;
- 
- 
- [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld",todaysSerialNumberCount] forKey:@"todaysSerialNumberCount"];
- 
- [self audioRecord];
- 
- startRecordingView.backgroundColor=[UIColor colorWithRed:250/255.0 green:162/255.0 blue:27/255.0 alpha:1];
- 
- recordingStatusLabel.text=@"Your audio is being recorded";
- 
- UIImageView* animatedImageView = [[UIImageView alloc] initWithFrame:CGRectMake(recordingStatusLabel.frame.origin.x-10, recordingStatusLabel.frame.origin.y+recordingStatusLabel.frame.size.height+10., recordingStatusLabel.frame.size.width+20, 30)];
- 
- animatedImageView.animationImages = [NSArray arrayWithObjects:
- [UIImage imageNamed:@"SoundWave-1"],
- [UIImage imageNamed:@"SoundWave-2"],
- [UIImage imageNamed:@"SoundWave-3"],
- nil];
- //animatedImageView.image= [UIImage animatedImageNamed:@"SoundWave-" duration:1.0f];
- //[UIImage animatedImageNamed:@"SoundWave-" duration:1.0f];
- 
- animatedImageView.animationDuration = 1.0f;
- 
- animatedImageView.animationRepeatCount = 0;
- 
- [animatedImageView startAnimating];
- 
- animatedImageView.userInteractionEnabled=YES;
- 
- animatedImageView.tag=1001;
- 
- [self.view addSubview: animatedImageView];
- 
- cirecleTimerLAbel.frame=CGRectMake((startRecordingView.frame.size.width/2)-30, (startRecordingView.frame.size.height/2)-25, 60, 50);
- 
- cirecleTimerLAbel.textColor=[UIColor whiteColor];
- 
- cirecleTimerLAbel.font=[UIFont systemFontOfSize:20];
- 
- cirecleTimerLAbel.textAlignment=NSTextAlignmentCenter;
- 
- cirecleTimerLAbel.text=[NSString stringWithFormat:@"%02d:%02d",00,00];
- 
- [startRecordingView addSubview:cirecleTimerLAbel];
- 
- isRecordingStarted=YES;
- 
- recordingPausedOrStoped = NO;
- 
- paused=NO;
- 
- UIImageView* pauseRecordingImageView = [pauseRecordingView viewWithTag:402];
- 
- pauseRecordingImageView.image=[UIImage imageNamed:@"Pause"];
- 
- startRecordingImageView= [startRecordingView viewWithTag:403];
- 
- [startRecordingImageView setHidden:YES];
- 
- [self performSelector:@selector(startRecorderAfterPrepared) withObject:nil afterDelay:0.3];
- 
- 
- }
-
- */
 -(void)startRecorderAfterPrepared
 {
 
@@ -1716,10 +1588,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     [recordNewButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     recordNewButton.layer.cornerRadius=5.0f;
     [recordNewButton addTarget:self action:@selector(presentRecordView) forControlEvents:UIControlEventTouchUpInside];
-    
-//    currentDuration=[[UILabel alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.15, animatedView.frame.size.height*0.1, 100, 20)];
-//    totalDuration=[[UILabel alloc]initWithFrame:CGRectMake(animatedView.frame.size.width*0.15+audioRecordSlider.frame.size.width-10, animatedView.frame.size.height*0.1, 100, 20)];
-    
+ 
     currentDuration=[[UILabel alloc]initWithFrame:CGRectMake(uploadAudioButton.frame.origin.x, animatedView.frame.size.height*0.1, 80, 20)];
     totalDuration=[[UILabel alloc]initWithFrame:CGRectMake(uploadAudioButton.frame.origin.x+uploadAudioButton.frame.size.width-80, animatedView.frame.size.height*0.1, 80, 20)];
     currentDuration.textAlignment=NSTextAlignmentLeft;
@@ -1746,10 +1615,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 
 
     }
-    
-    
-//     sliderTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateSliderTime:) userInfo:nil repeats:YES];
-    
+
     if (minutes>99)//foe more than 99 min show time in 3 digits
     {
         totalDuration.text=[NSString stringWithFormat:@"%03d:%02d",minutes,seconds];//for slider label time label
@@ -1992,23 +1858,27 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
 {
     player.currentTime = audioRecordSlider.value;
     
-    playerDurationWithMilliSeconds = audioRecordSlider.value;
+    if (audioRecordSlider.value > 0.1) {
+        playerDurationWithMilliSeconds = audioRecordSlider.value - 0.03;// to adjust accuracy and file compose failure;
+    }else{
+        playerDurationWithMilliSeconds = audioRecordSlider.value;
+    }
     
     int currentTime=audioRecordSlider.value;
     int minutes = currentTime/60;
     int seconds = currentTime%60;
     
-//    dispatch_async(dispatch_get_main_queue(), ^
-//                   {
-                       //NSLog(@"Reachable");
-                       currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
-                       
-                       if (minutes>99)//foe more than 99 min show time in 3 digits
-                       {
-                           currentDuration.text=[NSString stringWithFormat:@"%03d:%02d",minutes,seconds];//for slider label time label
-                           
-                       }
-//                   });
+    dispatch_async(dispatch_get_main_queue(), ^
+                   {
+        //NSLog(@"Reachable");
+        currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
+        
+        if (minutes>99)//foe more than 99 min show time in 3 digits
+        {
+            currentDuration.text=[NSString stringWithFormat:@"%03d:%02d",minutes,seconds];//for slider label time label
+            
+        }
+    });
     
 
     float sliderCurrentTimeDown = floorf(audioRecordSlider.value * 100) / 100;
@@ -2028,7 +1898,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
     
 }
--(void)updateSliderTime:(UISlider*)sender
+-(void)keepUpdatingSliderTimeWhileAudioPlaying:(UISlider*)sender
 {
     playerDurationWithMilliSeconds = player.currentTime;
     
@@ -3350,9 +3220,14 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
        
         if (updatedInsertionTime == 0)
         {
-            float_t sliderValue;
+            float_t sliderValue = 0.0;
             
-            sliderValue = playerDurationWithMilliSeconds;
+            if (playerDurationWithMilliSeconds > 0.1) {
+                sliderValue = playerDurationWithMilliSeconds - 0.03;// to adjust accuracy and file compose failure;
+            }else{
+                sliderValue = playerDurationWithMilliSeconds;// to adjust accuracy and file compose failure;
+            }
+            
             
             NSLog(@"overwrite updatedInsertionTime = %f", playerDurationWithMilliSeconds);
             
@@ -3392,9 +3267,13 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     {
         if (updatedInsertionTime == 0)
         {
-            float_t sliderValue;
-        
-            sliderValue = playerDurationWithMilliSeconds;
+            float_t sliderValue = 0.0;
+            
+            if (playerDurationWithMilliSeconds > 0.1) {
+                sliderValue = playerDurationWithMilliSeconds - 0.03;// to adjust accuracy and file compose failure;
+            }else{
+                sliderValue = playerDurationWithMilliSeconds;// to adjust accuracy and file compose failure;
+            }
 
             if (sliderValue <= 0)
             {
