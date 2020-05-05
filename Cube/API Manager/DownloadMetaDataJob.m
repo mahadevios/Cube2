@@ -237,8 +237,8 @@
     NSDictionary *response;
     if (responseString!=nil)
     {
-        responseString=[responseString stringByReplacingOccurrencesOfString:@"True" withString:@"1"];
-        responseString=[responseString stringByReplacingOccurrencesOfString:@"False" withString:@"0"];
+//        responseString=[responseString stringByReplacingOccurrencesOfString:@"True" withString:@"1"];
+//        responseString=[responseString stringByReplacingOccurrencesOfString:@"False" withString:@"0"];
         
         NSData *responsedData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
         //NSData *responsedData1 = [responseString dataUsingEncoding:NSDataBase64Encoding64CharacterLineLength];

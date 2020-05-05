@@ -17,7 +17,7 @@
 #import <AVKit/AVKit.h>
 
 #define IMPEDE_PLAYBACK NO
-extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSType outputFormat, Float64 outputSampleRate);
+//extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSType outputFormat, Float64 outputSampleRate);
 
 
 @interface RecordViewController ()
@@ -2280,6 +2280,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     
 }
 
+- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
+    NSLog(@"Error while decoding: %@", [error localizedDescription] );
+}
 
 -(void)playRecording
 {
