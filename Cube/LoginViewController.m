@@ -279,7 +279,7 @@
         
         NSString* enableVRSForUser = [responseDict valueForKey:@"IsVRS"];
 
-        if ([enableVRSForUser isEqualToString:@"True"] || enableVRSForUser == nil || [enableVRSForUser isEqualToString:@""]) {
+        if ([enableVRSForUser isEqualToString:@"1"] || enableVRSForUser == nil || [enableVRSForUser isEqualToString:@""]) {
             [AppPreferences sharedAppPreferences].enableVRSForUser = YES;
         }else{
             [AppPreferences sharedAppPreferences].enableVRSForUser = NO;
