@@ -9,7 +9,7 @@
 #import "InCompleteRecordViewController.h"
 #import "DepartMent.h"
 #define IMPEDE_PLAYBACK NO
-extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSType outputFormat, Float64 outputSampleRate);
+//extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSType outputFormat, Float64 outputSampleRate);
 
 @interface InCompleteRecordViewController ()
 
@@ -1840,6 +1840,9 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
    // [[self player] stop];
 }
 
+- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
+    NSLog(@"Error while decoding: %@", [error localizedDescription] );
+}
 
 #pragma mark: Audio composition and Compression Methods
 
@@ -2075,7 +2078,7 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
     if (newTrack.count <= 0)
     {
         NSLog(@"error in new track of incomplete= %@", error.localizedFailureReason);
-
+        NSLog(@"new asset duration = %f", CMTimeGetSeconds(newAsset.duration));
         [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
         [self setCompressAudio];
         return;
