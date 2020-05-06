@@ -40,8 +40,12 @@
   
     if ([[NSUserDefaults standardUserDefaults] boolForKey:IS_VRS_ENABLE] == YES) {
             [SpeechToTextView setHidden:NO];
+        
        }else{
             [SpeechToTextView setHidden:YES];
+           UILabel* recordingStatusLabel= [self.view viewWithTag:99];
+
+           recordingStatusLabel.text = @"Tap on record to start recording your audio";
        }
   //AVAudioSessionPortBuiltInMic;
 }
