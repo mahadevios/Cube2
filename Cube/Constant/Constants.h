@@ -124,6 +124,7 @@
 #define DOCX_FILES_FOLDER_NAME                 @"Downloads"
 #define DOC_VRS_FILES_FOLDER_NAME              @"VRSDOC files"
 #define DOC_VRS_TEXT_FILES_FOLDER_NAME         @"VRSAudio files"
+#define IS_VRS_ENABLE                          @"isVrsEnable"
 
 #define USER_PIN         @"userPIN"
 #define USER_ID         @"userId"

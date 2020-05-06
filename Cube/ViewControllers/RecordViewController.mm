@@ -38,7 +38,7 @@
     
     [self setViewForViewDidLoad];
   
-    if ([AppPreferences sharedAppPreferences].enableVRSForUser == YES) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:IS_VRS_ENABLE] == YES) {
             [SpeechToTextView setHidden:NO];
        }else{
             [SpeechToTextView setHidden:YES];
