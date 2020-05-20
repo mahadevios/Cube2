@@ -1891,20 +1891,9 @@
 - (void)convertAudio
 {
 
-//    if ([[destinationFilePath pathExtension] isEqualToString:@"caf"]) {
-//        outputFormat = kAudioFormatMPEG4AAC;
-//    }else{
-//        outputFormat = kAudioFormatLinearPCM;
-//    }
-    
-    
-//    sampleRate = 0;
-    
-//    OSStatus error = DoConvertFile(sourceURL, destinationURL, outputFormat, sampleRate);
     
     NSError* error1;
-    
-//    NSString* destinationPath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@.caf",AUDIO_FILES_FOLDER_NAME,self.existingAudioFileName]];
+
       NSString* fileToRemovePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.caf",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] ;
     
     if ([[destinationFilePath pathExtension] isEqualToString:@"wav"]) {
@@ -1912,51 +1901,12 @@
         fileToRemovePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
     }
     
-//
-//    NSString* sourcePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@compressed.caf",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]];
-//
-//    if ([[destinationFilePath pathExtension] isEqualToString:@"wav"]) {
-//
-//        sourcePath=[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@compressed.wav",AUDIO_FILES_FOLDER_NAME,existingAudioFileName]];
-//    }
-    
-//    if (error)
-//    {
-//        [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
-//
-//        // delete output file if it exists since an error was returned during the conversion process
-//        if ([[NSFileManager defaultManager] fileExistsAtPath:destinationFilePath])
-//        {
-//            [[NSFileManager defaultManager] removeItemAtPath:destinationFilePath error:nil];
-//        }
-//
-//        NSString* fileToMovePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.caf",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
-//
-//       if ([[fileToMovePath pathExtension] isEqualToString:@"wav"]) {
-//
-//           fileToMovePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.caf",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]];
-//       }
-//         [[NSFileManager defaultManager] moveItemAtPath:fileToMovePath toPath:destinationPath error:&error1];
-//
-//        printf("DoConvertFile failed! %d\n", (int)error);
-//    }
-//    else
-//    {
-       // NSLog(@"Converted");
-//        NSString* fileToRemovePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@copy.wav",AUDIO_FILES_FOLDER_NAME,self.recordedAudioFileName]] ;
-        
+  
         if ([[NSFileManager defaultManager] fileExistsAtPath:fileToRemovePath])
                {
                     [[NSFileManager defaultManager] removeItemAtPath:fileToRemovePath error:&error1];
                }
       
-       
-//       [[NSFileManager defaultManager] removeItemAtPath:destinationPath error:&error1];
-//
-//       [[NSFileManager defaultManager] moveItemAtPath:sourcePath toPath:destinationPath error:&error1];
-//
-     //  [[NSFileManager defaultManager] removeItemAtPath:[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/%@backup.wav",AUDIO_FILES_FOLDER_NAME,self.existingAudioFileName]] error:&error1];
-        
 
         dispatch_async(dispatch_get_main_queue(), ^
                        {
@@ -1983,29 +1933,7 @@
                            
                            [[self.view viewWithTag:704] setHidden:NO];
                        });
-      // [self performSelectorOnMainThread:@selector(hideHud) withObject:nil waitUntilDone:NO];
 
-        
-
-//    }
-    
-//    UIView* animatedViewCopy=[self.view viewWithTag:98];
-//    
-//    UIButton* slider=[animatedViewCopy viewWithTag:197];
-//    
-//    UIButton* uploadButton=[animatedViewCopy viewWithTag:198];
-//    
-//    UIButton* uploadLetter=[animatedViewCopy viewWithTag:199];
-//    
-//    UIButton* recordNew=[animatedViewCopy viewWithTag:196];
-//
-//    uploadButton.userInteractionEnabled=YES;
-//    
-//    uploadLetter.userInteractionEnabled=YES;
-//    
-//    slider.userInteractionEnabled=YES;
-//    
-//    recordNew.userInteractionEnabled=YES;
 
 }
 
