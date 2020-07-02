@@ -1575,6 +1575,7 @@
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rKL-JA-OfD">
                                 <rect key="frame" x="41.5" y="98" width="331" height="36"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="LC4-zW-6wE"/>
                                 </constraints>
@@ -1583,6 +1584,7 @@
                                     <segment title="Deleted List"/>
                                 </segments>
                                 <color key="tintColor" red="0.65098039220000004" green="0.41176470590000003" blue="0.047058823530000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="selectedSegmentTintColor" red="0.65098039220000004" green="0.41176470590000003" blue="0.047058823530000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="segmentChanged:" destination="7S6-gI-PkF" eventType="valueChanged" id="jkQ-YA-6N0"/>
                                 </connections>
@@ -1633,6 +1635,7 @@
                                                 <constraint firstItem="76j-vI-b8J" firstAttribute="trailing" secondItem="O04-Ap-T6k" secondAttribute="trailing" id="QsS-Cb-Ek4"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="q7B-yj-0PH" firstAttribute="leading" secondItem="5HH-x6-RJu" secondAttribute="leading" constant="10" id="3Rf-fo-ad9"/>
                                             <constraint firstItem="q7B-yj-0PH" firstAttribute="centerY" secondItem="5HH-x6-RJu" secondAttribute="centerY" multiplier="1.5" id="4RX-2r-L50"/>
@@ -1792,7 +1795,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NDy-Eb-0eg">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell" rowHeight="84" id="WS8-V4-lZX">
@@ -1868,7 +1871,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="NDy-Eb-0eg" firstAttribute="width" secondItem="zQA-gb-1XO" secondAttribute="width" id="QYh-wR-Yqr"/>
                             <constraint firstItem="NDy-Eb-0eg" firstAttribute="centerY" secondItem="zQA-gb-1XO" secondAttribute="centerY" id="Yvd-dI-9Dh"/>
@@ -2246,17 +2249,19 @@
                                                     <constraint firstAttribute="height" constant="128" id="EhI-YB-iUa"/>
                                                 </constraints>
                                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EQW-Vu-TKA">
                                                 <rect key="frame" x="10.5" y="10" width="393" height="0.0"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" red="0.38823529410000002" green="0.4941176471" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="khO-SE-oHP" firstAttribute="centerX" secondItem="9Ku-cA-TVA" secondAttribute="centerX" id="3qG-xf-Qbw"/>
                                             <constraint firstItem="EQW-Vu-TKA" firstAttribute="width" secondItem="9Ku-cA-TVA" secondAttribute="width" multiplier="0.95" id="4cb-Pt-oef"/>
@@ -2268,6 +2273,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="9Ku-cA-TVA" secondAttribute="bottom" id="6cX-We-tQJ"/>
                                     <constraint firstAttribute="trailing" secondItem="9Ku-cA-TVA" secondAttribute="trailing" id="asM-rw-74i"/>

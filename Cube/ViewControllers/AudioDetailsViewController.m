@@ -1214,7 +1214,12 @@
     [tableView reloadData];
     
 }
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 
+
+        cell.backgroundColor = [UIColor whiteColor];
+
+}
 -(void)cancel:(id)sender
 {
     ////    NSData *data1 = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
