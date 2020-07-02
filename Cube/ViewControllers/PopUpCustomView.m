@@ -233,18 +233,22 @@
     
     UILabel* sectionTitleLabel=[[UILabel alloc]initWithFrame:CGRectMake(16, 20, tableView.frame.size.width, 17)];
     [sectionTitleLabel setFont:[UIFont systemFontOfSize:16.0]];
+    
     UIFont *currentFont = sectionTitleLabel.font;
     UIFont *newFont = [UIFont fontWithName:[NSString stringWithFormat:@"%@-Bold",currentFont.fontName] size:currentFont.pointSize];
     sectionTitleLabel.font = newFont;
     sectionTitleLabel.text=@"Select Department";
+    sectionTitleLabel.textColor = [UIColor darkTextColor];
     [sectionHeaderView addSubview:sectionTitleLabel];
     
     tableView.tableHeaderView=sectionHeaderView;
     tableView.dataSource=sender;
     tableView.delegate=sender;
     UITableViewCell * cell=[[UITableViewCell alloc]init];
+//    cell.backgroundColor = [UIColor whiteColor];
     [tableView addSubview:cell];
     tableView.layer.cornerRadius=2.0f;
+    tableView.backgroundColor = [UIColor whiteColor];
     return tableView;
     
 }

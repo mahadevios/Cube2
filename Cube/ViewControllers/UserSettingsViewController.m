@@ -103,6 +103,7 @@
         lineView1.backgroundColor=[UIColor colorWithRed:170/255.0 green:170/255.0 blue:170/255.0 alpha:1];
         [sectionHeaderView addSubview:lineView1];
         
+        sectionTitleLabel.textColor = [UIColor darkTextColor];
         if (section==0)
         {
             sectionTitleLabel.text=@"Record Settings";

@@ -579,15 +579,14 @@
     sf = [self.storyboard instantiateViewControllerWithIdentifier:@"SafariSupportViewController"];
     sf.modalPresentationStyle = UIModalPresentationFullScreen;
     if ([self.patientDetails.DoctorUrl isEqualToString:@""] || self.patientDetails.DoctorUrl == nil) {
-        
+
         [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"Meeting URL is not available yet, please try after some time" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
     }
     else{
         sf.doctorMeetingUrlString = self.patientDetails.DoctorUrl;
-        //    sf.doctorMeetingUrlString = @"http://liveklasserp.testbot.xyz/Sessions/join?m=156&p=668467&u=mm";
+//            sf.doctorMeetingUrlString = @"https://video.conslt.live/bigbluebutton/api/join?fullName=Host&meetingID=102&password=MP102&checksum=8998eae6ec9245aa8afbc1be94f14c2f920b8064";
         [self presentViewController:sf animated:YES completion:nil];
     }
-  
 }
 - (IBAction)recordButtonClicked:(id)sender {
    

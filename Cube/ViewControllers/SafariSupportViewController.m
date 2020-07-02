@@ -29,6 +29,7 @@
            [self presentViewController:svc animated:YES completion:nil];
     }
     else{
+        svc = nil;
         [self dismissViewControllerAnimated:NO completion:nil];
     }
    

@@ -54,6 +54,7 @@
     
     awaitingTransferView.layer.cornerRadius = 4.0f;
     
+    VRSDOCFilesView.layer.cornerRadius = 4.0f;
     // tap gesture recognisers for four title views
     transferredTodayViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
     awaitingViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];

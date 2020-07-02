@@ -1601,6 +1601,8 @@
     totalDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
     currentDuration.text=[NSString stringWithFormat:@"%02d:%02d",minutes,seconds];//for slider label time label
     
+    currentDuration.textColor = [UIColor darkTextColor];
+    totalDuration.textColor = [UIColor darkTextColor];
 //    if (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && self.view.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular)
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {//for ipad
@@ -2542,6 +2544,7 @@
     UIButton* radioButton=[[UIButton alloc]initWithFrame:CGRectMake(10, 10, 18, 18)];
     tabelViewDepartmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
     tabelViewDepartmentLabel.tag=indexPath.row+200;
+    tabelViewDepartmentLabel.textColor = [UIColor darkTextColor];
     radioButton.tag=indexPath.row+100;
     
 //    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
@@ -2587,6 +2590,13 @@
     [tableView reloadData];
     //[self performSelector:@selector(hideTableView) withObject:nil afterDelay:0.2];
     
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+
+
+        cell.backgroundColor = [UIColor whiteColor];
+
 }
 -(void)cancel:(id)sender
 {

@@ -572,6 +572,13 @@ else
     [[[UIApplication sharedApplication] keyWindow] addSubview:popupView];
     
 }
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+
+
+        cell.backgroundColor = [UIColor whiteColor];
+
+}
 -(void)cancel:(id)sender
 {
     
