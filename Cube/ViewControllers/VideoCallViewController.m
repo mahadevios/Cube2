@@ -45,10 +45,10 @@
     patientsDetailsArray = [NSMutableArray new];
     
 //    [self setPatientDetailsFromAPI];
-    NSString* date = [[APIManager sharedManager] getDateAndTimeString];
-    [date componentsSeparatedByString:@" "];
-    [self getAppointmentList:[date componentsSeparatedByString:@" "][0]];
-   
+//    NSString* date = [[APIManager sharedManager] getDateAndTimeString];
+//    [date componentsSeparatedByString:@" "];
+//    [self getAppointmentList:[date componentsSeparatedByString:@" "][0]];
+//   
 }
 
 -(void)getAppointmentList:(NSString*) date
@@ -184,6 +184,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
 //    NSDate* date = [NSDate date];
+    NSString* date = [[APIManager sharedManager] getDateAndTimeString];
+    [date componentsSeparatedByString:@" "];
+    [self getAppointmentList:[date componentsSeparatedByString:@" "][0]];
+    
       [self setAudioDetailOrEmptyViewController:0];
     
 }
