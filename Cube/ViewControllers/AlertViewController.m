@@ -15,6 +15,7 @@
 #import "InCompleteDictationViewController.h"
 #import "ImportedAudioViewController.h"
 #import "VideoCallViewController.h"
+#import "EditDocxViewController.h"
 
 @interface AlertViewController ()
 
@@ -316,7 +317,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3 ;
+    return 4 ;
     
 }
 
@@ -342,9 +343,9 @@
             noDictationLabel.text=[NSString stringWithFormat:@"%ld",[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count];
             break;
             
-        case 3:inCompleteDictationLabel.text=@"Appointments";
-//            noDictationLabel.text=[NSString stringWithFormat:@"%ld",[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count];
-            break;
+//        case 3:inCompleteDictationLabel.text=@"Appointments";
+////            noDictationLabel.text=[NSString stringWithFormat:@"%ld",[AppPreferences sharedAppPreferences].importedFilesAudioDetailsArray.count];
+//            break;
             
 //        case 3:inCompleteDictationLabel.text=@"Completed Doc Files";
 //            noDictationLabel.text = @"";
@@ -358,9 +359,9 @@
 //            noDictationLabel.text=[NSString stringWithFormat:@"%d",VRSDocFilesArray.count];
 //            break;
         
-//        case 3:inCompleteDictationLabel.text = @"Custom Docx Editor";
-//            noDictationLabel.text = @"";
-//            break;
+        case 3:inCompleteDictationLabel.text = @"Custom Docx Editor";
+            noDictationLabel.text = @"";
+            break;
             
         default:
             break;
@@ -370,6 +371,8 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    EditDocxViewController * vc;
+
     //MainTabBarViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainTabBarViewController"];
     switch (indexPath.row)
     {
@@ -399,6 +402,7 @@
         case 2:
             if (self.splitViewController.isCollapsed)
             {
+
                 [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ImportedAudioViewController"] animated:YES];
             }
             else
@@ -408,17 +412,17 @@
             
             break;
          
-        case 3:
-            if (self.splitViewController.isCollapsed)
-            {
-                [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"VideoCallViewController"] animated:YES];
-            }
-            else
-            {
-                [self setSplitVCDetailViewSelectedRow:3];
-            }
-            
-            break;
+//        case 3:
+//            if (self.splitViewController.isCollapsed)
+//            {
+//                [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"VideoCallViewController"] animated:YES];
+//            }
+//            else
+//            {
+//                [self setSplitVCDetailViewSelectedRow:3];
+//            }
+//
+//            break;
 //        case 3:
 //            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"DocFilesViewController"] animated:YES];
 //            break;
@@ -431,10 +435,13 @@
 //            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SelectFileViewController"] animated:YES];
 //            break;
         
-//        case 3:
-//            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"EditDocxViewController"] animated:YES];
-//            break;
-            
+        
+        case 3:
+            vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EditDocxViewController"];
+            vc.modalPresentationStyle = UIModalPresentationFullScreen;
+            [self.navigationController presentViewController:vc animated:true completion:nil];
+            break;
+                                     
         default:
             break;
     }

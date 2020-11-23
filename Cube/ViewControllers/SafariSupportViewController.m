@@ -25,6 +25,7 @@
         self.browserOpenedOnce = YES;
         svc = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:self.doctorMeetingUrlString]];
            svc.delegate = self;
+        
            [UIApplication sharedApplication].idleTimerDisabled = YES;
            [self presentViewController:svc animated:YES completion:nil];
     }
