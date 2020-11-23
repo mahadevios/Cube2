@@ -33,6 +33,8 @@
 @property(nonatomic,strong) NSString* zipDocxFileName;
 
 @property(nonatomic,strong) DDXMLDocument *theDocument;
+@property(nonatomic,strong) DDXMLDocument *relsDocument;
+
 - (IBAction)saveEditedFile:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *saveDocxButton;
 @property (weak, nonatomic) IBOutlet UIButton *viewDocxButton;

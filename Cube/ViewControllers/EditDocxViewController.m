@@ -18,7 +18,7 @@
 
 @implementation EditDocxViewController
 
-@synthesize referenceTextView,textViewCount,scrollView,insideView,textAdded,elementChanged,modifiedTextViewTagsArray,XPathForTextViewDict,theDocument,elementIndexDict,bundleFileName,zipDocxFileName,unzipFolderName,textViewContentHeightDict;
+@synthesize referenceTextView,textViewCount,scrollView,insideView,textAdded,elementChanged,modifiedTextViewTagsArray,XPathForTextViewDict,theDocument, relsDocument,elementIndexDict,bundleFileName,zipDocxFileName,unzipFolderName,textViewContentHeightDict;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -37,21 +37,15 @@
     
     [self.tabBarController.tabBar setHidden:YES];
 
-//    insideView.layer.borderColor = [UIColor darkGrayColor].CGColor;
-//    insideView.layer.borderWidth = 2.0;
    
-    //    bundleFileName = @"Docx2";
-//    unzipFolderName = @"Docx2";
-//    zipDocxFileName = @"Docx2Zipped";
-    bundleFileName = @"sample";
-    unzipFolderName = @"sampleFolder1";
-    zipDocxFileName = @"sampleDocx";
-//    bundleFileName = @"TemplateDocx1";
-//    unzipFolderName = @"TemplateDocx1";
-//    zipDocxFileName = @"TemplateDocx1Zipped";
-//    bundleFileName = @"TemplateDocx2";
-//    unzipFolderName = @"TemplateDocx2";
-//    zipDocxFileName = @"TemplateDocx2Zipped";
+//    bundleFileName = @"Patient Letter Template";
+//    unzipFolderName = @"sample3Folder";
+//    zipDocxFileName = @"Patient Letter Template";
+
+    bundleFileName = @"Operative Note Different Template";
+    unzipFolderName = @"sample3Folder";
+    zipDocxFileName = @"Operative Note Different Template";
+
     // Do any additional setup after loading the view, typically from a nib.
     
     self.saveDocxButton.layer.cornerRadius = 4.0;
@@ -70,9 +64,14 @@
     
     [self unZipToMakeXML];
     
-    [self parseXMLFiles:nil];
+   
 }
 
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self parseXMLFiles:nil];
+}
 - (IBAction)backButtonClicked:(id)sender
 {
     [self popViewController:sender];
@@ -88,65 +87,7 @@
 
         if ([elementName isEqualToString:@"w:p"])
         {
-//            if (!(textViewCount == 1))
-//            {
-//                UITextView* referenceTextView = [insideView viewWithTag:textViewCount];
-//                UITextView* textView = [[UITextView alloc] initWithFrame:CGRectMake(referenceTextView.frame.origin.x, referenceTextView.frame.origin.y+referenceTextView.frame.size.height, self.view.frame.size.width, referenceTextView.frame.size.height)];
 
-
-//                NSLayoutConstraint *leading =[NSLayoutConstraint
-//                                               constraintWithItem:textView
-//                                               attribute:NSLayoutAttributeLeading
-//                                               relatedBy:NSLayoutRelationEqual
-//                                               toItem:insideView
-//                                               attribute:NSLayoutAttributeLeading
-//                                               multiplier:1.0f
-//                                               constant:0.f];
-//
-//                NSLayoutConstraint *yPosition =[NSLayoutConstraint
-//                                              constraintWithItem:textView
-//                                              attribute:NSLayoutAttributeTopMargin
-//                                              relatedBy:NSLayoutRelationEqual
-//                                              toItem:insideView
-//                                              attribute:NSLayoutAttributeBaseline
-//                                              multiplier:1.0f
-//                                              constant:50.f];
-//
-//                NSLayoutConstraint *height = [NSLayoutConstraint
-//                                              constraintWithItem:textView
-//                                              attribute:NSLayoutAttributeHeight
-//                                              relatedBy:NSLayoutRelationEqual
-//                                              toItem:nil
-//                                              attribute:NSLayoutAttributeNotAnAttribute
-//                                              multiplier:0
-//                                              constant:30];
-//
-//                [textView addConstraint:leading];
-//
-//                [textView addConstraint:yPosition];
-//
-//                [textView addConstraint:height];
-
-//                UITextView* textView = [[UITextView alloc] init];
-//
-//                textViewCount++;
-//
-//                textView.tag = textViewCount;
-//
-//                [insideView addSubview:textView];
-//            }
-//            else
-//            {
-//              textViewCount++;
-//            }
-
-
-//            if (attributeDict.count == 1 && textViewCount != 2)
-//            {
-//
-//            }
-//            else
-//            {
                elementChanged = true;
             
                 UITextView* referenceTextView = [insideView viewWithTag:textViewCount];
@@ -159,10 +100,9 @@
                 textView.tag = textViewCount;
                 
                 [insideView addSubview:textView];
-                
-            //}
+
            
-            NSLog(@"textview count = %d",textViewCount);
+           
 
         }
 }
@@ -174,7 +114,7 @@
 //              {
     if ([elementName isEqualToString:@"w:p"])
     {
-                  NSLog(@"rootelement end");
+                
     }
     
 }
@@ -291,11 +231,11 @@
     
     //
     //
-//    NSError* err;
-//    if([[NSFileManager defaultManager] fileExistsAtPath:unzipPath])
-//    {
-//        [[NSFileManager defaultManager] removeItemAtPath:unzipPath error:&err];
-//    }
+    NSError* err;
+    if([[NSFileManager defaultManager] fileExistsAtPath:unzipPath])
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:unzipPath error:&err];
+    }
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:unzipPath])
     {
@@ -344,7 +284,7 @@
     //[self viewXMLFile:@"document"];
     scrollView.layer.borderColor = [UIColor darkGrayColor].CGColor;
     scrollView.layer.borderWidth = 2.0;
-    [self startParsingUsingKissXML];
+    [self parseXML];
     [sender setUserInteractionEnabled:false];
 }
 
@@ -389,32 +329,23 @@
 
 // KissXML
 
--(void)startParsingUsingKissXML
-{
-    NSError *error;
-    
-//    NSString* filePath = [[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/Kuldeep/word/document"]] stringByAppendingPathExtension:@"xml"];
-    NSString* filePath = [[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/TemplateDocx1/word/document"]] stringByAppendingPathExtension:@"xml"];
 
-    NSString* content = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
-    
-    [self parseXML:content];
-    
-}
-
-
--(void)parseXML:(NSString*)source
+-(void)parseXML
 {
     
     textViewCount = 2;
     
     long totalTextHeight = 250;
-
+    
+    bool isGroupElement = false;
+    
+    float groupElementHeight = 0.0;
+    
     NSString* filePath = [[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/word/document",unzipFolderName]] stringByAppendingPathExtension:@"xml"];
-
-//    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"document" ofType:@"xml"];
+    
+    //    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"document" ofType:@"xml"];
     NSData *xmlData = [[NSMutableData alloc] initWithContentsOfFile:filePath];
-
+    
     theDocument = [[DDXMLDocument alloc] initWithData:xmlData options:0 error:nil];
     
     
@@ -423,162 +354,525 @@
     XPathForTextViewDict = [NSMutableDictionary new];
     
     elementIndexDict = [NSMutableDictionary new];
+    
+    DDXMLElement* rootElement = [theDocument rootElement] ;
+    
+    [rootElement nextNode];
+    [rootElement nextSibling];
+    
+    NSArray* bodyElementArray = [rootElement elementsForName:@"w:body"];
+    
+    DDXMLElement* bodyElement = [bodyElementArray objectAtIndex:0];
+    
+    // get page width, height and margins
+    NSArray* docPropArray = [bodyElement elementsForName:@"w:sectPr"];
+    
+    DDXMLElement* docPropElement = [docPropArray objectAtIndex:0];
+    
+    NSArray* pgSzArray = [docPropElement elementsForName:@"w:pgSz"];
+    
+    DDXMLElement* pgSzElement = [pgSzArray objectAtIndex:0];
+    
+    NSArray* pgMarArray = [docPropElement elementsForName:@"w:pgMar"];
+    
+    DDXMLElement* pgMarElement = [pgMarArray objectAtIndex:0];
+    float width = self.view.frame.size.width;
+    NSString* docWidthTwip = [[pgSzElement attributeForName:@"w:w"] stringValue];
+    NSString* docHeightTwip = [[pgSzElement attributeForName:@"w:h"] stringValue];
+    
+    float iOSValueOfOneTwip = width/[docWidthTwip intValue];
+    float iOSExpectedDocHeight = iOSValueOfOneTwip * [docHeightTwip intValue];
+    
+    NSString* pageTopMarginTwip = [[pgMarElement attributeForName:@"w:top"] stringValue];
+    NSString* pageRightMarginTwip = [[pgMarElement attributeForName:@"w:right"] stringValue];
+    NSString* pageLeftMarginTwip = [[pgMarElement attributeForName:@"w:left"] stringValue];
+    //    NSString* bottomMarginTwip = [[pgMarElement attributeForName:@"w:bottom"] stringValue];
 
-    DDXMLElement* ele = [theDocument rootElement] ;
-    
-    NSArray* arr = [ele elementsForName:@"w:body"];
-    
-    DDXMLElement* bodyElement = [arr objectAtIndex:0];
-    
+    //<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="708" w:footer="708" w:gutter="0"/>
+//    float docWidth = [docWidthTwip intValue] * iOSValueOfOneTwip;
+//    float docHeight = [docHeightTwip intValue] * iOSValueOfOneTwip;
+    float pageTopMarginIOS = [pageTopMarginTwip intValue] * iOSValueOfOneTwip;
+    float pageRightMarginIOS = [pageRightMarginTwip intValue] * iOSValueOfOneTwip;
+    float pageLeftMarginIOS = [pageLeftMarginTwip intValue] * iOSValueOfOneTwip;
+    //    float docBottomMargin = [bottomMarginTwip intValue] * iOSValueOfOneTwip;
+
     NSArray* paragraphArray = [bodyElement elementsForName:@"w:p"];
     
     for (DDXMLElement *paragraph in paragraphArray)
     {
-        NSLog(@"para text = %@", paragraph);
-
-        //DDXMLNode* node = [paragraph nextNode];
-        UITextView* referenceTextView = [insideView viewWithTag:textViewCount];
-
-        
-        UITextView* textView = [[UITextView alloc] initWithFrame:CGRectMake(referenceTextView.frame.origin.x, referenceTextView.frame.size.height + referenceTextView.frame.origin.y, self.view.frame.size.width-10, 45)];
-        
-        textView.returnKeyType = UIReturnKeyDone;
-        
-        textViewCount++;
-        
-        textView.tag = textViewCount;
-        
-        textView.delegate = self;
-        
-        [XPathForTextViewDict setObject:[paragraph XPath] forKey:[NSString stringWithFormat:@"%ld",(long)textView.tag]];
-
-        [elementIndexDict setObject:[NSString stringWithFormat:@"%ld",paragraph.index] forKey:[NSString stringWithFormat:@"%ld",(long)textView.tag]];
-        
-        //CGSize size = CGSizeMake(insideView.frame.size.width, insideView.frame.size.height);
-        
-        // paragraph has two childs w:pPr, w:r
-        
-//        NSArray* paragraphAttributeArray = [paragraph elementsForName:@"w:pPr"];
-//
-//        [xmlAttributeDict setObject:[paragraphAttributeArray objectAtIndex:0] forKey:[NSString stringWithFormat:@"%ld", textView.tag]];
-        
         NSMutableArray *runningArray = [paragraph elementsForName:@"w:r"];
         
-//        BOOL textAdded = false;
-        for (int i =0;i<runningArray.count;i++)
-        {
-            DDXMLElement *runningElement = [runningArray objectAtIndex:i];
+        if (runningArray.count > 0) {
             
-//            NSArray* runningElementChildrenArray = [runningElement children];
-//            
-//            for (int j =0;i<runningElementChildrenArray.count;j++)
-//            {
-//                NSString* childName = [runningElement childAtIndex:j].name;
-//
-//                NSArray *textArray = [runningElement elementsForName:childName];
-//
+          
+            
+            //DDXMLNode* node = [paragraph nextNode];
+//            UIView* referenceTextView;
+            
+            UIView* referenceTextView = [insideView viewWithTag:textViewCount];
+            
+//            if ([referenceView isKindOfClass:[UITextView class]]) {
+//                referenceTextView = referenceView;
 //            }
-            NSArray *textArray = [runningElement elementsForName:@"w:t"];
             
-           // DDXMLNode *textArray1 = [runningElement attributeForName:@"w:t"];
-
-            if (textArray.count>0)
+            UITextView* textView = [[UITextView alloc] initWithFrame:CGRectMake(pageLeftMarginIOS, referenceTextView.frame.size.height + referenceTextView.frame.origin.y, self.view.frame.size.width-pageRightMarginIOS-pageLeftMarginIOS, 45)];
+            
+            [textView setBackgroundColor:[UIColor clearColor]];
+            
+            textView.returnKeyType = UIReturnKeyDone;
+            
+            textViewCount++;
+            
+            textView.tag = textViewCount;
+            
+            textView.delegate = self;
+            
+            [XPathForTextViewDict setObject:[paragraph XPath] forKey:[NSString stringWithFormat:@"%ld",(long)textView.tag]];
+            
+            [elementIndexDict setObject:[NSString stringWithFormat:@"%ld",paragraph.index] forKey:[NSString stringWithFormat:@"%ld",(long)textView.tag]];
+            
+            
+            for (int i =0;i<runningArray.count;i++)
             {
+                DDXMLElement *runningElement = [runningArray objectAtIndex:i];
                 
-                DDXMLElement* ele = [textArray objectAtIndex:0];
+                NSArray* pictArray;
+                NSArray *textArray = [runningElement elementsForName:@"w:t"];
                 
-                DDXMLNode* str = [ele childAtIndex:0];
-                
-                textView.text = [textView.text stringByAppendingString:[NSString stringWithFormat:@"%@",str]];
-                
-                //textView.text = [textView.text stringByAddingPercentEncodingWithAllowedCharacters:(set)];
-                NSString* updatedString = [textView.text stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
-                
-                updatedString = [updatedString stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
-                
-                updatedString = [updatedString stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+                if (textArray.count>0)
+                {
+                    isGroupElement = false;
+                    
+                    DDXMLElement* ele = [textArray objectAtIndex:0];
+                    
+                    DDXMLNode* str = [ele childAtIndex:0];
+                    
+                    textView.text = [textView.text stringByAppendingString:[NSString stringWithFormat:@"%@",str]];
+                    
+                    NSString* updatedString = [textView.text stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
+                    
+                    updatedString = [updatedString stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+                    
+                    updatedString = [updatedString stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+                    
+                    textView.text = updatedString;
+                    
+                    CGRect frame = textView.frame;
+                    
+                    frame.size.height = textView.contentSize.height;
+                    
+                    textView.frame = frame;
+                    
+                    [textViewContentHeightDict setObject: [NSString stringWithFormat:@"%f",textView.contentSize.height] forKey:[NSString stringWithFormat:@"%ld",textView.tag]];
+                    
+                }
+                else if((pictArray = [runningElement elementsForName:@"w:pict"]).count > 0){
+                    
+                    isGroupElement = true;
+                    
+                    DDXMLElement* pictureElement = [pictArray objectAtIndex:0];
+                    
+                    NSArray* groupArray = [pictureElement elementsForName:@"v:group"];
+                    
+                    DDXMLElement* groupElement = [groupArray objectAtIndex:0];
+                    
+                    //DDXMLElement* ee = [[groupElement parent] parent];
+                    DDXMLNode* styleNode = [groupElement attributeForName:@"style"];
+                    
+                    DDXMLNode* groupCoordOriginNode = [groupElement attributeForName:@"coordorigin"];
+                    
+                    DDXMLNode* groupCoordSizeNode = [groupElement attributeForName:@"coordsize"];
+                    
+                    NSString* groupCoordOriginString = [groupCoordOriginNode stringValue];
+                    
+                    NSString* groupCoordSizeString = [groupCoordSizeNode stringValue];
+                    
+                    NSArray* groupCoordOriginArray = [groupCoordOriginString componentsSeparatedByString:@","];
+                    
+                    NSArray* groupCoordSizeArray = [groupCoordSizeString componentsSeparatedByString:@","];
+                    
+                    float groupCoordOriginX = 0.0, groupCoordOriginY = 0.0, groupCoordWidth = 0.0, groupCoordHeight = 0.0;
+                    if (groupCoordOriginArray.count == 2) {
+                        groupCoordOriginX = [[groupCoordOriginArray objectAtIndex:0] floatValue];
+                        groupCoordOriginY = [[groupCoordOriginArray objectAtIndex:1] floatValue];
+                        
+                    }
+                    if (groupCoordSizeArray.count == 2) {
+                        groupCoordWidth = [[groupCoordSizeArray objectAtIndex:0] floatValue];
+                        groupCoordHeight = [[groupCoordSizeArray objectAtIndex:1] floatValue];
+                    }
+                    NSString* styleString = [styleNode stringValue];
+                    
+                    NSArray* styleAttribute = [styleString componentsSeparatedByString:@";"];
+                    
+                    NSMutableDictionary* styleDict = [NSMutableDictionary new];
+                    for (NSString* att in styleAttribute) {
+                        NSArray* styleKey = [att componentsSeparatedByString:@":"];
+                        [styleDict setObject:[styleKey objectAtIndex:1] forKey:[styleKey objectAtIndex:0]];
+                    }
+                    NSString* groupHeightPtString = [styleDict valueForKey:@"height"];
+                    NSString* groupWidthPtString = [styleDict valueForKey:@"width"];
+                    NSString* groupLeftMarginPtString = [styleDict valueForKey:@"margin-left"];
+                    NSString* groupTopMarginPtString = [styleDict valueForKey:@"margin-top"];
+                    NSString* pos = [styleDict valueForKey:@"position"];
+                    
+                    float groupLeftMarginWRTiOS = 0.0, groupTopMarginWRTiOS = 0.0, groupWidthWRTiOS = 0.0, groupHeightWRTiOS = 0.0;
+                    float groupHeightIOS, groupWidthIOS, groupLeftMarginIOS = 0.0, groupTopMarginIOS = 0.0;
+                    
+                    float groupLeftMarginCalculatedPt = 0.0;
+                    float groupAndPageLeftMarginPt = 0.0;
+                    
+                    if ([groupHeightPtString containsString:@"pt"]) {
+                        if ([groupHeightPtString length] > 0) {
+                            groupHeightPtString = [groupHeightPtString substringToIndex:[groupHeightPtString length] - 2]; // remove "pt" suffix to get float value
+                            groupHeightIOS = [groupHeightPtString floatValue] * 20 * iOSValueOfOneTwip; // ht is in points so one point  = 20 twip
+                            groupHeightWRTiOS = groupHeightIOS;
+                        }
+                    }
+                    if ([groupWidthPtString containsString:@"pt"]) {
+                        if ([groupWidthPtString length] > 0) {
+                            groupWidthPtString = [groupWidthPtString substringToIndex:[groupWidthPtString length] - 2];
+                            groupWidthWRTiOS = [groupWidthPtString floatValue] * 20 * iOSValueOfOneTwip;
+                        }
+                    }
+                    if ([groupLeftMarginPtString containsString:@"pt"]) {
+                        if ([groupLeftMarginPtString length] > 0) {
+                            groupLeftMarginPtString = [groupLeftMarginPtString substringToIndex:[groupLeftMarginPtString length] - 2];
+                            groupAndPageLeftMarginPt = ([pageLeftMarginTwip floatValue]/20) + [groupLeftMarginPtString floatValue];
+                            groupLeftMarginIOS = [groupLeftMarginPtString floatValue] * 20 * iOSValueOfOneTwip;
+                            groupLeftMarginWRTiOS =  pageLeftMarginIOS + groupLeftMarginIOS;
+                            //                            groupLeftMarginWRTiOS = pageLeftMarginIOS + groupLeftMarginPt;
+                        }
+                    }
+                    if ([groupTopMarginPtString containsString:@"pt"]) {
+                        if ([groupTopMarginPtString length] > 0) {
+                            groupTopMarginPtString = [groupTopMarginPtString substringToIndex:[groupTopMarginPtString length] - 2];
+                            groupTopMarginIOS = [groupTopMarginPtString floatValue] * 20 * iOSValueOfOneTwip;
+                            groupTopMarginWRTiOS = pageTopMarginIOS + groupTopMarginIOS;
+                        }
+                    }
+                    
+                    groupElementHeight = groupHeightWRTiOS;
+                    
+                    
+                    NSArray* groupElementChildrenArray = [groupElement children];
+                    
+                    UIView* groupElementView = [[UIView alloc] initWithFrame: CGRectMake(groupLeftMarginWRTiOS, groupTopMarginWRTiOS, groupWidthWRTiOS, groupHeightWRTiOS)];
+                    
+                    for (DDXMLElement* groupChildElement in groupElementChildrenArray) {
+                        NSString *elementPathString = groupChildElement.XPath.lastPathComponent;
+                        NSString *elementNameString = [elementPathString lastPathComponent];
+                        
+                        if ([elementNameString containsString:@"shape"] && ![elementNameString containsString:@"shapetype"]) {
+                            
+                            DDXMLNode* styleNode = [groupChildElement attributeForName:@"style"];
+                            
+                            NSString* styleString = [styleNode stringValue];
+                            
+                            NSArray* styleAttribute = [styleString componentsSeparatedByString:@";"];
+                            
+                            NSMutableDictionary* styleDict = [NSMutableDictionary new];
+                            for (NSString* att in styleAttribute) {
+                                NSArray* styleKey = [att componentsSeparatedByString:@":"];
+                                [styleDict setObject:[styleKey objectAtIndex:1] forKey:[styleKey objectAtIndex:0]];
+                            }
+                            NSString* ht = [styleDict valueForKey:@"height"];
+                            NSString* wt = [styleDict valueForKey:@"width"];
+                            NSString* left = [styleDict valueForKey:@"left"];
+                            NSString* top = [styleDict valueForKey:@"top"];
+                            NSString* pos = [styleDict valueForKey:@"position"];
+                            
+//                            float groupAndPageLeft = [groupLeftMarginPtString floatValue] + ([pageLeftMarginTwip floatValue]/20);
+//
+                            
+//                            float groupElementLeftPosition = ([left floatValue]*iOSValueOfOneTwip) + groupLeftMarginIOS ;
+//                            float groupElementTopPosition = ([top floatValue]*iOSValueOfOneTwip) + groupTopMarginIOS;
+//                            float groupElementWidth = ([wt floatValue]*iOSValueOfOneTwip);
+//                            float groupElementHeight = ([ht floatValue]*iOSValueOfOneTwip);
+                            
+//                            float groupElementLeftPosition = ((groupAndPageLeftMarginPt/groupCoordOriginX) * [left floatValue])*iOSValueOfOneTwip*20;
+//                            float groupElementTopPosition = (groupTopMarginWRTiOS/groupCoordOriginY) * [top floatValue];
+//                            float groupElementWidth = (groupWidthWRTiOS/groupCoordWidth) * [wt floatValue];
+//                            float groupElementHeight = (groupHeightWRTiOS/groupCoordHeight) * [ht floatValue];
+                            
+                            float groupElementLeftPosition = (([left floatValue] - groupCoordOriginX)*iOSValueOfOneTwip) ; // minus groupCoordOriginX i.e. start from the origin
+                            float groupElementTopPosition = (([top floatValue] - groupCoordOriginY)*iOSValueOfOneTwip);
+                            float groupElementWidth = ([wt floatValue]*iOSValueOfOneTwip);
+                            float groupElementHeight = ([ht floatValue]*iOSValueOfOneTwip);
+                            
+                            //v:image, v:textbox
+                            NSArray* imageElementArray = [groupChildElement elementsForName:@"v:imagedata"];
+                            
+                            if (imageElementArray.count > 0) {
+                               DDXMLElement* imageElement = [imageElementArray firstObject];
+                                NSString* relationId = [[imageElement attributeForName:@"r:id"] stringValue];
+                                
+                                NSString* filePath = [[[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/word/_rels/document",unzipFolderName]] stringByAppendingPathExtension:@"xml"] stringByAppendingPathExtension:@"rels"];
+                                
+                                DDXMLDocument* relsDocument = [self parseXmlFromPath:filePath];
+                                
+                                DDXMLElement* relsRootElement = [relsDocument rootElement];
+                                
+                                NSString* imagePath;
+                                NSArray* relationshipElementArray = [relsRootElement elementsForName:@"Relationship"];
+                                for (DDXMLElement* relationshipElement in relationshipElementArray) {
+                                   NSString* elementRelationId = [[relationshipElement attributeForName:@"Id"] stringValue];
+                                    
+                                    if ([elementRelationId isEqualToString:relationId]) {
+                                       
+                                        NSString* filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@/word",unzipFolderName]];
+                                        
+                                        
+                                       imagePath = [[relationshipElement attributeForName:@"Target"] stringValue];
+                                       
+                                        imagePath = [filePath stringByAppendingPathComponent:imagePath];
+                                        break;
+                                    }
+                                }
 
-                textView.text = updatedString;
+                                if (imagePath != nil) {
+                                    UIImageView* shapeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(groupElementLeftPosition, groupElementTopPosition, groupElementWidth, groupElementHeight)];
+                                    
+                                    shapeImageView.image = [UIImage imageWithContentsOfFile:imagePath];
+                 
+                                    [groupElementView addSubview:shapeImageView];
+                                }
+                            }
+                            else{
+                                NSArray* textboxElementArray = [groupChildElement elementsForName:@"v:textbox"];
+                                
+                                if (textboxElementArray.count > 0) {
+                                    
+                                  DDXMLElement* textboxElement =  [textboxElementArray firstObject];
+                                    
+                                  NSArray* txbxContentElementArray =  [textboxElement elementsForName:@"w:txbxContent"];
+                                    
+                                    if (txbxContentElementArray.count > 0) {
+                                        
+                                      DDXMLElement* txbxContentElement =  [txbxContentElementArray firstObject];
+                                        
+                                        NSArray* paragraphArray = [txbxContentElement elementsForName:@"w:p"];
+                                        
+                                        UITextView* textView = [[UITextView alloc] initWithFrame:CGRectMake(groupElementLeftPosition, groupElementTopPosition, groupElementWidth, groupElementHeight)];
+                                        
+                                        [textView setBackgroundColor:[UIColor clearColor]];
+                                        
+                                        [textView setTextAlignment:NSTextAlignmentRight]; // Note: set statically, fetch the property then set
+                                        
+                                        for (int i =0 ; i < paragraphArray.count; i++)
+                                        {
+                                            if (i !=0) {
+                                                textView.text = [textView.text stringByAppendingString:@"\n"];
+                                            }
+                                            DDXMLElement* paragraph = [paragraphArray objectAtIndex:i];
+                                            
+                                            // parahraph can have running elements or smartTags or so on
+                                            NSArray *runningArray = [paragraph elementsForName:@"w:r"];
+                                            
+                                            if (runningArray.count > 0) {
+                                                
+                                                for (int i = 0; i < runningArray.count; i++) {
+                                                    
+                                                    DDXMLElement* runningElement = [runningArray objectAtIndex:i];
+                                                    
+                                                   
+                                                    
+                                                    NSArray *textArray = [runningElement elementsForName:@"w:t"];
+                                                    
+                                                    if (textArray.count>0)
+                                                    {
+                                                        isGroupElement = false;
+                                                        
+                                                        DDXMLElement* ele = [textArray objectAtIndex:0];
+                                                        
+                                                        DDXMLNode* str = [ele childAtIndex:0];
+                                                        
+                                                        [textView setFont:[UIFont fontWithName:@"Arial" size:5.4]];
+                                                        
+                                                        textView.text = [textView.text stringByAppendingString:[NSString stringWithFormat:@"%@",str]];
+                                                        
+                                                        NSString* updatedString = [textView.text stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
+                                                        
+                                                        updatedString = [updatedString stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+                                                        
+                                                        updatedString = [updatedString stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+                                                        
+                                                        textView.text = updatedString;
+                                                        
+//                                                        CGRect frame = textView.frame;
+//
+//                                                        frame.size.height = textView.contentSize.height;
+//
+//                                                        textView.frame = frame;
+                                                        
+                                                        [textViewContentHeightDict setObject: [NSString stringWithFormat:@"%f",textView.contentSize.height] forKey:[NSString stringWithFormat:@"%ld",textView.tag]];
+                                                        
+                                                        [groupElementView addSubview:textView];
+                                                    }
+
+                                                }
+                                                
+                                            }
+                                            
+                                                NSArray *smartTagElementArray = [paragraph elementsForName:@"w:smartTag"];
+
+                                                if (smartTagElementArray.count > 0) {
+                                                    
+                                                  DDXMLElement* smartTagElement =  [smartTagElementArray objectAtIndex:0];
+                                                    
+                                                  NSArray* innerSmartTagElementArray =  [smartTagElement elementsForName:@"w:smartTag"];
+                                                    
+                                                    if (innerSmartTagElementArray.count > 0) {
+                                                        DDXMLElement* innerSmartTagElement =  [innerSmartTagElementArray objectAtIndex:0];
+                                                        
+                                                        NSArray* runningArray =    [innerSmartTagElement elementsForName:@"w:r"];
+                                                        
+                                                        if (runningArray.count > 0) {
+                                                          DDXMLElement* runningElement =  [runningArray objectAtIndex:0];
+                                                            
+                                                          NSArray* textArray =  [runningElement elementsForName:@"w:t"];
+                                                            
+                                                            if (textArray.count > 0) {
+                                                              DDXMLElement* textElement =  [textArray objectAtIndex:0];
+                                                                
+                                                              DDXMLNode* str =  [textElement childAtIndex:0];
+                                                                
+                                                                [textView setFont:[UIFont fontWithName:@"Arial" size:5.4]];
+                                                                
+                                                                textView.text = [textView.text stringByAppendingString:[NSString stringWithFormat:@"%@",str]];
+                                                                
+                                                                NSString* updatedString = [textView.text stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
+                                                                
+                                                                updatedString = [updatedString stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+                                                                
+                                                                updatedString = [updatedString stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+                                                                
+                                                                textView.text = updatedString;
+                                                                
+        //                                                        CGRect frame = textView.frame;
+        //
+        //                                                        frame.size.height = textView.contentSize.height;
+        //
+        //                                                        textView.frame = frame;
+                                                                
+                                                                [textViewContentHeightDict setObject: [NSString stringWithFormat:@"%f",textView.contentSize.height] forKey:[NSString stringWithFormat:@"%ld",textView.tag]];
+                                                                
+                                                                [groupElementView addSubview:textView];
+                                                            }
+                                                        }
+
+                                                    }
+                                                }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                            
+                           
+                            
+                        }
+                        
+                        //                    bool str1 = groupEle.XPath.absolutePath;
+                        //                    NSString *str2 = groupEle.XPath.decomposedStringWithCanonicalMapping;
+                        //                    NSString *str3 = groupEle.XPath.decomposedStringWithCompatibilityMapping;
+                        
+                        NSArray* shapeTypeArray;
+                    }
+                    textView.tag = 0;
+                    
+                    groupElementView.tag = textViewCount;
+                    
+                    totalTextHeight = totalTextHeight + groupElementView.frame.size.height;
+                    
+                    [insideView addSubview:groupElementView];
+                    //                NSArray* shapeTypeArray = [groupElement elementsForName:@"v:shapetype"];
+                    //                NSArray* shapeArray = [groupElement elementsForName:@"v:shape"];
+                    //
+                    //                DDXMLElement* shapeLement = [shapeArray objectAtIndex:0];
+                    //                NSArray* imageDataArray = [shapeLement elementsForName:@"imagedata"];
+                    //                DDXMLElement* imageDataElement = [imageDataArray objectAtIndex:0];
+                }
+                else if((pictArray = [runningElement elementsForName:@"w:tab"]).count > 0){
+                    
+                    NSString *elementPathString = runningElement.XPath;
+                    NSLog(@"ele");
+                }
+//                else{
+//                    textViewCount--;
+//
+//                    textView.tag = 0;
+//
+//                    textView.delegate = nil;
+//
+//                    [XPathForTextViewDict removeObjectForKey:[NSString stringWithFormat:@"%ld",(long)textView.tag]];
+//
+//                    [elementIndexDict removeObjectForKey:[NSString stringWithFormat:@"%ld",(long)textView.tag]];
+//                }
                 
-//                NSLog(@"TextView text = %d", textView.text);
-//
-//                NSLog(@"level = %ld",str.level);
-//
-//                NSLog(@"index = %ld",str.index);
+            }
+            
+            if (textView.text.length > 0) { // dont add paragraph/runElement that dont have any content
+            
+            totalTextHeight = totalTextHeight + textView.frame.size.height;
+            
+            [insideView addSubview:textView];
+            }
+            else{ // if no text that may mean <w:r> with <w:tab>(atleast for the current nhs template) and no text...but you have to add the textfield since when you will fetch y posn and height in next loop you should get the below textfield.
+                
 
                 CGRect frame = textView.frame;
-                
-                frame.size.height = textView.contentSize.height;
-                
-                textView.frame = frame;
-                
-                [textViewContentHeightDict setObject: [NSString stringWithFormat:@"%f",textView.contentSize.height] forKey:[NSString stringWithFormat:@"%ld",textView.tag]];
-                
-               
-//                NSLog(@"element :%@",str);
-//                
-//                NSLog(@"textViewCount :%d",textViewCount);
-                
-               
-            }
 
+                frame.size.height = 35;
+                frame.size.width = 0;
+
+                textView.frame = frame;
+                [insideView addSubview:textView];
+            }
             
-           
             
         }
-//        for (int i = 1; i<runningArray.count; i++)
-//        {
-//            [runningArray removeObjectAtIndex:1];
-//        }
-        totalTextHeight = totalTextHeight + textView.frame.size.height;
-
-        [insideView addSubview:textView];
-
         
-        //
-        //        for (int i = 0; i < [paragraph childCount]; i++)
-        //        {
-        //            DDXMLNode *node = [paragraph childAtIndex:i];
-        //
-        //            NSString *name = [node name];
-        //
-        //            NSString *value = [node stringValue];
-        //
-        //            NSLog(@"%@:%@",name,value);
-        //
-        //        }
+        if (insideView.frame.size.height < totalTextHeight)
+        {
+            CGRect frame = insideView.frame;
+            
+            frame.size.height = totalTextHeight;
+            
+            insideView.frame = frame;
+            
+            CGSize size = CGSizeMake(insideView.frame.size.width, insideView.frame.size.height);
+            
+            self.scrollView.contentSize = size;
+            
+            NSLayoutConstraint *height = [NSLayoutConstraint
+                                          constraintWithItem:insideView
+                                          attribute:NSLayoutAttributeHeight
+                                          relatedBy:NSLayoutRelationEqual
+                                          toItem:nil
+                                          attribute:NSLayoutAttributeNotAnAttribute
+                                          multiplier:0
+                                          constant:size.height];
+            
+            [insideView addConstraint:height];
+        }
+        
         
     }
-    
-    if (insideView.frame.size.height < totalTextHeight)
-    {
-        CGRect frame = insideView.frame;
-
-        frame.size.height = totalTextHeight;
-
-        insideView.frame = frame;
-
-        CGSize size = CGSizeMake(insideView.frame.size.width, insideView.frame.size.height);
-        
-        self.scrollView.contentSize = size;
-        
-        NSLayoutConstraint *height = [NSLayoutConstraint
-                                                      constraintWithItem:insideView
-                                                      attribute:NSLayoutAttributeHeight
-                                                      relatedBy:NSLayoutRelationEqual
-                                                      toItem:nil
-                                                      attribute:NSLayoutAttributeNotAnAttribute
-                                                      multiplier:0
-                                                      constant:size.height];
-        
-        [insideView addConstraint:height];
-    }
-   
-    
-    
 }
 
-
+-(DDXMLDocument*) parseXmlFromPath:(NSString*)filePath
+{
+    
+    
+    //    NSString* filePath = [[NSBundle mainBundle] pathForResource:@"document" ofType:@"xml"];
+    NSData *xmlData = [[NSMutableData alloc] initWithContentsOfFile:filePath];
+    
+    relsDocument = [[DDXMLDocument alloc] initWithData:xmlData options:0 error:nil];
+    
+    
+    return relsDocument;
+}
 
 - (IBAction)saveEditedFile:(id)sender
 {
@@ -615,93 +909,7 @@
 
 -(BOOL)saveEditedFileResource:(NSString*)source
 {
-//    NSError *error = nil;
-//
-//    textViewCountForEdit = 2;
-//
-//    DDXMLDocument *theDocument = [[DDXMLDocument alloc] initWithXMLString:source options:0 error:&error];
-//
-//    DDXMLElement* ele = [theDocument rootElement] ;
-//
-//    NSArray* arr = [ele elementsForName:@"w:body"];
-//
-//    DDXMLElement* bodyElement = [arr objectAtIndex:0];
-//
-//    DDXMLElement* bodyElement1 = [bodyElement valueForKeyPath:@"w:p"];
-//
-//
-//    NSArray* paragraphArray = [bodyElement elementsForName:@"w:p"];
-//
-////    for (DDXMLElement *paragraph in paragraphArray)
-//        for (int j =0;j<paragraphArray.count;j++)
-//
-//    {
-//
-//        UITextView* referenceTextView = [insideView viewWithTag:textViewCountForEdit];
-//
-////        UITextView* textView = [[UITextView alloc] initWithFrame:CGRectMake(referenceTextView.frame.origin.x, referenceTextView.frame.size.height + referenceTextView.frame.origin.y, self.view.frame.size.width, 45)];
-//
-//        textViewCountForEdit++;
-//
-//       // textView.tag = textViewCountForEdit;
-//
-//       // textView.delegate = self;
-//        DDXMLElement *paragraph = [paragraphArray objectAtIndex:j];
-//        NSArray *runningArray = [paragraph elementsForName:@"w:r"];
-//
-////        for (DDXMLElement *runningElement in runningArray)
-//        NSString* wholeString;
-//        for (int i =0;i<runningArray.count;i++)
-//
-//        {
-//            DDXMLElement *runningElement = [runningArray objectAtIndex:i];
-//            NSArray *textArray = [runningElement elementsForName:@"w:t"];
-//
-//
-//            if (textArray.count>0)
-//            {
-//                //DDXMLElement* ele = [textArray objectAtIndex:0];
-//
-//                //wholeString = [wholeString stringByAppendingString:[NSString stringWithFormat:@"%@",[ele childAtIndex:0]]];
-//                //DDXMLNode* str = [ele childAtIndex:0];
-//
-//                if([modifiedTextViewTagsArray containsObject:[NSString stringWithFormat:@"%d",textViewCountForEdit]] && i==runningArray.count-1)
-//                {
-//                    //[ele removeChildAtIndex:0];
-//
-//
-//
-//                    UITextView* textView = [insideView viewWithTag:textViewCountForEdit];
-//
-//                    DDXMLNode* str = [DDXMLNode textWithStringValue:textView.text];
-//
-//
-////                    for (int i =0;i<runningArray.count;i++)
-////                    {
-//                    [bodyElement removeChildAtIndex:j];
-//
-//                   // [bodyElement addChild:str];
-//
-//                    [bodyElement insertChild:str atIndex:j];
-//                    //}
-//                    NSLog(@"TextView tag = %d", textView.tag);
-//                }
-////                textView.text = [textView.text stringByAppendingString:[NSString stringWithFormat:@"%@",str]];
-////
-////                CGRect frame = textView.frame;
-////                frame.size.height = textView.contentSize.height;
-////                textView.frame = frame;
-//
-//
-//                //NSLog(@"element :%@",str);
-//                NSLog(@"textViewCount :%d",textViewCountForEdit);
-//
-//            }
-//
-//        }
-//       // [insideView addSubview:textView];
-//
-//    }
+
      NSData* data = [theDocument XMLData];
     // NSString* editedFilePath = [[NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/editedXML5"]] stringByAppendingPathExtension:@"xml"];
     
@@ -712,7 +920,7 @@
     {
         [[NSFileManager defaultManager] removeItemAtPath:editedFilePath error:&err];
     }
-    NSLog(@"doc = %@", theDocument.XMLString);
+
 
     BOOL written = [data writeToFile:editedFilePath atomically:true];
     
@@ -721,7 +929,7 @@
 }
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
-    NSLog(@"");
+   
     return true;
 }
 
@@ -741,9 +949,7 @@
     path = [path stringByReplacingOccurrencesOfString:@"/w:text[1]" withString:@""];
     
     DDXMLElement* bodyElement = [[theDocument rootElement] childAtIndex: 0];
-    
-    // proprty settings code
-    // get old paraelement and its property
+
     DDXMLElement* oldParaElement = [bodyElement childAtIndex:textViewIndex]; // get the old paragraph to get running ele. prop
     
     NSArray* paraPropertyArray = [oldParaElement elementsForName:@"w:pPr"];
@@ -777,7 +983,7 @@
         
         [runningElement addChild:runningPropElement];
     }
-    else
+    else if (runningPropElement != nil)
     {
         [runningElement addChild:[runningPropElement copy]];
     }
@@ -819,11 +1025,7 @@
     {
         if (changedContentHeight != 0)
         {
-//            double preContentHeight = [[textViewContentHeightDict objectForKey:[NSString stringWithFormat:@"%ld",textView.tag]] doubleValue];
-//
-//            double currentContentHeight = textView.contentSize.height;
-//
-//            double changedContentHeight = currentContentHeight  + preContentHeight;
+
             
             UITextView* nextTextView = [insideView viewWithTag:i];
 
@@ -838,9 +1040,6 @@
             {
                 [nextTextView removeConstraint:constraint];
             }
-            
-//            [textViewContentHeightDict setObject:[NSString stringWithFormat:@"%f",currentContentHeight] forKey:[NSString stringWithFormat:@"%ld",i]
-//             ];
             
         }
        

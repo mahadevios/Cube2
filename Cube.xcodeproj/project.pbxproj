@@ -101,6 +101,7 @@
 		84D0B52D1D81B4D70084E016 /* SBJson4StreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D0B5251D81B4D70084E016 /* SBJson4StreamWriterState.m */; };
 		84D0B52E1D81B4D70084E016 /* SBJson4Writer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D0B5271D81B4D70084E016 /* SBJson4Writer.m */; };
 		84DEE9E92427384F00B310E0 /* PatientDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DEE9E82427384F00B310E0 /* PatientDetails.m */; };
+		84EE09B9254A96DB00AB8CEF /* Operative Note Different Template.docx in Resources */ = {isa = PBXBuildFile; fileRef = 84EE09B8254A96DB00AB8CEF /* Operative Note Different Template.docx */; };
 		84F5641A1FCD4970006FC7AD /* SelectFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F564191FCD4970006FC7AD /* SelectFileViewController.m */; };
 		84F5641D1FCD522D006FC7AD /* CommonDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 84F5641C1FCD522D006FC7AD /* CommonDelegate.h */; };
 		84FCCFA21D48B75A00E3D7AE /* SelectDepartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FCCFA11D48B75A00E3D7AE /* SelectDepartmentViewController.m */; };
@@ -349,6 +350,7 @@
 		84DEE9E82427384F00B310E0 /* PatientDetails.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PatientDetails.m; sourceTree = "<group>"; };
 		84EACD9D1E03FF65002C43BE /* iTunesLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iTunesLibrary.framework; path = ../../../../../Library/Frameworks/iTunesLibrary.framework; sourceTree = "<group>"; };
 		84EACDA11E040CE2002C43BE /* iTunesLibrary */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = iTunesLibrary; path = ../../../../../Library/Frameworks/iTunesLibrary.framework/Versions/A/iTunesLibrary; sourceTree = "<group>"; };
+		84EE09B8254A96DB00AB8CEF /* Operative Note Different Template.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Operative Note Different Template.docx"; path = "Cube/Operative Note Different Template.docx"; sourceTree = "<group>"; };
 		84F564181FCD4970006FC7AD /* SelectFileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectFileViewController.h; sourceTree = "<group>"; };
 		84F564191FCD4970006FC7AD /* SelectFileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectFileViewController.m; sourceTree = "<group>"; };
 		84F5641C1FCD522D006FC7AD /* CommonDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonDelegate.h; sourceTree = "<group>"; };
@@ -555,6 +557,7 @@
 		847222351D47368A00C00F20 = {
 			isa = PBXGroup;
 			children = (
+				84EE09B8254A96DB00AB8CEF /* Operative Note Different Template.docx */,
 				847D95CA1D5F325600145C32 /* libsqlite3.0.tbd */,
 				84BA563221B00A6200765A65 /* TCsFinal.docx */,
 				847222401D47368A00C00F20 /* Cube */,
@@ -996,6 +999,7 @@
 			files = (
 				847222511D47368A00C00F20 /* LaunchScreen.storyboard in Resources */,
 				849AF60D209C49A800C67980 /* Cube_DB.sqlite in Resources */,
+				84EE09B9254A96DB00AB8CEF /* Operative Note Different Template.docx in Resources */,
 				8472224E1D47368A00C00F20 /* Assets.xcassets in Resources */,
 				8472224C1D47368A00C00F20 /* Main.storyboard in Resources */,
 				843B340E20452BD20080F355 /* Info.plist in Resources */,
