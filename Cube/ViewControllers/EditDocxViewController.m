@@ -18,7 +18,7 @@
 
 @implementation EditDocxViewController
 
-@synthesize referenceTextView,textViewCount,scrollView,insideView,textAdded,elementChanged,modifiedTextViewTagsArray,XPathForTextViewDict,theDocument, relsDocument,elementIndexDict,bundleFileName,zipDocxFileName,unzipFolderName,textViewContentHeightDict;
+@synthesize referenceTextView,textViewCount,scrollView,insideView,textAdded,elementChanged,modifiedTextViewTagsArray,XPathForTextViewDict,theDocument, relsDocument,elementIndexDict,bundleFileName,zipDocxFileName,unzipFolderName,textViewContentHeightDict,locAndLenOfRunEleUsingTxVwTagDic;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -26,6 +26,7 @@
     modifiedTextViewTagsArray = [NSMutableArray new];
     
     textViewContentHeightDict = [NSMutableDictionary new];
+    locAndLenOfRunEleUsingTxVwTagDic = [NSMutableDictionary new];
     referenceTextView.translatesAutoresizingMaskIntoConstraints = true;
     [referenceTextView sizeToFit];
     referenceTextView.scrollEnabled = false;
@@ -357,8 +358,13 @@
     
     DDXMLElement* rootElement = [theDocument rootElement] ;
     
-    [rootElement nextNode];
-    [rootElement nextSibling];
+//    DDXMLNode *defaultNamespace = [theDocument.rootElement namespaceForPrefix:@""];
+//        defaultNamespace.name = @"default";
+//        NSArray *xmlNodes = [[theDocument rootElement] nodesForXPath:@"//default:document[1]/default:body[1]" error:nil];
+    
+//    /document[1]/body[1]/p[10]
+//    [rootElement nextNode];
+//    [rootElement nextSibling];
     
     NSArray* bodyElementArray = [rootElement elementsForName:@"w:body"];
     
@@ -402,22 +408,15 @@
     {
         NSMutableArray *runningArray = [paragraph elementsForName:@"w:r"];
         
+        
         if (runningArray.count > 0) {
-            
-          
-            
-            //DDXMLNode* node = [paragraph nextNode];
-//            UIView* referenceTextView;
-            
+         
             UIView* referenceTextView = [insideView viewWithTag:textViewCount];
-            
-//            if ([referenceView isKindOfClass:[UITextView class]]) {
-//                referenceTextView = referenceView;
-//            }
-            
+           
             UITextView* textView = [[UITextView alloc] initWithFrame:CGRectMake(pageLeftMarginIOS, referenceTextView.frame.size.height + referenceTextView.frame.origin.y, self.view.frame.size.width-pageRightMarginIOS-pageLeftMarginIOS, 45)];
             
             [textView setBackgroundColor:[UIColor clearColor]];
+            
             
             textView.returnKeyType = UIReturnKeyDone;
             
@@ -436,6 +435,51 @@
             {
                 DDXMLElement *runningElement = [runningArray objectAtIndex:i];
                 
+                NSString* fontNameString, *colorString, *fontSizeString;
+                bool isFontBoldForParaText = false;
+                NSArray* paraRunningPropArray = [runningElement elementsForName:@"w:rPr"];
+                
+                if (paraRunningPropArray.count > 0) {
+                    
+                    DDXMLElement* paraRunningPropElement = [paraRunningPropArray firstObject];
+                    
+                    NSArray* boldElementArray = [paraRunningPropElement elementsForName:@"w:b"];
+                    if (boldElementArray.count > 0) {
+                        isFontBoldForParaText = true;
+                    }else{
+                        isFontBoldForParaText = false;
+                    }
+                    
+                    if (isFontBoldForParaText) {
+                        NSArray* fontsElementArray = [paraRunningPropElement elementsForName:@"w:rFonts"];
+                        if (fontsElementArray.count > 0) {
+                           DDXMLElement* fontNameElement = [fontsElementArray firstObject] ;
+                            
+                           fontNameString = [[[fontNameElement attributeForName:@"w:cs"] stringValue] stringByAppendingString:@"-Bold"];
+                        }
+                    }else{
+                        NSArray* fontsElementArray = [paraRunningPropElement elementsForName:@"w:rFonts"];
+                        if (fontsElementArray.count > 0) {
+                           DDXMLElement* fontNameElement = [fontsElementArray firstObject] ;
+                            
+                           fontNameString = [[fontNameElement attributeForName:@"w:cs"] stringValue];
+                        }
+                    }
+                    
+                    NSArray* colorElementArray = [paraRunningPropElement elementsForName:@"w:color"];
+                    if (colorElementArray.count > 0) {
+                        DDXMLElement* colorNameElement  = [colorElementArray firstObject];
+                        
+                        colorString = [[colorNameElement attributeForName:@"w:val"] stringValue];
+                    }
+                    NSArray* sizeElementArray = [paraRunningPropElement elementsForName:@"w:sz"];
+                    if (sizeElementArray.count > 0) {
+                        DDXMLElement* sizeElement = [sizeElementArray firstObject];
+                        
+                        fontSizeString = [[sizeElement attributeForName:@"w:val"] stringValue];
+                    }
+                    
+                }
                 NSArray* pictArray;
                 NSArray *textArray = [runningElement elementsForName:@"w:t"];
                 
@@ -447,7 +491,27 @@
                     
                     DDXMLNode* str = [ele childAtIndex:0];
                     
+                    
+//                    [textView setFont:[UIFont fontWithName:fontNameString size:[fontSizeString floatValue]]];
+                    long locnOfNxtRunEle = textView.text.length;
+
                     textView.text = [textView.text stringByAppendingString:[NSString stringWithFormat:@"%@",str]];
+                    
+//                    NSRange range = [textView.text rangeOfString:[str stringValue]]; // this cause dupication if same text appears
+                    
+                    NSMutableDictionary* XPathUsingLocAndLenOfRunEleDic = [locAndLenOfRunEleUsingTxVwTagDic objectForKey:[NSString stringWithFormat:@"%ld", textView.tag]];
+                    
+                    if (XPathUsingLocAndLenOfRunEleDic == nil) {
+                        
+                        XPathUsingLocAndLenOfRunEleDic = [NSMutableDictionary new];
+                        [XPathUsingLocAndLenOfRunEleDic setObject:runningElement.XPath forKey:[[NSString stringWithFormat:@"%lu", locnOfNxtRunEle] stringByAppendingString:[NSString stringWithFormat:@",%lu", [str stringValue].length]]];
+                        [locAndLenOfRunEleUsingTxVwTagDic setObject:XPathUsingLocAndLenOfRunEleDic forKey:[NSString stringWithFormat:@"%ld", textView.tag]];
+                    }else{
+                        [XPathUsingLocAndLenOfRunEleDic setObject:runningElement.XPath forKey:[[NSString stringWithFormat:@"%lu", locnOfNxtRunEle] stringByAppendingString:[NSString stringWithFormat:@",%lu", [str stringValue].length]]];
+                        
+                        [locAndLenOfRunEleUsingTxVwTagDic setObject:XPathUsingLocAndLenOfRunEleDic forKey:[NSString stringWithFormat:@"%ld", textView.tag]];
+                    }
+
                     
                     NSString* updatedString = [textView.text stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
                     
@@ -582,18 +646,6 @@
                             NSString* top = [styleDict valueForKey:@"top"];
                             NSString* pos = [styleDict valueForKey:@"position"];
                             
-//                            float groupAndPageLeft = [groupLeftMarginPtString floatValue] + ([pageLeftMarginTwip floatValue]/20);
-//
-                            
-//                            float groupElementLeftPosition = ([left floatValue]*iOSValueOfOneTwip) + groupLeftMarginIOS ;
-//                            float groupElementTopPosition = ([top floatValue]*iOSValueOfOneTwip) + groupTopMarginIOS;
-//                            float groupElementWidth = ([wt floatValue]*iOSValueOfOneTwip);
-//                            float groupElementHeight = ([ht floatValue]*iOSValueOfOneTwip);
-                            
-//                            float groupElementLeftPosition = ((groupAndPageLeftMarginPt/groupCoordOriginX) * [left floatValue])*iOSValueOfOneTwip*20;
-//                            float groupElementTopPosition = (groupTopMarginWRTiOS/groupCoordOriginY) * [top floatValue];
-//                            float groupElementWidth = (groupWidthWRTiOS/groupCoordWidth) * [wt floatValue];
-//                            float groupElementHeight = (groupHeightWRTiOS/groupCoordHeight) * [ht floatValue];
                             
                             float groupElementLeftPosition = (([left floatValue] - groupCoordOriginX)*iOSValueOfOneTwip) ; // minus groupCoordOriginX i.e. start from the origin
                             float groupElementTopPosition = (([top floatValue] - groupCoordOriginY)*iOSValueOfOneTwip);
@@ -664,9 +716,61 @@
                                             if (i !=0) {
                                                 textView.text = [textView.text stringByAppendingString:@"\n"];
                                             }
+                                            
                                             DDXMLElement* paragraph = [paragraphArray objectAtIndex:i];
                                             
-                                            // parahraph can have running elements or smartTags or so on
+                                            NSString* fontNameString, *fontSizeString, *colorString;
+                                            bool isFontBold = false;
+                                            NSArray *paraPropArray = [paragraph elementsForName:@"w:pPr"];
+
+                                            if (paraPropArray.count > 0) {
+                                                
+                                                DDXMLElement* paraPropElement = [paraPropArray firstObject];
+                                                
+                                                NSArray* paraRunningPropArray = [paraPropElement elementsForName:@"w:rPr"];
+                                                
+                                                if (paraRunningPropArray.count > 0) {
+                                                    
+                                                    DDXMLElement* paraRunningPropElement = [paraRunningPropArray firstObject];
+                                                    
+                                                    NSArray* boldElementArray = [paraRunningPropElement elementsForName:@"w:b"];
+                                                    if (boldElementArray.count > 0) {
+                                                        isFontBold = true;
+                                                    }else{
+                                                        isFontBold = false;
+                                                    }
+                                                    
+                                                    if (isFontBold) {
+                                                        NSArray* fontsElementArray = [paraRunningPropElement elementsForName:@"w:rFonts"];
+                                                        if (fontsElementArray.count > 0) {
+                                                           DDXMLElement* fontNameElement = [fontsElementArray firstObject] ;
+                                                            
+                                                           fontNameString = [[[fontNameElement attributeForName:@"w:cs"] stringValue] stringByAppendingString:@"-Bold"];
+                                                        }
+                                                    }else{
+                                                        NSArray* fontsElementArray = [paraRunningPropElement elementsForName:@"w:rFonts"];
+                                                        if (fontsElementArray.count > 0) {
+                                                           DDXMLElement* fontNameElement = [fontsElementArray firstObject] ;
+                                                            
+                                                           fontNameString = [[fontNameElement attributeForName:@"w:cs"] stringValue];
+                                                        }
+                                                    }
+                                                    NSArray* colorElementArray = [paraRunningPropElement elementsForName:@"w:color"];
+                                                    if (colorElementArray.count > 0) {
+                                                        DDXMLElement* colorNameElement  = [colorElementArray firstObject];
+                                                        
+                                                        colorString = [[colorNameElement attributeForName:@"w:val"] stringValue];
+                                                    }
+                                                    NSArray* sizeElementArray = [paraRunningPropElement elementsForName:@"w:sz"];
+                                                    if (sizeElementArray.count > 0) {
+                                                        DDXMLElement* sizeElement = [sizeElementArray firstObject];
+                                                        
+                                                        fontSizeString = [[sizeElement attributeForName:@"w:val"] stringValue];
+                                                    }
+                                                   
+                                                }
+                                            }
+                                            // parahraph can have running elements or smartTags or so on(addon them in if, if, if..like below)
                                             NSArray *runningArray = [paragraph elementsForName:@"w:r"];
                                             
                                             if (runningArray.count > 0) {
@@ -675,8 +779,49 @@
                                                     
                                                     DDXMLElement* runningElement = [runningArray objectAtIndex:i];
                                                     
-                                                   
+                                                    NSArray* paraRunningPropArray = [runningElement elementsForName:@"w:rPr"];
                                                     
+                                                    if (paraRunningPropArray.count > 0) {
+                                                        
+                                                        DDXMLElement* paraRunningPropElement = [paraRunningPropArray firstObject];
+                                                        
+                                                        NSArray* boldElementArray = [paraRunningPropElement elementsForName:@"w:b"];
+                                                        if (boldElementArray.count > 0) {
+                                                            isFontBold = true;
+                                                        }else{
+                                                            isFontBold = false;
+                                                        }
+                                                        
+                                                        if (isFontBold) {
+                                                            NSArray* fontsElementArray = [paraRunningPropElement elementsForName:@"w:rFonts"];
+                                                            if (fontsElementArray.count > 0) {
+                                                               DDXMLElement* fontNameElement = [fontsElementArray firstObject] ;
+                                                                
+                                                               fontNameString = [[[fontNameElement attributeForName:@"w:cs"] stringValue] stringByAppendingString:@"-Bold"];
+                                                            }
+                                                        }else{
+                                                            NSArray* fontsElementArray = [paraRunningPropElement elementsForName:@"w:rFonts"];
+                                                            if (fontsElementArray.count > 0) {
+                                                               DDXMLElement* fontNameElement = [fontsElementArray firstObject] ;
+                                                                
+                                                               fontNameString = [[fontNameElement attributeForName:@"w:cs"] stringValue];
+                                                            }
+                                                        }
+                                                        
+                                                        NSArray* colorElementArray = [paraRunningPropElement elementsForName:@"w:color"];
+                                                        if (colorElementArray.count > 0) {
+                                                            DDXMLElement* colorNameElement  = [colorElementArray firstObject];
+                                                            
+                                                            colorString = [[colorNameElement attributeForName:@"w:val"] stringValue];
+                                                        }
+                                                        NSArray* sizeElementArray = [paraRunningPropElement elementsForName:@"w:sz"];
+                                                        if (sizeElementArray.count > 0) {
+                                                            DDXMLElement* sizeElement = [sizeElementArray firstObject];
+                                                            
+                                                            fontSizeString = [[sizeElement attributeForName:@"w:val"] stringValue];
+                                                        }
+                                                        
+                                                    }
                                                     NSArray *textArray = [runningElement elementsForName:@"w:t"];
                                                     
                                                     if (textArray.count>0)
@@ -687,7 +832,9 @@
                                                         
                                                         DDXMLNode* str = [ele childAtIndex:0];
                                                         
-                                                        [textView setFont:[UIFont fontWithName:@"Arial" size:5.4]];
+                                                       
+                                                        [textView setFont:[UIFont fontWithName:fontNameString size:[fontSizeString floatValue]/2*0.6]];  // fontsize is half of a point...and we want in a point so divide by 2, * 0.6 is for ios scale down
+                                                        
                                                         
                                                         textView.text = [textView.text stringByAppendingString:[NSString stringWithFormat:@"%@",str]];
                                                         
@@ -729,7 +876,26 @@
                                                         
                                                         if (runningArray.count > 0) {
                                                           DDXMLElement* runningElement =  [runningArray objectAtIndex:0];
+                                                         
+                                                            NSArray* paraRunningPropArray = [runningElement elementsForName:@"w:rPr"];
                                                             
+                                                            if (paraRunningPropArray.count > 0) {
+                                                                
+                                                                DDXMLElement* paraRunningPropElement = [paraRunningPropArray firstObject];
+                                                                
+                                                                NSArray* fontsElementArray = [paraRunningPropElement elementsForName:@"w:rFonts"];
+                                                                if (fontsElementArray.count > 0) {
+                                                                    fontNameString = [[fontsElementArray firstObject] stringValue];
+                                                                }
+                                                                NSArray* colorElementArray = [paraRunningPropElement elementsForName:@"w:color"];
+                                                                if (colorElementArray.count > 0) {
+                                                                    colorString = [[colorElementArray firstObject] stringValue];
+                                                                }
+                                                                NSArray* sizeElementArray = [paraRunningPropElement elementsForName:@"w:sz"];
+                                                                if (sizeElementArray.count > 0) {
+                                                                    fontSizeString = [[sizeElementArray firstObject] stringValue];
+                                                                }
+                                                            }
                                                           NSArray* textArray =  [runningElement elementsForName:@"w:t"];
                                                             
                                                             if (textArray.count > 0) {
@@ -737,7 +903,7 @@
                                                                 
                                                               DDXMLNode* str =  [textElement childAtIndex:0];
                                                                 
-                                                                [textView setFont:[UIFont fontWithName:@"Arial" size:5.4]];
+                                                                [textView setFont:[UIFont fontWithName:fontNameString size:[fontSizeString floatValue]/2*0.6]]; // fontsize is half of a point...and we want in a point so divide by 2, * 0.6 is for ios scale down
                                                                 
                                                                 textView.text = [textView.text stringByAppendingString:[NSString stringWithFormat:@"%@",str]];
                                                                 
@@ -757,6 +923,8 @@
                                                                 
                                                                 [textViewContentHeightDict setObject: [NSString stringWithFormat:@"%f",textView.contentSize.height] forKey:[NSString stringWithFormat:@"%ld",textView.tag]];
                                                                 
+                                                                totalTextHeight = totalTextHeight + textView.frame.size.height;
+                                                                
                                                                 [groupElementView addSubview:textView];
                                                             }
                                                         }
@@ -772,14 +940,9 @@
                            
                             
                         }
-                        
-                        //                    bool str1 = groupEle.XPath.absolutePath;
-                        //                    NSString *str2 = groupEle.XPath.decomposedStringWithCanonicalMapping;
-                        //                    NSString *str3 = groupEle.XPath.decomposedStringWithCompatibilityMapping;
-                        
-                        NSArray* shapeTypeArray;
+                       
                     }
-                    textView.tag = 0;
+//                    textView.tag = 0;
                     
                     groupElementView.tag = textViewCount;
                     
@@ -845,7 +1008,9 @@
             
             self.scrollView.contentSize = size;
             
-            NSLayoutConstraint *height = [NSLayoutConstraint
+            [insideView removeConstraint:_insideViewHeightConstraint];
+
+            _insideViewHeightConstraint = [NSLayoutConstraint
                                           constraintWithItem:insideView
                                           attribute:NSLayoutAttributeHeight
                                           relatedBy:NSLayoutRelationEqual
@@ -854,7 +1019,7 @@
                                           multiplier:0
                                           constant:size.height];
             
-            [insideView addConstraint:height];
+            [insideView addConstraint:_insideViewHeightConstraint];
         }
         
         
@@ -933,13 +1098,14 @@
     return true;
 }
 
+
 - (void)textViewDidChange:(UITextView *)textView
 {
     if(![modifiedTextViewTagsArray containsObject:[NSString stringWithFormat:@"%ld",(long)textView.tag]])
     {
         [modifiedTextViewTagsArray addObject:[NSString stringWithFormat:@"%ld",(long)textView.tag]];
     }
-    
+     
     int textViewIndex = [[elementIndexDict objectForKey:[NSString stringWithFormat:@"%ld",(long)textView.tag]] intValue];
     
     NSString* path = [XPathForTextViewDict objectForKey:[NSString stringWithFormat:@"%ld",(long)textView.tag]];
@@ -1056,7 +1222,94 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range
  replacementText:(NSString *)text
 {
+//    textView.sele
+   
+    int selectedTextEndLocn = range.location + range.length - 1;
+    int updatedSelectedTextLength = range.length;
+    int selectedTextStartLocn = range.location;
     
+   
+        
+    NSMutableDictionary* XpathUsingLocLenDic = [locAndLenOfRunEleUsingTxVwTagDic objectForKey:[NSString stringWithFormat:@"%ld", textView.tag]];
+    
+    NSMutableDictionary* XPathUsingLocDic = [NSMutableDictionary new];
+
+    for (NSString* locAndLenKey in XpathUsingLocLenDic) {
+        NSArray* runEleStartLocnArr = [locAndLenKey componentsSeparatedByString:@","];
+
+        [XPathUsingLocDic setObject:[XpathUsingLocLenDic objectForKey:locAndLenKey] forKey:[runEleStartLocnArr objectAtIndex:0]];
+    }
+    for (NSString* locAndLenKey in XpathUsingLocLenDic) {
+        NSArray* locAndLenOfRunEleArray = [locAndLenKey componentsSeparatedByString:@","];
+        
+        if ((selectedTextStartLocn >= [[locAndLenOfRunEleArray objectAtIndex:0] intValue]) && (selectedTextStartLocn <= [[locAndLenOfRunEleArray objectAtIndex:1] intValue])) {
+            
+            NSString* xPathOfSelectedTextsRunElement = [XpathUsingLocLenDic objectForKey:locAndLenKey];
+            NSError* error;
+          
+            bool isIteratedForNxtRunEle = false;
+            while(updatedSelectedTextLength > 0){
+             
+            if (isIteratedForNxtRunEle) {
+                NSString* XPathOfNxtRunEle = [XPathUsingLocDic objectForKey:[NSString stringWithFormat:@"%d", selectedTextStartLocn]];
+                    
+                for (NSString* locAndLenKey in XpathUsingLocLenDic) {
+                            
+                    NSString* XPathToMatch = [XpathUsingLocLenDic objectForKey:locAndLenKey];
+                        
+                    if ([XPathOfNxtRunEle isEqualToString:XPathToMatch]) {
+                            locAndLenOfRunEleArray =  [locAndLenKey componentsSeparatedByString:@","];
+                        
+                        xPathOfSelectedTextsRunElement = XPathOfNxtRunEle;
+                    }
+                }
+             }
+           
+            isIteratedForNxtRunEle = true;
+                
+            DDXMLNode *defaultNamespace = [theDocument.rootElement namespaceForPrefix:@""];
+
+            xPathOfSelectedTextsRunElement = [xPathOfSelectedTextsRunElement stringByReplacingOccurrencesOfString:@"/" withString:[NSString stringWithFormat:@"/%@:", defaultNamespace.name]];
+                
+            NSArray* runEleArray =[[theDocument rootElement] nodesForXPath:xPathOfSelectedTextsRunElement error:&error];
+                
+            if (runEleArray.count > 0) {
+                DDXMLElement* runEle = [runEleArray firstObject];
+                
+                NSArray* txtEleArray = [runEle elementsForName:@"w:t"];
+                
+                if (txtEleArray.count > 0) {
+                    DDXMLElement* txtEle = [txtEleArray firstObject];
+                    
+                    int runEleEndLocn = [[locAndLenOfRunEleArray objectAtIndex:0] intValue] + [[locAndLenOfRunEleArray objectAtIndex:1] intValue] - 1;
+                   
+                    NSString* updatedTxt;
+                   
+                        if (runEleEndLocn <= selectedTextEndLocn) {//29
+                            // procedure: general anaesthetic
+
+                            int removeLength = runEleEndLocn - selectedTextStartLocn + 1;// 17 - 9 +1 = 9
+                            NSRange rangeToRemove = NSMakeRange(selectedTextStartLocn, removeLength);
+                            updatedSelectedTextLength = updatedSelectedTextLength - removeLength;// 20 - 9 = 11
+                            selectedTextStartLocn = selectedTextStartLocn + removeLength;// 9 + 9 = 18
+                            NSLog(@"");
+                        }else{
+                            NSRange rangeToRemove = NSMakeRange(selectedTextStartLocn, updatedSelectedTextLength);
+                            updatedSelectedTextLength = 0;
+                            NSLog(@"");
+                        }
+                        
+                   
+                   
+                }
+                
+            }
+            NSLog(@"fd");
+        }
+            
+            break;;
+    }
+    }
     if ([text isEqualToString:@"\n"])
     {
         
