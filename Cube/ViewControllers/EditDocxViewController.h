@@ -19,6 +19,8 @@
     NSString* parsedString;
 }
 @property (weak, nonatomic) IBOutlet UITextView *referenceTextView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *insideViewHeightConstraint;
+@property(nonatomic,strong) NSLayoutConstraint* height;
 @property(nonatomic) int textViewCount;
 
 @property(nonatomic) BOOL textAdded;
@@ -27,6 +29,7 @@
 @property(nonatomic,strong) NSMutableDictionary* XPathForTextViewDict;
 @property(nonatomic,strong) NSMutableDictionary* elementIndexDict;
 @property(nonatomic,strong) NSMutableDictionary* textViewContentHeightDict;
+@property(nonatomic,strong) NSMutableDictionary* locAndLenOfRunEleUsingTxVwTagDic;
 
 @property(nonatomic,strong) NSString* bundleFileName;
 @property(nonatomic,strong) NSString* unzipFolderName;

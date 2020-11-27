@@ -5973,7 +5973,7 @@
                                     <constraint firstItem="vx0-KY-fwO" firstAttribute="centerX" secondItem="kZD-BD-GFi" secondAttribute="centerX" multiplier="1.5" id="zMC-nb-HP5"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="pxM-ff-wVK">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="pxM-ff-wVK">
                                 <rect key="frame" x="0.0" y="168" width="414" height="691"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Twp-aw-vGP">
@@ -6001,7 +6001,6 @@
                                 <constraints>
                                     <constraint firstItem="Twp-aw-vGP" firstAttribute="leading" secondItem="pxM-ff-wVK" secondAttribute="leading" id="4o9-wU-6gy"/>
                                     <constraint firstItem="Twp-aw-vGP" firstAttribute="top" secondItem="pxM-ff-wVK" secondAttribute="top" id="H07-3y-BQa"/>
-                                    <constraint firstAttribute="bottom" secondItem="Twp-aw-vGP" secondAttribute="bottom" id="X2W-Vv-s0N"/>
                                     <constraint firstAttribute="trailing" secondItem="Twp-aw-vGP" secondAttribute="trailing" id="tzA-yO-VOm"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -6031,6 +6030,7 @@
                     </view>
                     <connections>
                         <outlet property="insideView" destination="Twp-aw-vGP" id="r6G-Eo-Pfk"/>
+                        <outlet property="insideViewHeightConstraint" destination="rWC-97-f9L" id="el8-v2-UOH"/>
                         <outlet property="referenceTextView" destination="eHa-kI-O7r" id="RXw-P0-HHv"/>
                         <outlet property="saveDocxButton" destination="F2i-UV-sPE" id="O5R-ng-1Em"/>
                         <outlet property="scrollView" destination="pxM-ff-wVK" id="XYz-Bc-ekI"/>
