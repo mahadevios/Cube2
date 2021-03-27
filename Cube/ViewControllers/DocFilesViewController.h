@@ -9,12 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "TableViewButton.h"
 #import "UIColor+ApplicationColors.h"
+#import "PopUpCustomView.h"
 
 @interface DocFilesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate, UIDocumentInteractionControllerDelegate, UIGestureRecognizerDelegate,UITextViewDelegate, UISplitViewControllerDelegate>
 {
     UIAlertController *alertController;
     UIAlertAction *actionDelete;
     UIAlertAction *actionCancel;
+    UIView* popupView;
+    PopUpCustomView* forTableViewObj;
+    NSArray* departmentNamesArray;
+    UITableViewCell *cell;
+    NSString* selectedDepartment;
+
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *completedFilesResponseArray;

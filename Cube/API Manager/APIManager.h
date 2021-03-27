@@ -78,7 +78,7 @@
 
 -(void)downloafFileUsingSession:(NSString*)mobielDictationIdVal;
 
--(void)sendDictationIds:(NSString*)dictationIdArray;
+//-(void)sendDictationIds:(NSString*)dictationIdArray;
 
 -(void)sendComment:(NSString*)comment dictationId:(NSString*)mobielDictationIdVal;
 
@@ -100,5 +100,7 @@
 -(void) getAppointmentList:(NSString*)dictatorId date:(NSString*)date;
 
 -(void) updateAppointmentStatus:(NSString*)appointementStatus appointmentId:(NSString*)appointmentId;
+
+-(void)getCompletedDoc:(NSString*)departmentId;
 
 @end

@@ -317,7 +317,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4 ;
+    return 5 ;
     
 }
 
@@ -360,6 +360,10 @@
 //            break;
         
         case 3:inCompleteDictationLabel.text = @"Custom Docx Editor";
+            noDictationLabel.text = @"";
+            break;
+        
+        case 4:inCompleteDictationLabel.text = @"Custom Docx Editor Copy";
             noDictationLabel.text = @"";
             break;
             
@@ -423,9 +427,9 @@
 //            }
 //
 //            break;
-//        case 3:
-//            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"DocFilesViewController"] animated:YES];
-//            break;
+        case 3:
+            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"DocFilesViewController"] animated:YES];
+            break;
 //
 //        case 4:
 //            [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"SpeechRecognitionViewController"] animated:YES];
@@ -436,12 +440,18 @@
 //            break;
         
         
-        case 3:
+        case 4:
             vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EditDocxViewController"];
             vc.modalPresentationStyle = UIModalPresentationFullScreen;
             [self.navigationController presentViewController:vc animated:true completion:nil];
             break;
-                                     
+//        case 4:
+//            vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EditDocxTextKitViewController"];
+//            vc.modalPresentationStyle = UIModalPresentationFullScreen;
+//            [self.navigationController presentViewController:vc animated:true completion:nil];
+//            break;
+            
+            
         default:
             break;
     }

@@ -54,28 +54,37 @@
     
     awaitingTransferView.layer.cornerRadius = 4.0f;
     
+    _completedDocView.layer.cornerRadius = 4.0f;
+    
     VRSDOCFilesView.layer.cornerRadius = 4.0f;
     // tap gesture recognisers for four title views
     transferredTodayViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
     awaitingViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showList:)];
     appointmentTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showAppointmentView:)];
     vrsDocViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showVRSDocFilesView:)];
-
+    completedDocViewTapRecogniser = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(showCompletedDocFIlesView:)];
+    
     [transferredView addGestureRecognizer:transferredTodayViewTapRecogniser];
     [awaitingTransferView addGestureRecognizer:awaitingViewTapRecogniser];
     [transferFailedView addGestureRecognizer:appointmentTapRecogniser];
     [VRSDOCFilesView addGestureRecognizer:vrsDocViewTapRecogniser];
-
+    [_completedDocView addGestureRecognizer:completedDocViewTapRecogniser];
+    
     // observer for transfer, awiating, failed recording counts change
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(getCountsOfTransferredAwaitingFiles) name:NOTIFICATION_FILE_UPLOAD_API
                                                object:nil];
     
     // observer for completed doc API response
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(validateSendIdsResponse:) name:NOTIFICATION_SEND_DICTATION_IDS_API
+//                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(validateSendIdsResponse:) name:NOTIFICATION_SEND_DICTATION_IDS_API
+                                             selector:@selector(validateCompletedDocResponse:) name:NOTIFICATION_COMPLETED_DOC_LIST
                                                object:nil];
     // Do any additional setup after loading the view.
+    
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -134,6 +143,8 @@
     // check for complted docx file count
     [self getAppointmentList];
     
+    [self checkForCompletedDocFiles];
+    
     // check files tobe purge
     [self checkFilesToBePurge];
     
@@ -148,6 +159,7 @@
     NSLog(@"%@",NSHomeDirectory());
 
 }
+
 
 #pragma mark:Split VC delegate
 
@@ -212,26 +224,7 @@
 
     }
 }
-//-(void)checkForCompletedDocFiles
-//{
-//    // get mobiledicataionid to send it to the server
-//    NSArray* uploadedFilesDictationIdArray = [[Database shareddatabase] getUploadedFilesDictationIdList:false filterDate:@"5"];
-//    
-//    NSString* uploadedFilesDictationIdString = [uploadedFilesDictationIdArray componentsJoinedByString:@","];
-//    
-//    // send dictation ids to server to get list of completed doc
-//    
-//    if ([[AppPreferences sharedAppPreferences] isReachable])
-//    {
-//        [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
-//
-//        [self showActivityIndicator];
-//    }
-//    else
-//    {
-//        
-//    }
-//}
+
 
 
 -(void)getAppointmentList
@@ -270,6 +263,21 @@
         [self.activityIndicator stopAnimating];
         [self.activityIndicator setHidden:true];
         [self.completedDocCountLabel setHidden:false];
+    }
+}
+
+-(void) showCompletedDocIndicator:(BOOL)show
+{
+    if (show) {
+        [self.completedDocActivityIndicator startAnimating];
+        [self.completedDocActivityIndicator setHidden:false];
+        [self.completedDocCountNewLabel setHidden:true];
+    }
+    else
+    {
+        [self.completedDocActivityIndicator stopAnimating];
+        [self.completedDocActivityIndicator setHidden:true];
+        [self.completedDocCountNewLabel setHidden:false];
     }
 }
 -(void)showActivityIndicator
@@ -345,52 +353,56 @@
 
 }
 
--(void)validateSendIdsResponse:(NSNotification*)obj
+//-(void)validateSendIdsResponse:(NSNotification*)obj
+//{
+//    long completedDocCount = 0;
+//
+//    NSDictionary* response = obj.object;
+//
+//    [self showCompletedDocIndicator:false];
+//
+//    if ([[response valueForKey:@"code"]  isEqual: @"200"])
+//    {
+//        // getting completed files count.
+//        NSArray* completedFilesResponseArray = [response valueForKey:@"CompletedList"];
+//
+//        completedDocCount = [completedFilesResponseArray count];
+//        //converting integer value of completed doc count to string.
+//        NSString* completedDocCountStrValue = [NSString stringWithFormat:@"%ld",completedDocCount];
+//
+//        self.completedDocCountNewLabel.text = completedDocCountStrValue;
+//    }
+//
+//
+//}
+
+-(void)validateCompletedDocResponse:(NSNotification*)obj
 {
-    long completedDocCount = 0;
-    
     NSDictionary* response = obj.object;
     
-    if ([[response valueForKey:@"code"]  isEqual: @"200"])
+    long completedDocCount = 0;
+    
+    [self showCompletedDocIndicator:false];
+    
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+
+    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    self.completedDocDeptLabel.text = [NSString stringWithFormat:@"(%@)", deptObj.departmentName];
+    
+    if ([[response valueForKey:@"code"] intValue]  == 200)
     {
         // getting completed files count.
-        NSArray* completedFilesResponseArray = [response valueForKey:@"CompletedList"];
+        NSArray* completedFilesResponseArray = [response valueForKey:@"ApprovalList"];
         
         completedDocCount = [completedFilesResponseArray count];
         //converting integer value of completed doc count to string.
         NSString* completedDocCountStrValue = [NSString stringWithFormat:@"%ld",completedDocCount];
-        //remove spinner from completed doc view
-
-        dispatch_async(dispatch_get_main_queue(), ^
-                       {
-                           //NSLog(@"Reachable");
-                           self.completedDocCountLabel.hidden = NO;
-                           
-                           [[transferFailedView viewWithTag:12] removeFromSuperview]; // reomve spinner
-                           
-                           self.completedDocCountLabel.text = completedDocCountStrValue; // show completed doc count
-
-                       });
-        
-        //set completed doc count to completedDocCountLabel
-
+     
+        self.completedDocCountNewLabel.text = completedDocCountStrValue;
     }
-    else
-    {
-        dispatch_async(dispatch_get_main_queue(), ^
-                       {
-                           //NSLog(@"Reachable");
-                           self.completedDocCountLabel.hidden = NO;
-                           
-                           [[self.view viewWithTag:12] removeFromSuperview]; // reomve spinner
-                           
-                           self.completedDocCountLabel.text = @"0";
-                       });
         
-    }
-    
 }
-
 -(BOOL) needsUpdate
 {
     
@@ -858,6 +870,31 @@
 
 }
 
+-(void)checkForCompletedDocFiles
+{
+    // get mobiledicataionid to send it to the server
+//    NSArray* uploadedFilesDictationIdArray = [[Database shareddatabase] getUploadedFilesDictationIdList:false filterDate:@"5"];
+//
+//    NSString* uploadedFilesDictationIdString = [uploadedFilesDictationIdArray componentsJoinedByString:@","];
+    
+    // send dictation ids to server to get list of completed doc
+    
+    if ([[AppPreferences sharedAppPreferences] isReachable])
+    {
+//        [[APIManager sharedManager] sendDictationIds:uploadedFilesDictationIdString];
+        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+
+        DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        
+        [[APIManager sharedManager] getCompletedDoc:[NSString stringWithFormat:@"%ld", deptObj.Id]];
+        
+        [self showCompletedDocIndicator:true];
+    }
+    else
+    {
+        
+    }
+}
 
 - (void)didReceiveMemoryWarning
 {
