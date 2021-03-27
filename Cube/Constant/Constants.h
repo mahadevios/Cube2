@@ -22,7 +22,9 @@
 //#define  PIN_CANGE_API                        @"MobilePINChange"
 
 //#define  BASE_URL_PATH                        @"http://www.xanadutec.net/cubeagent_webapi/api"
-#define  BASE_URL_PATH                        @"https://www.cubescribe.com/cubeagent_webapi/api"
+
+#define  BASE_URL_PATH                          @"https://www.cubescribeonline.com/CubeApi4Intranet/api"
+#define  BASE_URL_PATH_1                        @"https://www.cubescribe.com/cubeagent_webapi/api"
 
 
 //#define  BASE_URL_PATH                        @"http://192.168.3.156:8081/CubeAPI/api"
@@ -43,6 +45,8 @@
 #define  ACCEPY_TandC_API                     @"encedecr_MobileTermsAndConditions"
 #define  GET_APNTMNT_LIST_API                 @"encrdecr_MobileClinicList"
 #define  UPDATE_APNTMNT_STATUS_API            @"encrdecr_MobileAppointmentStatus"
+#define  GET_COMPLETED_DOC_LIST_API           @"encrdecr_MobileApproval"
+
 
 #define  MEETING_USER_ENDPOINT_API            @"http://liveklasserp.testbot.xyz/Sessions/join?m=91&p=532714&u="
 #define  MEETING_MENTOR_ENDPOINT              @"http://liveklasserp.testbot.xyz/Sessions/join?m=91&p=861720&u=";
@@ -84,9 +88,10 @@
 #define NOTIFICATION_STOP_VRS                       @"stopVRS"
 #define NOTIFICATION_GET_APNTMNT_LIST               @"notiGetApntmntList"
 #define NOTIFICATION_UPDATE_APNTMNT_STATUS          @"notiUpdateApntStatus"
+#define NOTIFICATION_COMPLETED_DOC_LIST             @"notiCompletedDocList"
 
 //Settimg Constants
-
+//
 #define SAVE_DICTATION_WAITING_SETTING         @"Save dictation waiting by"
 #define CONFIRM_BEFORE_SAVING_SETTING          @"Confirm before saving"
 #define CONFIRM_BEFORE_SAVING_SETTING_ALTERED  @"Confirm before saving alter"
@@ -127,9 +132,9 @@
 #define IS_VRS_ENABLE                          @"isVrsEnable"
 
 #define USER_PIN         @"userPIN"
-#define USER_ID         @"userId"
+#define USER_ID         @"userId" //Username
 #define USER_PASS         @"userPassword"
-
+#define USER_ID_INT         @"userIdInt" //Username
 //#define DATE_TIME_FORMAT                       @"MM-dd-yyyy HH:mm:ss"
 #define DATE_TIME_FORMAT                       @"yyyy-MM-dd HH:mm:ss"
 

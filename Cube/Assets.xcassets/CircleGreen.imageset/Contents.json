@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "image2-1.png",
+      "filename" : "icons8-green-circle-20.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "image2 2-1.png",
+      "filename" : "icons8-green-circle-40.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "image2 3.png",
+      "filename" : "icons8-green-circle-60.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -250,6 +250,9 @@
         
         [[NSUserDefaults standardUserDefaults] setValue:pin forKey:USER_PIN];
 
+        NSString* userId =  [responseDict valueForKey:@"UserID"];
+
+        [[NSUserDefaults standardUserDefaults] setValue:userId forKey:USER_ID_INT];
         
         NSArray* departmentArray=  [responseDict valueForKey:@"DepartmentList"];
         

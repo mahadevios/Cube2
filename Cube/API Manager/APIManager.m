@@ -622,7 +622,7 @@ static APIManager *singleton = nil;
     
 }
 
--(void)sendDictationIds:(NSString*)dictationIdArray
+-(void)getCompletedDoc:(NSString*)departmentId
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])
     {
@@ -631,8 +631,8 @@ static APIManager *singleton = nil;
         NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
         
         NSError* error;
-        
-        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",dictationIdArray,@"DictationID", nil];
+        //{"macid":"8:d4:2b:1d:5a:84","PIN":"123","DepartID":"5"}
+        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",[AppPreferences sharedAppPreferences].userObj.userPin,@"PIN", departmentId, @"DepartID", nil];
         
         
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
@@ -649,7 +649,7 @@ static APIManager *singleton = nil;
         NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
         
         NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
-        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:SEND_DICTATION_IDS_API withRequestParameter:array withResourcePath:SEND_DICTATION_IDS_API withHttpMethd:POST downloadMethodType:@""];
+        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:GET_COMPLETED_DOC_LIST_API withRequestParameter:array withResourcePath:GET_COMPLETED_DOC_LIST_API withHttpMethd:POST downloadMethodType:@""];
         [downloadmetadatajob startMetaDataDownLoad];
     }
     else
@@ -659,6 +659,43 @@ static APIManager *singleton = nil;
     
     
 }
+//-(void)sendDictationIds:(NSString*)dictationIdArray
+//{
+//    if ([[AppPreferences sharedAppPreferences] isReachable])
+//    {
+//        //[[AppPreferences sharedAppPreferences] showHudWithTitle:@"Loading Files" detailText:@"Please wait.."];
+//
+//        NSString* macId = [[NSUserDefaults standardUserDefaults] valueForKey:@"MacId"];
+//
+//        NSError* error;
+//
+//        NSDictionary *dictionary1 = [[NSDictionary alloc] initWithObjectsAndKeys:macId,@"macid",dictationIdArray,@"DictationID", nil];
+//
+//
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary1
+//                                                           options:0 // Pass 0 if you don't care about the readability of the generated string
+//                                                             error:&error];
+//
+//
+//        NSData *dataDesc = [jsonData AES256EncryptWithKey:SECRET_KEY];
+//
+//
+//
+//        NSString* str2=[dataDesc base64EncodedStringWithOptions:0];
+//
+//        NSDictionary *dictionary2 = [[NSDictionary alloc] initWithObjectsAndKeys:str2,@"encDevChkKey", nil];
+//
+//        NSMutableArray* array=[NSMutableArray arrayWithObjects:dictionary2, nil];
+//        DownloadMetaDataJob *downloadmetadatajob=[[DownloadMetaDataJob alloc]initWithdownLoadEntityJobName:SEND_DICTATION_IDS_API withRequestParameter:array withResourcePath:SEND_DICTATION_IDS_API withHttpMethd:POST downloadMethodType:@""];
+//        [downloadmetadatajob startMetaDataDownLoad];
+//    }
+//    else
+//    {
+//        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//    }
+//
+//
+//}
 -(void)downloadFileUsingConnection:(NSString*)mobielDictationIdVal
 {
     if ([[AppPreferences sharedAppPreferences] isReachable])

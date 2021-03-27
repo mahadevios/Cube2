@@ -69,8 +69,13 @@
 //            [parameter appendFormat:@"&%@", strng];
 //        }
 //    }
-    
-    NSString *webservicePath = [NSString stringWithFormat:@"%@/%@",BASE_URL_PATH,resourcePath];
+    NSString *webservicePath;
+    if ([resourcePath isEqualToString:GET_APNTMNT_LIST_API] || [resourcePath isEqualToString:UPDATE_APNTMNT_STATUS_API]) {
+        webservicePath = [NSString stringWithFormat:@"%@/%@",BASE_URL_PATH_1,resourcePath];
+    }else{
+        webservicePath = [NSString stringWithFormat:@"%@/%@",BASE_URL_PATH,resourcePath];
+    }
+//    NSString *webservicePath = [NSString stringWithFormat:@"%@/%@",BASE_URL_PATH,resourcePath];
    // NSString *webservicePath = [NSString stringWithFormat:@"%@/%@?%@",BASE_URL_PATH,resourcePath,parameter];
 
     NSURL *url = [[NSURL alloc] initWithString:[webservicePath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -247,6 +252,7 @@
                                                                  options:NSJSONReadingAllowFragments
                                                                    error:&error];
 
+        NSLog(@"error = %@", error.localizedDescription);
     }
     
 
@@ -502,22 +508,47 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
     }
 }
     
-    if ([self.downLoadEntityJobName isEqualToString:SEND_DICTATION_IDS_API])
+//    if ([self.downLoadEntityJobName isEqualToString:SEND_DICTATION_IDS_API])
+//    {
+//
+//        if (response != nil)
+//        {
+//            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+//
+//            if ([[response objectForKey:@"code"] isEqualToString:@"200"])
+//            {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_DICTATION_IDS_API object:response];
+//
+//
+//            }
+//            else
+//            {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_DICTATION_IDS_API object:response];
+////                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Message" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//            }
+//        }else
+//        {
+//            [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
+//
+//            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//        }
+//    }
+//
+    if ([self.downLoadEntityJobName isEqualToString:GET_COMPLETED_DOC_LIST_API])
     {
         
         if (response != nil)
         {
             [[[UIApplication sharedApplication].keyWindow viewWithTag:789] removeFromSuperview];
             
-            if ([[response objectForKey:@"code"] isEqualToString:@"200"])
+            if ([[response objectForKey:@"code"] intValue] == 200)
             {
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_DICTATION_IDS_API object:response];
-                
-                
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMPLETED_DOC_LIST object:response];
+               
             }
             else
             {
-//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SEND_DICTATION_IDS_API object:response];
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_COMPLETED_DOC_LIST object:response];
 //                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Message" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
             }
         }else
@@ -552,26 +583,26 @@ if ([self.downLoadEntityJobName isEqualToString:DICTATIONS_INSERT_API])
         }
     }
     
-    if ([self.downLoadEntityJobName isEqualToString:DATA_SYNCHRONISATION_API])
-    {
-        
-        if (response != nil)
-        {
-            
-            if ([[response objectForKey:@"code"] isEqualToString:SUCCESS])
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DATA_SYNCHRONISATION_API object:response];
-                
-                
-            }else
-            {
-                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-            }
-        }else
-        {
-            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-        }
-    }
+//    if ([self.downLoadEntityJobName isEqualToString:DATA_SYNCHRONISATION_API])
+//    {
+//
+//        if (response != nil)
+//        {
+//
+//            if ([[response objectForKey:@"code"] isEqualToString:SUCCESS])
+//            {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DATA_SYNCHRONISATION_API object:response];
+//
+//
+//            }else
+//            {
+//                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"username or password is incorrect, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//            }
+//        }else
+//        {
+//            [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Error" withMessage:@"Received empty response, please try again" withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+//        }
+//    }
 //
     
     if ([self.downLoadEntityJobName isEqualToString:FILE_DOWNLOAD_API])

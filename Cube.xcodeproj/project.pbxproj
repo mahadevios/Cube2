@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		8400457B1EC1F1470001369A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846DE68E1D72BDB10004C886 /* AVFoundation.framework */; };
 		8400457C1EC1F1520001369A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840045761EC1EB0A0001369A /* AudioToolbox.framework */; };
+		840697B42578AFFA00E076D6 /* EditDocxTextKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 840697B32578AFFA00E076D6 /* EditDocxTextKitViewController.m */; };
 		8408BBCF2425F11000564B0E /* VideoCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8408BBCE2425F11000564B0E /* VideoCallViewController.m */; };
+		840A459E25825FE7009A2845 /* Operative Note Different Template.htm in Resources */ = {isa = PBXBuildFile; fileRef = 840A459D25825FE7009A2845 /* Operative Note Different Template.htm */; };
 		840AC7551D8280F200EF6AF7 /* CAStreamBasicDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 840AC7511D8280F200EF6AF7 /* CAStreamBasicDescription.mm */; };
 		840AC7561D8280F200EF6AF7 /* CAXException.mm in Sources */ = {isa = PBXBuildFile; fileRef = 840AC7531D8280F200EF6AF7 /* CAXException.mm */; };
 		840AC7581D82816000EF6AF7 /* ExtAudioFileConvert.mm in Sources */ = {isa = PBXBuildFile; fileRef = 840AC7571D82816000EF6AF7 /* ExtAudioFileConvert.mm */; };
@@ -23,6 +25,7 @@
 		8430D3DD1D4A1A7D005FCA33 /* TransferListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430D3DC1D4A1A7D005FCA33 /* TransferListViewController.m */; };
 		8430D3E01D4A32AB005FCA33 /* AudioDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430D3DF1D4A32AB005FCA33 /* AudioDetailsViewController.m */; };
 		843600F81D5C7198002A9395 /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 843600F71D5C7198002A9395 /* ChangePasswordViewController.m */; };
+		8439E524260F09B800298700 /* CustomObjectForTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8439E523260F09B800298700 /* CustomObjectForTableViewCell.m */; };
 		843B33DF20452B630080F355 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 843B33D520452B630080F355 /* DDXMLDocument.m */; };
 		843B33E020452B630080F355 /* DDXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 843B33D720452B630080F355 /* DDXMLElement.m */; };
 		843B33E120452B630080F355 /* DDXMLElementAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 843B33D920452B630080F355 /* DDXMLElementAdditions.m */; };
@@ -54,10 +57,12 @@
 		845A96781DDDEF9A007F460C /* NSData+AES256.m in Sources */ = {isa = PBXBuildFile; fileRef = 845A96771DDDEF9A007F460C /* NSData+AES256.m */; };
 		846A561F219AA51400EC0B3C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 846A561E219AA51400EC0B3C /* StoreKit.framework */; };
 		846B5A5220B43EAB0012F6D9 /* EmptyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846B5A5120B43EAB0012F6D9 /* EmptyViewController.m */; };
+		846DBBFB2589E23A0045707C /* document.xml in Resources */ = {isa = PBXBuildFile; fileRef = 846DBBFA2589E2390045707C /* document.xml */; };
 		846DE6861D7288420004C886 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 846DE6841D7288420004C886 /* Database.m */; };
 		846DE68A1D728B210004C886 /* AudioSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 846DE6891D728B210004C886 /* AudioSessionManager.m */; };
 		846DE68D1D728CDA0004C886 /* InCompleteRecordViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 846DE68C1D728CDA0004C886 /* InCompleteRecordViewController.mm */; };
 		846DE6921D730CC20004C886 /* AudioDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 846DE6911D730CC20004C886 /* AudioDetails.m */; };
+		846E7E76257E028600CFF961 /* Trauma OpNote_502_40370.docx in Resources */ = {isa = PBXBuildFile; fileRef = 846E7E75257E028600CFF961 /* Trauma OpNote_502_40370.docx */; };
 		847222431D47368A00C00F20 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 847222421D47368A00C00F20 /* main.m */; };
 		847222461D47368A00C00F20 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 847222451D47368A00C00F20 /* AppDelegate.mm */; };
 		847222491D47368A00C00F20 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847222481D47368A00C00F20 /* LoginViewController.m */; };
@@ -89,6 +94,7 @@
 		84B87BD11D770D1D002B91FB /* SplashScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B87BD01D770D1D002B91FB /* SplashScreenViewController.m */; };
 		84BA563321B00A6200765A65 /* TCsFinal.docx in Resources */ = {isa = PBXBuildFile; fileRef = 84BA563221B00A6200765A65 /* TCsFinal.docx */; };
 		84BD03061FC2DD7C006C45A6 /* DocFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */; };
+		84BE944F257A14E700923EA0 /* Ward Round_427_39199.docx in Resources */ = {isa = PBXBuildFile; fileRef = 84BE944E257A14E700923EA0 /* Ward Round_427_39199.docx */; };
 		84BFFB4B21ABDD8500DD8E04 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BFFB4921ABDD8500DD8E04 /* Reachability.m */; };
 		84CC5F731D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC5F721D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m */; };
 		84CC5F761D74351900D1E982 /* DepartMent.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC5F751D74351900D1E982 /* DepartMent.m */; };
@@ -101,7 +107,9 @@
 		84D0B52D1D81B4D70084E016 /* SBJson4StreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D0B5251D81B4D70084E016 /* SBJson4StreamWriterState.m */; };
 		84D0B52E1D81B4D70084E016 /* SBJson4Writer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D0B5271D81B4D70084E016 /* SBJson4Writer.m */; };
 		84DEE9E92427384F00B310E0 /* PatientDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DEE9E82427384F00B310E0 /* PatientDetails.m */; };
+		84E795A92599F98C006ACA6A /* Clinic Letter Template.doc in Resources */ = {isa = PBXBuildFile; fileRef = 84E795A82599F98B006ACA6A /* Clinic Letter Template.doc */; };
 		84EE09B9254A96DB00AB8CEF /* Operative Note Different Template.docx in Resources */ = {isa = PBXBuildFile; fileRef = 84EE09B8254A96DB00AB8CEF /* Operative Note Different Template.docx */; };
+		84F4030725791B02008355A5 /* Wound Check ATT Letter_107_38841.docx in Resources */ = {isa = PBXBuildFile; fileRef = 84F4030625791B01008355A5 /* Wound Check ATT Letter_107_38841.docx */; };
 		84F5641A1FCD4970006FC7AD /* SelectFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F564191FCD4970006FC7AD /* SelectFileViewController.m */; };
 		84F5641D1FCD522D006FC7AD /* CommonDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 84F5641C1FCD522D006FC7AD /* CommonDelegate.h */; };
 		84FCCFA21D48B75A00E3D7AE /* SelectDepartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FCCFA11D48B75A00E3D7AE /* SelectDepartmentViewController.m */; };
@@ -152,8 +160,11 @@
 
 /* Begin PBXFileReference section */
 		840045761EC1EB0A0001369A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		840697B22578AFFA00E076D6 /* EditDocxTextKitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditDocxTextKitViewController.h; sourceTree = "<group>"; };
+		840697B32578AFFA00E076D6 /* EditDocxTextKitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditDocxTextKitViewController.m; sourceTree = "<group>"; };
 		8408BBCD2425F11000564B0E /* VideoCallViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoCallViewController.h; sourceTree = "<group>"; };
 		8408BBCE2425F11000564B0E /* VideoCallViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoCallViewController.m; sourceTree = "<group>"; };
+		840A459D25825FE7009A2845 /* Operative Note Different Template.htm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "Operative Note Different Template.htm"; path = "Cube/Operative Note Different Template.htm"; sourceTree = "<group>"; };
 		840AC74F1D8280F200EF6AF7 /* CADebugMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADebugMacros.h; sourceTree = "<group>"; };
 		840AC7501D8280F200EF6AF7 /* CAMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMath.h; sourceTree = "<group>"; };
 		840AC7511D8280F200EF6AF7 /* CAStreamBasicDescription.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAStreamBasicDescription.mm; sourceTree = "<group>"; };
@@ -181,6 +192,8 @@
 		8430D3DF1D4A32AB005FCA33 /* AudioDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioDetailsViewController.m; sourceTree = "<group>"; };
 		843600F61D5C7198002A9395 /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
 		843600F71D5C7198002A9395 /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
+		8439E522260F09B800298700 /* CustomObjectForTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomObjectForTableViewCell.h; sourceTree = "<group>"; };
+		8439E523260F09B800298700 /* CustomObjectForTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomObjectForTableViewCell.m; sourceTree = "<group>"; };
 		843B33D320452B630080F355 /* DDXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXML.h; sourceTree = "<group>"; };
 		843B33D420452B630080F355 /* DDXMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLDocument.h; sourceTree = "<group>"; };
 		843B33D520452B630080F355 /* DDXMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDXMLDocument.m; sourceTree = "<group>"; };
@@ -247,6 +260,7 @@
 		846B5A5020B43EAB0012F6D9 /* EmptyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmptyViewController.h; sourceTree = "<group>"; };
 		846B5A5120B43EAB0012F6D9 /* EmptyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmptyViewController.m; sourceTree = "<group>"; };
 		846D68741D5713F80089CA15 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		846DBBFA2589E2390045707C /* document.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = document.xml; path = Cube/document.xml; sourceTree = "<group>"; };
 		846DE6831D7288420004C886 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
 		846DE6841D7288420004C886 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
 		846DE6881D728B210004C886 /* AudioSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioSessionManager.h; sourceTree = "<group>"; };
@@ -256,6 +270,7 @@
 		846DE68E1D72BDB10004C886 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		846DE6901D730CC20004C886 /* AudioDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioDetails.h; sourceTree = "<group>"; };
 		846DE6911D730CC20004C886 /* AudioDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioDetails.m; sourceTree = "<group>"; };
+		846E7E75257E028600CFF961 /* Trauma OpNote_502_40370.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Trauma OpNote_502_40370.docx"; path = "Cube/Trauma OpNote_502_40370.docx"; sourceTree = "<group>"; };
 		8472223E1D47368A00C00F20 /* Cube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		847222421D47368A00C00F20 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		847222441D47368A00C00F20 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -316,6 +331,7 @@
 		84A180C121AD7632004F539D /* TandCViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TandCViewController.m; sourceTree = "<group>"; };
 		84AB68571D536961006F962D /* InCompleteDictationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InCompleteDictationViewController.h; sourceTree = "<group>"; };
 		84AB68581D536961006F962D /* InCompleteDictationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InCompleteDictationViewController.m; sourceTree = "<group>"; };
+		84AE67F82580FA490086383E /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		84B87BCC1D76859A002B91FB /* UIDevice+Identifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Identifier.h"; sourceTree = "<group>"; };
 		84B87BCD1D76859A002B91FB /* UIDevice+Identifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Identifier.m"; sourceTree = "<group>"; };
 		84B87BCF1D770D1D002B91FB /* SplashScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashScreenViewController.h; sourceTree = "<group>"; };
@@ -323,6 +339,7 @@
 		84BA563221B00A6200765A65 /* TCsFinal.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = TCsFinal.docx; path = Cube/TCsFinal.docx; sourceTree = "<group>"; };
 		84BD03041FC2DD7C006C45A6 /* DocFilesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DocFilesViewController.h; sourceTree = "<group>"; };
 		84BD03051FC2DD7C006C45A6 /* DocFilesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DocFilesViewController.m; sourceTree = "<group>"; };
+		84BE944E257A14E700923EA0 /* Ward Round_427_39199.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ward Round_427_39199.docx"; path = "Cube/Ward Round_427_39199.docx"; sourceTree = "<group>"; };
 		84BFFB4921ABDD8500DD8E04 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Cube/Libraries/Rechability/Reachability.m; sourceTree = SOURCE_ROOT; };
 		84BFFB4A21ABDD8500DD8E04 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Cube/Libraries/Rechability/Reachability.h; sourceTree = SOURCE_ROOT; };
 		84CC5F711D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferredOrDeletedAudioDetailsViewController.h; sourceTree = "<group>"; };
@@ -348,9 +365,11 @@
 		84D0B5271D81B4D70084E016 /* SBJson4Writer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4Writer.m; sourceTree = "<group>"; };
 		84DEE9E72427384F00B310E0 /* PatientDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PatientDetails.h; sourceTree = "<group>"; };
 		84DEE9E82427384F00B310E0 /* PatientDetails.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PatientDetails.m; sourceTree = "<group>"; };
+		84E795A82599F98B006ACA6A /* Clinic Letter Template.doc */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Clinic Letter Template.doc"; path = "Cube/Clinic Letter Template.doc"; sourceTree = "<group>"; };
 		84EACD9D1E03FF65002C43BE /* iTunesLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iTunesLibrary.framework; path = ../../../../../Library/Frameworks/iTunesLibrary.framework; sourceTree = "<group>"; };
 		84EACDA11E040CE2002C43BE /* iTunesLibrary */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = iTunesLibrary; path = ../../../../../Library/Frameworks/iTunesLibrary.framework/Versions/A/iTunesLibrary; sourceTree = "<group>"; };
 		84EE09B8254A96DB00AB8CEF /* Operative Note Different Template.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Operative Note Different Template.docx"; path = "Cube/Operative Note Different Template.docx"; sourceTree = "<group>"; };
+		84F4030625791B01008355A5 /* Wound Check ATT Letter_107_38841.docx */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Wound Check ATT Letter_107_38841.docx"; path = "Cube/Wound Check ATT Letter_107_38841.docx"; sourceTree = "<group>"; };
 		84F564181FCD4970006FC7AD /* SelectFileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectFileViewController.h; sourceTree = "<group>"; };
 		84F564191FCD4970006FC7AD /* SelectFileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectFileViewController.m; sourceTree = "<group>"; };
 		84F5641C1FCD522D006FC7AD /* CommonDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonDelegate.h; sourceTree = "<group>"; };
@@ -557,7 +576,13 @@
 		847222351D47368A00C00F20 = {
 			isa = PBXGroup;
 			children = (
+				84E795A82599F98B006ACA6A /* Clinic Letter Template.doc */,
+				846DBBFA2589E2390045707C /* document.xml */,
+				840A459D25825FE7009A2845 /* Operative Note Different Template.htm */,
+				84BE944E257A14E700923EA0 /* Ward Round_427_39199.docx */,
+				84F4030625791B01008355A5 /* Wound Check ATT Letter_107_38841.docx */,
 				84EE09B8254A96DB00AB8CEF /* Operative Note Different Template.docx */,
+				846E7E75257E028600CFF961 /* Trauma OpNote_502_40370.docx */,
 				847D95CA1D5F325600145C32 /* libsqlite3.0.tbd */,
 				84BA563221B00A6200765A65 /* TCsFinal.docx */,
 				847222401D47368A00C00F20 /* Cube */,
@@ -707,6 +732,7 @@
 		84EACD9A1E03FA64002C43BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84AE67F82580FA490086383E /* CoreText.framework */,
 				843FF21A243D883500F50BD8 /* SafariServices.framework */,
 				848735502433119900155623 /* WebKit.framework */,
 				847FCB2724260CE500AA9B7D /* Contacts.framework */,
@@ -763,6 +789,8 @@
 				843600F71D5C7198002A9395 /* ChangePasswordViewController.m */,
 				847B83FD202B0F5100D69755 /* EditDocxViewController.h */,
 				847B83FE202B0F5100D69755 /* EditDocxViewController.m */,
+				840697B22578AFFA00E076D6 /* EditDocxTextKitViewController.h */,
+				840697B32578AFFA00E076D6 /* EditDocxTextKitViewController.m */,
 				842D535A1D55EA0300ECCDE7 /* PopUpCustomView.h */,
 				842D535B1D55EA0300ECCDE7 /* PopUpCustomView.m */,
 				84CC5F711D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.h */,
@@ -808,6 +836,8 @@
 				849F02661D75328000E74723 /* User.m */,
 				84DEE9E72427384F00B310E0 /* PatientDetails.h */,
 				84DEE9E82427384F00B310E0 /* PatientDetails.m */,
+				8439E522260F09B800298700 /* CustomObjectForTableViewCell.h */,
+				8439E523260F09B800298700 /* CustomObjectForTableViewCell.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1000,10 +1030,16 @@
 				847222511D47368A00C00F20 /* LaunchScreen.storyboard in Resources */,
 				849AF60D209C49A800C67980 /* Cube_DB.sqlite in Resources */,
 				84EE09B9254A96DB00AB8CEF /* Operative Note Different Template.docx in Resources */,
+				84F4030725791B02008355A5 /* Wound Check ATT Letter_107_38841.docx in Resources */,
 				8472224E1D47368A00C00F20 /* Assets.xcassets in Resources */,
 				8472224C1D47368A00C00F20 /* Main.storyboard in Resources */,
+				846E7E76257E028600CFF961 /* Trauma OpNote_502_40370.docx in Resources */,
+				840A459E25825FE7009A2845 /* Operative Note Different Template.htm in Resources */,
+				84BE944F257A14E700923EA0 /* Ward Round_427_39199.docx in Resources */,
 				843B340E20452BD20080F355 /* Info.plist in Resources */,
+				846DBBFB2589E23A0045707C /* document.xml in Resources */,
 				84BA563321B00A6200765A65 /* TCsFinal.docx in Resources */,
+				84E795A92599F98C006ACA6A /* Clinic Letter Template.doc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1082,6 +1118,7 @@
 				84B87BCE1D76859A002B91FB /* UIDevice+Identifier.m in Sources */,
 				848B37A0242B778E003E49E8 /* CustomSplitViewController.m in Sources */,
 				84CC5F731D73EDF500D1E982 /* TransferredOrDeletedAudioDetailsViewController.m in Sources */,
+				840697B42578AFFA00E076D6 /* EditDocxTextKitViewController.m in Sources */,
 				84BD03061FC2DD7C006C45A6 /* DocFilesViewController.m in Sources */,
 				84302E9C1D5E094C005E14E2 /* RecordTabViewController.m in Sources */,
 				8429BDD61D5DD839004CED76 /* RegistrationViewController.m in Sources */,
@@ -1106,6 +1143,7 @@
 				840AC7561D8280F200EF6AF7 /* CAXException.mm in Sources */,
 				8430D3DD1D4A1A7D005FCA33 /* TransferListViewController.m in Sources */,
 				843B341320452BD20080F355 /* fileenc.c in Sources */,
+				8439E524260F09B800298700 /* CustomObjectForTableViewCell.m in Sources */,
 				843B33E320452B630080F355 /* NSString+DDXML.m in Sources */,
 				849F02671D75328000E74723 /* User.m in Sources */,
 				843B341520452BD20080F355 /* prng.c in Sources */,
