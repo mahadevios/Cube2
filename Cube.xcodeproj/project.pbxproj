@@ -106,6 +106,7 @@
 		84D0B52C1D81B4D70084E016 /* SBJson4StreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D0B5231D81B4D70084E016 /* SBJson4StreamWriter.m */; };
 		84D0B52D1D81B4D70084E016 /* SBJson4StreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D0B5251D81B4D70084E016 /* SBJson4StreamWriterState.m */; };
 		84D0B52E1D81B4D70084E016 /* SBJson4Writer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D0B5271D81B4D70084E016 /* SBJson4Writer.m */; };
+		84D67AB3261EF9C900FAEF38 /* ApprovalFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D67AB2261EF9C900FAEF38 /* ApprovalFile.m */; };
 		84DEE9E92427384F00B310E0 /* PatientDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DEE9E82427384F00B310E0 /* PatientDetails.m */; };
 		84E795A92599F98C006ACA6A /* Clinic Letter Template.doc in Resources */ = {isa = PBXBuildFile; fileRef = 84E795A82599F98B006ACA6A /* Clinic Letter Template.doc */; };
 		84EE09B9254A96DB00AB8CEF /* Operative Note Different Template.docx in Resources */ = {isa = PBXBuildFile; fileRef = 84EE09B8254A96DB00AB8CEF /* Operative Note Different Template.docx */; };
@@ -363,6 +364,8 @@
 		84D0B5251D81B4D70084E016 /* SBJson4StreamWriterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4StreamWriterState.m; sourceTree = "<group>"; };
 		84D0B5261D81B4D70084E016 /* SBJson4Writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson4Writer.h; sourceTree = "<group>"; };
 		84D0B5271D81B4D70084E016 /* SBJson4Writer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4Writer.m; sourceTree = "<group>"; };
+		84D67AB1261EF9C900FAEF38 /* ApprovalFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApprovalFile.h; sourceTree = "<group>"; };
+		84D67AB2261EF9C900FAEF38 /* ApprovalFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApprovalFile.m; sourceTree = "<group>"; };
 		84DEE9E72427384F00B310E0 /* PatientDetails.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PatientDetails.h; sourceTree = "<group>"; };
 		84DEE9E82427384F00B310E0 /* PatientDetails.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PatientDetails.m; sourceTree = "<group>"; };
 		84E795A82599F98B006ACA6A /* Clinic Letter Template.doc */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Clinic Letter Template.doc"; path = "Cube/Clinic Letter Template.doc"; sourceTree = "<group>"; };
@@ -838,6 +841,8 @@
 				84DEE9E82427384F00B310E0 /* PatientDetails.m */,
 				8439E522260F09B800298700 /* CustomObjectForTableViewCell.h */,
 				8439E523260F09B800298700 /* CustomObjectForTableViewCell.m */,
+				84D67AB1261EF9C900FAEF38 /* ApprovalFile.h */,
+				84D67AB2261EF9C900FAEF38 /* ApprovalFile.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1142,6 +1147,7 @@
 				849094AF1FE92B6500B00C0B /* DocFileDetails.m in Sources */,
 				840AC7561D8280F200EF6AF7 /* CAXException.mm in Sources */,
 				8430D3DD1D4A1A7D005FCA33 /* TransferListViewController.m in Sources */,
+				84D67AB3261EF9C900FAEF38 /* ApprovalFile.m in Sources */,
 				843B341320452BD20080F355 /* fileenc.c in Sources */,
 				8439E524260F09B800298700 /* CustomObjectForTableViewCell.m in Sources */,
 				843B33E320452B630080F355 /* NSString+DDXML.m in Sources */,
@@ -1236,7 +1242,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Copy to Cube/Copy to Cube.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1249,7 +1255,7 @@
 				INFOPLIST_FILE = "Copy to Cube/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate.CopytoCube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0e8eea66-bdda-4edd-8661-5b7df9f7e67e";
@@ -1270,7 +1276,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Copy to Cube/Copy to Cube.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1279,7 +1285,7 @@
 				INFOPLIST_FILE = "Copy to Cube/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate.CopytoCube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9f74969c-d172-411b-b6fa-c0c9399e893e";
@@ -1402,7 +1408,7 @@
 				CODE_SIGN_ENTITLEMENTS = Cube/Cube.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rohit Dhawan (KUQ89QN37Y)";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INPUT_FILETYPE = automatic;
@@ -1412,7 +1418,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				New_Setting = "";
 				OTHER_LDFLAGS = "";
 				"OTHER_LDFLAGS[arch=*]" = "";
@@ -1435,7 +1441,7 @@
 				CODE_SIGN_ENTITLEMENTS = Cube/Cube.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Rohit Dhawan (Y56BAH343T)";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y56BAH343T;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INPUT_FILETYPE = automatic;
@@ -1445,7 +1451,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				New_Setting = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coreFlexSolutions.CubeDictate;

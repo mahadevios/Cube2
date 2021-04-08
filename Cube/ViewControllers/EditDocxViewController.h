@@ -17,6 +17,10 @@
     NSXMLParser * parser;
     NSString* parsedString;
     NSAttributedString* textViewAttributedString;
+    UIAlertController *alertController;
+    UIAlertAction *actionDelete;
+    UIAlertAction *actionCancel;
+    bool isWebViewLoadedOnce;
 }
 @property (weak, nonatomic) IBOutlet UIView *saveOptionView;
 @property (weak, nonatomic) IBOutlet UIView *navigationView;

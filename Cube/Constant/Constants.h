@@ -60,6 +60,7 @@
 #define  SUCCESS                        @"1000"
 #define  FAILURE                        @"1001"
 #define  VRS_LOCALE                     @"vrsLocale"
+#define  DICTATOR_NAME                  @"dictatorName"
 
 
 //NSNOTIFICATION

@@ -55,5 +55,6 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *appointmentDateLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *completedDocActivityIndicator;
+@property (weak, nonatomic) IBOutlet UILabel *dictatorNameLabel;
 
 @end

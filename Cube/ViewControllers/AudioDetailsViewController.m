@@ -1172,6 +1172,8 @@
     
     departmentLabel.tag=indexPath.row+200;
     
+    departmentLabel.textColor = [UIColor darkTextColor];
+    
     radioButton.tag=indexPath.row+100;
     
     NSString* departmentName = [audiorecordDict valueForKey:@"Department"];

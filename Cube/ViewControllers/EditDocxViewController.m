@@ -23,7 +23,7 @@
 {
     [super viewDidLoad];
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeKeyBoard:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeKeyBoard:) name:UIKeyboardWillShowNotification object:nil];
 
     self.wkWebView.userInteractionEnabled = false;
     modifiedTextViewTagsArray = [NSMutableArray new];
@@ -76,11 +76,11 @@
     
 }
 
-//- (void)removeKeyBoard:(NSNotification *)notify {
-//    // web is your UIWebView
+- (void)removeKeyBoard:(NSNotification *)notify {
+    // web is your UIWebView
 //    [self.wkWebView evaluateJavaScript:@"document.activeElement.blur()" completionHandler:nil];
-////    [self.wkWebView stringByEvaluatingJavaScriptFromString:@"document.activeElement.blur()"];
-//}
+    [self.wkWebView endEditing:YES];
+}
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -90,8 +90,38 @@
 //    NSString* sourcePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"Operative Note Different Template"] ofType:@"htm"];
     
 //    [self showHTMLFileUsingFilePathAndTextView:sourcePath];
-    [self showHTMLFileUsingFilePathAndWebView:sourcePath];
+    if (!isWebViewLoadedOnce) {
+        [self showHTMLFileUsingFilePathAndWebView:sourcePath];
+        isWebViewLoadedOnce = true;
+    }
+   
 
+}
+
+-(void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler
+{
+    alertController = [UIAlertController alertControllerWithTitle:message
+                                                      message:nil
+                                               preferredStyle:UIAlertControllerStyleAlert];
+    actionDelete = [UIAlertAction actionWithTitle:@"Ok"
+                                        style:UIAlertActionStyleDefault
+                                      handler:^(UIAlertAction * action)
+                {
+        completionHandler();
+        [self dismissViewControllerAnimated:true completion:nil];
+    }];
+    [alertController addAction:actionDelete];
+    [self presentViewController:alertController animated:YES completion:^{}];
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler
+{
+    NSLog(@"");
+}
+
+-(void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable))completionHandler
+{
+    NSLog(@"");
 }
 - (IBAction)backButtonClicked:(id)sender
 {
@@ -1798,9 +1828,12 @@
     self.wkWebView.navigationDelegate = self;
     self.wkWebView.UIDelegate = self;
     [self.wkWebView loadRequest:loadDataRequest];
-
-    [self.wkWebView setUserInteractionEnabled:true];
+//    self.wkWebView.
+   
     [self.view addSubview:self.wkWebView];
+    
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.webFilePath] options:@{} completionHandler:nil];
+
 }
 
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation

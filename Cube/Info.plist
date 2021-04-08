@@ -63,5 +63,9 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.coreFlexSolutions.CubeDictate</string>
+	</array>
 </dict>
 </plist>

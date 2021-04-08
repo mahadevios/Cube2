@@ -13,6 +13,7 @@
 #import "Constants.h"
 #import "EditDocxViewController.h"
 #import "CustomObjectForTableViewCell.h"
+#import "ApprovalFile.h"
 
 @interface DocFilesViewController ()
 
@@ -36,11 +37,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(validateCommentResponse:) name:NOTIFICATION_SEND_COMMENT_API
                                                object:nil];
-    self.navigationItem.title=@"Doc Files";
+    self.navigationItem.title=@"Approval Queue";
     
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController:)];
     
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(showFilterSettings:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"More"] style:UIBarButtonItemStylePlain target:self action:@selector(moreButtonClicked:)];
 
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Last 5 days" style:UIBarButtonItemStylePlain target:self action:@selector(showFilterSettings:)];
     
@@ -53,6 +54,16 @@
     
     forTableViewObj=[[PopUpCustomView alloc]init];
     
+//    changeDeptCalled =  true;
+    
+//    [self ChangeDepartment];
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:SELECTED_DEPARTMENT_NAME];
+
+    DepartMent *deptObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    selectedDepartment = deptObj.departmentName;
+    
+    [self setSearchController];
     [self.tabBarController.tabBar setHidden:YES];
 
     [self beginAppearanceTransition:true animated:true];
@@ -61,7 +72,9 @@
     
     [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
     
-  
+    self.definesPresentationContext = true;
+    
+    self.extendedLayoutIncludesOpaqueBars = YES;
     
    // self.navigationController.navigationBar.translucent = NO;
 
@@ -70,6 +83,15 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+  
+   
+//    if (changeDeptCalled) {
+//        changeDeptCalled = false;
+//    }else{
+        [self getCompletedFilesForDepartment];
+    
+    self.searchController.searchBar.text = @"";
+//    }
 //    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
 //    {
 //        self.splitViewController.delegate = self;
@@ -78,8 +100,140 @@
 //        
 //        [self.splitViewController setPreferredDisplayMode:UISplitViewControllerDisplayModeAllVisible];
 //    }
-    [self ChangeDepartment];
+    
 }
+
+
+-(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    // to avoid first responder yes when clicked on file upload yes
+    if (!searchBecomeResponsderFromUploadAlert)
+    {
+        return YES;
+    }
+    else
+    {
+        searchBecomeResponsderFromUploadAlert = NO;
+        return NO;
+    }
+    
+}
+-(void)setSearchController
+{
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    [self.searchBarBGView addSubview:self.searchController.searchBar];
+    if (UIScreen.mainScreen.traitCollection.userInterfaceStyle==UIUserInterfaceStyleDark){
+             self.searchController.searchBar.barTintColor = [UIColor whiteColor];
+             self.searchController.searchBar.searchTextField.textColor = [UIColor blackColor];
+        self.searchController.searchBar.searchTextField.leftView.tintColor = [UIColor blackColor];
+
+         }
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.delegate = self;
+    //    self.tableView.tableHeaderView = self.searchController.searchBar;
+//        self.navigationController.definesPresentationContext = YES;
+    self.searchController.obscuresBackgroundDuringPresentation = NO;
+    self.searchController.hidesNavigationBarDuringPresentation=NO;
+    //    self.navigationController.definesPresentationContext = YES;
+}
+
+
+-(void)prepareForSearchBar
+{
+ 
+    self.completedFilesResponsePredicateArray = [[NSMutableArray alloc] initWithArray:self.completedFilesResponseArray];
+//    self.transferredListPredicateArray = [APIManager sharedManager].transferredListArray;
+    
+}
+
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    if ([searchBar.text isEqualToString:@""]) {
+        [self.searchController.searchBar setShowsCancelButton:NO animated:NO];
+    }
+   
+}
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+//    [searchController.searchBar setShowsCancelButton:YES animated:NO];
+        
+    
+    if ([self.searchController.searchBar.text isEqual:@""])
+    {
+        self.completedFilesResponseArray = [[NSMutableArray alloc] initWithArray:self.completedFilesResponsePredicateArray];
+        [self.tableView reloadData];
+        
+    }
+    else
+    {
+//        NSArray *commonArray = [[NSMutableArray alloc]init];
+        
+        NSArray *predicateResultArray = [[NSMutableArray alloc]init];
+                
+        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"OriginalFileName CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"PatientName CONTAINS [cd] %@", self.searchController.searchBar.text];
+        NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"DictationUploadDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+//        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"department.departmentName CONTAINS [cd] %@", self.searchController.searchBar.text];
+        
+        NSPredicate *mainPredicate;
+        
+       
+            
+//            commonArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+//            transferDatePredicate = [NSPredicate predicateWithFormat:@"transferDate CONTAINS [cd] %@", self.searchController.searchBar.text];
+
+            mainPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[predicate1, predicate2, predicate3]];
+
+        
+  
+        
+        predicateResultArray = [self.completedFilesResponsePredicateArray filteredArrayUsingPredicate:mainPredicate];
+        
+        
+        self.completedFilesResponseArray = [NSMutableArray arrayWithArray:predicateResultArray];
+       
+        
+        [self.tableView reloadData];
+    }
+    
+}
+-(void)updateSerachBarManually
+{
+    self.searchController.active = YES;
+    self.searchController.searchBar.text = self.searchController.searchBar.text;
+    
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    searchBar.text = @"";
+    
+    [searchBar resignFirstResponder];
+    
+    [self prepareDataSourceForTableView];
+    
+//    [self.searchController.searchBar setShowsCancelButton:NO];
+    [self.searchController.searchBar setShowsCancelButton:NO animated:YES];
+    [self.tableView reloadData];
+}
+
+-(void)prepareDataSourceForTableView
+{
+//        [APIManager sharedManager].transferredListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Transferred"];
+//
+//        [APIManager sharedManager].deletedListArray = [[Database shareddatabase] getListOfTransferredOrDeletedFiles:@"Deleted"];
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    
+    [searchBar resignFirstResponder];
+
+}
+
+
+
 
 -(void) showDepartment
 {
@@ -147,16 +301,20 @@
 {
     [popupView removeFromSuperview];
     
-    [self.navigationController popViewControllerAnimated:true];
+//    [self.navigationController popViewControllerAnimated:true];
 }
 
 -(void)save:(id)sender
 {
-    NSString* departmentName = selectedDepartment;
+   
+    if ([selectedDepartment isEqualToString:@""] || selectedDepartment == nil) {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"Alert" withMessage:@"Please select department" withCancelText:nil withOkText:@"Ok" withAlertTag:1000];
+    }else{
+        [popupView removeFromSuperview];
+        
+        [self getCompletedFilesForDepartment];
+    }
     
-    [popupView removeFromSuperview];
-    
-    [self getCompletedFilesForDepartment];
     //call completed doc api
 }
 
@@ -196,6 +354,16 @@
     
 }
 
+- (void)moreButtonClicked:(id)sender
+{
+    [self ChangeDepartment];
+//    NSArray* subViewArray=[NSArray arrayWithObjects:@"Change Department", nil];
+//
+//    UIView* pop=[[PopUpCustomView alloc]initWithFrame:CGRectMake(self.view.frame.origin.x+self.view.frame.size.width-160, self.view.frame.origin.y+40, 160, 40) andSubViews:subViewArray :self];
+//
+//    [[[UIApplication sharedApplication] keyWindow] addSubview:pop];
+}
+
 -(void)setRightBarButtonItem:(NSString*)barButtonTitleString
 {
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Last 5 days" style:UIBarButtonItemStylePlain target:self action:@selector(showFilterSettings:)];
@@ -232,6 +400,8 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    [self.searchBarBGView removeFromSuperview];
+    
     if (self.splitViewController.isCollapsed == true || self.splitViewController == nil)
     {
         [self.navigationController popViewControllerAnimated:YES];
@@ -242,6 +412,10 @@
     }
     [self.tabBarController.tabBar setHidden:NO];
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self.searchController removeFromParentViewController];
+}
 -(void)validateCompletedDocResponse:(NSNotification*)obj
 {
     NSString* response = obj.object;
@@ -250,8 +424,29 @@
     
 //    [self.completedFilesForTableViewArray removeAllObjects];
     
-    self.completedFilesResponseArray = [response valueForKey:@"ApprovalList"];
+    NSArray* aprovalList = [response valueForKey:@"ApprovalList"];
     
+   
+        for (int i=0; i<aprovalList.count; i++)
+        {
+//            PatientDateofBirth
+            ApprovalFile* file = [ApprovalFile new];
+            NSDictionary* dic = [aprovalList objectAtIndex:i];
+    
+            file.DictationID = [dic valueForKey:@"DictationID"];
+            file.PatientDateofBirth = [dic valueForKey:@"PatientDateofBirth"];
+
+            file.DictationUploadDate = [dic valueForKey:@"DictationUploadDate"];
+            file.ErrorMsg = [dic valueForKey:@"ErrorMsg"];
+            file.FileLockStatus = [dic valueForKey:@"FileLockStatus"];
+            file.FileLockedToolTip = [dic valueForKey:@"FileLockedToolTip"];
+            file.IsErrorMsg = [dic valueForKey:@"IsErrorMsg"];
+            file.OriginalFileName = [dic valueForKey:@"OriginalFileName"];
+            file.PatientName = [dic valueForKey:@"PatientName"];
+            file.Signals = [dic valueForKey:@"Signals"];
+            file.SignalsToolTip = [dic valueForKey:@"SignalsToolTip"];
+            [self.completedFilesResponseArray addObject:file];
+        }
 //    AudioDetails* ad = [AudioDetails new];
 //    
 //    ad.fileName = @"test";
@@ -283,7 +478,7 @@
 //        }
 //    }
     
-    
+    [self prepareForSearchBar];
     [self.tableView reloadData];
 
 }
@@ -476,11 +671,13 @@
 
     tapToDismissNotif.delegate = self;
    
+    float popupHeight = 0.0;
+    
     NSDictionary* docDetails = [self.completedFilesResponseArray objectAtIndex:sender.indexPathRow];
     
-    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
+    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -self.view.frame.size.height, self.view.frame.size.width, 170)];
     
-     self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.05, -self.view.frame.size.height, self.view.frame.size.width*0.9, self.view.frame.size.height*0.73);
+     self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.05, -self.view.frame.size.height, self.view.frame.size.width*0.9, 170);
     
     scrollView.delegate = self;
     
@@ -489,7 +686,7 @@
 
     scrollView.backgroundColor = [UIColor whiteColor];
     
-    UIView* insideView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, scrollView.frame.size.width, 500)];
+    UIView* insideView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, scrollView.frame.size.width, 200)];
     
     insideView.backgroundColor = [UIColor whiteColor];
     
@@ -506,6 +703,7 @@
     referenceLabel.font = [UIFont systemFontOfSize:18.0 weight:UIFontWeightSemibold];
     
     referenceLabel.textColor = [UIColor appOrangeColor];
+    
     
     UIView* headingSeparatorLineView = [[UIView alloc] initWithFrame:CGRectMake(0, referenceLabel.frame.origin.y + referenceLabel.frame.size.height + 5, insideView.frame.size.width, 1)];
     headingSeparatorLineView.backgroundColor = [UIColor colorWithRed:208/255.0 green:208/255.0 blue:208/255.0 alpha:1.0];
@@ -524,38 +722,41 @@
     float titleValueLabelXPosition = insideView.frame.size.width*0.49;
 
     UILabel* dictationIdTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, headingSeparatorLineView.frame.origin.y + headingSeparatorLineView.frame.size.height+10 , insideView.frame.size.width*0.4, 30)];
-    
+
     dictationIdTitleLabel.textColor = [UIColor colorWithRed:148/255.0 green:148/255.0 blue:148/255.0 alpha:1.0];
-    
+
     dictationIdTitleLabel.font = [UIFont systemFontOfSize:14];
-    
-    
-//    NSString* OriginalFileName =    [docDetails valueForKey:@"OriginalFileName"];
-//    NSString* PatientName =  [docDetails valueForKey:@"PatientName"];
-//    NSString* DictationUploadDate =  [docDetails valueForKey:@"DictationUploadDate"];
-    dictationIdTitleLabel.text = @"Dictation ID";
-    
+
+    dictationIdTitleLabel.text = @"File Name";
+
     UILabel* dictationIdLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, headingSeparatorLineView.frame.origin.y + headingSeparatorLineView.frame.size.height+10, insideView.frame.size.width*0.5, 30)];
 
     dictationIdLabel.font = [UIFont systemFontOfSize:14];
 
-    dictationIdLabel.text = [NSString stringWithFormat:@"%@",[docDetails valueForKey:@"DictationID"]];
+    dictationIdLabel.text = [NSString stringWithFormat:@"%@",[docDetails valueForKey:@"OriginalFileName"]];
+
+    dictationIdLabel.numberOfLines = 0;
+   
+    dictationIdLabel.textColor = [UIColor grayColor];
+
+    CGRect newFrame3 = [self getLabelSize:dictationIdLabel];
+   
+    dictationIdLabel.frame = newFrame3;
     
-    UIView* separatorLineView = [[UIView alloc] initWithFrame:CGRectMake(10, dictationIdTitleLabel.frame.origin.y + dictationIdTitleLabel.frame.size.height + 5, insideView.frame.size.width-20, 1)];
+    
+    UIView* separatorLineView = [[UIView alloc] initWithFrame:CGRectMake(10, dictationIdLabel.frame.origin.y + dictationIdLabel.frame.size.height + 5, insideView.frame.size.width-20, 1)];
     separatorLineView.backgroundColor = [UIColor colorWithRed:208/255.0 green:208/255.0 blue:208/255.0 alpha:1.0];
-    
-    
-    
-    //
-    UILabel* patientNameTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, separatorLineView.frame.origin.y + 10 , insideView.frame.size.width*0.5, 30)];
+//
+  
+    UILabel* patientNameTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, separatorLineView.frame.origin.y + separatorLineView.frame.size.height+10 , insideView.frame.size.width*0.5, 30)];
     
     patientNameTitleLabel.textColor = [UIColor colorWithRed:148/255.0 green:148/255.0 blue:148/255.0 alpha:1.0];
     
     patientNameTitleLabel.font = [UIFont systemFontOfSize:14];
     
-    patientNameTitleLabel.text = @"Patient Name";
+    patientNameTitleLabel.text = @"Patient's Name";
     
-    UILabel* patientNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, separatorLineView.frame.origin.y + 10, insideView.frame.size.width*0.4, 30)];
+    UILabel* patientNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, separatorLineView.frame.origin.y + separatorLineView.frame.size.height+10, insideView.frame.size.width*0.4, 30)];
     
     patientNameLabel.font = [UIFont systemFontOfSize:14];
     
@@ -563,58 +764,76 @@
     
     patientNameLabel.numberOfLines = 0;
    
+    patientNameLabel.textColor = [UIColor grayColor];
+
+    
     CGRect newFrame = [self getLabelSize:patientNameLabel];
     
     patientNameLabel.frame = newFrame;
     
-    UIView* separatorLineView1 = [[UIView alloc] initWithFrame:CGRectMake(10, patientNameLabel.frame.origin.y + patientNameLabel.frame.size.height + 5, insideView.frame.size.width-20, 1)];
-    separatorLineView1.backgroundColor = [UIColor colorWithRed:208/255.0 green:208/255.0 blue:208/255.0 alpha:1.0];
+//    UIView* separatorLineView1 = [[UIView alloc] initWithFrame:CGRectMake(10, patientNameLabel.frame.origin.y + patientNameLabel.frame.size.height + 5, insideView.frame.size.width-20, 1)];
+//    separatorLineView1.backgroundColor = [UIColor colorWithRed:208/255.0 green:208/255.0 blue:208/255.0 alpha:1.0];
+//
+//    UILabel* originalFileNameTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, separatorLineView1.frame.origin.y + 10 , insideView.frame.size.width*0.5, 30)];
+//
+//    originalFileNameTitleLabel.textColor = [UIColor colorWithRed:148/255.0 green:148/255.0 blue:148/255.0 alpha:1.0];
+//
+//    originalFileNameTitleLabel.font = [UIFont systemFontOfSize:14];
+//
+//    originalFileNameTitleLabel.text = @"Original File Name";
+//
+//    UILabel* originalFileNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, separatorLineView1.frame.origin.y + 10, insideView.frame.size.width*0.4, 30)];
+//
+//    originalFileNameLabel.font = [UIFont systemFontOfSize:14];
+//
+//    originalFileNameLabel.text = [docDetails valueForKey:@"OriginalFileName"];
+//
+//
+//    originalFileNameLabel.numberOfLines = 0;
+//
+//    CGRect newFrame1 = [self getLabelSize:originalFileNameLabel];
+//
+//    originalFileNameLabel.frame = newFrame1;
     
-    UILabel* originalFileNameTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, separatorLineView1.frame.origin.y + 10 , insideView.frame.size.width*0.5, 30)];
-    
-    originalFileNameTitleLabel.textColor = [UIColor colorWithRed:148/255.0 green:148/255.0 blue:148/255.0 alpha:1.0];
-    
-    originalFileNameTitleLabel.font = [UIFont systemFontOfSize:14];
-    
-    originalFileNameTitleLabel.text = @"Original File Name";
-    
-    UILabel* originalFileNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, separatorLineView1.frame.origin.y + 10, insideView.frame.size.width*0.4, 30)];
-    
-    originalFileNameLabel.font = [UIFont systemFontOfSize:14];
-    
-    originalFileNameLabel.text = [docDetails valueForKey:@"OriginalFileName"];
-    
-    
-    originalFileNameLabel.numberOfLines = 0;
-
-    CGRect newFrame1 = [self getLabelSize:originalFileNameLabel];
-    
-    originalFileNameLabel.frame = newFrame1;
-    
-    UIView* separatorLineView2 = [[UIView alloc] initWithFrame:CGRectMake(10, originalFileNameLabel.frame.origin.y + originalFileNameLabel.frame.size.height + 5, insideView.frame.size.width-20, 1)];
+    UIView* separatorLineView2 = [[UIView alloc] initWithFrame:CGRectMake(10, patientNameLabel.frame.origin.y + patientNameLabel.frame.size.height + 5, insideView.frame.size.width-20, 1)];
     separatorLineView2.backgroundColor = [UIColor colorWithRed:208/255.0 green:208/255.0 blue:208/255.0 alpha:1.0];
     
     
+    UILabel* patientDOBTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, separatorLineView2.frame.origin.y + 10 , insideView.frame.size.width*0.4, 30)];
     
+    patientDOBTitleLabel.textColor = [UIColor colorWithRed:148/255.0 green:148/255.0 blue:148/255.0 alpha:1.0];
     
-//    UILabel* dictatedOnTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, separatorLineView1.frame.origin.y + 10 , insideView.frame.size.width*0.4, 30)];
-//
-//    dictatedOnTitleLabel.textColor= [UIColor colorWithRed:148/255.0 green:148/255.0 blue:148/255.0 alpha:1.0];
-//
-//    dictatedOnTitleLabel.font = [UIFont systemFontOfSize:14];
-//
-//    dictatedOnTitleLabel.text = @"Dictated On";
-//
-//    UILabel* dictatedOnLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, separatorLineView1.frame.origin.y + 10, insideView.frame.size.width*0.5, 30)];
-//
-//    dictatedOnLabel.font = [UIFont systemFontOfSize:14];
-//
-//    dictatedOnLabel.text = [NSString stringWithFormat:@"%@",[docDetails valueForKey:@"DictationUploadDate"]];
-//
-//    UIView* separatorLineView2 = [[UIView alloc] initWithFrame:CGRectMake(10, dictatedOnLabel.frame.origin.y + dictatedOnLabel.frame.size.height + 5, insideView.frame.size.width-20, 1)];
-//    separatorLineView2.backgroundColor = [UIColor colorWithRed:208/255.0 green:208/255.0 blue:208/255.0 alpha:1.0];
+    patientDOBTitleLabel.font = [UIFont systemFontOfSize:14];
+    
+    patientDOBTitleLabel.text = @"Patient's DOB";
+    
+    CGRect newFrame1 = [self getLabelSize:patientDOBTitleLabel];
+    
+    patientDOBTitleLabel.numberOfLines = 0;
+    
+    patientDOBTitleLabel.frame = newFrame1;
+    
+    UILabel* patientDOBLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, separatorLineView2.frame.origin.y + 10, insideView.frame.size.width*0.5, 30)];
+    
+    patientDOBLabel.font = [UIFont systemFontOfSize:14];
+    
+    patientDOBLabel.text = [NSString stringWithFormat:@"%@",[docDetails valueForKey:@"PatientDateofBirth"]];
+    
+    patientDOBLabel.textColor = [UIColor grayColor];
 
-    UILabel* uploadedDateTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, separatorLineView2.frame.origin.y + 10 , insideView.frame.size.width*0.4, 30)];
+    CGRect newFrame2 = [self getLabelSize:patientDOBLabel];
+    
+    patientDOBLabel.numberOfLines = 0;
+    
+    patientDOBLabel.frame = newFrame2;
+    
+
+    
+    UIView* separatorLineView3 = [[UIView alloc] initWithFrame:CGRectMake(10, patientDOBTitleLabel.frame.origin.y + patientDOBTitleLabel.frame.size.height + 5, insideView.frame.size.width-20, 1)];
+    separatorLineView3.backgroundColor = [UIColor colorWithRed:208/255.0 green:208/255.0 blue:208/255.0 alpha:1.0];
+    
+    
+    UILabel* uploadedDateTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelXPosition, separatorLineView3.frame.origin.y + 10 , insideView.frame.size.width*0.4, 30)];
     
     uploadedDateTitleLabel.textColor = [UIColor colorWithRed:148/255.0 green:148/255.0 blue:148/255.0 alpha:1.0];
     
@@ -622,19 +841,29 @@
     
     uploadedDateTitleLabel.text = @"Dictation Upload Date";
     
-    UILabel* uploadedDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, separatorLineView2.frame.origin.y + 10, insideView.frame.size.width*0.5, 30)];
+    CGRect newFrame4 = [self getLabelSize:uploadedDateTitleLabel];
+    
+    uploadedDateTitleLabel.numberOfLines = 0;
+    
+    uploadedDateTitleLabel.frame = newFrame4;
+    
+    UILabel* uploadedDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleValueLabelXPosition, separatorLineView3.frame.origin.y + 10, insideView.frame.size.width*0.5, 30)];
     
     uploadedDateLabel.font = [UIFont systemFontOfSize:14];
     
     uploadedDateLabel.text = [NSString stringWithFormat:@"%@",[docDetails valueForKey:@"DictationUploadDate"]];
     
-    UIView* separatorLineView3 = [[UIView alloc] initWithFrame:CGRectMake(10, uploadedDateLabel.frame.origin.y + uploadedDateLabel.frame.size.height + 5, insideView.frame.size.width-20, 1)];
-    separatorLineView2.backgroundColor = [UIColor colorWithRed:208/255.0 green:208/255.0 blue:208/255.0 alpha:1.0];
+    uploadedDateLabel.textColor = [UIColor grayColor];
 
-    commentTextView.font = [UIFont systemFontOfSize:14.0];
+    CGRect newFrame5 = [self getLabelSize:uploadedDateLabel];
     
-    commentTextView.delegate = self;
+    uploadedDateLabel.numberOfLines = 0;
     
+    uploadedDateLabel.frame = newFrame5;
+    
+    
+    popupHeight = referenceLabel.frame.size.height + dictationIdLabel.frame.size.height + patientNameLabel.frame.size.height+ patientDOBLabel.frame.size.height + uploadedDateTitleLabel.frame.size.height+80;//80 = addn of dist betwn 2 lines
+
     [insideView addSubview:referenceLabel];
     [insideView addSubview:crossButton];
     [insideView addSubview:crossImageView];
@@ -646,15 +875,18 @@
     
     [insideView addSubview:patientNameTitleLabel];
     [insideView addSubview:patientNameLabel];
-    [insideView addSubview:separatorLineView1];
-    
-    [insideView addSubview:originalFileNameTitleLabel];
-    [insideView addSubview:originalFileNameLabel];
+    [insideView addSubview:patientDOBTitleLabel];
+    [insideView addSubview:patientDOBLabel];
+//    [insideView addSubview:separatorLineView1];
+//
+//    [insideView addSubview:originalFileNameTitleLabel];
+//    [insideView addSubview:originalFileNameLabel];
     [insideView addSubview:separatorLineView2];
-    
+    [insideView addSubview:separatorLineView3];
+
     [insideView addSubview:uploadedDateTitleLabel];
     [insideView addSubview:uploadedDateLabel];
-    [insideView addSubview:separatorLineView3];
+//    [insideView addSubview:separatorLineView3];
     
     
         
@@ -666,7 +898,7 @@
     
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.9 initialSpringVelocity:0.1 options:UIViewAnimationOptionTransitionCurlDown animations:^{
    
-    self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.05, self.view.frame.size.height*0.09, self.view.frame.size.width*0.9, self.view.frame.size.height*0.73);
+    self.scrollView.frame = CGRectMake(self.view.frame.size.width*0.05, self.view.frame.size.height*0.09, self.view.frame.size.width*0.9, popupHeight);
  
     } completion:^(BOOL finished) {
         
@@ -837,16 +1069,17 @@
     if (tableView == self.tableView) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
      
-        NSDictionary* docDetails = [self.completedFilesResponseArray objectAtIndex:indexPath.row];
-        NSString* OriginalFileName =    [docDetails valueForKey:@"OriginalFileName"];
+        ApprovalFile* docDetails = [self.completedFilesResponseArray objectAtIndex:indexPath.row];
+        NSString* OriginalFileName =    docDetails.OriginalFileName;
         
-        NSString* FileLockStatus =  [docDetails valueForKey:@"FileLockStatus"];
-        NSString* FileLockedToolTip =  [docDetails valueForKey:@"FileLockedToolTip"];
-        NSString* Signals =  [docDetails valueForKey:@"Signals"];
-        NSString* IsErrorMsg =  [docDetails valueForKey:@"IsErrorMsg"];
-        
-        NSString* SignalsToolTip =  [docDetails valueForKey:@"SignalsToolTip"];
-        NSString* ErrorMsg =  [docDetails valueForKey:@"ErrorMsg"];
+        NSString* FileLockStatus =  docDetails.FileLockStatus;
+        NSString* FileLockedToolTip =  docDetails.FileLockedToolTip;
+        NSString* Signals =  docDetails.Signals;
+        NSString* IsErrorMsg =  docDetails.IsErrorMsg;
+        NSString* PatientName =  docDetails.PatientName;
+
+        NSString* SignalsToolTip =  docDetails.SignalsToolTip;
+        NSString* ErrorMsg =  docDetails.ErrorMsg;
 
         BOOL  isErrorPresent = false, isFileLockPresent = false;
         if ([IsErrorMsg isEqualToString:@"true"]){
@@ -857,20 +1090,20 @@
         }
         
         double width = 0.0;
-        if (isFileLockPresent && isErrorPresent) {
+//        if (isFileLockPresent && isErrorPresent) {
             width = (cell.frame.size.width - 20)/3 - 2;
-        }else{
-            width = (cell.frame.size.width - 20)/2 - 1.5;
-        }
+//        }else{
+//            width = (cell.frame.size.width - 20)/2 - 1.5;
+//        }
         
         if ([cell viewWithTag:101] != nil) {
             [[cell viewWithTag:101] removeFromSuperview];
         }
-        TableViewButton* signalButton = [[TableViewButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height-39, width, 29)];
+        TableViewButton* signalButton = [[TableViewButton alloc] initWithFrame:CGRectMake(10, cell.frame.size.height-29, width, 29)];
         [signalButton addTarget:self action:@selector(signalButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         signalButton.indexPathRow = indexPath.row;
         signalButton.messageString = SignalsToolTip;
-        [signalButton setTitle:SignalsToolTip forState:UIControlStateNormal];
+        [signalButton setTitle:@"File Status" forState:UIControlStateNormal];
         [signalButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
         [signalButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         [signalButton.titleLabel setFont:[UIFont systemFontOfSize:14.0]];
@@ -893,10 +1126,10 @@
 //                isErrorButtonAdded = true;
                 
                
-                errorButton = [[TableViewButton alloc] initWithFrame:CGRectMake(xPos, cell.frame.size.height-39, signalButton.frame.size.width, signalButton.frame.size.height)];
+                errorButton = [[TableViewButton alloc] initWithFrame:CGRectMake(xPos, cell.frame.size.height-29, signalButton.frame.size.width, signalButton.frame.size.height)];
                 [errorButton setImage:[UIImage imageNamed:@"WarningRed"] forState:UIControlStateNormal];
                 errorButton.messageString = ErrorMsg;
-                [errorButton setTitle:ErrorMsg forState:UIControlStateNormal];
+                [errorButton setTitle:@"Error" forState:UIControlStateNormal];
                 errorButton.tag = 102;
                 [errorButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
                 [errorButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
@@ -907,10 +1140,10 @@
                 [cell addSubview:errorButton];
             }else{
                
-                errorButton = [[TableViewButton alloc] initWithFrame:CGRectMake(xPos, cell.frame.size.height-39, signalButton.frame.size.width, signalButton.frame.size.height)];
+                errorButton = [[TableViewButton alloc] initWithFrame:CGRectMake(xPos, cell.frame.size.height-29, signalButton.frame.size.width, signalButton.frame.size.height)];
                 [errorButton setImage:[UIImage imageNamed:@"WarningRed"] forState:UIControlStateNormal];
                 errorButton.messageString = ErrorMsg;
-                [errorButton setTitle:ErrorMsg forState:UIControlStateNormal];
+                [errorButton setTitle:@"Error" forState:UIControlStateNormal];
                 [errorButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
                 [errorButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
                 [errorButton.titleLabel setFont:[UIFont systemFontOfSize:14.0]];
@@ -932,19 +1165,19 @@
        if ([FileLockStatus isEqualToString:@"3"]){
            double xPos = 0.0;
            if (isErrorPresent) {
-//               xPos = cell.frame.size.width*0.66-7;
-               xPos = errorButton.frame.origin.x + errorButton.frame.size.width + 3;
+               xPos = cell.frame.size.width*0.66-7;
+//               xPos = errorButton.frame.origin.x + errorButton.frame.size.width + 3;
            }else{
-//               xPos = cell.frame.size.width*0.5-7;
                xPos = signalButton.frame.origin.x + signalButton.frame.size.width + 3;
+//               xPos = signalButton.frame.origin.x + signalButton.frame.size.width + 3;
            }
            if ([cell viewWithTag:103] != nil) {
                [[cell viewWithTag:103] removeFromSuperview];
                
-               TableViewButton* lockButton = [[TableViewButton alloc] initWithFrame:CGRectMake(xPos, cell.frame.size.height-39, signalButton.frame.size.width, signalButton.frame.size.height)];
+               TableViewButton* lockButton = [[TableViewButton alloc] initWithFrame:CGRectMake(xPos, cell.frame.size.height-29, signalButton.frame.size.width, signalButton.frame.size.height)];
                [lockButton setImage:[UIImage imageNamed:@"LockBlue"] forState:UIControlStateNormal];
                lockButton.messageString = FileLockedToolTip;
-               [lockButton setTitle:FileLockedToolTip forState:UIControlStateNormal];
+               [lockButton setTitle:@"File Lock" forState:UIControlStateNormal];
                lockButton.tag = 103;
                [lockButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
                [lockButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
@@ -955,9 +1188,9 @@
                [cell addSubview:lockButton];
            }else{
             
-               TableViewButton* lockButton = [[TableViewButton alloc] initWithFrame:CGRectMake(xPos, cell.frame.size.height-39, signalButton.frame.size.width, signalButton.frame.size.height)];
+               TableViewButton* lockButton = [[TableViewButton alloc] initWithFrame:CGRectMake(xPos, cell.frame.size.height-29, signalButton.frame.size.width, signalButton.frame.size.height)];
                [lockButton setImage:[UIImage imageNamed:@"LockBlue"] forState:UIControlStateNormal];
-               [lockButton setTitle:FileLockedToolTip forState:UIControlStateNormal];
+               [lockButton setTitle:@"File Lock" forState:UIControlStateNormal];
                lockButton.messageString = FileLockedToolTip;
                lockButton.tag = 103;
                [lockButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
@@ -986,7 +1219,7 @@
 //        warningButton.messageString = ErrorMsg;
 //
         TableViewButton* moreButton = [cell viewWithTag:701];
-//        [moreButton addTarget:self action:@selector(addDetailsViewindexPathRow:) forControlEvents:UIControlEventTouchUpInside];
+        [moreButton addTarget:self action:@selector(addDetailsViewindexPathRow:) forControlEvents:UIControlEventTouchUpInside];
         moreButton.indexPathRow = indexPath.row;
         
 //        if ([FileLockStatus intValue] == 3) {
@@ -1033,6 +1266,10 @@
         
         fileNameLabel.text = OriginalFileName;
         
+        UILabel* patientNameLabel = [cell viewWithTag:106];
+        
+        patientNameLabel.text = PatientName;
+        
         return cell;
         
         //    if (audioDetails.downloadStatus == DOWNLOADING)
@@ -1059,6 +1296,7 @@
         
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
+        [cell setBackgroundColor:[UIColor whiteColor]];
         if (cell == nil)
         {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -1072,6 +1310,8 @@
         departmentLabel.text = [departmentNamesArray objectAtIndex:indexPath.row];
         
         departmentLabel.tag=indexPath.row+200;
+        
+        departmentLabel.textColor = [UIColor darkTextColor];
         
         radioButton.tag=indexPath.row+100;
         
@@ -1091,6 +1331,16 @@
         return cell;
     }
     
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+
+        cell.backgroundColor = [UIColor whiteColor];
+
+}
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.searchController.searchBar resignFirstResponder];
 }
 
 -(void) addSubview:(CustomObjectForTableViewCell*)obj
@@ -1132,6 +1382,7 @@
         
        EditDocxViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EditDocxViewController"];
         vc.webFilePath = filePathString;
+        vc.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:vc animated:true completion:nil];
     }
     else{

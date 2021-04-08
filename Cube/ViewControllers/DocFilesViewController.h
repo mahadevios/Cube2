@@ -11,7 +11,7 @@
 #import "UIColor+ApplicationColors.h"
 #import "PopUpCustomView.h"
 
-@interface DocFilesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate, UIDocumentInteractionControllerDelegate, UIGestureRecognizerDelegate,UITextViewDelegate, UISplitViewControllerDelegate>
+@interface DocFilesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate, UIDocumentInteractionControllerDelegate, UIGestureRecognizerDelegate,UITextViewDelegate, UISplitViewControllerDelegate,UISearchBarDelegate, UISearchResultsUpdating>
 {
     UIAlertController *alertController;
     UIAlertAction *actionDelete;
@@ -21,10 +21,13 @@
     NSArray* departmentNamesArray;
     UITableViewCell *cell;
     NSString* selectedDepartment;
-
+    bool changeDeptCalled;
+    BOOL searchBecomeResponsderFromUploadAlert;
 }
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *completedFilesResponseArray;
+@property (strong, nonatomic) NSMutableArray *completedFilesResponsePredicateArray;
 @property (strong, nonatomic) NSMutableArray *completedFilesForTableViewArray;
 @property (strong, nonatomic) NSMutableArray *downloadingFilesDictationIdsArray;
 @property (strong, nonatomic) UIView* overLayView;
@@ -32,5 +35,7 @@
 @property (strong, nonatomic) NSArray *uploadedFilesArray;
 @property (strong, nonatomic) UITextView* commentTextView;
 @property (nonatomic) long selectedRow;
+@property (strong, nonatomic) UISearchController *searchController;
+@property (weak, nonatomic) IBOutlet UIView *searchBarBGView;
 
 @end
