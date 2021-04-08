@@ -277,7 +277,10 @@
        
         //get user firstname,lastname and userId for file prefix
         NSString* fileNamePrefix = [responseDict valueForKey:@"FileNamePrefix"];
+        NSString* dictatorName = [responseDict valueForKey:@"Dname"];
+
         
+        [[NSUserDefaults standardUserDefaults] setValue:dictatorName forKey:DICTATOR_NAME];
         [[NSUserDefaults standardUserDefaults] setValue:fileNamePrefix forKey:@"FileNamePrefix"];
         
         NSString* enableVRSForUser = [responseDict valueForKey:@"IsVRS"];

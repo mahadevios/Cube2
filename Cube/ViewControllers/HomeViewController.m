@@ -40,6 +40,11 @@
       selector:@selector(validateApntmntListResponse:) name:NOTIFICATION_GET_APNTMNT_LIST
         object:nil];
     
+    NSString* dictatorName = [[NSUserDefaults standardUserDefaults] valueForKey:DICTATOR_NAME];
+    if ([dictatorName isEqualToString:@""] || dictatorName == nil) {
+        self.dictatorNameLabel.hidden = true;
+    }else
+        self.dictatorNameLabel.text = [NSString stringWithFormat:@"Welcome, %@",dictatorName];
 //    app.awaitingFileTransferNamesArray=[[NSMutableArray alloc]init];
     
 //    [self beginAppearanceTransition:true animated:true];
@@ -79,9 +84,9 @@
 //    [[NSNotificationCenter defaultCenter] addObserver:self
 //                                             selector:@selector(validateSendIdsResponse:) name:NOTIFICATION_SEND_DICTATION_IDS_API
 //                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(validateCompletedDocResponse:) name:NOTIFICATION_COMPLETED_DOC_LIST
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(validateCompletedDocResponse:) name:NOTIFICATION_COMPLETED_DOC_LIST
+//                                               object:nil];
     // Do any additional setup after loading the view.
     
     
@@ -143,7 +148,7 @@
     // check for complted docx file count
     [self getAppointmentList];
     
-    [self checkForCompletedDocFiles];
+//    [self checkForCompletedDocFiles];
     
     // check files tobe purge
     [self checkFilesToBePurge];
