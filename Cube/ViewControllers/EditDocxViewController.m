@@ -69,9 +69,9 @@
     
     self.viewDocxButton.layer.borderColor = [UIColor colorWithRed:3/255.0 green:122/255.0 blue:1 alpha:1.0].CGColor;
     
-    [self copyBundleDocxFileToDirectory];
+//    [self copyBundleDocxFileToDirectory];
     
-    [self unZipToMakeXML];
+//    [self unZipToMakeXML];
     
     
 }

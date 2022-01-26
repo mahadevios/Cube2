@@ -13,4 +13,6 @@
 @property(nonatomic,strong)UITableViewCell* cell;
 @property(nonatomic,strong)UITableView* tableview;
 @property(nonatomic,strong)UILabel* label;
+@property(nonatomic,strong)UISwitch* flipSwitch;
+@property(nonatomic) int tag;
 @end

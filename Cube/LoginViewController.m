@@ -37,6 +37,7 @@
 #import "NSData+AES256.h"
 #import "Keychain.h"
 #import "SelectDepartmentViewController.h"
+#import <LocalAuthentication/LocalAuthentication.h>
 
 @interface LoginViewController ()
 
@@ -51,6 +52,16 @@
     
     [pinCode1TextField becomeFirstResponder];
   
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:LOGIN_USING_FACE_TOUCH_ID]) {
+        NSString* userPin = [[NSUserDefaults standardUserDefaults] valueForKey:USER_PIN];
+
+        if ([userPin isEqualToString:@""] || userPin == NULL) {
+            
+        }else{
+            [self checkAuthentication];
+        }
+    }
+   
 }
 
 //-(void) addWebView
@@ -110,8 +121,8 @@
                                              selector:@selector(validatePinResponseCheck:) name:NOTIFICATION_VALIDATE_PIN_API
                                                object:nil];
     
-    
-    
+   
+   
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -246,10 +257,17 @@
         
         NSString* pin=[NSString stringWithFormat:@"%@%@%@%@",pinCode1TextField.text,pinCode2TextField.text,pinCode3TextField.text,pinCode4TextField.text];
         
-        [AppPreferences sharedAppPreferences].userObj.userPin = pin;
-        
-        [[NSUserDefaults standardUserDefaults] setValue:pin forKey:USER_PIN];
+        if ([pin isEqualToString:@""] || pin == NULL) {
+            NSString* userPin =  [[NSUserDefaults standardUserDefaults] valueForKey:USER_PIN];
+            
+            [AppPreferences sharedAppPreferences].userObj.userPin = userPin;
+        }else{
+            [AppPreferences sharedAppPreferences].userObj.userPin = pin;
+            
+            [[NSUserDefaults standardUserDefaults] setValue:pin forKey:USER_PIN];
 
+        }
+       
         NSString* userId =  [responseDict valueForKey:@"UserID"];
 
         [[NSUserDefaults standardUserDefaults] setValue:userId forKey:USER_ID_INT];
@@ -541,27 +559,7 @@
         
         else
         {
-            if ([AppPreferences sharedAppPreferences].isReachable)
-            {
-                
-                hud.minSize = CGSizeMake(150.f, 100.f);
-                hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                hud.mode = MBProgressHUDModeIndeterminate;
-                hud.label.text = @"Validating PIN...";
-                hud.detailsLabel.text = @"Please wait";
-                NSString*     macId=[Keychain getStringForKey:@"udid"];
-                
-                [[NSUserDefaults standardUserDefaults] setValue:macId forKey:@"MacId"];
-                
-                [pinCode4TextField resignFirstResponder];
-                
-                [[APIManager sharedManager] validatePinMacID:macId Pin:pin];
-                
-            }
-            else
-            {
-                [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
-            }
+            [self loginAndFetchData:@"Validating PIN..." pin:pin];
         }
         
     }
@@ -569,7 +567,30 @@
     
 }
 
-
+-(void) loginAndFetchData:(NSString*) loadingMessage pin:(NSString*)pin
+{
+    if ([AppPreferences sharedAppPreferences].isReachable)
+    {
+        
+        hud.minSize = CGSizeMake(150.f, 100.f);
+        hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
+        hud.label.text = loadingMessage;
+        hud.detailsLabel.text = @"Please wait";
+        NSString*     macId=[Keychain getStringForKey:@"udid"];
+        
+        [[NSUserDefaults standardUserDefaults] setValue:macId forKey:@"MacId"];
+        
+        [pinCode4TextField resignFirstResponder];
+        
+        [[APIManager sharedManager] validatePinMacID:macId Pin:pin];
+        
+    }
+    else
+    {
+        [[AppPreferences sharedAppPreferences] showAlertViewWithTitle:@"No internet connection!" withMessage:@"Please check your internet connection and try again." withCancelText:nil withOkText:@"OK" withAlertTag:1000];
+    }
+}
 - (IBAction)cancelButtonClicked:(id)sender
 {
     pinCode1TextField.text=@"";pinCode2TextField.text=@"";pinCode3TextField.text=@"";pinCode4TextField.text=@"";
@@ -580,6 +601,77 @@
     
 }
 
+-(void) checkAuthentication
+{
+    LAContext *myContext = [[LAContext alloc] init];
+    NSError *authError = nil;
+    NSString *localizedReason = @"Authenticate using your finger";
+//    [myContext setLocalizedCancelTitle:@"Enter PIN"];
+    myContext.localizedFallbackTitle = @"Enter PIN";
+//    [myContext setAccessibilityFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    
+    if (@available(iOS 11.0, *)) {
+        if ([myContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
+            if (myContext.biometryType == LABiometryTypeFaceID) {
+                localizedReason = @"Unlock using Face ID";
+                NSLog(@"FaceId support");
+                
+                
+                        } else if (myContext.biometryType == LABiometryTypeTouchID) {
+                            localizedReason = @"Unlock using Touch ID";
+                            NSLog(@"TouchId support");
+                        } else {
+                            NSLog(@"No Biometric support");
+                        }
+            
+            
+            [myContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                      localizedReason:localizedReason
+                                reply:^(BOOL success, NSError *error) {
+                dispatch_async(dispatch_get_main_queue(), ^
+                               {
+                    if (success) {
+                        
+                        NSString* userPin = [[NSUserDefaults standardUserDefaults] valueForKey:USER_PIN];
+                        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isLoadedFirstTime"] && [AppPreferences sharedAppPreferences].userObj.userPin!=NULL) // came from background hence simply dimiss after Face Success
+                        {
+                            [self dismissViewControllerAnimated:YES completion:nil];
+                        }
+                        else{
+                            [self loginAndFetchData:@"Fetching Data" pin:userPin];
+                        }
+                        NSLog(@"User is authenticated successfully");
+                    } else {
+                        switch (error.code) {
+                            case LAErrorAuthenticationFailed:
+                                NSLog(@"Authentication Failed");
+                                break;
+                                
+                            case LAErrorUserCancel:
+                                NSLog(@"User pressed Cancel button");
+                                break;
+                                
+                            case LAErrorUserFallback:
+                                NSLog(@"User pressed \"Enter Password\"");
+                                break;
+                                
+                            default:
+                                NSLog(@"Touch ID is not configured");
+                                break;
+                        }
+                        NSLog(@"Authentication Fails");
+                    }
 
+                });
+            }];
+            
+            
+        } else {
+            NSLog(@"Can not evaluate Touch ID");
+        }
+    } else {
+        // Fallback on earlier versions
+    }
+}
 
 @end
