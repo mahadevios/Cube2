@@ -339,6 +339,15 @@ extern OSStatus DoConvertFile(CFURLRef sourceURL, CFURLRef destinationURL, OSTyp
                     [topRootViewController presentViewController:loginViewController animated:YES completion:nil];
 
                 }
+                else{
+                    UIViewController *presentingViewController = [topRootViewController presentingViewController];
+                    
+                    [topRootViewController dismissViewControllerAnimated:true completion:nil];
+
+                    loginViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+
+                   [presentingViewController presentViewController:loginViewController animated:YES completion:nil];
+                }
             }
             
                 

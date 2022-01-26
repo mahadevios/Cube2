@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key></key>
+	<string></string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.coreFlexSolutions.CubeDictate</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -35,6 +41,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow Camera access to Cube?</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>$(PRODUCT_NAME) Authentication with FaceID</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Need microphone access for recording audios</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
@@ -62,10 +70,6 @@
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>BGTaskSchedulerPermittedIdentifiers</key>
-	<array>
-		<string>com.coreFlexSolutions.CubeDictate</string>
 	</array>
 </dict>
 </plist>

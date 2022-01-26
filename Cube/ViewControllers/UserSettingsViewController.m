@@ -29,7 +29,7 @@
     
     storageManagementItemsArray=[[NSMutableArray alloc]initWithObjects:@"Low Storage Threshold",@"Purge Data By", nil];
 
-    PlaybackAutoRewindByArray=[[NSMutableArray alloc]initWithObjects:@"Change Your PIN", nil];
+    PlaybackAutoRewindByArray=[[NSMutableArray alloc]initWithObjects:@"Login Using Face Id/Touch Id",@"Change Your PIN", nil];
 
     popUpOptionsArray=[[NSMutableArray alloc]init];
     radioButtonArray=[[NSMutableArray alloc]init];
@@ -228,7 +228,9 @@
     if ([tableview isEqual:self.userSettingsTableView])
     {
         UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-        cell.tag=indexPath.row;
+//        cell.tag = [[NSString stringWithFormat:@"%ld%ld", indexPath.section,indexPath.row] intValue];
+        cell.tag = indexPath.row;
+
         if (indexPath.section==0)
         {
             UILabel* nameLabel= [cell viewWithTag:101];
@@ -263,11 +265,29 @@
             UILabel* nameLabel= [cell viewWithTag:101];
             nameLabel.text=[storageManagementItemsArray objectAtIndex:indexPath.row];
         }
+        
         if (indexPath.section==2)
         {
             UILabel* nameLabel= [cell viewWithTag:101];
             nameLabel.text=[PlaybackAutoRewindByArray objectAtIndex:indexPath.row];
+            
+            if (indexPath.row==0 )
+            {
+                SwitchCreation* switchobj=[SwitchCreation new];
+                switchobj.tableview=tableview;
+                switchobj.cell=cell;
+                switchobj.label=nameLabel;
+                [self performSelector:@selector(createSwitch:) withObject:switchobj afterDelay:0.0];
+                
+            }
+            
+            
         }
+//        if (indexPath.section==2)
+//        {
+//            UILabel* nameLabel= [cell viewWithTag:101];
+//            nameLabel.text=[PlaybackAutoRewindByArray objectAtIndex:indexPath.row];
+//        }
         
         return cell;
     }
@@ -365,21 +385,31 @@
     if (flag==false)
     {
         UISwitch *onoff = [[UISwitch alloc] initWithFrame: CGRectMake(sender.tableview.frame.size.width-80,sender.label.frame.origin.y-7, 0, 0)];
-        onoff.tag=sender.cell.tag;
-        if (onoff.tag==1)
+        
+        NSIndexPath *indexPath = [self.userSettingsTableView indexPathForCell:sender.cell];
+
+        NSString* composedTag = [[NSString stringWithFormat:@"100"] stringByAppendingString:[NSString stringWithFormat:@"%ld%ld", indexPath.section,indexPath.row]];
+        
+        onoff.tag = [composedTag intValue];
+        
+
+        if (onoff.tag==10001)
         {
             [onoff setOn:[[NSUserDefaults standardUserDefaults] boolForKey:CONFIRM_BEFORE_SAVING_SETTING]];
         }
 
-        if (onoff.tag==2)
+        if (onoff.tag==10002)
         {
             [onoff setOn:[[NSUserDefaults standardUserDefaults] boolForKey:ALERT_BEFORE_RECORDING]];
         }
-        if (onoff.tag==3)
+        if (onoff.tag==10003)
         {
             [onoff setOn:[[NSUserDefaults standardUserDefaults] boolForKey:BACK_TO_HOME_AFTER_DICTATION]];
         }
-
+        if (onoff.tag==10020)
+        {
+            [onoff setOn:[[NSUserDefaults standardUserDefaults] boolForKey:LOGIN_USING_FACE_TOUCH_ID]];
+        }
         [onoff addTarget: self action: @selector(flip:) forControlEvents:UIControlEventValueChanged];
         [sender.cell addSubview:onoff];
     }
@@ -388,7 +418,7 @@
 
 -(void)flip:(UISwitch*)sender
 {
-    if (sender.tag==1)
+    if (sender.tag==10001)
     {
         bool confirmBeforeSaving=sender.isOn;
         [[NSUserDefaults standardUserDefaults] setBool:confirmBeforeSaving forKey:CONFIRM_BEFORE_SAVING_SETTING];
@@ -396,16 +426,22 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:CONFIRM_BEFORE_SAVING_SETTING_ALTERED];
 
     }
-    if (sender.tag==2)
+    if (sender.tag==10002)
     {
         bool alertBeforeSaving=sender.isOn;
         [[NSUserDefaults standardUserDefaults] setBool:alertBeforeSaving forKey:ALERT_BEFORE_RECORDING];
 
     }
-    if (sender.tag==3)
+    if (sender.tag==10003)
     {
         bool backToHomeAfterDictation=sender.isOn;
         [[NSUserDefaults standardUserDefaults] setBool:backToHomeAfterDictation forKey:BACK_TO_HOME_AFTER_DICTATION];
+
+    }
+    if (sender.tag==10020)
+    {
+        bool backToHomeAfterDictation=sender.isOn;
+        [[NSUserDefaults standardUserDefaults] setBool:backToHomeAfterDictation forKey:LOGIN_USING_FACE_TOUCH_ID];
 
     }
     //NSLog(@"%ld",sender.tag);
@@ -488,7 +524,7 @@
             [[[UIApplication sharedApplication] keyWindow] addSubview:abbreviationPopupView];
             
         }
-        if (indexPath.section==2 && indexPath.row==0)
+        if (indexPath.section==2 && indexPath.row==1)
         {
             UIViewController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ChangePasswordViewController"];
                        vc.modalPresentationStyle = UIModalPresentationFullScreen;
